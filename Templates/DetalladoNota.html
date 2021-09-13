@@ -12,7 +12,7 @@
 
     <!-- google icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <title>Editar Notas</title>
+    <title>Detallado Nota</title>
 
 </head>
 
@@ -34,23 +34,23 @@
             </div>
 
             <div class="col-md-8 col-sm-10 col-xs-10">
-                <h1 class="my-5">Editar Nota</h1>
+                <h1 class="my-5">Detallado Nota</h1>
                 <form>
                     <div class="mb-3">
                         <label for="Titulo" class="form-label">Titulo Nota</label>
-                        <input type="text" class="form-control" id="Titulo" aria-describedby="tituloHelp" value="Corrección">
+                        <input type="text" class="form-control" id="Titulo" aria-describedby="tituloHelp" value="Corrección" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="ContenidoNota" class="form-label">Descripcion Nota</label>
-                        <input type="text" class="form-control" id="ContenidoNota" value="Corrección del nombre del proveedor  ">
+                        <input type="text" class="form-control" id="ContenidoNota" value="Corrección del nombre del proveedor  " disabled>
                     </div>
                     <div class="mb-3">
                         <label class="mb-2" for="FechaLimite">Fecha Limite:</label>
                         <br>
-                        <input type="date" id="FechaLimite" name="FechaLimite">
+                        <input type="date" id="FechaLimite" name="FechaLimite" disabled>
                     </div>
                     <div class="mb-3">
-                        <select id="Donacion" class="form-select">
+                        <select id="Donacion" class="form-select" disabled>
                             <option>Donacion 1</option>
                             <option>Donacion 2</option>
                             <option>Donacion 3</option>
@@ -58,14 +58,14 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">
-                        <a class="m-0 p-0  nav-link " href="ListadoNota.html" style="color: white;">
-                            Guardar Cambios
+                        <a class="m-0 p-0  nav-link " href="EditarNota.html" style="color: white;">
+                            Editar
                         </a>
                     </button>
                     <button type="submit" class="btn btn-warning">
-                        <a class="m-0 p-0  nav-link " href="DetalladoNota.html" style="color: white;">
+                        <a class="m-0 p-0  nav-link " href="ListadoNota.html" style="color: white;">
                             Regresar
-                        </a>    
+                        </a>
                     </button>
                 </form>
             </div>
