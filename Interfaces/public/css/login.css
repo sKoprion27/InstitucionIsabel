@@ -1,0 +1,35 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
+#login_title {
+  margin-top: 100px;
+  margin-bottom: 60px;
+}
+
+img {
+  border-radius: 50%;
+  border: rgba(153, 253, 248, 0.521);
+  background-color: rgba(153, 253, 248, 0.521);
+  width: 150px;
+}
+
+input {
+  width: 300px;
+  border-radius: 3px;
+  height: 40px;
+  border: rgb(190, 189, 189) solid;
+  padding: 10px;
+}
+
+input:focus {
+  outline: none !important;
+  border-color: #215996;
+}
+
+button {
+  padding: 10px;
+}
+
+form {
+  text-align: center;
+}

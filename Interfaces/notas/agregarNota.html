@@ -2,78 +2,76 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- google icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <title>Listado Notas</title>
+  <!-- google icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <title>Listado Notas</title>
 
 </head>
 
 <body>
 
-    <div class="container-fluid" style="display: block;">
-        <div class="row">
+  <div class="container-fluid" style="display: block;">
+    <div class="row">
 
-            <div class="col-md-2 d-none d-md-block">
-                <ul class="nav flex-column">
-                    <li>
-                        <img src="../static/img/logoIsabel.jpg" alt="logoIsabel" width="150vw">
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="ListadoNota.html">Notas</a>
-                    </li>
+      <div class="col-md-2 d-none d-md-block">
+        <ul class="nav flex-column">
+          <li>
+            <img src="../static/img/logoIsabel.jpg" alt="logoIsabel" width="150vw">
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="ListadoNota.html">Notas</a>
+          </li>
 
-                </ul>
-            </div>
+        </ul>
+      </div>
 
-            <div class="col-md-8 col-sm-10 col-xs-10">
-                <h1 class="my-5">Registrar Nota</h1>
-                <form>
-                    <div class="mb-3">
-                        <label for="Titulo" class="form-label">Titulo Nota</label>
-                        <input type="text" class="form-control" id="Titulo" aria-describedby="tituloHelp">
-                    </div>
-                    <div class="mb-3">
-                        <label for="ContenidoNota" class="form-label">Descripcion Nota</label>
-                        <input type="text" class="form-control" id="ContenidoNota">
-                    </div>
-                    <div class="mb-3">
-                        <label class="mb-2" for="FechaLimite">Fecha Limite:</label>
-                        <br>
-                        <input type="date" id="FechaLimite" name="FechaLimite">
-                    </div>
-                    <div class="mb-3">
-                        <select id="Donacion" class="form-select">
-                            <option>Donacion 1</option>
-                            <option>Donacion 2</option>
-                            <option>Donacion 3</option>
-                          </select>
-                    </div>
+      <div class="col-md-8 col-sm-10 col-xs-10">
+        <h1 class="my-5">Registrar Nota</h1>
+        <form>
+          <div class="mb-3">
+            <label for="Titulo" class="form-label">Titulo Nota</label>
+            <input type="text" class="form-control" id="Titulo" aria-describedby="tituloHelp">
+          </div>
+          <div class="mb-3">
+            <label for="ContenidoNota" class="form-label">Descripcion Nota</label>
+            <input type="text" class="form-control" id="ContenidoNota">
+          </div>
+          <div class="mb-3">
+            <label class="mb-2" for="FechaLimite">Fecha Limite:</label>
+            <br>
+            <input type="date" id="FechaLimite" name="FechaLimite">
+          </div>
+          <div class="mb-3">
+            <select id="Donacion" class="form-select">
+              <option>Donacion 1</option>
+              <option>Donacion 2</option>
+              <option>Donacion 3</option>
+            </select>
+          </div>
 
-                    <button type="submit" class="btn btn-primary">
-                        <a class="m-0 p-0  nav-link " href="ListadoNota.html" style="color: white;">
-                            Regsitrar
-                        </a>
-                        </button>
-                </form>
-            </div>
+          <button type="submit" class="btn btn-primary">
+            <a class="m-0 p-0  nav-link " href="ListadoNota.html" style="color: white;">
+              Regsitrar
+            </a>
+          </button>
+        </form>
+      </div>
 
 
-        </div>
     </div>
+  </div>
 
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
 
 </body>
 
