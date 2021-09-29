@@ -153,15 +153,26 @@ INSERT INTO beneficiarios(nombre_beneficiario, descripcion) VALUES
 -- Crear tabla métodos de pago
 
 CREATE TABLE metodos_pago(
-
+  idMetodoPago SERIAL PRIMARY KEY NOT NULL,
+  nombre TEXT NOT NULL,
+  descripcion TEXT NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
 );
 
 
 -- Crear datos de la tabla metodos_pago
 
-INSERT INTO metodos_pago() VALUES
-()
-
+INSERT INTO metodos_pago(nombre, descripcion) VALUES
+('tarjeta visa','numero: 1234 1234 1234 1234'),
+('tarjeta mastercard','numero: 3456 3456 3456 3456'),
+('tarjeta american express','numero: 7890 7890 7890 7890'),
+('cheque','folio: 12345678'),
+('paypal','correo: lau@gmail.com'),
+('efectivo','monto: $500'),
+('3 meses sin intereses','monto: $500'),
+('6 meses sin intereses','monto: $500'),
+('12 meses sin intereses','monto: $500'),
+('tarjeta de regalo','numero: 122345');
 
 -- Crear tabla categorias 
 
