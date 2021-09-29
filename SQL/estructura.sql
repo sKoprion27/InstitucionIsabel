@@ -172,7 +172,7 @@ INSERT INTO metodos_pago(nombre, descripcion) VALUES
 ('3 meses sin intereses','monto: $500'),
 ('6 meses sin intereses','monto: $500'),
 ('12 meses sin intereses','monto: $500'),
-('tarjeta de regalo','numero: 122345');
+('Especie','cantidad: 10');
 
 -- Crear tabla categorias 
 
@@ -200,13 +200,26 @@ INSERT INTO categorias(nombre, descripcion) VALUES
 -- Crear tabla tipo de donación
 
 CREATE TABLE tipo_donacion(
-
+  idTipoDonacion SERIAL PRIMARY KEY NOT NULL,
+  nombre TEXT NOT NULL,
+  descripcion TEXT NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
 );
 
 -- Crear datos de la tabla tipo_donacion
 
-INSERT INTO tipo_donacion() VALUES
-()
+INSERT INTO tipo_donacion(nombre, descripcion) VALUES
+('efectivo','Donación de dinero (ya sea en efectivo o en tarjeta)'),
+('especie','Cubre materia prima, materiales fisicos y apoyo tangible'),
+('inmuebles','Donación de una propiedad'),
+('puntual','Donación de una cantidad una sola vez'),
+('recurrente','Donación realizada cada mes'),
+('microdonacion','Donación masiva de pequeñas cantidades'),
+('',''),
+('',''),
+('',''),
+('','');
+
 
 
 -- Crear tabla donaciones
