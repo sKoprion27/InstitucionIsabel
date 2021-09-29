@@ -1,0 +1,243 @@
+
+-- Creando la base de datos
+
+DROP DATABASE IF EXISTS institucion_isabel;
+CREATE DATABASE institucion_isabel;
+\c institucion_isabel;
+
+
+-- USUARIOS
+
+-- Crear tabla de usuarios
+
+CREATE TABLE usuarios (
+  idUsuario SERIAL PRIMARY KEY, 
+  nombre TEXT NOT NULL,
+  apellido TEXT NOT NULL,
+  contraseña TEXT NOT NULL,
+  correo_electronico TEXT NULL,
+  "role" INTEGER NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+);
+
+-- Crear tabla de roles
+
+CREATE TABLE roles (
+  idRole SERIAL PRIMARY KEY NOT NULL,
+  nombre_role	TEXT NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+);
+
+-- Crear datos tabla roles 
+
+INSERT INTO roles( nombre_role) VALUES
+('ADMIN'),
+('TESORERO'),
+('CONTADOR'),
+('PRESIDENTE');
+
+-- Crear tabla permisos
+
+CREATE TABLE permisos(
+  idPermiso	SERIAL PRIMARY KEY NOT NULL,
+  nombre_permiso	TEXT NOT NULL,
+  creado	TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+);
+
+-- Crear datos tabla permisos
+
+INSERT INTO permisos(nombre_permiso) VALUES
+('Iniciar sesión'),
+('Cerrar sesión')
+
+-- Crear tabla roles_permisos
+
+CREATE TABLE roles_permisos(
+  idPermiso	INTEGER NOT NULL,
+  idRole	INTEGER NOT NULL,
+  PRIMARY KEY(idPermiso, idRole)
+); 
+
+-- Crear datos roles_permisos
+
+INSERT INTO roles_permisos(idPermiso, idRole) VALUES
+(1,1),
+(1,1);
+
+-- Modificar la relacion entre usuarios y roles
+
+ALTER TABLE usuarios
+  add constraint FK_role
+  foreign key ("role")
+  references roles (idRole);
+
+-- Crear datos de la tabla usuarios
+
+INSERT INTO usuarios( nombre, apellido, contraseña, correo_electronico, "role") VALUES
+('Laura','Rivero', 'Password','lau@tec.mx', 1),
+('Daniel','Cu','Password','daniel@tec.mx', 1);
+('Polo','Juarez', 'Password','polo@tec.mx', 1),
+('Julio','Hernandez','Password','julio@tec.mx', 1);
+
+
+-- DONADORES
+
+-- Crear tabla CFDIS
+CREATE TABLE cfdis(
+
+);
+
+-- Crear datos de la tabla CFDIS
+INSERT INTO cfdis() VALUES
+()
+
+-- Crear tabla estados
+CREATE TABLE estados(
+
+);
+
+-- Crear datos de la tabla estados
+INSERT INTO estados() VALUES
+()
+
+
+-- Crear tabla donadores
+
+CREATE TABLE donadores(
+
+);
+
+-- Crear datos de la tabla donadores
+
+INSERT INTO donadores() VALUES
+()
+
+
+
+-- DONACIONES
+
+-- Crear tabla de beneficiarios
+
+CREATE TABLE beneficiarios(
+
+);
+
+-- Crear datos de la tabla beneficiarios
+
+INSERT INTO beneficiarios() VALUES
+()
+
+
+
+-- Crear tabla métodos de pago
+
+CREATE TABLE metodos_pago(
+
+);
+
+
+-- Crear datos de la tabla metodos_pago
+
+INSERT INTO metodos_pago() VALUES
+()
+
+
+-- Crear tabla categorias 
+
+CREATE TABLE categorias(
+
+);
+
+-- Crear datos de la tabla categorias
+
+INSERT INTO categorias() VALUES
+()
+
+
+-- Crear tabla tipo de donación
+
+CREATE TABLE tipo_donacion(
+
+);
+
+-- Crear datos de la tabla tipo_donacion
+
+INSERT INTO tipo_donacion() VALUES
+()
+
+
+-- Crear tabla donaciones
+
+CREATE TABLE donaciones(
+  idDonacion	SERIAL PRIMARY KEY,
+  idDonador	INTEGER,
+  idMetodoPago	INTEGER,
+  idTipoDonacion	INTEGER,
+  nombre	TEXT NOT NULL,
+  monto	NUMERIC(10,2) NOT NULL,
+  foto_donacion	TEXT,
+  esta_facturado	DATE, 
+  creado TIMESTAMP CURRENT_TIMESTAMP(0)
+);
+
+INSERT INTO donaciones(idDonador, idMetodoPago, idTipoDonacion, nombre, monto) VALUES
+(1,1,1,'10 computadoras', 3000),
+
+
+-- Crear tabla donaciones_beneficiarios
+
+CREATE TABLE donaciones_beneficiarios(
+
+);
+
+-- Crear datos de la tabla donaciones_beneficiarios
+
+INSERT INTO donaciones_beneficiarios() VALUES
+()
+
+-- Crear tabla donaciones_categorias
+
+CREATE TABLE donaciones_categorias(
+
+);
+
+-- Crear datos de la tabla donaciones_categorias
+
+INSERT INTO donaciones_categorias() VALUES
+()
+
+
+-- NOTAS 
+
+-- Crear tabla de notas
+
+CREATE TABLE notas (
+  idNota	SERIAL PRIMARY KEY,
+  idDonacion INTEGER,
+  idUsuario INTEGER,
+  titulo	TEXT NOT NULL,
+  contenido	TEXT NOT NULL,
+  fecha_limite	DATE NOT NULL,
+  estado_completado	SMALLINT DEFAULT 0,
+  estado_activo	SMALLINT DEFAULT 1,
+  creado	TIMESTAMP CURRENT_TIMESTAMP(0)
+);
+
+-- Modificar la relacion entre usuarios y roles
+
+ALTER TABLE notas
+  add constraint FK_idUsuario
+  foreign key ("idUsuario")
+  references usuarios (idUsuario);
+
+ALTER TABLE notas
+  add constraint FK_idDonacion
+  foreign key ("idDonacion")
+  references donaciones (idDonacion);
+
+-- Crear datos de la tabla notas
+
+INSERT INTO notas(titulo, contenido, fecha_limite, idUsuario, idDonacion) VALUES
+('Modificar nombre de proveedor','Este proveedor cambio de razón social', '20-10-2021',4,1),
+('Modificar correo de facturación','Este proveedor marco en la mañana y necesita que le llegue su factura', '20-10-2021',4,2),
+
