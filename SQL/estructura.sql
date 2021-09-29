@@ -177,14 +177,25 @@ INSERT INTO metodos_pago(nombre, descripcion) VALUES
 -- Crear tabla categorias 
 
 CREATE TABLE categorias(
-
+  idCategoria SERIAL PRIMARY KEY NOT NULL,
+  nombre TEXT NOT NULL,
+  descripcion TEXT NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
 );
 
 -- Crear datos de la tabla categorias
 
-INSERT INTO categorias() VALUES
-()
-
+INSERT INTO categorias(nombre, descripcion) VALUES
+('Tecnología','Computadoras para los niños de la institución'),
+('Inmobiliario','Sillas para los niños de la institución'),
+('Materiales','Materiales de arte para los niños de la institución'),
+('Inmobiliario','Sillones para los niños de la institución'),
+('Tecnología','Ipads para los niños de la institución'),
+('Materiales','Materiales de escritura para los niños de la institución'),
+('Tecnología','Pantallas para dar clases a los niños de la institución'),
+('Inmobiliario','Mesas para los niños de la institución'),
+('Tecnología','Teclados extra para los niños de la institución'),
+('Materiales','Materiales de construcción para los niños de la institución');
 
 -- Crear tabla tipo de donación
 
