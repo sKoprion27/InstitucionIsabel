@@ -187,25 +187,45 @@ INSERT INTO donaciones(idDonador, idMetodoPago, idTipoDonacion, nombre, monto) V
 -- Crear tabla donaciones_beneficiarios
 
 CREATE TABLE donaciones_beneficiarios(
-
+  idBeneficiario	INTEGER NOT NULL,
+  idDonacion	INTEGER NOT NULL,
+  destino_donacion	TEXT NOT NULL,
+  creado	TIMESTAMP CURRENT_TIMESTAMP(0),
+  PRIMARY KEY(idBeneficiario, idDonacion)
 );
 
 -- Crear datos de la tabla donaciones_beneficiarios
 
-INSERT INTO donaciones_beneficiarios() VALUES
-()
+INSERT INTO donaciones_beneficiarios(idBeneficiario, idDonacion, destino_donacion) VALUES
+(1,1, 'Crear un nuevo salon de clases'),
+(2,2, 'Para los niños de la casa hogar'),
+(2,1, 'Para el evento de diciembre'),
+(2,1, 'Para el evento de verano'),
+(2,1, 'Configurar el nuevo internet'),
+(2,1, 'Para uso del instituto'),
+(2,1, 'Para uso del instituto');
 
 -- Crear tabla donaciones_categorias
 
 CREATE TABLE donaciones_categorias(
-
+  idCategoria	INTEGER NOT NULL, 
+  idDonacion	INTEGER NOT NULL,
+  PRIMARY KEY(idCategoria,idDonacion)
 );
 
 -- Crear datos de la tabla donaciones_categorias
 
-INSERT INTO donaciones_categorias() VALUES
-()
-
+INSERT INTO donaciones_categorias(idCategoria, idDonacion) VALUES
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(2,1),
+(2,2),
+(2,3),
+(3,1),
+(3,2),
+(3,3);
 
 -- NOTAS 
 
