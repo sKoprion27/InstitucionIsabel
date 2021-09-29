@@ -119,15 +119,36 @@ INSERT INTO donadores() VALUES
 -- Crear tabla de beneficiarios
 
 CREATE TABLE beneficiarios(
-
+  idBeneficiario SERIAL PRIMARY KEY NOT NULL,
+  nombre_beneficiario TEXT NOT NULL,
+  descripcion TEXT NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
 );
 
 -- Crear datos de la tabla beneficiarios
 
-INSERT INTO beneficiarios() VALUES
-()
-
-
+INSERT INTO beneficiarios(nombre_beneficiario, descripcion) VALUES
+('niños de la institución','Esta donación es material didactico para los niños de la institución'),
+('colaboradores','Esta donación se utilizará para la compensación de los colaboradores'),
+('niños de la institución','Esta donación es para comprar materiales de arte para los niños'),
+('niños de la institución','Esta donación es para introducir nuevos cursos para los niños'),
+('Personal de la institución','Esta donación es para comprar juguetes para los niños'),
+('niños de la institución','Esta donación es para introducir nuevos cursos para los niños'),
+('colaboradores','Esta donación se utilizará para la compensación de los colaboradores'),
+('Personal de la institución','Esta donación es para pagar los salarios del personal'),
+('niños de la institución','Esta donación es para introducir nuevos cursos para los niños'),
+('niños de la institución','Esta donación es para la compra de productos de higiene (papel de baño, jabón, etc) para la utilización de los niños'),
+('Personal de la institución','Esta donación es para pagar los salarios del personal'),
+('niños de la institución','Esta donación es para comprar materiales de arte para los niños'),
+('niños de la institución','Esta donación es para la compra de productos de higiene (papel de baño, jabón, etc) para la utilización de los niños'),
+('niños de la institución','Esta donación es para comprar juguetes para los niños'),
+('niños de la institución','Esta donación es para introducir nuevos cursos para los niños'),
+('colaboradores','Esta donación se utilizará para la compensación de los colaboradores'),
+('Personal de la institución','Esta donación es para pagar los salarios del personal'),
+('Personal de la institución','Esta donación es para comprar juguetes para los niños'),
+('niños de la institución','Esta donación es para la compra de productos de higiene (papel de baño, jabón, etc) para la utilización de los niños'),
+('niños de la institución','Esta donación es para comprar materiales de arte para los niños'),
+('niños de la institución','Esta donación es para la compra de productos de higiene (papel de baño, jabón, etc) para la utilización de los niños');
 
 -- Crear tabla métodos de pago
 
