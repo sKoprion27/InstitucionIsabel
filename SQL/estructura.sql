@@ -11,7 +11,7 @@ CREATE DATABASE institucion_isabel;
 -- Crear tabla de usuarios
 
 CREATE TABLE usuarios(
-  id SERIAL PRIMARY KEY, 
+  id SERIAL PRIMARY KEY,
   nombre TEXT NOT NULL,
   apellido TEXT NOT NULL,
   "password" TEXT NOT NULL,
