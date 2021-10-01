@@ -6,6 +6,7 @@ import { initRoutes } from './routes/index'
 
 const app = express()
 const PORT = 4000 || process.env.PORT
+
 // Middlewares de configuracion inicial
 app.use(json()) // Parsea lo que llega al servidor en formato json
 app.use(cookieParser()) // Generar el rastero de las cookies
@@ -14,7 +15,7 @@ app.use(cors()) // Una configuracion de seguridad entre headers
 
 app.get('/', (req, res) => {
   console.log('Esto es una prueba')
-  res.json('Bien 😀')
+  res.json({ menssge: 'Bien 😀' })
 })
 // Inicializa todas las rutas
 initRoutes(app)
