@@ -13,7 +13,8 @@ app.use(morgan('dev')) // Muestra en consola la url, tiempo y status solicitado
 app.use(cors()) // Una configuracion de seguridad entre headers
 
 app.get('/', (req, res) => {
-  res.send('Bien 😀')
+  console.log('Esto es una prueba')
+  res.json('Bien 😀')
 })
 // Inicializa todas las rutas
 initRoutes(app)
