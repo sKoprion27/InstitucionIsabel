@@ -11,6 +11,8 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+    'no-control-regex': 'off',
     'no-useless-return': 'off'
   }
 }
