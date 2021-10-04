@@ -2,6 +2,7 @@ import usersRouter from './users.routes'
 import notesRouter from './notes.routes'
 import authRouter from './auth.routes'
 import donorsRouter from './donors.routes'
+import cfdisRouter from './cfdis.routes'
 // import { verifyToken } from '../lib/auth'
 
 export const initRoutes = (app) => {
@@ -11,4 +12,5 @@ export const initRoutes = (app) => {
   app.use('/donations', usersRouter)
   app.use('/donors', donorsRouter)
   app.use('/notes', notesRouter)
+  app.use('/cfdis', cfdisRouter)
 }
