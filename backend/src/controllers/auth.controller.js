@@ -1,5 +1,5 @@
 import { response } from './../utils/response'
-import { createToken } from './../lib/auth'
+import { auth } from './../lib/auth'
 
 const mockup = {
   id: 100,
@@ -19,6 +19,6 @@ export const login = async (req, res) => {
     return
   }
 
-  const token = createToken({ payload: mockup.id })
+  const token = auth.createToken({ payload: mockup.id })
   response(req, res, 'LOGIN', token, 200)
 }

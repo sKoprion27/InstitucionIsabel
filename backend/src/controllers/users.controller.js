@@ -1,5 +1,7 @@
 import { response } from './../utils/response'
 import { db } from './../database/index'
+import { encrypt } from './../lib/encrypt'
+import { User } from './../models/User.model'
 
 // GET ALL
 export const getUsers = async (req, res) => {
@@ -18,9 +20,13 @@ export const getOneUser = async (req, res) => {
 // POST ONE
 
 export const postOneUser = async (req, res) => {
-  const userToPost = req.body
-  console.log(userToPost)
-  response(req, res, 'POST ONE USER', userToPost, 201)
+  const passwordHashed = encrypt.createHash(req.body.password)
+  const user = {
+    ...req.body,
+    password: passwordHashed
+  }
+  const queryAnswer = await User.postOneUser(user)
+  response(req, res, 'POST ONE USER', queryAnswer, 201)
 }
 
 // UPDATE ONE
