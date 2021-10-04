@@ -1,20 +1,18 @@
 import { response } from './../utils/response'
-import { db } from './../database/index'
 import { encrypt } from './../lib/encrypt'
 import { User } from './../models/User.model'
 
 // GET ALL
 export const getUsers = async (req, res) => {
-  const { rows } = await db.query('SELECT * FROM usuarios')
-  response(req, res, 'GET USERS', rows, 200)
+  const users = await User.getAll()
+  response(req, res, 'GET USERS', users, 200)
 }
 
 // GET ONE
 export const getOneUser = async (req, res) => {
   const { id } = req.params
-  console.log('Usuario que quiero consultar', id)
-  const { rows } = await db.query('SELECT * FROM usuarios WHERE id = $1', [id])
-  response(req, res, 'GET ONE USER', rows[0], 200)
+  const user = await User.getOne(id)
+  response(req, res, 'GET ONE USER', user, 200)
 }
 
 // POST ONE
