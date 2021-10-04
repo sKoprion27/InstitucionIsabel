@@ -1,34 +1,37 @@
 import { response } from './../utils/response'
+import { db } from './../database/index'
 // GET, POST, PUT, DELETE
 
 // GET ALL
-export const getUsers = (req, res) => {
-  response(req, res, 'GET users', 200)
+export const getUsers = async (req, res) => {
+  const { rows } = await db.query('SELECT * FROM usuarios')
+  response(req, res, rows, 200)
 }
 
 // GET ONE
-export const getOneUser = (req, res) => {
+export const getOneUser = async (req, res) => {
   const { id } = req.params
   console.log('Usuario que quiero consultar', id)
-  response(req, res, `GET ONE user ${id}`, 200)
+  const { rows } = await db.query('SELECT * FROM usuarios WHERE id = $1', [id])
+  response(req, res, rows[0], 200)
 }
 
 // POST ONE
 
-export const postOneUser = (req, res) => {
+export const postOneUser = async (req, res) => {
   const userToPost = req.body
   console.log(userToPost)
   response(req, res, `POST ONE user ${JSON.stringify(userToPost)}`, 201)
 }
 
 // UPDATE ONE
-export const updateOneUser = (req, res) => {
+export const updateOneUser = async (req, res) => {
   console.log('ID to UPDATE 😀', req.params.id)
   response(req, res, 'PUT ONE user', 201)
 }
 
 // DELETE ONE
-export const deleteOneUser = (req, res) => {
+export const deleteOneUser = async (req, res) => {
   console.log('ID to DELETE 😀', req.params.id)
   response(req, res, 'DELETE ONE user', 201)
 }
