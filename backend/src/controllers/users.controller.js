@@ -1,6 +1,5 @@
 import { response } from './../utils/response'
 import { db } from './../database/index'
-// GET, POST, PUT, DELETE
 
 // GET ALL
 export const getUsers = async (req, res) => {
