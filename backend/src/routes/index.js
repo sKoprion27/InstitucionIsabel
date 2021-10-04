@@ -10,7 +10,6 @@ export const initRoutes = (app) => {
   app.use('/auth', authRouter)
   // app.use(verifyToken) si se activa pide token
   app.use('/users', usersRouter)
-  app.use('/donations', usersRouter)
   app.use('/donors', donorsRouter)
   app.use('/notes', notesRouter)
   app.use('/cfdis', cfdisRouter)
