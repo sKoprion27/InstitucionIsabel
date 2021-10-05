@@ -17,37 +17,43 @@ CREATE TABLE usuarios(
   "password" TEXT NOT NULL,
   correo_electronico TEXT NULL,
   id_role INTEGER NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla de roles
 CREATE TABLE roles (
   id SERIAL PRIMARY KEY,
   nombre_role TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla permisos
 CREATE TABLE permisos(
   id SERIAL PRIMARY KEY,
   nombre_permiso TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla roles_permisos
 CREATE TABLE roles_permisos(
   id SERIAL PRIMARY KEY,
   id_permiso INTEGER NOT NULL,
-  id_role INTEGER NOT NULL
+  id_role INTEGER NOT NULL,
+  existe BOOLEAN DEFAULT TRUE
 );
 -- DONADORES
 -- Crear tabla CFDIS
 CREATE TABLE cfdis(
   id SERIAL PRIMARY KEY,
   clave TEXT NOT NULL,
-  descripcion TEXT NOT NULL
+  descripcion TEXT NOT NULL,
+  existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla estados
 CREATE TABLE estados(
   id SERIAL PRIMARY KEY,
-  nombre TEXT NOT NULL
+  nombre TEXT NOT NULL,
+  existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla donadores
 CREATE TABLE donadores(
@@ -62,7 +68,8 @@ CREATE TABLE donadores(
   codigo_postal INTEGER NOT NULL,
   domicilio_fiscal TEXT NOT NULL,
   regimen_fiscal BOOLEAN NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- DONACIONES
@@ -72,7 +79,8 @@ CREATE TABLE beneficiarios(
   id SERIAL PRIMARY KEY NOT NULL,
   nombre_beneficiario TEXT NOT NULL,
   descripcion TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- Crear tabla métodos de pago
@@ -80,7 +88,8 @@ CREATE TABLE metodos_pago(
   id SERIAL PRIMARY KEY NOT NULL,
   nombre TEXT NOT NULL,
   descripcion TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- Crear tabla categorias
@@ -88,7 +97,8 @@ CREATE TABLE categorias(
   id SERIAL PRIMARY KEY NOT NULL,
   nombre TEXT NOT NULL,
   descripcion TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- Crear tabla tipo de donación
@@ -96,7 +106,8 @@ CREATE TABLE tipo_donaciones(
   id SERIAL PRIMARY KEY NOT NULL,
   nombre TEXT NOT NULL,
   descripcion TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- Crear tabla donaciones
@@ -109,7 +120,8 @@ CREATE TABLE donaciones(
   monto NUMERIC(10,2) NOT NULL,
   foto_donacion TEXT,
   esta_facturado DATE,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- Crear tabla donaciones_beneficiarios
@@ -118,7 +130,8 @@ CREATE TABLE donaciones_beneficiarios(
   id_beneficiario INTEGER NOT NULL,
   id_donacion INTEGER NOT NULL,
   destino_donacion TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- Crear tabla donaciones_categorias
@@ -126,7 +139,8 @@ CREATE TABLE donaciones_beneficiarios(
 CREATE TABLE donaciones_categorias(
   id SERIAL PRIMARY KEY,
   id_categoria INTEGER NOT NULL,
-  id_donacion INTEGER NOT NULL
+  id_donacion INTEGER NOT NULL,
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- NOTAS
@@ -141,7 +155,8 @@ CREATE TABLE notas (
   fecha_limite DATE NOT NULL,
   estado_completado SMALLINT DEFAULT 0,
   estado_activo SMALLINT DEFAULT 1,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
 );
 
 -- CONSTRAINTS EN TABLAS
