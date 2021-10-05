@@ -1,14 +1,21 @@
-export const getCFDI = (req, res) => {
-  res.status(200).json({ message: 'GET CFDIs 🐧' })
+import { response } from './../utils/response'
+import { Cfdi } from './../models/Cfdi.model'
+
+export const getCFDI = async (req, res) => {
+  const cfdis = await Cfdi.getAll()
+  response(req, res, 'GET CFDIS', cfdis, 200)
 }
 
-export const getOneCFDI = (req, res) => {
+export const getOneCFDI = async (req, res) => {
   const { id } = req.params
-  res.status(200).json({ message: 'GET this CFDI: ' + id + ' 🐨' })
+  const cfdi = await Cfdi.getOne(id)
+  response(req, res, 'GET ONE CFDI', cfdi, 200)
 }
 
-export const postOneCFDI = (req, res) => {
-  res.status(201).json({ message: 'POST CFDI 🐼' })
+// Dudas (?)
+export const postOneCFDI = async (req, res) => {
+  const cfdi = await Cfdi.postOne()
+  response(req, res, 'POST ONE USER', cfdi, 201)
 }
 
 export const updateOneCFDI = (req, res) => {
