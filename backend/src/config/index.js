@@ -5,7 +5,7 @@ const config = {
       user: 'postgres',
       host: '127.0.0.1',
       database: 'institucion_isabel',
-      password: 'wel46com',
+      password: '0000',
       port: 5432
     },
     jwt_token: {
