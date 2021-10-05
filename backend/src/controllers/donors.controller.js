@@ -17,7 +17,7 @@ export const postOneDonor = async (req, res) => {
   const donor = {
     ...req.body
   }
-  const queryAnswer = await Donor.postOneUser(donor)
+  const queryAnswer = await Donor.postOneDonor(donor)
   response(req, res, 'POST ONE DONOR', queryAnswer, 201)
 }
 
