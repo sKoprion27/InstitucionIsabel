@@ -1,23 +1,27 @@
 import { response } from './../utils/response'
+import { Donation } from './../models/Donation.model'
 
 // GET ALL
-export const getDonation = (req, res) => {
-  response(req, res, 'GET donations', {}, 200)
+export const getDonation = async (req, res) => {
+  const donations = await Donation.getAll()
+  response(req, res, 'GET donations', donations, 200)
 }
 
 // GET ONE
-export const getOneDonation = (req, res) => {
+export const getOneDonation = async (req, res) => {
   const { id } = req.params
+  const donation = await Donation.getOne(id)
   console.log('Donacion que quiero consultar', id)
-  response(req, res, `GET ONE Donation ${id}`, {}, 200)
+  response(req, res, `GET ONE Donation ${id}`, donation, 200)
 }
 
 // POST ONE
 
-export const postOneDonation = (req, res) => {
-  const DonationToPost = req.body
-  console.log(DonationToPost)
-  response(req, res, `POST ONE Donation ${JSON.stringify(DonationToPost)}`, {}, 201)
+export const postOneDonation = async (req, res) => {
+  const donation = req.body
+  console.log(donation)
+  await Donation.postOne(donation)
+  response(req, res, `POST ONE Donation ${JSON.stringify(donation)}`, ':D', 201)
 }
 
 // UPDATE ONE

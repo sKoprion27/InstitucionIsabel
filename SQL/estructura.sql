@@ -109,7 +109,8 @@ CREATE TABLE donaciones(
   monto NUMERIC(10,2) NOT NULL,
   foto_donacion TEXT,
   esta_facturado DATE,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0)
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  activo BOOLEAN DEFAULT TRUE
 );
 
 -- Crear tabla donaciones_beneficiarios
