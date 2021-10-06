@@ -13,10 +13,14 @@ export const auth = {
   },
   me: async (token) => {
     try {
-      const user = await axios.get(`${URL_BASE}/auth/me/`, token)
+      const response = await axios.post(`${URL_BASE}/auth/me/`, token, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      const user = response.data.resp
       return user
     } catch (error) {
-      console.log(error)
+      console.log('error 😀')
+      return null
     }
   }
 }

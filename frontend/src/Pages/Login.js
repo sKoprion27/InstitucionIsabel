@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useAuth } from './../hooks/useAuth'
 export const Login = () => {
-  const { login, isAuthenticated } = useAuth()
+  const { login, user } = useAuth()
 
   const [state, setState] = useState({
     correo_electronico: 'daniel@isabel.com',
@@ -22,9 +22,7 @@ export const Login = () => {
     e.preventDefault()
     await login(correo_electronico, password)
   }
-  if (isAuthenticated) {
-    alert('LOGGED')
-  }
+  console.log(user)
   return (
     <div className='container'>
       <h1 className='text-center mt-4'>Login</h1>

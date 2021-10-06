@@ -93,8 +93,8 @@ export const AuthProvider = (props) => {
         })
       }
     }
-
     initialize()
+    console.log('I DO THIS')
   }, [])
 
   const login = async (correo_electronico, password) => {
@@ -118,13 +118,15 @@ export const AuthProvider = (props) => {
     dispatch({ type: 'LOGOUT' })
   }
 
+  const values = {
+    ...state,
+    login,
+    logout
+  }
+
   return (
     <AuthContext.Provider
-      value={{
-        ...state,
-        login,
-        logout
-      }}
+      value={values}
     >
       {children}
     </AuthContext.Provider>

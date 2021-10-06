@@ -27,7 +27,13 @@ export const login = async (req, res) => {
     response(req, res, 'LOGIN', 'invalid password', 400)
     return
   }
-
   const token = auth.createToken({ payload: { id: user.id } })
   response(req, res, 'LOGIN', token, 200)
+}
+export const me = async (req, res) => {
+  const { id } = req.body
+  const userDB = await User.getOneByField('id', id)
+  const { password, ...user } = userDB
+
+  response(req, res, 'ME', user, 200)
 }

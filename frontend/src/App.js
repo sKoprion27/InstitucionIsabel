@@ -1,11 +1,10 @@
-import { Login } from './Pages/Login'
+import { AuthProvider } from './contexts/authContext'
+import { Routes } from './routes'
 
-function App () {
+export const App = () => {
   return (
-    <>
-      <Login />
-    </>
+    <AuthProvider>
+      <Routes />
+    </AuthProvider >
   )
 }
-
-export default App
