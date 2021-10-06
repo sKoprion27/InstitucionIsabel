@@ -14,8 +14,11 @@ export const getOneCFDI = async (req, res) => {
 
 // Dudas (?)
 export const postOneCFDI = async (req, res) => {
-  const cfdi = await Cfdi.postOne()
-  response(req, res, 'POST ONE USER', cfdi, 201)
+  const cfdi = {
+    ...req.body
+  }
+  const queryAnswer = await Cfdi.postOne(cfdi)
+  response(req, res, 'POST ONE CFDI', queryAnswer, 201)
 }
 
 export const updateOneCFDI = (req, res) => {
