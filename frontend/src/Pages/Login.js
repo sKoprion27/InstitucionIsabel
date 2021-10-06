@@ -20,6 +20,7 @@ export const Login = () => {
 
   const handlerSubmit = async (e) => {
     e.preventDefault()
+    console.log(state)
     await login(correo_electronico, password)
   }
   console.log(user)
@@ -39,7 +40,7 @@ export const Login = () => {
               <label htmlFor='passwordInput' className='form-label'>
                 Contraseña
               </label>
-              <input onChange={handlerOnChange} value={password} type='password' className='form-control' name='password' />
+              <input onChange={handlerOnChange} value={password} type='text' className='form-control' name='password' />
             </div>
             <div className='justify-content-center d-flex'>
               <button type='submit' className='btn btn-primary btn-lg w-50'>
