@@ -1,10 +1,10 @@
 import { response } from './../utils/response'
 import { validator } from '../lib/validator'
-import { userPostSchema } from '../schemas/user.schema'
+import { loginSchema } from '../schemas/auth.schema'
 
 // Middleware validator
-export const validateUser = async (req, res, next) => {
-  const { err } = await validator.validateSchema(userPostSchema, req.body)
+export const validateLoginFields = async (req, res, next) => {
+  const { err } = await validator.validateSchema(loginSchema, req.body)
   if (!err) {
     next()
   } else {
