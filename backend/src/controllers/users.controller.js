@@ -23,7 +23,7 @@ export const postOneUser = async (req, res) => {
     ...req.body,
     password: passwordHashed
   }
-  const queryAnswer = await User.postOneUser(user)
+  const queryAnswer = await User.postOne(user)
   response(req, res, 'POST ONE USER', queryAnswer, 201)
 }
 
