@@ -624,3 +624,7 @@ INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALU
 ('Modificar contraseña','Se le olvido la contraseña', '18-10-2021',11,8),
 ('Modificar correo','Tiene mal el dominio', '19-10-2021',11,9),
 ('Agregar usuario','No esta dado de alta TELEVISA en proveedores','20-10-2021',11,10);
+
+
+
+

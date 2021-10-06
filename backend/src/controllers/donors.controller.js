@@ -4,6 +4,7 @@ export const getDonor = (req, res) => {
 
 export const getOneDonor = (req, res) => {
   const { id } = req.params
+  // paso de db
   res.status(200).json({ message: 'GET this donor: ' + id })
 }
 
