@@ -17,6 +17,7 @@ export const authAPI = {
         headers: { Authorization: `Bearer ${token}` }
       })
       const user = response.data.resp
+      console.log('USER', user)
       if (user) {
         return user
       } else {

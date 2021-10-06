@@ -1,7 +1,7 @@
 import { useAuth } from '../hooks/useAuth'
 
 export const Dashboard = () => {
-  console.log('Loaded')
+  console.log('DASHBOARD')
   const auth = useAuth()
   return (
     <div className='container'>

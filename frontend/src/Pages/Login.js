@@ -20,6 +20,7 @@ export const Login = () => {
 
   const handlerSubmit = async (e) => {
     e.preventDefault()
+    console.log(state)
     await login(correo_electronico, password)
   }
   console.log(user)
