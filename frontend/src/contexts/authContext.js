@@ -65,7 +65,7 @@ export const AuthProvider = (props) => {
 
         if (accessToken) {
           const user = await authAPI.me(accessToken)
-
+          console.log('DISPATCH', user)
           dispatch({
             type: 'INITIALIZE',
             payload: {
@@ -74,6 +74,7 @@ export const AuthProvider = (props) => {
             }
           })
         } else {
+          console.log('DISPATCH NOT TOKEN')
           dispatch({
             type: 'INITIALIZE',
             payload: {
@@ -83,7 +84,6 @@ export const AuthProvider = (props) => {
           })
         }
       } catch (err) {
-        console.error(err)
         dispatch({
           type: 'INITIALIZE',
           payload: {
@@ -94,18 +94,22 @@ export const AuthProvider = (props) => {
       }
     }
     initialize()
-    console.log('I DO THIS')
   }, [])
 
   const login = async (correo_electronico, password) => {
-    console.log('object')
     const accessToken = await authAPI.login({ correo_electronico, password })
+    console.log('TOKEN_LOGIN', accessToken)
+
+    if (accessToken === null) {
+      return
+    }
 
     const user = await authAPI.me(accessToken)
 
     if (user === null) {
       return
     }
+
     localStorage.setItem('accessToken', accessToken)
 
     dispatch({

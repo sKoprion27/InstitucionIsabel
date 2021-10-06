@@ -23,6 +23,7 @@ module.exports = {
     'react/jsx-uses-react': 0,
     'jsx-quotes': ['error', 'prefer-single'],
     'react/prop-types': 0,
-    'no-unused-vars': 'off'
+    'no-unused-vars': 'off',
+    camelcase: 'off'
   }
 }
