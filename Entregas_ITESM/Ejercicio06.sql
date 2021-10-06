@@ -61,20 +61,40 @@ WHERE duracion > (SELECT duration FROM película WHERE nombre = ‘Lo que el vie
 -- no hay solucion
 
 --  sub-consulta
--- pendiente
-SELECT nombre 
-FROM Productor, Pelicula
-GROUP BY idproductor
-WHERE SUM(SELECT titulo FROM pelicula  )
->
-(SUM(SELECT titulo FROM pelicula WHERE idproductor = (SELECT idproductor FROM Productor WHERE nombre = 'George Lucas')))
+
+SELECT nombre, COUNT(titulo)
+FROM productor Pr, pelicula Pe
+WHERE Pr.idProductor = Pe.idProductor
+GROUP BY nombre
+HAVING COUNT(titulo) > (
+    -- Número de peliculas hechas por George Lucas
+    SELECT COUNT(*)
+    FROM productor Pr, pelicula Pe
+    WHERE Pr.idProductor = Pe.idProductor 
+    AND nombre = 'George Lucas')
+
+-- Sub Consulta con vista
+SELECT nombre, COUNT(titulo)
+FROM productor Pr, pelicula Pe
+WHERE Pr.idProductor = Pe.idProductor
+GROUP BY nombre
+HAVING COUNT(titulo) > (
+    SELECT *
+    FROM Productores_Mas_Peliculas_Que_George_Lucas
+)
+
+CREATE VIEW  Productores_Mas_Peliculas_Que_George_Lucas AS 
+    SELECT COUNT(*)
+    FROM productor Pr, pelicula Pe
+    WHERE Pr.idProductor = Pe.idProductor 
+    AND nombre = 'George Lucas'
 
 -- 5.- Nombres de los productores de las películas en las que ha aparecido Sharon Stone.
 
 -- no sub-consulta
 
 SELECT Nombre
-FROM Pelicula P , Elenco E , Productor R
+FROM pelicula P , elenco E , productor R
 WHERE (P.titulo = E.titulo)
 AND (P.año = E.año) 
 AND (R.idProductor = P.idProductor)
@@ -83,17 +103,18 @@ AND (E.Nombre = 'Sharon Stone')
 -- sub-consulta
 
 SELECT Nombre
-FROM Productor
-WHERE idproductor IN (SELECT idproductor FROM Pelicula WHERE titulo IN (SELECT Titulo FROM Elenco WHERE Nombre = 'Sharon Stone'))
+FROM productor Pr, pelicula Pe
+WHERE Pe.idProductor = Pr.idProductor AND Pe.titulo IN (
+        SELECT Titulo 
+        FROM Elenco 
+        WHERE Nombre = 'Sharon Stone')
 
 -- 6.- Título de las películas que han sido filmadas más de una vez
 
 -- no sub-consulta
 
-
-
 -- sub-consulta
-
-SELECT titulo
-FROM Pelicula
-WHERE (SUM(SELECT titulo FROM pelicula WHERE ))
+SELECT titulo, COUNT(*)
+FROM pelicula
+GROUP BY titulo
+HAVING COUNT(*) > 1
