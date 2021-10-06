@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { createContext, useEffect, useReducer } from 'react'
-import { auth } from './../services/auth.service'
+import { authAPI } from './../services/auth.service'
 
 const initialState = {
   isAuthenticated: false,
@@ -64,7 +64,7 @@ export const AuthProvider = (props) => {
         const accessToken = window.localStorage.getItem('accessToken')
 
         if (accessToken) {
-          const user = await auth.me(accessToken)
+          const user = await authAPI.me(accessToken)
 
           dispatch({
             type: 'INITIALIZE',
@@ -99,10 +99,13 @@ export const AuthProvider = (props) => {
 
   const login = async (correo_electronico, password) => {
     console.log('object')
-    const accessToken = await auth.login({ correo_electronico, password })
+    const accessToken = await authAPI.login({ correo_electronico, password })
 
-    const user = await auth.me(accessToken)
+    const user = await authAPI.me(accessToken)
 
+    if (user === null) {
+      return
+    }
     localStorage.setItem('accessToken', accessToken)
 
     dispatch({

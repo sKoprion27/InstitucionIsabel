@@ -5,6 +5,6 @@ export const App = () => {
   return (
     <AuthProvider>
       <Routes />
-    </AuthProvider >
+    </AuthProvider>
   )
 }

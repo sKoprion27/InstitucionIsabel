@@ -1,6 +1,6 @@
 import axios from 'axios'
 const URL_BASE = 'http://localhost:4000'
-export const auth = {
+export const authAPI = {
   login: async (credentials = {}) => {
     try {
       const response = await axios.post(`${URL_BASE}/auth/login/`, credentials)
@@ -17,9 +17,12 @@ export const auth = {
         headers: { Authorization: `Bearer ${token}` }
       })
       const user = response.data.resp
-      return user
+      if (user) {
+        return user
+      } else {
+        return null
+      }
     } catch (error) {
-      console.log('error 😀')
       return null
     }
   }
