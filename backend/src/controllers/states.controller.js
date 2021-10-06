@@ -13,8 +13,11 @@ export const getOneState = async (req, res) => {
 }
 
 export const postOneState = async (req, res) => {
-  const state = await State.postOne()
-  response(req, res, 'POST ONE STATE', state, 201)
+  const state = {
+    ...req.body
+  }
+  const queryAnswer = await State.postOne(state)
+  response(req, res, 'POST ONE STATE', queryAnswer, 201)
 }
 
 export const updateOneState = (req, res) => {

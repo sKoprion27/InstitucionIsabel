@@ -8,8 +8,8 @@ export const getDonors = async (req, res) => {
 
 export const getOneDonor = async (req, res) => {
   const { id } = req.params
-  // paso de db
-  res.status(200).json({ message: 'GET this donor: ' + id })
+  const donor = await Donor.getOne(id)
+  response(req, res, 'GET ONE DONOR', donor, 200)
 }
 
 // Dudas (?)
@@ -17,7 +17,7 @@ export const postOneDonor = async (req, res) => {
   const donor = {
     ...req.body
   }
-  const queryAnswer = await Donor.postOneDonor(donor)
+  const queryAnswer = await Donor.postOne(donor)
   response(req, res, 'POST ONE DONOR', queryAnswer, 201)
 }
 

@@ -10,7 +10,7 @@ export const State = {
   },
   postOne: async (state) => {
     const INSERTION = `INSERT INTO estados (nombre)
-    VALUES ($1, $2, $3, $4, $5)`
+    VALUES ($1)`
     const query = await db.query(INSERTION, [state.nombre])
     console.log('QUERY 😀', query)
     return query
