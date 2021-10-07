@@ -17,13 +17,11 @@ export const Login = () => {
       [e.target.name]: e.target.value
     })
   }
-
   const handlerSubmit = async (e) => {
     e.preventDefault()
     console.log(state)
     await login(correo_electronico, password)
   }
-  console.log(user)
   return (
     <div className='container'>
       <h1 className='text-center mt-4'>Login</h1>

@@ -8,13 +8,12 @@ export const Routes = () => {
   return (
     <Router>
       <Switch>
-
-        <PublicRoute>
-          <Route exact path='/' component={Login} />
-        </PublicRoute>
         <PrivateRoute>
           <Route path='/dashboard' component={Dashboard} />
         </PrivateRoute>
+        <PublicRoute>
+          <Route exact path='/' component={Login} />
+        </PublicRoute>
       </Switch>
     </Router>
   )
