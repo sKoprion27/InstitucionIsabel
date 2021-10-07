@@ -8,8 +8,9 @@ export const encrypt = {
     const hash = bcrypt.hashSync(data, salt)
     return hash
   },
-  compareHashPassword: async (password, user) => {
-    const match = await bcrypt.compare(password, user.password)
+  compareHashPassword: async (password, hash) => {
+    const match = await bcrypt.compareSync(password, hash)
+    console.log('MATCH PASWORD', match)
     if (match) {
       return true
     } else {

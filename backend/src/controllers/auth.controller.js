@@ -22,8 +22,9 @@ export const login = async (req, res) => {
     response(req, res, 'LOGIN', 'invalid email', 400)
     return
   }
+  const match = await encrypt.compareHashPassword(password, user.password)
 
-  if (!(encrypt.compareHashPassword(password, user))) {
+  if (!match) {
     response(req, res, 'LOGIN', 'invalid password', 400)
     return
   }
@@ -33,7 +34,7 @@ export const login = async (req, res) => {
 export const me = async (req, res) => {
   const { id } = req.body
   const userDB = await User.getOneByField('id', id)
-  const { password, ...user } = userDB
+  const { password, creado, existe, ...user } = userDB
 
   response(req, res, 'ME', user, 200)
 }
