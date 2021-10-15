@@ -1,6 +1,6 @@
 import { db } from '../database/index'
 
-export const TipoDonaciones = {
+export const TypesDonations = {
   getAll: async () => {
     const { rows } = await db.query('SELECT * FROM tipo_donaciones')
     return rows

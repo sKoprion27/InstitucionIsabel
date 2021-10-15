@@ -6,7 +6,7 @@ import donorsRouter from './donors.routes'
 import cfdisRouter from './cfdis.routes'
 import statesRouter from './states.routes'
 import notFoundRouter from './notFound.routes'
-import tipoDonacionesRouter from './tipo_donaciones.routes'
+import typesDonationsRouter from './typesDonations.routes'
 // import { auth } from '../lib/auth'
 
 export const initRoutes = (app) => {
@@ -15,7 +15,7 @@ export const initRoutes = (app) => {
   app.use('/users', usersRouter)
   app.use('/donors', donorsRouter)
   app.use('/donations', donationsRouter)
-  app.use('/tipoDonaciones', tipoDonacionesRouter) // cambiar a ingles, se ocupara otro ruteador en el front
+  app.use('/typesDonations', typesDonationsRouter) // cambiar a ingles, se ocupara otro ruteador en el front
   app.use('/notes', notesRouter)
   app.use('/cfdis', cfdisRouter)
   app.use('/states', statesRouter)
