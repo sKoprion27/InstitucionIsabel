@@ -4,15 +4,15 @@ import { User } from './../models/User.model'
 
 // GET ALL
 export const getUsers = async (req, res) => {
-  const users = await User.getAll()
-  response(req, res, 'GET USERS', users, 200)
+  const [queryAnswer, status] = await User.getAll()
+  response(req, res, 'GET USERS', queryAnswer, status)
 }
 
 // GET ONE
 export const getOneUser = async (req, res) => {
   const { id } = req.params
-  const user = await User.getOne(id)
-  response(req, res, 'GET ONE USER', user, 200)
+  const [queryAnswer, status] = await User.getOne(id)
+  response(req, res, 'GET ONE USER', queryAnswer, status)
 }
 
 // POST ONE
@@ -23,19 +23,21 @@ export const postOneUser = async (req, res) => {
     ...req.body,
     password: passwordHashed
   }
-  const queryAnswer = await User.postOne(user)
-  response(req, res, 'POST ONE USER', queryAnswer, 201)
+  const [queryAnswer, status] = await User.postOne(user)
+  response(req, res, 'POST ONE USER', queryAnswer, status)
 }
 
 // UPDATE ONE
 export const updateOneUser = async (req, res) => {
-
-  console.log('ID to UPDATE 😀', req.params.id)
-  response(req, res, 'PUT ONE USER', req.params.id, 201)
+  const user = req.body
+  const id = req.params.id
+  const [queryAnswer, status] = await User.putOne(user, id)
+  response(req, res, 'UPDATE ONE USER', queryAnswer, status)
 }
 
 // DELETE ONE
 export const deleteOneUser = async (req, res) => {
-  console.log('ID to DELETE 😀', req.params.id)
-  response(req, res, 'DELETE ONE USER', req.params.id, 201)
+  const id = req.params.id
+  const [queryAnswer, status] = await User.deleteOne(id)
+  response(req, res, 'DELETE ONE USER', queryAnswer, status)
 }

@@ -12,29 +12,30 @@ import { encrypt } from './../lib/encrypt'
 export const login = async (req, res) => {
   const { correo_electronico, password } = req.body
 
-  const user = await User.getOneByField('correo_electronico', correo_electronico)
-  if (!user) {
-    response(req, res, 'LOGIN', 'invalid credentials', 400)
+  const [queryAnswer, status] = await User.getOneByField('correo_electronico', correo_electronico)
+  if (!queryAnswer) {
+    response(req, res, 'LOGIN', 'invalid credentials', status)
     return
   }
 
-  if (!(correo_electronico === user.correo_electronico)) {
+  if (!(correo_electronico === queryAnswer.correo_electronico)) {
     response(req, res, 'LOGIN', 'invalid email', 400)
     return
   }
-  const match = await encrypt.compareHashPassword(password, user.password)
+  console.log(queryAnswer)
+  const match = await encrypt.compareHashPassword(password, queryAnswer.password)
 
   if (!match) {
     response(req, res, 'LOGIN', 'invalid password', 400)
     return
   }
-  const token = auth.createToken({ payload: { id: user.id } })
+  const token = auth.createToken({ payload: { id: queryAnswer.id } })
   response(req, res, 'LOGIN', token, 200)
 }
 export const me = async (req, res) => {
   const { id } = req.body
-  const userDB = await User.getOneByField('id', id)
-  const { password, creado, existe, ...user } = userDB
+  const [queryAnswer, status] = await User.getOneByField('id', id)
+  const { password, creado, existe, ...user } = queryAnswer
 
-  response(req, res, 'ME', user, 200)
+  response(req, res, 'ME', user, status)
 }
