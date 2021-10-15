@@ -29,6 +29,7 @@ export const postOneUser = async (req, res) => {
 
 // UPDATE ONE
 export const updateOneUser = async (req, res) => {
+
   console.log('ID to UPDATE 😀', req.params.id)
   response(req, res, 'PUT ONE USER', req.params.id, 201)
 }

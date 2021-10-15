@@ -12,6 +12,7 @@ module.exports = {
   },
   rules: {
     'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+    camelcase: ['error', 'never'],
     'no-control-regex': 'off',
     'no-useless-return': 'off'
   }

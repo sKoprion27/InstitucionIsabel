@@ -1,11 +1,21 @@
 import { db } from './../database/index'
 export const User = {
   getAll: async () => {
-    const { rows } = await db.query('SELECT * FROM usuarios')
+    const QUERY = `
+      SELECT nombre, apellido, correo_electronico, R.nombre_role Rol
+      FROM usuarios U, roles R
+      WHERE U.id_role = R.id
+    `
+    const { rows } = await db.query(QUERY)
     return rows
   },
   getOne: async (id) => {
-    const { rows } = await db.query('SELECT * FROM usuarios WHERE id = $1', [id])
+    const QUERY = `
+      SELECT nombre, apellido, correo_electronico, R.nombre_role Rol
+      FROM usuarios U, roles R
+      WHERE U.id_role = R.id AND U.id = $1;
+    `
+    const { rows } = await db.query(QUERY, [id])
     return rows[0]
   },
   getOneByField: async (field = '', param = '') => {
