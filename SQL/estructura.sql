@@ -640,6 +640,6 @@ INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALU
 ('Modificar correo','Tiene mal el dominio', '19-10-2021',11,9),
 ('Agregar usuario','No esta dado de alta TELEVISA en proveedores','20-10-2021',11,10);
 
-
-
-
+-- El correo como único
+ALTER TABLE usuarios
+ADD CONSTRAINT unique_correo UNIQUE (correo_electronico);
