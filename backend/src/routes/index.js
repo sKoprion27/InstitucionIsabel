@@ -15,7 +15,7 @@ export const initRoutes = (app) => {
   app.use('/users', usersRouter)
   app.use('/donors', donorsRouter)
   app.use('/donations', donationsRouter)
-  app.use('/typesDonations', typesDonationsRouter) // cambiar a ingles, se ocupara otro ruteador en el front
+  app.use('/typesDonations', typesDonationsRouter)
   app.use('/notes', notesRouter)
   app.use('/cfdis', cfdisRouter)
   app.use('/states', statesRouter)
