@@ -39,7 +39,6 @@ CREATE TABLE roles_permisos(
   id SERIAL PRIMARY KEY,
   id_permiso INTEGER NOT NULL,
   id_role INTEGER NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 -- DONADORES
@@ -48,14 +47,12 @@ CREATE TABLE cfdis(
   id SERIAL PRIMARY KEY,
   clave TEXT NOT NULL,
   descripcion TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla estados
 CREATE TABLE estados(
   id SERIAL PRIMARY KEY,
   nombre TEXT NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla donadores
@@ -143,7 +140,6 @@ CREATE TABLE donaciones_categorias(
   id SERIAL PRIMARY KEY,
   id_categoria INTEGER NOT NULL,
   id_donacion INTEGER NOT NULL,
-  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 
@@ -296,16 +292,10 @@ INSERT INTO permisos(nombre_permiso) VALUES
 -- Insertar datos tabla roles - 10
 
 INSERT INTO roles( nombre_role) VALUES
-('ADMIN'),
 ('TESORERO'),
 ('CONTADOR'),
-('PRESIDENTE'),
-('INVITADO'),
-('SUPERVISOR'),
-('GERENTE'),
-('TRABAJADOR'),
-('BECARIO'),
-('EXTERNO');
+('PRESIDENTE')
+('ADMIN'),
 
 -- Insertar datos tabla roles_permisos - 50
 
@@ -314,9 +304,7 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 (1,2),
 (1,3),
 (1,4),
-(1,5),
 (1,6),
-(1,7),
 (1,8),
 (1,9),
 (1,10),
@@ -329,61 +317,54 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 (1,17),
 (1,18),
 (1,19),
-(1,25),
+(1,20),
+(1,21),
+(1,22),
+(1,23),
+(1,24),
+(1,28),
+(1,29),
+(1,30),
+(1,31),
+(1,32),
+(1,33),
 (2,1),
 (2,2),
 (2,3),
-(2,4),
-(2,5),
 (2,6),
 (2,7),
 (2,8),
-(2,9),
-(2,10),
 (2,11),
-(2,12),
-(2,13),
-(2,14),
 (2,15),
+(2,28),
+(2,29),
+(2,33),
 (3,1),
 (3,2),
-(3,3),
-(3,4),
 (3,5),
 (3,6),
-(3,7),
 (3,8),
-(3,9),
-(3,10),
-(4,7),
-(4,8),
-(4,9),
-(4,5),
-(4,2);
+(3,25),
+(3,26),
+(3,27),
+(3,28),
+(3,29),
+(3,33),
+(4,1),
+(4,2),
+(4,34),
+(4,35),
+(4,36);
+(4,37);
 
 -- Insertar datos tabla usuarios - 20
 
 INSERT INTO usuarios( nombre, apellido, "password", correo_electronico, id_role) VALUES
-('Laura','Rivero', 'Password','lau@tec.mx', 1),
-('Daniel','Cu','Password','daniel@tec.mx', 1),
-('Polo','Juarez', 'Password','polo@tec.mx', 1),
-('Julio','Hernandez','Password','julio@tec.mx', 1),
-('Alberto','Rivero', 'Password','beto@isabel.mx', 2),
-('Hugo','Chavez','Password','daniel@isabel.mx', 2),
-('Maria','Perez', 'Password','polo@isabel.mx', 6),
-('Fernanda','Hernandez','Password','julio@isabel.mx', 7),
-('Karla','Rivero', 'Password','lau@isabel.mx', 8),
-('Sofia','Cu','Password','daniel@isabel.mx', 4),
-('Luis','Juarez', 'Password','polo@isabel.mx', 4),
-('Ciro','Polo','Password','julio@isabel.mx', 3),
-('Gabriela','Rivero', 'Password','lau@isabel.mx', 2),
-('Ernesto','Perez','Password','daniel@alternet.mx', 10),
-('Florencio','Olvera', 'Password','polo@alternet.mx', 10),
-('Ana','Hernandez','Password','julio@isabel.mx', 5),
-('Jose','Rivero', 'Password','lau@isabel.mx', 9),
-('Salvador','Cu','Password','daniel@isabel.mx', 8),
-('Alexia','Mendez', 'Password','polo@isabel.mx', 2),
-('Oswaldo','Sanchez','Password','julio@isabel.mx', 6);
+('Laura','Rivero', 'Password','tesorero@tec.mx', 1),
+('Julio','Ramirez','Password','contador@tec.mx', 2),
+('Alejandro','Polo', 'Password','presidente@tec.mx', 3),
+('Daniel','Cu','Password','admin@tec.mx', 4)
+
 
 -- DONACIONES
 
