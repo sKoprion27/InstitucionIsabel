@@ -298,7 +298,7 @@ INSERT INTO permisos(nombre_permiso) VALUES
 INSERT INTO roles( nombre_role) VALUES
 ('TESORERO'),
 ('CONTADOR'),
-('PRESIDENTE')
+('PRESIDENTE'),
 ('ADMIN');
 
 -- Insertar datos tabla roles_permisos - 50
@@ -363,11 +363,11 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 
 -- Insertar datos tabla usuarios - 20
 
-INSERT INTO usuarios( nombre, apellido, "password", correo_electronico, id_role) VALUES
+INSERT INTO usuarios(nombre, apellido, "password", correo_electronico, id_role) VALUES
 ('Laura','Rivero', 'Password','tesorero@tec.mx', 1),
 ('Julio','Ramirez','Password','contador@tec.mx', 2),
 ('Alejandro','Polo', 'Password','presidente@tec.mx', 3),
-('Daniel','Cu','Password','admin@tec.mx', 4)
+('Daniel','Cu','Password','admin@tec.mx', 4);
 
 
 -- DONACIONES
