@@ -624,7 +624,7 @@ INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALU
 ('Agrega donacion de unicef ','No esta en el sistema esta donacion','10-10-2021',3,10),
 ('Modificar rfc unicef','Está mal su RFC', '11-10-2021',3,1),
 ('Modificar domicilio a donador ','Se cambio de domicilio fiscal', '12-10-2021',3,2),
-('Modificar monto de donacion','Se omitio un cero en la donacion ', '13-10-2021',3,3),
+('Modificar monto de donacion la donacion ', '13-10-2021',3,3),
 ('Modificar usuario','Tiene mal su nombre', '14-10-2021',3,4),
 ('Modificar proovedor','Tiene mal su direccion', '15-10-2021',3,5),
 ('Modificar nombre','Esta mal escrito el nombre', '16-10-2021',3,6),
