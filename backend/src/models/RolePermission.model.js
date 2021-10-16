@@ -4,7 +4,8 @@ export const RolePermission = {
     const QUERY = `
       SELECT RP.id, nombre_role AS rol, nombre_permiso AS permiso
       FROM roles_permisos RP, roles R, permisos P
-      WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND RP.existe = true
+      WHERE
+      RP.existe = true
     `
     try {
       const { rows } = await db.query(QUERY)
@@ -16,7 +17,7 @@ export const RolePermission = {
   },
   getOne: async (idRole) => {
     const QUERY = `
-      SELECT nombre_role AS rol, nombre_permiso AS permiso
+      SELECT Rp.id, nombre_permiso AS permiso
       FROM roles_permisos RP, roles R, permisos P
       WHERE
       RP.id_permiso = P.id
@@ -26,18 +27,20 @@ export const RolePermission = {
       R.id = $1
       AND
       RP.existe = true
+      AND
+      R.existe = true
     `
     try {
       const { rows } = await db.query(QUERY, [idRole])
-      if (!rows[0]) {
-        return ["ERROR GET ONE Role 🤯", 404]
+      if (!rows) {
+        return ["ERROR GET ONE Role Permission 🤯", 404]
       }
       else {
-        return [rows[0], 200]
+        return [rows, 200]
       }
     } catch (error) {
-      console.log('ERROR GET ONE Role 🤯', error)
-      return ["ERROR GET ONE Role 🤯", 400]
+      console.log('ERROR GET ONE Role Permission 🤯', error)
+      return ["ERROR GET ONE Role Permission 🤯", 400]
     }
   },
   postOne: async (role) => {
@@ -49,8 +52,8 @@ export const RolePermission = {
       await db.query(INSERTION, [role.nombre_role])
       return ['POST Role', 201]
     } catch (error) {
-      console.log('ERROR POST Role 🤯', error)
-      return ["ERROR POST Role 🤯", 400]
+      console.log('ERROR POST Role Permission 🤯', error)
+      return ["ERROR POST Role Permission 🤯", 400]
     }
   },
   putOne: async (role, id) => {
@@ -64,13 +67,13 @@ export const RolePermission = {
     try {
       const [, status] = await Role.getOne(id)
       if (status === 400) {
-        return ["ERROR UPDATE Role 🤯", 400]
+        return ["ERROR UPDATE Role Permission 🤯", 400]
       }
       await db.query(UPDATE, values)
       return ['UPDATE Role', 201]
     } catch (error) {
-      console.log('ERROR UPDATE Role 🤯', error)
-      return ["ERROR UPDATE Role 🤯", 400]
+      console.log('ERROR UPDATE Role Permission 🤯', error)
+      return ["ERROR UPDATE Role  Permission🤯", 400]
     }
   },
   deleteOne: async (id) => {
@@ -83,8 +86,8 @@ export const RolePermission = {
       await db.query(DELETE, [id])
       return ['DELETE Role', 201]
     } catch (error) {
-      console.log('ERROR DELETE Role 🤯', error)
-      return ["ERROR DELETE Role 🤯", 400]
+      console.log('ERROR DELETE Role Permission 🤯', error)
+      return ["ERROR DELETE Role Permission 🤯", 400]
     }
   },
 }

@@ -3,8 +3,8 @@ import { Role } from '../models/Role.model'
 
 // GET ALL
 export const getRoles = async (req, res) => {
-  const [queryAnswer, status] = await Role.getAll()
-  response(req, res, 'GET Roles', queryAnswer, status)
+  const [roles, status] = await Role.getAll()
+  response(req, res, 'GET Roles', roles, status)
 }
 
 // GET ONE

@@ -8,7 +8,7 @@ const router = Router()
 router.get('/', getRoles)
 router.get('/:id', getOneRole)
 router.post('/', validateRoleFields, postOneRole)
-router.put('/:id', validateRoleFields, updateOneRole)
+router.put('/:id', updateOneRole)
 router.delete('/:id', deleteOneRole)
 
 export default router
