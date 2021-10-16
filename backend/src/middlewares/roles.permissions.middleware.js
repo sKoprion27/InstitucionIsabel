@@ -1,6 +1,6 @@
 import { response } from '../utils/response'
 import { validator } from '../lib/validator'
-import { permissionPostSchema, rolePostSchema } from './../schemas/roles.permissions.schema';
+import { permissionPostSchema, rolePermissionPostSchema, rolePostSchema } from './../schemas/roles.permissions.schema';
 
 // Middleware validator
 export const validatePermissionFields = async (req, res, next) => {
@@ -21,7 +21,7 @@ export const validateRoleFields = async (req, res, next) => {
 }
 
 export const validateRolePermissionFields = async (req, res, next) => {
-  const { err } = await validator.validateSchema(permissionPostSchema, req.body)
+  const { err } = await validator.validateSchema(rolePermissionPostSchema, req.body)
   if (!err) {
     next()
   } else {

@@ -18,7 +18,7 @@ export const initRoutes = (app) => {
   app.use('/users', usersRouter)
   app.use('/roles', rolesRouter)
   app.use('/permissions', permissionsRouter)
-  app.use('/rolesPermissions', rolesPermissionsRouter)
+  app.use('/rolespermissions', rolesPermissionsRouter)
   app.use('/donors', donorsRouter)
   app.use('/donations', donationsRouter)
   app.use('/typesDonations', typesDonationsRouter)

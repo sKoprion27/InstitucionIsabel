@@ -1,5 +1,3 @@
-/* eslint-disable prefer-regex-literals */
-
 import Joi from 'joi'
 
 export const userPostSchema = Joi.object({
