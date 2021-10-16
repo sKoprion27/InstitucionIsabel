@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { validatePermissionFields } from '../middlewares/permission.middleware'
 import { deleteOnePermission, getOnePermission, getPermissions, postOnePermission, updateOnePermission } from './../controllers/Permissions.controller'
+import { validatePermissionFields } from './../middlewares/roles.permissions.middleware';
 const router = Router()
 
 router.get('/', getPermissions)
