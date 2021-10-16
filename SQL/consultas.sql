@@ -71,17 +71,17 @@ SET nombre_permiso = ''
 WHERE id = $1; 
 
 -- 4) Consultar los permisos de cada rol
-SELECT RP.id, nombre_role AS rol, nombre_permiso AS permiso
+SELECT RP.id, nombre_role, nombre_permiso
 FROM roles_permisos RP, roles R, permisos P
 WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND RP.existe = true;
 
 -- 4.1) Consultar los permisos de un solo rol
-SELECT Rp.id, nombre_role AS rol, nombre_permiso AS permiso
+SELECT Rp.id, nombre_role, nombre_permiso
 FROM roles_permisos RP, roles R, permisos P
 WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND R.id = $1 AND RP.existe = true AND R.existe = true;
 
 -- 4.2) Consultar un solo permiso de un rol
-SELECT Rp.id, nombre_role AS rol, nombre_permiso AS permiso
+SELECT Rp.id, nombre_role, nombre_permiso
 FROM roles_permisos RP, roles R, permisos P
 WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND RP.id = $1 AND RP.existe = true;
 
@@ -149,12 +149,12 @@ SET nombre = ''
 WHERE id = $1;
 
 -- 7) Consultar Donadores
-SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre as Estado, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
+SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
 FROM donadores D, cfdis C, estados E
 WHERE D.id_cfdi = C.id AND D.id_estado = E.id AND D.existe = true;
 
 -- 7.1) Consultar un Donador
-SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre as Estado, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
+SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
 FROM donadores D, cfdis C, estados E
 WHERE D.id_cfdi = C.id AND D.id_estado = E.id AND D.id = $1 AND D.existe = true;
 
@@ -271,12 +271,12 @@ SET nombre = '', descripcion = ''
 WHERE id = $1;
 
 -- 12) Consultar donaciones
-SELECT D.id, D.nombre, monto, M.nombre AS Metodo_Pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
+SELECT D.id, D.nombre, monto, M.nombre, T.nombre Tipo_Donacion, N.razon_social, N.rfc
 FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
 WHERE D.id_donador = N.id AND D.id_metodo_pago = M.id AND D.id_tipo_donacion = T.id AND D.existe = true;
 
 -- 12.1) Consultar una donación
-SELECT D.id, D.nombre, monto, M.nombre AS Metodo_Pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
+SELECT D.id, D.nombre, monto, M.nombre, T.nombre Tipo_Donacion, N.razon_social, N.rfc
 FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
 WHERE D.id_donador = N.id AND D.id_metodo_pago = M.id AND D.id_tipo_donacion = T.id AND D.id = $1 AND D.existe = true;
 
@@ -319,12 +319,12 @@ SET id_beneficiario = $1, id_donacion = $2, destino_donacion = ''
 WHERE id = $3;
 
 -- 14) Consultar Categorias de las donaciones
-SELECT DC.id, D.nombre AS nombre_donacion, C.nombre AS categoria
+SELECT DC.id, D.nombre, C.nombre
 FROM donaciones_categorias DC, donaciones D, categorias C
 WHERE DC.id_categoria = C.id AND DC.id_donacion = D.id AND DC.existe = true;
 
 -- 14.1) Consultaar donaciones de una categoria
-SELECT DC.id, D.nombre AS nombre_donacion, C.nombre AS categoria
+SELECT DC.id, D.nombre, C.nombre
 FROM donaciones_categorias DC, donaciones D, categorias C
 WHERE DC.id_categoria = C.id AND DC.id_donacion = D.id AND C.id = $1 DC.existe = true;
 
