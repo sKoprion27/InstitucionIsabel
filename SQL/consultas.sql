@@ -24,7 +24,7 @@ WHERE id = $2;
 
 -- 2) Consultar Roles
 SELECT id, nombre_role
-FROM roles  
+FROM roles
 WHERE existe = true;
 
 -- 2.1) Consultar un rol
@@ -51,7 +51,7 @@ SELECT id, nombre_permiso
 FROM permisos
 WHERE existe = true;
 
--- 3.1) Consultar un permiso 
+-- 3.1) Consultar un permiso
 SELECT id, nombre_permiso
 FROM permisos
 WHERE id = $1 AND existe = true;
@@ -96,7 +96,7 @@ WHERE id = $3;
 
 -- 5) Consultar CFDIs
 SELECT id, clave, descripcion
-FROM cfdis 
+FROM cfdis
 WHERE existe = true;
 
 -- 5.1) Consultar un CFDI
@@ -120,14 +120,14 @@ WHERE id = $1;
 
 -- 6) Consultar Estados
 SELECT id, nombre
-FROM estados 
-WHERE existe = true
-ORDER BY nombre ASC;
+FROM estados
+WHERE existe = true;
 
 -- 6.1) Consultar un estado
 SELECT id, nombre
 FROM estados
-WHERE id = $1 AND existe = true;
+WHERE id = $1 AND existe = true
+ORDER BY nombre ASC;
 
 -- 6.2) Borrar un estado
 UPDATE estados
@@ -174,7 +174,7 @@ SELECT id, nombre_beneficiario, descripcion
 FROM beneficiarios
 WHERE existe = true;
 
--- 8.1) Consultar un beneficiario 
+-- 8.1) Consultar un beneficiario
 SELECT id, nombre_beneficiario, descripcion
 FROM beneficiarios
 WHERE nombre_beneficiario = '$1' AND existe = true;

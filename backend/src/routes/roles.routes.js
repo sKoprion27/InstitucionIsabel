@@ -1,13 +1,14 @@
 import { Router } from 'express'
+import { validateRoleFields } from '../middlewares/roles.permissions.middleware'
 import { deleteOneRole, getOneRole, getRoles, postOneRole, updateOneRole } from './../controllers/roles.controller'
-// import { validateRole } from './../middlewares/Roles.middlewares'
+
 
 const router = Router()
 
 router.get('/', getRoles)
 router.get('/:id', getOneRole)
-router.post('/', postOneRole)
-router.put('/:id', updateOneRole)
+router.post('/', validateRoleFields, postOneRole)
+router.put('/:id', validateRoleFields, updateOneRole)
 router.delete('/:id', deleteOneRole)
 
 export default router
