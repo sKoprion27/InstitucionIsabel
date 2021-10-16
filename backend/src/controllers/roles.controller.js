@@ -3,33 +3,36 @@ import { Role } from '../models/Role.model'
 
 // GET ALL
 export const getRoles = async (req, res) => {
-  const roles = await Role.getAll()
-  response(req, res, 'GET Roles', roles, 200)
+  const [queryAnswer, status] = await Role.getAll()
+  response(req, res, 'GET Roles', queryAnswer, status)
 }
 
 // GET ONE
 export const getOneRole = async (req, res) => {
   const { id } = req.params
-  const role = await Role.getOne(id)
-  response(req, res, 'GET ONE Role', role, 200)
+  const [queryAnswer, status] = await Role.getOne(id)
+  response(req, res, 'GET ONE Role', queryAnswer, status)
 }
 
 // POST ONE
 
 export const postOneRole = async (req, res) => {
   const role = req.body
-  const queryAnswer = await Role.postOne(role)
-  response(req, res, 'POST ONE Role', queryAnswer, 201)
+  const [queryAnswer, status] = await Role.postOne(role)
+  response(req, res, 'POST ONE Role', queryAnswer, status)
 }
 
 // UPDATE ONE
 export const updateOneRole = async (req, res) => {
-  console.log('ID to UPDATE 😀', req.params.id)
-  response(req, res, 'PUT ONE Roles', req.params.id, 201)
+  const { id } = req.params
+  const role = req.body
+  const [queryAnswer, status] = await Role.putOne(role, id)
+  response(req, res, 'PUT ONE Role', queryAnswer, status)
 }
 
 // DELETE ONE
 export const deleteOneRole = async (req, res) => {
-  console.log('ID to DELETE 😀', req.params.id)
-  response(req, res, 'DELETE ONE Roles', req.params.id, 201)
+  const { id } = req.params
+  const [queryAnswer, status] = await Role.deleteOne(id)
+  response(req, res, 'DELETE ONE Role', queryAnswer, status)
 }
