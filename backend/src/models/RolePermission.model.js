@@ -1,23 +1,8 @@
 import { db } from '../database/index'
 export const RolePermission = {
-  getAll: async () => {
+  getRoleAllPermissions: async (idRole) => {
     const QUERY = `
-      SELECT RP.id, nombre_role AS rol, nombre_permiso AS permiso
-      FROM roles_permisos RP, roles R, permisos P
-      WHERE
-      RP.existe = true
-    `
-    try {
-      const { rows } = await db.query(QUERY)
-      return [rows, 200]
-    } catch (error) {
-      console.log('ERROR GET ALL Role 🤯', error)
-      return ["ERROR GET ALL Role 🤯", 400]
-    }
-  },
-  getOne: async (idRole) => {
-    const QUERY = `
-      SELECT Rp.id, nombre_permiso AS permiso
+      SELECT RP.id, nombre_permiso as permiso
       FROM roles_permisos RP, roles R, permisos P
       WHERE
       RP.id_permiso = P.id
@@ -31,16 +16,44 @@ export const RolePermission = {
       R.existe = true
     `
     try {
-      const { rows } = await db.query(QUERY, [idRole])
-      if (!rows) {
-        return ["ERROR GET ONE Role Permission 🤯", 404]
-      }
-      else {
+      const { rows, rowCount } = await db.query(QUERY, [idRole])
+      if (rowCount === 0) {
+        return ['ERROR GET ONE Role Permission 🤯', 404]
+      } else {
         return [rows, 200]
       }
     } catch (error) {
       console.log('ERROR GET ONE Role Permission 🤯', error)
-      return ["ERROR GET ONE Role Permission 🤯", 400]
+      return ['ERROR GET ONE Role Permission 🤯', 400]
+    }
+  },
+  getOneRoleOnePermission: async (idRole, idPermiso) => {
+    const QUERY = `
+      SELECT RP.id, nombre_permiso as permiso
+      FROM roles_permisos RP, roles R, permisos P
+      WHERE
+      RP.id_role = R.id
+      AND
+      RP.id_permiso = P.id
+      AND
+      R.id = $1
+      AND
+      P.id = $2
+      AND
+      RP.existe = true
+      AND
+      R.existe = true
+    `
+    try {
+      const { rows, rowCount } = await db.query(QUERY, [idRole, idPermiso])
+      if (rowCount === 0) {
+        return ['ERROR GET ONE Role One Permission 🤯', 404]
+      } else {
+        return [rows[0], 200]
+      }
+    } catch (error) {
+      console.log('ERROR GET ONE Role Permission 🤯', error)
+      return ['ERROR GET ONE Role Permission 🤯', 400]
     }
   },
   postOne: async (role) => {
@@ -53,7 +66,7 @@ export const RolePermission = {
       return ['POST Role', 201]
     } catch (error) {
       console.log('ERROR POST Role Permission 🤯', error)
-      return ["ERROR POST Role Permission 🤯", 400]
+      return ['ERROR POST Role Permission 🤯', 400]
     }
   },
   putOne: async (role, id) => {
@@ -67,13 +80,13 @@ export const RolePermission = {
     try {
       const [, status] = await Role.getOne(id)
       if (status === 400) {
-        return ["ERROR UPDATE Role Permission 🤯", 400]
+        return ['ERROR UPDATE Role Permission 🤯', 400]
       }
       await db.query(UPDATE, values)
       return ['UPDATE Role', 201]
     } catch (error) {
       console.log('ERROR UPDATE Role Permission 🤯', error)
-      return ["ERROR UPDATE Role  Permission🤯", 400]
+      return ['ERROR UPDATE Role  Permission🤯', 400]
     }
   },
   deleteOne: async (id) => {
@@ -87,7 +100,7 @@ export const RolePermission = {
       return ['DELETE Role', 201]
     } catch (error) {
       console.log('ERROR DELETE Role Permission 🤯', error)
-      return ["ERROR DELETE Role Permission 🤯", 400]
+      return ['ERROR DELETE Role Permission 🤯', 400]
     }
-  },
+  }
 }

@@ -1,14 +1,13 @@
 import { Router } from 'express'
-import { deleteOneRolePermission, getOneRolePermission, getRolePermission, postOneRolePermission, updateOneRolePermission } from './../controllers/roles.permissions.controller'
-import { validateRolePermissionFields } from './../middlewares/roles.permissions.middleware';
-
+import { rpController } from './../controllers/roles.permissions.controller'
+import { validateRolePermissionFields } from './../middlewares/roles.permissions.middleware'
 
 const router = Router()
 
-router.get('/', getRolePermission)
-router.get('/:id', getOneRolePermission)
-router.post('/', validateRolePermissionFields, postOneRolePermission)
-router.put('/:id', validateRolePermissionFields, updateOneRolePermission)
-router.delete('/:id', deleteOneRolePermission)
+router.get('/roles/:id/permissions', rpController.getOneRoleAllPermissions)
+router.get('/roles/:id/permissions/:id', rpController.getRoleOnePermission)
+router.post('/roles/permissions', validateRolePermissionFields, rpController.postRoleOnePermission)
+router.put('/roles/:id/permissions/:id', validateRolePermissionFields, rpController.updateRoleOnePermission)
+router.delete('/roles/:id/permissions/:id', rpController.deleteRoleOnePermission)
 
 export default router

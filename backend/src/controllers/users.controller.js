@@ -41,3 +41,11 @@ export const deleteOneUser = async (req, res) => {
   const [queryAnswer, status] = await User.deleteOne(id)
   response(req, res, 'DELETE ONE USER', queryAnswer, status)
 }
+
+// CHANGE PASSWORD
+export const changePasswordUser = async (req, res) => {
+  const { password } = req.body
+  const { id } = req.params
+  const [queryAnswer, status] = await User.putOneByField('password', password, id)
+  response(req, res, 'UPDATE ONE USER', queryAnswer, status)
+}

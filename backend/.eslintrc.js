@@ -11,9 +11,13 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
-    camelcase: ['error', 'never'],
-    'no-control-regex': 'off',
-    'no-useless-return': 'off'
+    'sort-imports': ['error', {
+      ignoreDeclarationSort: true,
+      memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple']
+    }],
+    'object-curly-newline': ['error', { multiline: true }],
+    'prefer-regex-literals': ['off'],
+    'no-useless-return': 'off',
+    camelcase: 'off'
   }
 }
