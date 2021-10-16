@@ -78,18 +78,23 @@ WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND RP.existe = true;
 -- 4.1) Consultar los permisos de un solo rol
 SELECT Rp.id, nombre_role AS rol, nombre_permiso AS permiso
 FROM roles_permisos RP, roles R, permisos P
-WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND R.id = $1 AND RP.existe = true;
+WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND R.id = $1 AND RP.existe = true AND R.existe = true;
 
--- 4.2) Borrar los permisos de un rol
+-- 4.2) Consultar un solo permiso de un rol
+SELECT Rp.id, nombre_role AS rol, nombre_permiso AS permiso
+FROM roles_permisos RP, roles R, permisos P
+WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND RP.id = $1 AND RP.existe = true;
+
+-- 4.3) Borrar los permisos de un rol
 UPDATE roles_permisos
 SET existe = false
 WHERE id = $1;
 
--- 4.3) Insertar un permiso a un rol
+-- 4.4) Insertar un permiso a un rol
 INSERT INTO roles_permisos(id_permiso, id_role)
 VALUES ($1, $2);
 
--- 4.4) Actualizar un permiso a un rol
+-- 4.5) Actualizar un permiso a un rol
 UPDATE roles_permisos
 SET id_permiso = $1, id_role = $2
 WHERE id = $3;
