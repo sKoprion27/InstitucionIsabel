@@ -299,7 +299,7 @@ INSERT INTO roles( nombre_role) VALUES
 ('TESORERO'),
 ('CONTADOR'),
 ('PRESIDENTE')
-('ADMIN'),
+('ADMIN');
 
 -- Insertar datos tabla roles_permisos - 50
 
@@ -358,7 +358,7 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 (4,2),
 (4,34),
 (4,35),
-(4,36);
+(4,36),
 (4,37);
 
 -- Insertar datos tabla usuarios - 20
