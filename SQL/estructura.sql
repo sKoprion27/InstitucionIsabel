@@ -537,21 +537,21 @@ INSERT INTO donaciones_beneficiarios(id_beneficiario, id_donacion, destino_donac
 (1,3, 'Para el evento de diciembre'),
 (1,4, 'Para el evento de verano'),
 (1,5, 'Configurar el nuevo internet'),
-(2,1, 'Para uso del 2instituto1'),
-(2,2, 'Para uso del 2instituto2'),
-(2,3, 'Para uso del 2institut3'),
-(2,4, 'Para uso del 2instituto4'),
-(2,5, 'Para uso del 2instituto5'),
-(3,1, 'Para uso del 3instituto1'),
-(3,2, 'Para uso del 3instituto2'),
-(3,3, 'Para uso del 3institut3'),
-(3,4, 'Para uso del 3instituto4'),
-(3,5, 'Para uso del 3instituto5'),
-(4,1, 'Para uso del 4instituto1'),
-(4,2, 'Para uso del 4instituto2'),
-(4,3, 'Para uso del 4institut3'),
-(4,4, 'Para uso del 4instituto4'),
-(4,5, 'Para uso del 4instituto5');
+(2,1, 'Para uso del instituto'),
+(2,2, 'Para uso del instituto'),
+(2,3, 'Para uso del instituto'),
+(2,4, 'Para uso del instituto'),
+(2,5, 'Para uso del instituto'),
+(3,1, 'Para uso del instituto'),
+(3,2, 'Para uso del instituto'),
+(3,3, 'Para uso del instituto'),
+(3,4, 'Para uso del instituto'),
+(3,5, 'Para uso del instituto'),
+(4,1, 'Para uso del instituto'),
+(4,2, 'Para uso del instituto'),
+(4,3, 'Para uso del instituto'),
+(4,4, 'Para uso del instituto'),
+(4,5, 'Para uso del instituto');
 
 -- Insertar datos de la tabla donaciones_categorias - 50
 INSERT INTO donaciones_categorias(id_categoria, id_donacion) VALUES
@@ -611,6 +611,7 @@ INSERT INTO donaciones_categorias(id_categoria, id_donacion) VALUES
 -- Insertar datos de la tabla notas - 20
 
 INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALUES
+<<<<<<< HEAD
 ('Modificar nombre de proveedor','Este proveedor cambio de razón social', '20-10-2021',3,2),
 ('Modificar correo de facturación','Este proveedor marco en la mañana y necesita que le llegue su factura', '1-10-2021',3,2),
 ('Agregar proveedor','Este proveedor no existe', '2-10-2021',3,3),
@@ -621,14 +622,35 @@ INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALU
 ('Modificar nombre de proveedor','Tiene una letra de más','7-10-2021',3,8),
 ('Modificar RFC del proovedor','Tiene mal su RFC', '8-10-2021',3,8),
 ('Modificar Apellido Contador','Poner los dos apellidos', '9-10-2021',3,9),
+=======
+('Modificar nombre de proveedor','Este proveedor cambio de razón social', '20-10-2021',1,1),
+('Modificar correo de facturación','Este proveedor marco en la mañana y necesita que le llegue su factura', '1-10-2021',1,2),
+('Agregar proveedor','Este proveedor no existe', '2-10-2021',1,3),
+('Agregar donacion','No esta donacion de cemex', '3-10-2021',1,4),
+('Eliminar donador','Este donador se cambio de pais ', '4-10-2021',1,5),
+('Eliminar donacion','La donacion se cancelo', '5-10-2021',2,6),
+('Modificar pago','No esta bien el monto', '6-10-2021',2,7),
+('Modificar nombre de proveedor','Tiene una letra de más','7-10-2021',2,8),
+('Modificar RFC del proovedor','Tiene mal su RFC', '8-10-2021',2,8),
+('Modificar Apellido Contador','Poner los dos apellidos', '9-10-2021',2,9),
+>>>>>>> d199549a7bd0b40a9f4b1d3c9559f29550b37f34
 ('Agrega donacion de unicef ','No esta en el sistema esta donacion','10-10-2021',3,10),
 ('Modificar rfc unicef','Está mal su RFC', '11-10-2021',3,1),
 ('Modificar domicilio a donador ','Se cambio de domicilio fiscal', '12-10-2021',3,2),
 ('Modificar monto de donacion','Se omitio un cero en la donacion ', '13-10-2021',3,3),
 ('Modificar usuario','Tiene mal su nombre', '14-10-2021',3,4),
+<<<<<<< HEAD
 ('Modificar proovedor','Tiene mal su direccion', '15-10-2021',3,5),
 ('Modificar nombre','Esta mal escrito el nombre', '16-10-2021',3,6),
 ('Modificar direccion','Se cambio de estado', '17-10-2021',3,7),
 ('Modificar contraseña','Se le olvido la contraseña', '18-10-2021',3,8),
 ('Modificar correo','Tiene mal el dominio', '19-10-2021',3,9),
 ('Agregar usuario','No esta dado de alta TELEVISA en proveedores','20-10-2021',3,10);
+=======
+('Modificar proovedor','Tiene mal su direccion', '15-10-2021',4,5),
+('Modificar nombre','Esta mal escrito el nombre', '16-10-2021',4,6),
+('Modificar direccion','Se cambio de estado', '17-10-2021',4,7),
+('Modificar contraseña','Se le olvido la contraseña', '18-10-2021',4,8),
+('Modificar correo','Tiene mal el dominio', '19-10-2021',4,9),
+('Agregar usuario','No esta dado de alta TELEVISA en proveedores','20-10-2021',4,10);
+>>>>>>> d199549a7bd0b40a9f4b1d3c9559f29550b37f34
