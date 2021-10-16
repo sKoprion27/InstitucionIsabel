@@ -39,6 +39,7 @@ CREATE TABLE roles_permisos(
   id SERIAL PRIMARY KEY,
   id_permiso INTEGER NOT NULL,
   id_role INTEGER NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 -- DONADORES
@@ -47,12 +48,14 @@ CREATE TABLE cfdis(
   id SERIAL PRIMARY KEY,
   clave TEXT NOT NULL,
   descripcion TEXT NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla estados
 CREATE TABLE estados(
   id SERIAL PRIMARY KEY,
   nombre TEXT NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 -- Crear tabla donadores
@@ -140,6 +143,7 @@ CREATE TABLE donaciones_categorias(
   id SERIAL PRIMARY KEY,
   id_categoria INTEGER NOT NULL,
   id_donacion INTEGER NOT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
 
