@@ -17,6 +17,11 @@ WHERE id = 6;
 INSERT INTO usuarios(nombre, apellido, password, correo_electronico, id_role)
 VALUES ('', '', '', '', $1);
 
+-- 1.4) Actualizar un usuario
+UPDATE usuarios
+SET nombre = '', apellido= '', password='', correo_electronico='', id_role=$1
+WHERE id = $2;
+
 -- 2) Consultar Roles
 SELECT id, nombre_role
 FROM roles  
@@ -35,6 +40,11 @@ WHERE id = $1;
 -- 2.3) Insertar un Rol
 INSERT INTO roles(nombre_role)
 VALUES ('');
+
+-- 2.4) Actualiazar un rol
+UPDATE roles
+SET nombre_role = ''
+WHERE id = $1;
 
 -- 3) Consultar Permisos
 SELECT id, nombre_permiso
@@ -55,6 +65,11 @@ WHERE id = $1;
 INSERT INTO permisos(nombre_permiso)
 VALUES ('');
 
+-- 3.4) Actualizar un permiso
+UPDATE permisos
+SET nombre_permiso = ''
+WHERE id = $1; 
+
 -- 4) Consultar los permisos de cada rol
 SELECT RP.id, nombre_role AS rol, nombre_permiso AS permiso
 FROM roles_permisos RP, roles R, permisos P
@@ -74,6 +89,11 @@ WHERE id = $1;
 INSERT INTO roles_permisos(id_permiso, id_role)
 VALUES ($1, $2);
 
+-- 4.4) Actualizar un permiso a un rol
+UPDATE roles_permisos
+SET id_permiso = $1, id_role = $2
+WHERE id = $3;
+
 -- 5) Consultar CFDIs
 SELECT id, clave, descripcion
 FROM cfdis 
@@ -92,11 +112,17 @@ WHERE id = $1;
 -- 5.3) Insertar un cfdi
 INSERT INTO cfdis(clave, descripcion)
 VALUES ('', '');
-	
+
+-- 5.4) Actualizar un cfdi
+UPDATE cfdis
+SET clave = '', descripcion = ''
+WHERE id = $1;
+
 -- 6) Consultar Estados
 SELECT id, nombre
 FROM estados 
-WHERE existe = true;
+WHERE existe = true
+ORDER BY nombre ASC;
 
 -- 6.1) Consultar un estado
 SELECT id, nombre
@@ -111,6 +137,11 @@ WHERE id = $1;
 -- 6.3) Insertar estado
 INSERT INTO estados(nombre)
 VALUES ('');
+
+-- 6.4) Actualizar un estado
+UPDATE estados
+SET nombre = ''
+WHERE id = $1;
 
 -- 7) Consultar Donadores
 SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre as Estado, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
@@ -132,6 +163,12 @@ INSERT INTO donadores(
 	id_cfdi, id_estado, nombre_contacto, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal)
 VALUES ($1, $2, '', '', '', '', '', $3, '', true);
 
+-- 7.4) Actualizar un donador
+UPDATE donadores
+SET id_cfdi = $1, id_estado = $2, nombre_contacto = '', telefono = '', razon_social = '', rfc = '', 
+	correo_electronico = '', codigo_postal = $3, domicilio_fiscal = '', regimen_fiscal = 
+WHERE id = $4;
+
 -- 8) Consultar Beneficiarios
 SELECT id, nombre_beneficiario, descripcion
 FROM beneficiarios
@@ -150,6 +187,11 @@ WHERE id = $1;
 -- 8.3) Insertar un beneficiario
 INSERT INTO beneficiarios(nombre_beneficiario, descripcion)
 VALUES ('', '');
+
+-- 8.4) Actualizar un beneficiario
+UPDATE beneficiarios
+SET nombre_beneficiario = '', descripcion = ''
+WHERE id = $1;
 
 -- 9) Consultar metodos de pago
 SELECT id, nombre, descripcion
@@ -170,6 +212,11 @@ WHERE id = $1;
 INSERT INTO metodos_pago(nombre, descripcion)
 VALUES ('', '');
 
+-- 9.4) Actualizar un método de pago
+UPDATE metodos_pago
+SET nombre = '', descripcion = ''
+WHERE id = $1;
+
 -- 10) Consultar categorias
 SELECT id, nombre, descripcion
 FROM categorias
@@ -188,6 +235,11 @@ WHERE id = $1;
 -- 10.3) Insertar una categoría
 INSERT INTO categorias(nombre, descripcion)
 VALUES ('', '');
+
+-- 10.4) Actualizar una categoría
+UPDATE categorias
+SET nombre = '', descripcion = ''
+WHERE id = $1;
 
 -- 11) Consultar tipos de donacion
 SELECT id, nombre, descripcion
@@ -208,6 +260,11 @@ WHERE id = $1;
 INSERT INTO tipo_donaciones(nombre, descripcion)
 VALUES ('', '');
 
+-- 11.4) Actualizar un tipo de donación
+UPDATE tipo_donaciones
+SET nombre = '', descripcion = ''
+WHERE id = $1;
+
 -- 12) Consultar donaciones
 SELECT D.id, D.nombre, monto, M.nombre AS Metodo_Pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
 FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
@@ -226,6 +283,11 @@ WHERE id = $1;
 -- 12.3) Insertar una donación
 INSERT INTO donaciones(id_donador, id_metodo_pago, id_tipo_donacion, nombre, monto, foto_donacion, esta_facturado)
 VALUES ($1, $2, $3, '', $4, '', '');
+
+-- 12.4) Actualizar una donación
+UPDATE donaciones
+SET id_donador = $1, id_metodo_pago = $2, id_tipo_donacion = $3, nombre = '', monto = $4, foto_donacion = '', esta_facturado = ''
+WHERE id = $5;
 
 -- 13) Consultar Beneficiarios de las Donaciones
 SELECT DB.id, D.nombre, B.nombre_beneficiario, destino_donacion
@@ -246,6 +308,11 @@ WHERE id = $1;
 INSERT INTO donaciones_beneficiarios(id_beneficiario, id_donacion, destino_donacion)
 VALUES ($1, $2, '');
 
+-- 13.4) Actualizar una donación a un beneficiario
+UPDATE donaciones_beneficiarios
+SET id_beneficiario = $1, id_donacion = $2, destino_donacion = ''
+WHERE id = $3;
+
 -- 14) Consultar Categorias de las donaciones
 SELECT DC.id, D.nombre AS nombre_donacion, C.nombre AS categoria
 FROM donaciones_categorias DC, donaciones D, categorias C
@@ -264,6 +331,11 @@ WHERE id = $1;
 -- 14.3) Insertar una categoría de una donación
 INSERT INTO donaciones_categorias(id_categoria, id_donacion)
 VALUES ($1, $2);
+
+-- 14.4) Actualizar una categoría de una donación
+UPDATE donaciones_categorias
+SET id_categoria = $1, id_donacion = $2
+WHERE id = $3;
 
 -- 15) Consultar Notas
 SELECT N.id, titulo, contenido, fecha_limite, D.nombre Donacion, U.nombre Usuario
@@ -288,3 +360,8 @@ WHERE id = $1;
 -- 15.4) Insertar una nota
 INSERT INTO notas(id_donacion, id_usuario, titulo, contenido, fecha_limite, estado_completado, estado_activo)
 VALUES ($1, $2, '', '', '', $3, $4);
+
+-- 15.5) Actualizar una nota
+UPDATE notas
+SET id_donacion = $1, id_usuario = $2, titulo = '', contenido = '', fecha_limite = '', estado_completado = $3, estado_activo = $4 
+WHERE id = $5;
