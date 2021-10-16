@@ -51,7 +51,7 @@ UPDATE permisos
 SET existe = false
 WHERE id = $1;
 
--- 3.3) Insertar un permiso 
+-- 3.3) Insertar un permiso
 INSERT INTO permisos(nombre_permiso)
 VALUES ('');
 
