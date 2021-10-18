@@ -1,10 +1,13 @@
+/* eslint-disable react/display-name */
+
 import { AuthProvider } from './contexts/authContext'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import { Login } from './Pages/Login/Login'
-import { Dashboard } from './Pages/Dashboard'
 import { useAuth } from './hooks/useAuth'
+import { Dashboard } from './Pages/Dashboard'
+import { Login } from './Pages/Login'
+import { Users } from './Pages/Users'
+import { authAPI } from './services/auth.service'
 
-// eslint-disable-next-line react/display-name
 export default () => {
   return (
     <AuthProvider>
@@ -41,23 +44,16 @@ const PublicRoutes = () => {
 
 const PrivateRoutes = () => {
   console.log('PRIVATE_ROUTES')
+  authAPI.initInterceptors()
   return (
     <>
       <Switch>
         <Route exact path='/' render={(props) => <Dashboard {...props} />} default />
         <Route path='/users' render={(props) => <Users {...props} />} />
+        <Route path='*' >
+          <Redirect push to='/' />
+        </Route>
       </Switch>
-    </>
-  )
-}
-
-const Users = () => {
-  console.log('USERS')
-  const auth = useAuth()
-  return (
-    <>
-      <button className='btn btn-danger w-25' onClick={() => auth.logout()}>Logout</button>
-      <h1>Users</h1>
     </>
   )
 }

@@ -85,11 +85,10 @@ const ShowPassword = ({ setShow, show }) => {
       {
         show ? 'Mostrar contraseña' : 'Ocultar contraseña'
       }
-      <span span className='material-icons material-icons-outlined ' >
+      <span className='material-icons material-icons-outlined ' >
         {
           show ? 'visibility' : 'visibility_off'
         }
-
       </span>
     </p>
   )

@@ -16,7 +16,7 @@ export const authAPI = {
   },
   initInterceptors: () => {
     Axios.interceptors.request.use(function (config) {
-      const token = localStorage.getItem()
+      const token = localStorage.getItem('TOKEN_ISABEL')
 
       if (token) {
         config.headers.Authorization = `bearer ${token}`
