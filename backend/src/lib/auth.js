@@ -25,7 +25,7 @@ export const auth = {
     const { authorization = undefined } = headers
 
     if (!authorization) {
-      response(req, res, 'ERROR', 'token error', 400)
+      response(req, res, 'ERROR', 'token error', 401)
       return
     }
 
@@ -34,7 +34,7 @@ export const auth = {
     const decodedToken = isValidToken({ token: headerToken })
 
     if (!decodedToken) {
-      response(req, res, 'ERROR', 'invalid token', 400)
+      response(req, res, 'ERROR', 'invalid token', 401)
       return
     }
     const { payload } = decodedToken

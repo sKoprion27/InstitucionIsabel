@@ -20,14 +20,14 @@ export const authController = {
     }
 
     if (!(correo_electronico === queryAnswer.correo_electronico)) {
-      response(req, res, 'LOGIN', 'invalid email', 400)
+      response(req, res, 'LOGIN', 'invalid email', 500)
       return
     }
     console.log(queryAnswer)
     const match = await encrypt.compareHashPassword(password, queryAnswer.password)
 
     if (!match) {
-      response(req, res, 'LOGIN', 'invalid password', 400)
+      response(req, res, 'LOGIN', 'invalid password', 500)
       return
     }
     const token = auth.createToken({ payload: { id: queryAnswer.id } })
