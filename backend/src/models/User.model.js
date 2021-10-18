@@ -78,14 +78,13 @@ export const User = {
       SET
       nombre = $2,
       apellido = $3,
-      "password" = $4,
-      correo_electronico = $5,
-      id_role = $6
+      correo_electronico = $4,
+      id_role = $5
       WHERE id = $1
       AND
       existe = true
     `
-    const values = [id, user.nombre, user.apellido, user.password, user.correo_electronico, user.id_role]
+    const values = [id, user.nombre, user.apellido, user.correo_electronico, user.id_role]
     try {
       const { rowCount } = await db.query(UPDATE, values)
 

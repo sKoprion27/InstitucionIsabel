@@ -7,9 +7,7 @@ export const Sidebar = () => {
         <h2>Menú</h2>
         <ul className='sidebar__menu'>
           <li className='sidebar__item'>
-            <NavLink
-              to='/users'
-            >
+            <NavLink to='/usuarios'>
               Usuarios
             </NavLink>
           </li>

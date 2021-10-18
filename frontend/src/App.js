@@ -5,8 +5,9 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { useAuth } from './hooks/useAuth'
 import { Dashboard } from './Pages/Dashboard'
 import { Login } from './Pages/Login'
-import { Users } from './Pages/Users'
 import { authAPI } from './services/auth.service'
+import { UserEdit } from './Pages/Users/UserEdit'
+import { UserList } from './Pages/Users/UserList'
 
 export default () => {
   return (
@@ -49,7 +50,8 @@ const PrivateRoutes = () => {
     <>
       <Switch>
         <Route exact path='/' render={(props) => <Dashboard {...props} />} default />
-        <Route path='/users' render={(props) => <Users {...props} />} />
+        <Route exact path='/usuarios' render={(props) => <UserList {...props} />} />
+        <Route exact path='/usuarios/:id' render={(props) => <UserEdit {...props} />} />
         <Route path='*' >
           <Redirect push to='/' />
         </Route>
