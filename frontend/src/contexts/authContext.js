@@ -63,15 +63,19 @@ export const AuthProvider = (props) => {
         const token = window.localStorage.getItem('TOKEN_ISABEL')
 
         if (token) {
-          const user = await authAPI.me(token)
-          console.log('DISPATCH INITIALIZE TOKEN', user)
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              isAuthenticated: true,
-              user
-            }
-          })
+          try {
+            const user = await authAPI.me(token)
+            console.log('DISPATCH INITIALIZE TOKEN', user)
+            dispatch({
+              type: 'INITIALIZE',
+              payload: {
+                isAuthenticated: true,
+                user
+              }
+            })
+          } catch (error) {
+            console.log(error)
+          }
         } else {
           console.log('DISPATCH INITIALIZE NOT TOKEN')
           dispatch({

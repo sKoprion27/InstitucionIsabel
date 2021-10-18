@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useAuth } from './../../hooks/useAuth'
 import bg from '../../img/login.jpg'
 import logo from '../../img/logo.jpg'
+import { Notification } from '../../Components/Dashboard/Notification'
 export const Login = () => {
   const { login } = useAuth()
 
@@ -12,6 +13,7 @@ export const Login = () => {
   })
 
   const [show, setShow] = useState(true)
+  const [error, setError] = useState(null)
 
   const { correo_electronico, password } = credentials
 
@@ -26,7 +28,10 @@ export const Login = () => {
     try {
       await login(correo_electronico, password)
     } catch (error) {
-      console.log(error.response.data, '😕')
+      setError('Crendenciales incorrectas')
+      setTimeout(() => {
+        setError(null)
+      }, 2000)
     }
   }
   return (
@@ -70,8 +75,14 @@ export const Login = () => {
                   Ingresar
                 </button>
               </div>
-              <p className='text-center mt-4 login__info'>Si desconoces tus accesos contacta a tu administrador</p>
             </form>
+            {
+              error
+                ? <Notification type='error' message={error} />
+                : (<div className='text-center mt-4 login__info'>
+                  Si desconoces tus accesos contacta a tu administrador
+                </div>)
+            }
           </div>
         </div>
       </div>

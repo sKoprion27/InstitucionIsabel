@@ -40,6 +40,27 @@ export const User = {
       return ['ERROR GET ONE USER 🤯', 400]
     }
   },
+  getOnePassword: async (correo_electronico) => {
+    const QUERY = `
+      SELECT id, "password", correo_electronico
+      FROM usuarios
+      WHERE
+      "correo_electronico" = $1
+      AND
+      existe = true
+    `
+    try {
+      const { rows, rowCount } = await db.query(QUERY, [correo_electronico])
+      if (rowCount === 0) {
+        return ['ERROR GET BY FIELD 🤯', 404]
+      } else {
+        return [rows[0], 200]
+      }
+    } catch (error) {
+      console.log('ERROR GET BY FIELD 🤯', error)
+      return ['ERROR GET BY FIELD 🤯', 404]
+    }
+  },
   getOneByField: async (field = '', param) => {
     const QUERY = `
       SELECT U.id, nombre, apellido, correo_electronico, "password"
@@ -52,8 +73,8 @@ export const User = {
       U.existe = true
     `
     try {
-      const { rows } = await db.query(QUERY, [param])
-      if (!rows[0]) {
+      const { rows, rowCount } = await db.query(QUERY, [param])
+      if (rowCount === 0) {
         return ['ERROR GET BY FIELD 🤯', 404]
       } else {
         return [rows[0], 200]

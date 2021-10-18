@@ -9,6 +9,7 @@ import { authAPI } from './services/auth.service'
 import { UserEdit } from './Pages/Users/UserEdit'
 import { UserList } from './Pages/Users/UserList'
 
+authAPI.initInterceptors()
 export default () => {
   return (
     <AuthProvider>
@@ -19,11 +20,12 @@ export default () => {
 const App = () => {
   const auth = useAuth()
   console.log(auth.isAuthenticated)
+  console.log(auth.user, 'USSSSSERR')
   return (
     <BrowserRouter>
       {
         auth.isAuthenticated
-          ? (<PrivateRoutes />)
+          ? (<PrivateRoutes role={auth.user.role} />)
           : (<PublicRoutes />)
       }
     </BrowserRouter>
@@ -43,17 +45,24 @@ const PublicRoutes = () => {
   )
 }
 
-const PrivateRoutes = () => {
+const PrivateRoutes = ({ role }) => {
+  console.log(role)
   console.log('PRIVATE_ROUTES')
-  authAPI.initInterceptors()
   return (
     <>
       <Switch>
-        <Route exact path='/' render={(props) => <Dashboard {...props} />} default />
-        <Route exact path='/usuarios' render={(props) => <UserList {...props} />} />
-        <Route exact path='/usuarios/:id' render={(props) => <UserEdit {...props} />} />
-        <Route path='*' >
-          <Redirect push to='/' />
+        <Route exact path='/' >
+          <Dashboard />
+        </Route>
+        <Route exact path='/usuarios'>
+          <UserList />
+        </Route>
+        <Route exact path='/usuarios/:id'>
+          <UserEdit />
+        </Route>
+
+        <Route exact path='/donadores/'>
+          <UserEdit />
         </Route>
       </Switch>
     </>

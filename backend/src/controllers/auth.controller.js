@@ -13,7 +13,8 @@ export const authController = {
   login: async (req, res) => {
     const { correo_electronico, password } = req.body
 
-    const [queryAnswer, status] = await User.getOneByField('correo_electronico', correo_electronico)
+    const [queryAnswer, status] = await User.getOnePassword(correo_electronico)
+
     if (!queryAnswer) {
       response(req, res, 'LOGIN', 'invalid credentials', status)
       return
@@ -23,21 +24,27 @@ export const authController = {
       response(req, res, 'LOGIN', 'invalid email', 500)
       return
     }
-    console.log(queryAnswer)
     const match = await encrypt.compareHashPassword(password, queryAnswer.password)
+    console.log('MATCH PASSWORD USER', match)
 
     if (!match) {
       response(req, res, 'LOGIN', 'invalid password', 500)
       return
     }
     const token = auth.createToken({ payload: { id: queryAnswer.id } })
+    console.log(queryAnswer.id)
     response(req, res, 'LOGIN', token, 200)
   },
   me: async (req, res) => {
     const { id } = req.body
-    const [queryAnswer, status] = await User.getOneByField('id', id)
-    const { password, creado, existe, ...user } = queryAnswer
+    console.log('ID_ME', id)
+    try {
+      const [queryAnswer, status] = await User.getOneByField('id', id)
+      const { password, creado, existe, ...user } = queryAnswer
 
-    response(req, res, 'ME', user, status)
+      response(req, res, 'ME', user, status)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
