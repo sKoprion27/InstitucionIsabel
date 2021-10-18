@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import { getCFDI, getOneCFDI, postOneCFDI, updateOneCFDI, deleteOneCFDI } from './../controllers/cfdis.controller'
+import { cfdiController } from './../controllers/cfdis.controller'
 
 const router = Router()
 
-router.get('/', getCFDI)
-router.get('/:id', getOneCFDI)
-router.post('/', postOneCFDI)
-router.put('/:id', updateOneCFDI)
-router.delete('/:id', deleteOneCFDI)
+router.get('/', cfdiController.getCfdis)
+router.get('/:id', cfdiController.getOneCfdi)
+router.post('/', cfdiController.postOneCfdi)
+router.put('/:id', cfdiController.updateOneCfdi)
+router.delete('/:id', cfdiController.deleteOneCfdi)
 
 export default router
