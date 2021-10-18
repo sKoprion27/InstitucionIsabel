@@ -1,4 +1,5 @@
 import { useAuth } from '../hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 export const Dashboard = () => {
   console.log('DASHBOARD')
@@ -15,6 +16,7 @@ export const Dashboard = () => {
           }
         </div>
         <button className='btn btn-danger w-25' onClick={() => auth.logout()}>Logout</button>
+        <Link className='btn btn-primary w-25' to='/users'>Users</Link>
       </div>
     </div>
   )

@@ -1,0 +1,55 @@
+.background {
+  height: 100vh;
+  background: contain;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-position: center;
+}
+
+.login {
+  background: #fefefe;
+  opacity: .8;
+  max-width: 400px;
+  border-radius: 20px;
+  padding: 30px;
+}
+.login__img-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login__logo{
+  width: 100px;
+}
+
+.login__info{
+  font-size: 12px;
+  font-weight: bold;
+}
+.login__container-show{
+  height: 35px;
+}
+.login__show-password{
+  cursor: pointer;
+}
+
+.login__show-password{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span{
+    margin-left: 10px;
+    padding: 0;
+  }
+}
+
+
+@media screen and (max-width: 900px) {
+  .login {
+    max-width: 400px;
+  }
+}

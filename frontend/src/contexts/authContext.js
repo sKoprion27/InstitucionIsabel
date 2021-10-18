@@ -21,7 +21,6 @@ const handlers = {
   },
   LOGIN: (state, action) => {
     const { user } = action.payload
-
     return {
       ...state,
       isAuthenticated: true,
@@ -61,11 +60,11 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        const accessToken = window.localStorage.getItem('accessToken')
+        const token = window.localStorage.getItem('TOKEN_ISABEL')
 
-        if (accessToken) {
-          const user = await authAPI.me(accessToken)
-          console.log('DISPATCH', user)
+        if (token) {
+          const user = await authAPI.me(token)
+          console.log('DISPATCH INITIALIZE TOKEN', user)
           dispatch({
             type: 'INITIALIZE',
             payload: {
@@ -74,7 +73,7 @@ export const AuthProvider = (props) => {
             }
           })
         } else {
-          console.log('DISPATCH NOT TOKEN')
+          console.log('DISPATCH INITIALIZE NOT TOKEN')
           dispatch({
             type: 'INITIALIZE',
             payload: {
@@ -97,20 +96,11 @@ export const AuthProvider = (props) => {
   }, [])
 
   const login = async (correo_electronico, password) => {
-    const accessToken = await authAPI.login({ correo_electronico, password })
-    console.log('TOKEN_LOGIN', accessToken)
+    const token = await authAPI.login(correo_electronico, password)
 
-    if (accessToken === null) {
-      return
-    }
+    const user = await authAPI.me(token)
 
-    const user = await authAPI.me(accessToken)
-
-    if (user === null) {
-      return
-    }
-
-    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('TOKEN_ISABEL', token)
 
     dispatch({
       type: 'LOGIN',
@@ -121,7 +111,7 @@ export const AuthProvider = (props) => {
   }
 
   const logout = async () => {
-    localStorage.removeItem('accessToken')
+    localStorage.removeItem('TOKEN_ISABEL')
     dispatch({ type: 'LOGOUT' })
   }
 

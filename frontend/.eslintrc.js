@@ -19,6 +19,7 @@ module.exports = {
     'react'
   ],
   rules: {
+    'space-before-function-paren': ['error', 'always'],
     'react/react-in-jsx-scope': 0,
     'react/jsx-uses-react': 0,
     'jsx-quotes': ['error', 'prefer-single'],
