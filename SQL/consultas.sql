@@ -1,7 +1,8 @@
 -- 1) Consultar Usuarios
 SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role Rol
 FROM usuarios U, roles R
-WHERE U.id_role = R.id AND U.existe = true;
+WHERE U.id_role = R.id AND U.existe = true
+ORDER BY id ASC;
 
 -- 1.1) Consultar un usuario
 SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role Rol
@@ -19,13 +20,14 @@ VALUES ('', '', '', '', $1);
 
 -- 1.4) Actualizar un usuario
 UPDATE usuarios
-SET nombre = '', apellido= '', password='', correo_electronico='', id_role=$1
-WHERE id = $2;
+SET nombre = '', apellido = '', password = '', correo_electronico = '', id_role = $1
+WHERE id = $2 AND existe = true;
 
 -- 2) Consultar Roles
 SELECT id, nombre_role
 FROM roles
-WHERE existe = true;
+WHERE existe = true
+ORDER BY id ASC;
 
 -- 2.1) Consultar un rol
 SELECT id, nombre_role
@@ -44,12 +46,13 @@ VALUES ('');
 -- 2.4) Actualiazar un rol
 UPDATE roles
 SET nombre_role = ''
-WHERE id = $1;
+WHERE id = $1 AND existe = true;
 
 -- 3) Consultar Permisos
 SELECT id, nombre_permiso
 FROM permisos
 WHERE existe = true;
+ORDER BY id ASC;
 
 -- 3.1) Consultar un permiso
 SELECT id, nombre_permiso
@@ -68,17 +71,19 @@ VALUES ('');
 -- 3.4) Actualizar un permiso
 UPDATE permisos
 SET nombre_permiso = ''
-WHERE id = $1; 
+WHERE id = $1 AND existe = true; 
 
 -- 4) Consultar los permisos de cada rol
 SELECT RP.id, nombre_role, nombre_permiso
 FROM roles_permisos RP, roles R, permisos P
-WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND RP.existe = true;
+WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND RP.existe = true
+ORDER BY RP.id ASC;
 
 -- 4.1) Consultar los permisos de un solo rol
 SELECT Rp.id, nombre_role, nombre_permiso
 FROM roles_permisos RP, roles R, permisos P
-WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND R.id = $1 AND RP.existe = true AND R.existe = true;
+WHERE RP.id_permiso = P.id AND RP.id_role = R.id AND R.id = 2 AND RP.existe = true AND R.existe = true
+ORDER BY RP.id ASC;
 
 -- 4.2) Consultar un solo permiso de un rol
 SELECT Rp.id, nombre_role, nombre_permiso
@@ -97,12 +102,13 @@ VALUES ($1, $2);
 -- 4.5) Actualizar un permiso a un rol
 UPDATE roles_permisos
 SET id_permiso = $1, id_role = $2
-WHERE id = $3;
+WHERE id = $3 AND existe = true;
 
 -- 5) Consultar CFDIs
 SELECT id, clave, descripcion
 FROM cfdis
-WHERE existe = true;
+WHERE existe = true
+ORDER BY id ASC;
 
 -- 5.1) Consultar un CFDI
 SELECT id, clave, descripcion
@@ -121,18 +127,18 @@ VALUES ('', '');
 -- 5.4) Actualizar un cfdi
 UPDATE cfdis
 SET clave = '', descripcion = ''
-WHERE id = $1;
+WHERE id = $1 AND existe = true;
 
 -- 6) Consultar Estados
 SELECT id, nombre
 FROM estados
-WHERE existe = true;
+WHERE existe = true
+ORDER BY id ASC;
 
 -- 6.1) Consultar un estado
 SELECT id, nombre
 FROM estados
-WHERE id = $1 AND existe = true
-ORDER BY nombre ASC;
+WHERE id = $1 AND existe = true;
 
 -- 6.2) Borrar un estado
 UPDATE estados
@@ -146,12 +152,13 @@ VALUES ('');
 -- 6.4) Actualizar un estado
 UPDATE estados
 SET nombre = ''
-WHERE id = $1;
+WHERE id = $1 AND existe = true;
 
 -- 7) Consultar Donadores
 SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
 FROM donadores D, cfdis C, estados E
-WHERE D.id_cfdi = C.id AND D.id_estado = E.id AND D.existe = true;
+WHERE D.id_cfdi = C.id AND D.id_estado = E.id AND D.existe = true
+ORDER BY D.id ASC;
 
 -- 7.1) Consultar un Donador
 SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
@@ -172,12 +179,13 @@ VALUES ($1, $2, '', '', '', '', '', $3, '', true);
 UPDATE donadores
 SET id_cfdi = $1, id_estado = $2, nombre_contacto = '', telefono = '', razon_social = '', rfc = '', 
 	correo_electronico = '', codigo_postal = $3, domicilio_fiscal = '', regimen_fiscal = 
-WHERE id = $4;
+WHERE id = $4 and existe = true;
 
 -- 8) Consultar Beneficiarios
 SELECT id, nombre_beneficiario, descripcion
 FROM beneficiarios
-WHERE existe = true;
+WHERE existe = true
+ORDER BY id ASC;
 
 -- 8.1) Consultar un beneficiario
 SELECT id, nombre_beneficiario, descripcion
@@ -196,12 +204,13 @@ VALUES ('', '');
 -- 8.4) Actualizar un beneficiario
 UPDATE beneficiarios
 SET nombre_beneficiario = '', descripcion = ''
-WHERE id = $1;
+WHERE id = $1 AND existe = true;
 
 -- 9) Consultar metodos de pago
 SELECT id, nombre, descripcion
 FROM metodos_pago
-WHERE existe = true;
+WHERE existe = true
+ORDER BY id ASC;
 
 -- 9.1) Consultar un método de pago
 SELECT id, nombre, descripcion
@@ -220,12 +229,13 @@ VALUES ('', '');
 -- 9.4) Actualizar un método de pago
 UPDATE metodos_pago
 SET nombre = '', descripcion = ''
-WHERE id = $1;
+WHERE id = $1 AND existe = true;
 
 -- 10) Consultar categorias
 SELECT id, nombre, descripcion
 FROM categorias
-WHERE existe = true;
+WHERE existe = true
+ORDER BY id ASC;
 
 -- 10.1) Consultar una categoría
 SELECT id, nombre, descripcion
@@ -244,12 +254,13 @@ VALUES ('', '');
 -- 10.4) Actualizar una categoría
 UPDATE categorias
 SET nombre = '', descripcion = ''
-WHERE id = $1;
+WHERE id = $1 AND existe = true;
 
 -- 11) Consultar tipos de donacion
 SELECT id, nombre, descripcion
 FROM tipo_donaciones
-WHERE existe = true;
+WHERE existe = true
+ORDER BY id ASC;
 
 -- 11.1) Consultar un tipo de donación
 SELECT id, nombre, descripcion
@@ -268,12 +279,13 @@ VALUES ('', '');
 -- 11.4) Actualizar un tipo de donación
 UPDATE tipo_donaciones
 SET nombre = '', descripcion = ''
-WHERE id = $1;
+WHERE id = $1 AND existe = true;
 
 -- 12) Consultar donaciones
 SELECT D.id, D.nombre, monto, M.nombre, T.nombre Tipo_Donacion, N.razon_social, N.rfc
 FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
-WHERE D.id_donador = N.id AND D.id_metodo_pago = M.id AND D.id_tipo_donacion = T.id AND D.existe = true;
+WHERE D.id_donador = N.id AND D.id_metodo_pago = M.id AND D.id_tipo_donacion = T.id AND D.existe = true
+ORDER BY D.id ASC;
 
 -- 12.1) Consultar una donación
 SELECT D.id, D.nombre, monto, M.nombre, T.nombre Tipo_Donacion, N.razon_social, N.rfc
@@ -292,12 +304,13 @@ VALUES ($1, $2, $3, '', $4, '', '');
 -- 12.4) Actualizar una donación
 UPDATE donaciones
 SET id_donador = $1, id_metodo_pago = $2, id_tipo_donacion = $3, nombre = '', monto = $4, foto_donacion = '', esta_facturado = ''
-WHERE id = $5;
+WHERE id = $5 AND existe = true;
 
 -- 13) Consultar Beneficiarios de las Donaciones
 SELECT DB.id, D.nombre, B.nombre_beneficiario, destino_donacion
 FROM donaciones_beneficiarios DB, donaciones D, beneficiarios B
-WHERE DB.id_beneficiario = B.id AND DB.id_donacion = D.id AND DB.existe = true;
+WHERE DB.id_beneficiario = B.id AND DB.id_donacion = D.id AND DB.existe = true
+ORDER BY DB.id;
 
 -- 13.1) Consultar donaciones a un beneficiario
 SELECT DB.id, D.nombre, B.nombre_beneficiario, destino_donacion
@@ -316,12 +329,13 @@ VALUES ($1, $2, '');
 -- 13.4) Actualizar una donación a un beneficiario
 UPDATE donaciones_beneficiarios
 SET id_beneficiario = $1, id_donacion = $2, destino_donacion = ''
-WHERE id = $3;
+WHERE id = $3 AND existe = true;
 
 -- 14) Consultar Categorias de las donaciones
 SELECT DC.id, D.nombre, C.nombre
 FROM donaciones_categorias DC, donaciones D, categorias C
-WHERE DC.id_categoria = C.id AND DC.id_donacion = D.id AND DC.existe = true;
+WHERE DC.id_categoria = C.id AND DC.id_donacion = D.id AND DC.existe = true
+ORDER BY DC.id ASC;
 
 -- 14.1) Consultaar donaciones de una categoria
 SELECT DC.id, D.nombre, C.nombre
@@ -340,12 +354,13 @@ VALUES ($1, $2);
 -- 14.4) Actualizar una categoría de una donación
 UPDATE donaciones_categorias
 SET id_categoria = $1, id_donacion = $2
-WHERE id = $3;
+WHERE id = $3 AND existe = true;
 
 -- 15) Consultar Notas
 SELECT N.id, titulo, contenido, fecha_limite, D.nombre Donacion, U.nombre Usuario
 FROM notas N, Donaciones D, usuarios U
-WHERE N.id_donacion = D.id AND N.id_usuario = U.id and N.existe = true;
+WHERE N.id_donacion = D.id AND N.id_usuario = U.id and N.existe = true
+ORDER BY N.id ASC;
 
 -- 15.1) Consultar una nota
 SELECT N.id, titulo, contenido, fecha_limite, D.nombre Donacion, U.nombre Usuario
@@ -355,7 +370,8 @@ WHERE N.id_donacion = D.id AND N.id_usuario = U.id AND N.id = $1 AND N.existe = 
 -- 15.2) Consultar todas las notas asignadas a un usuario
 SELECT N.id, titulo, contenido, fecha_limite, D.nombre Donacion, U.nombre Usuario
 FROM notas N, Donaciones D, usuarios U
-WHERE N.id_donacion = D.id AND N.id_usuario = U.id  AND U.id = $1 AND N.existe = true;
+WHERE N.id_donacion = D.id AND N.id_usuario = U.id  AND U.id = $1 AND N.existe = true
+ORDER BY N.id;
 
 -- 15.3) Borrar una nota
 UPDATE notas
@@ -369,4 +385,4 @@ VALUES ($1, $2, '', '', '', $3, $4);
 -- 15.5) Actualizar una nota
 UPDATE notas
 SET id_donacion = $1, id_usuario = $2, titulo = '', contenido = '', fecha_limite = '', estado_completado = $3, estado_activo = $4 
-WHERE id = $5;
+WHERE id = $5 AND existe = true;

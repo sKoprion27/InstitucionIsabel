@@ -363,7 +363,7 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 
 -- Insertar datos tabla usuarios - 20
 
-INSERT INTO usuarios( nombre, apellido, "password", correo_electronico, id_role) VALUES
+INSERT INTO usuarios(nombre, apellido, "password", correo_electronico, id_role) VALUES
 ('Laura','Rivero', 'Password','tesorero@tec.mx', 1),
 ('Julio','Ramirez','Password','contador@tec.mx', 2),
 ('Alejandro','Polo', 'Password','presidente@tec.mx', 3),
