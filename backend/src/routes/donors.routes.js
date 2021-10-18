@@ -6,7 +6,7 @@ const router = Router()
 router.get('/', donorController.getDonors)
 router.get('/:id', donorController.getOneDonor)
 router.post('/', donorController.postOneDonor)
-// router.put('/:id', updateOneDonor)
-// router.delete('/:id', deleteOneDonor)
+router.put('/:id', donorController.updateOneDonor)
+router.delete('/:id', donorController.deleteOneDonor)
 
 export default router

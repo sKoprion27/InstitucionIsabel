@@ -16,6 +16,17 @@ export const donorController = {
     const donor = { ...req.body }
     const [queryAnswer, status] = await Donor.postOne(donor)
     response(req, res, 'POST ONE DONOR', queryAnswer, status)
+  },
+  updateOneDonor: async (req, res) => {
+    const donor = req.body
+    const id = req.params.id
+    const [queryAnswer, status] = await Donor.putOne(donor, id)
+    response(req, res, 'UPDATE ONE DONOR', queryAnswer, status)
+  },
+  deleteOneDonor: async (req, res) => {
+    const id = req.params.id
+    const [queryAnswer, status] = await Donor.deleteOne(id)
+    response(req, res, 'DELETE ONE USER', queryAnswer, status)
   }
 }
 
