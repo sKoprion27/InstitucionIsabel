@@ -2,7 +2,7 @@ import { db } from './../database/index'
 export const User = {
   getAll: async () => {
     const QUERY = `
-      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role Rol
+      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role as role, R.id as id_role
       FROM usuarios U, roles R
       WHERE
       U.id_role = R.id
@@ -20,9 +20,13 @@ export const User = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role Rol
+      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role as role
       FROM usuarios U, roles R
-      WHERE U.id_role = R.id AND U.id = $1 AND U.existe = true
+      WHERE
+      U.id_role = R.id
+      AND
+      U.id = $1
+      AND U.existe = true
     `
     try {
       const { rows, rowCount } = await db.query(QUERY, [id])
@@ -38,7 +42,7 @@ export const User = {
   },
   getOneByField: async (field = '', param) => {
     const QUERY = `
-      SELECT U.id, nombre, apellido, correo_electronico, "password", R.nombre_role Rol
+      SELECT U.id, nombre, apellido, correo_electronico, "password"
       FROM usuarios U, roles R
       WHERE
       U.${field} = $1
