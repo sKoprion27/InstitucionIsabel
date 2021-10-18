@@ -35,8 +35,8 @@ export const Cfdi = {
   },
   postOne: async (cfdi) => {
     const INSERTION = `
-    INSERT INTO cfdis(clave, descripcion)
-    VALUES ($1, $2)
+      INSERT INTO cfdis(clave, descripcion)
+      VALUES ($1, $2)
     `
     try {
       await db.query(INSERTION, [cfdi.clave, cfdi.descripcion])
