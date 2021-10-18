@@ -8,6 +8,7 @@ import cfdisRouter from './cfdis.routes'
 import statesRouter from './states.routes'
 import notFoundRouter from './notFound.routes'
 import typesDonationsRouter from './typesDonations.routes'
+import beneficiariesRouter from './beneficiaries.routes'
 // import { auth } from '../lib/auth'
 
 export const initRoutes = (app) => {
@@ -17,6 +18,7 @@ export const initRoutes = (app) => {
   app.use('/roles', rolesRouter)
   app.use('/donors', donorsRouter)
   app.use('/donations', donationsRouter)
+  app.use('/beneficiaries', beneficiariesRouter)
   app.use('/typesDonations', typesDonationsRouter)
   app.use('/notes', notesRouter)
   app.use('/cfdis', cfdisRouter)
