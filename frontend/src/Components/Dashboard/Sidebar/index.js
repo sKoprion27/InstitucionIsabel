@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './style.scss'
 export const Sidebar = () => {
   return (
@@ -7,24 +7,24 @@ export const Sidebar = () => {
         <h2>Menú</h2>
         <ul className='sidebar__menu'>
           <li className='sidebar__item'>
-            <NavLink to='/usuarios'>
+            <Link to='usuarios'>
               Usuarios
-            </NavLink>
+            </Link>
           </li>
           <li className='sidebar__item'>
-            <NavLink to='/donaciones'>
+            <Link to='donaciones'>
               Donaciones
-            </NavLink>
+            </Link>
           </li>
           <li className='sidebar__item'>
-            <NavLink to='/beneficiarios'>
+            <Link to='beneficiarios'>
               Beneficiarios
-            </NavLink>
+            </Link>
           </li>
           <li className='sidebar__item'>
-            <NavLink to='/donadores'>
+            <Link to='donadores'>
               Donadores
-            </NavLink>
+            </Link>
           </li>
         </ul>
       </div>
