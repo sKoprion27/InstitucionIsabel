@@ -1,32 +1,40 @@
 import { response } from './../utils/response'
 import { Cfdi } from './../models/Cfdi.model'
 
-export const getCFDI = async (req, res) => {
-  const cfdis = await Cfdi.getAll()
-  response(req, res, 'GET CFDIS', cfdis, 200)
-}
+export const cfdiController = {
 
-export const getOneCFDI = async (req, res) => {
-  const { id } = req.params
-  const cfdi = await Cfdi.getOne(id)
-  response(req, res, 'GET ONE CFDI', cfdi, 200)
-}
+  // GET ALL
+  getCfdis: async (req, res) => {
+    const [queryAnswer, status] = await Cfdi.getAll()
+    response(req, res, 'GET CFDIS', queryAnswer, status)
+  },
 
-// Dudas (?)
-export const postOneCFDI = async (req, res) => {
-  const cfdi = {
-    ...req.body
+  // GET ONE
+  getOneCfdi: async (req, res) => {
+    const { id } = req.params
+    const [queryAnswer, status] = await Cfdi.getOne(id)
+    response(req, res, 'GET ONE CFDI', queryAnswer, status)
+  },
+
+  // POST ONE
+  postOneCfdi: async (req, res) => {
+    const cfdi = { ...req.body }
+    const [queryAnswer, status] = await Cfdi.postOne(cfdi)
+    response(req, res, 'POST ONE cfdi', queryAnswer, status)
+  },
+
+  // UPDATE ONE
+  updateOneCfdi: async (req, res) => {
+    const cfdi = req.body
+    const id = req.params.id
+    const [queryAnswer, status] = await Cfdi.putOne(cfdi, id)
+    response(req, res, 'UPDATE ONE CFDI', queryAnswer, status)
+  },
+
+  // DELETE ONE
+  deleteOneCfdi: async (req, res) => {
+    const id = req.params.id
+    const [queryAnswer, status] = await Cfdi.deleteOne(id)
+    response(req, res, 'DELETE ONE CFDI', queryAnswer, status)
   }
-  const queryAnswer = await Cfdi.postOne(cfdi)
-  response(req, res, 'POST ONE CFDI', queryAnswer, 201)
-}
-
-export const updateOneCFDI = (req, res) => {
-  const { id } = req.params
-  res.status(201).json({ message: 'PUT this CFDI: ' + id + ' 🐻' })
-}
-
-export const deleteOneCFDI = (req, res) => {
-  const { id } = req.params
-  res.status(201).json({ message: 'DELETE this CFDI: ' + id + ' 🦘' })
 }
