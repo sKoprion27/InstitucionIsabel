@@ -1,5 +1,7 @@
+import './style.scss'
 import { Link } from 'react-router-dom'
 import { useAuth } from './../../../hooks/useAuth'
+import { MdManageAccounts } from 'react-icons/md'
 
 export const Navbar = () => {
   const auth = useAuth()
@@ -13,12 +15,16 @@ export const Navbar = () => {
           Institución Isabel
         </Link>
 
-        <Link to='perfil' className='btn btn-primary'>
-          Perfil
-        </Link>
-        <button className='btn btn-danger' onClick={handlerLogout}>
-          Cerrar sesión
-        </button>
+        <div className='options'>
+          <div className='options__profile'>
+            <Link to='perfil' className='btn btn-primary options__profile__btn'>
+              {auth.user.nombre} <MdManageAccounts size={24} />
+            </Link>
+          </div>
+          <button className='btn btn-danger' onClick={handlerLogout}>
+            Cerrar sesión
+          </button>
+        </div>
       </div>
     </nav>
 

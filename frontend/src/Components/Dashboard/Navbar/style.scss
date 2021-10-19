@@ -1,0 +1,16 @@
+.options {
+  display: flex;
+  justify-content: space-around;
+  width: 300px;
+
+  .options__profile {
+    display: flex;
+  }
+
+  .options__profile__btn {
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

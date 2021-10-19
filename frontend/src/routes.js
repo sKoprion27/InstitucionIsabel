@@ -10,6 +10,8 @@ import { DashboardLayout } from './Pages/Dashboard'
 import { DonorList } from './Pages/Donors/DonorList'
 import { Profile } from './Pages/Profile/'
 import { DonorEdit } from './Pages/Donors/DonorEdit/index'
+import { DonationsList } from './Pages/Donations/DonationsList/index'
+import { DonationEdit } from './Pages/Donations/DonationEdit'
 
 export const routes = [
   {
@@ -55,6 +57,19 @@ export const routes = [
           {
             path: ':id',
             element: <DonorEdit />
+          }
+        ]
+      },
+      {
+        path: 'donaciones',
+        children: [
+          {
+            path: '',
+            element: <DonationsList />
+          },
+          {
+            path: ':id',
+            element: <DonationEdit />
           }
         ]
       },
