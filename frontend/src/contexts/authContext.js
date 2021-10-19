@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { createContext, useEffect, useReducer } from 'react'
-import { authAPI } from './../services/auth.service'
+import { whoIamService, loginService } from './../services/auth.service'
 
 const initialState = {
   isAuthenticated: false,
@@ -64,7 +64,7 @@ export const AuthProvider = (props) => {
 
         if (token) {
           try {
-            const user = await authAPI.me(token)
+            const user = await whoIamService(token)
             console.log('DISPATCH INITIALIZE TOKEN', user)
             dispatch({
               type: 'INITIALIZE',
@@ -100,9 +100,9 @@ export const AuthProvider = (props) => {
   }, [])
 
   const login = async (correo_electronico, password) => {
-    const token = await authAPI.login(correo_electronico, password)
+    const token = await loginService(correo_electronico, password)
 
-    const user = await authAPI.me(token)
+    const user = await whoIamService(token)
 
     localStorage.setItem('TOKEN_ISABEL', token)
 

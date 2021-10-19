@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import { ContainerGrid } from '../../Components/ContainerGrid'
 import { Navbar } from '../../Components/Dashboard/Navbar'
 import { Sidebar } from '../../Components/Dashboard/Sidebar'
-import { Profile } from '../../Components/Profile'
 
-export const Dashboard = ({ children }) => {
+export const DashboardLayout = () => {
   console.log('DASHBOARD')
 
   return (
@@ -11,9 +11,10 @@ export const Dashboard = ({ children }) => {
       <Navbar />
       <div className='row'>
         <Sidebar />
-        {
-          children || (<Profile />)
-        }
+        {/* Renders children */}
+        <ContainerGrid>
+          <Outlet />
+        </ContainerGrid>
       </div>
     </div>
   )
