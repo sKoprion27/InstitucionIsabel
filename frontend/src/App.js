@@ -8,6 +8,7 @@ import { Login } from './Pages/Login'
 import { authAPI } from './services/auth.service'
 import { UserEdit } from './Pages/Users/UserEdit'
 import { UserList } from './Pages/Users/UserList'
+import { DonorList } from './Pages/Donors/DonorList'
 
 authAPI.initInterceptors()
 export default () => {
@@ -62,7 +63,7 @@ const PrivateRoutes = ({ role }) => {
         </Route>
 
         <Route exact path='/donadores/'>
-          <UserEdit />
+          <DonorList />
         </Route>
       </Switch>
     </>

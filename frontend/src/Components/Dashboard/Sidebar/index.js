@@ -21,6 +21,11 @@ export const Sidebar = () => {
               Beneficiarios
             </NavLink>
           </li>
+          <li className='sidebar__item'>
+            <NavLink to='/donadores'>
+              Donadores
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>
