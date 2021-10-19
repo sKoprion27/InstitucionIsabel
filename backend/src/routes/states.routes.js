@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import { getState, getOneState, postOneState, updateOneState, deleteOneState } from './../controllers/states.controller'
+import { stateController } from './../controllers/states.controller'
 
 const router = Router()
 
-router.get('/', getState)
-router.get('/:id', getOneState)
-router.post('/', postOneState)
-router.put('/:id', updateOneState)
-router.delete('/:id', deleteOneState)
+router.get('/', stateController.getStates)
+router.get('/:id', stateController.getOneState)
+router.post('/', stateController.postOneState)
+router.put('/:id', stateController.updateOneState)
+router.delete('/:id', stateController.deleteOneState)
 
 export default router
