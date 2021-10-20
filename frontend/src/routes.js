@@ -82,5 +82,9 @@ export const routes = [
         element: <NotFound />
       }
     ]
+  },
+  {
+    path: '*',
+    element: <Navigate to='/' />
   }
 ]

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getAllUsers } from '../../../helpers/users.helpers'
-import { Link, Outlet } from 'react-router-dom'
-import { ContainerGrid } from '../../../Components/ContainerGrid/index'
+import { Link } from 'react-router-dom'
 export const UserList = () => {
   const [users, setUsers] = useState([])
   useEffect(() => {
@@ -42,7 +41,7 @@ export const UserList = () => {
                       <td>{user.nombre}</td>
                       <td>{user.nombre}</td>
                       <td>{user.apellido}</td>
-                      <td>{user.rol}</td>
+                      <td>{user.role}</td>
                       <td>
                         <Link to={`${user.id}`} className='btn btn-primary btn-sm'>Editar</Link>
                         <Link to={`${user.id}`} className='btn btn-danger btn-sm'>Eliminar</Link>
@@ -55,7 +54,6 @@ export const UserList = () => {
           </table>
         </div>
       </div>
-      <Outlet />
     </div>
   )
 }
