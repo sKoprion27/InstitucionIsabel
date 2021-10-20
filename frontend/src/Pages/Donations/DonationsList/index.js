@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { getAllDonations } from '../../../helpers/donations.helpers'
 import { Link } from 'react-router-dom'
+import { MdDelete, MdOutlineMode } from 'react-icons/md'
 export const DonationsList = () => {
   const [donations, setDonations] = useState([])
   useEffect(() => {
-    const getDonors = async () => {
+    const getDonations = async () => {
       try {
         const donations = await getAllDonations()
         setDonations(donations)
@@ -12,7 +13,7 @@ export const DonationsList = () => {
         console.log(error.response)
       }
     }
-    getDonors()
+    getDonations()
   }, [])
   return (
     <div className='container donations'>
@@ -45,8 +46,12 @@ export const DonationsList = () => {
                       <td>{donation.razon_social}</td>
                       <td>{donation.rfc}</td>
                       <td>
-                        <Link to={`${donation.id}`} className='btn btn-primary btn-sm'>Editar</Link>
-                        <Link to={`${donation.id}`} className='btn btn-danger btn-sm'>Eliminar</Link>
+                      <Link to={`${donation.id}`} className='btn btn-success'>
+                          <MdOutlineMode /> Editar
+                        </Link>
+                        <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${donation.id}`}>
+                          <MdDelete /> Eliminar
+                        </button>
                       </td>
                     </tr>
                   )

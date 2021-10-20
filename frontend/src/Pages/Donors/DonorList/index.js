@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getAllDonors } from '../../../helpers/donors.helpers'
 import { Link } from 'react-router-dom'
+import { MdDelete, MdOutlineMode } from 'react-icons/md'
 export const DonorList = () => {
   const [donors, setDonors] = useState([])
   useEffect(() => {
@@ -55,8 +56,13 @@ export const DonorList = () => {
                       <td>{donor.clave_cfdi}</td>
                       <td>{donor.decripcion_cfdi}</td>
                       <td>
-                        <Link to={`${donor.id}`} className='btn btn-primary btn-sm'>Editar</Link>
-                        <Link to={`${donor.id}`} className='btn btn-danger btn-sm'>Eliminar</Link>
+                        <Link to={`${donor.id}`} className='btn btn-success'>
+                          <MdOutlineMode /> Editar
+                        </Link>
+                        <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${donor.id}`}>
+                          <MdDelete /> Eliminar
+                        </button>
+
                       </td>
                     </tr>
                   )
