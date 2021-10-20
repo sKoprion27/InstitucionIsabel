@@ -282,13 +282,13 @@ SET nombre = '', descripcion = ''
 WHERE id = $1 AND existe = true;
 
 -- 12) Consultar donaciones
-SELECT D.id, D.nombre, monto, M.nombre, T.nombre Tipo_Donacion, N.razon_social, N.rfc
+SELECT D.id, D.nombre nombre_donacion, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
 FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
 WHERE D.id_donador = N.id AND D.id_metodo_pago = M.id AND D.id_tipo_donacion = T.id AND D.existe = true
-ORDER BY D.id ASC;
+ORDER BY D.id ASC
 
 -- 12.1) Consultar una donación
-SELECT D.id, D.nombre, monto, M.nombre, T.nombre Tipo_Donacion, N.razon_social, N.rfc
+SELECT D.id, D.nombre nombre_donacion, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
 FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
 WHERE D.id_donador = N.id AND D.id_metodo_pago = M.id AND D.id_tipo_donacion = T.id AND D.id = $1 AND D.existe = true;
 

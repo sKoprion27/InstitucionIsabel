@@ -54,18 +54,18 @@ export const Donor = {
   },
   putOne: async (donor, id) => {
     const UPDATE = `
-    UPDATE donadores
-    SET id_cfdi = $2, 
-    id_estado = $3, 
-    nombre_contacto = $4, 
-    telefono = $5, 
-    razon_social = $6, 
-    rfc = $7, 
-    correo_electronico = $8, 
-    codigo_postal = $9, 
-    domicilio_fiscal = $10, 
-    regimen_fiscal = $11
-    WHERE id = $1 and existe = true
+      UPDATE donadores
+      SET id_cfdi = $2, 
+      id_estado = $3, 
+      nombre_contacto = $4, 
+      telefono = $5, 
+      razon_social = $6, 
+      rfc = $7, 
+      correo_electronico = $8, 
+      codigo_postal = $9, 
+      domicilio_fiscal = $10, 
+      regimen_fiscal = $11
+      WHERE id = $1 and existe = true
     `
     const values = [id, donor.id_cfdi, donor.id_estado, donor.nombre_contacto, donor.telefono, donor.razon_social, donor.rfc, donor.correo_electronico, donor.codigo_postal, donor.domicilio_fiscal, donor.regimen_fiscal]
     try {

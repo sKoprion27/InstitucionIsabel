@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import { deleteOneDonation, getOneDonation, getDonation, postOneDonation, updateOneDonation } from './../controllers/donations.controller'
+import { donationController } from './../controllers/donations.controller'
 
 const router = Router()
 
-router.get('/', getDonation)
-router.get('/:id', getOneDonation)
-router.post('/', postOneDonation)
-router.put('/:id', updateOneDonation)
-router.delete('/:id', deleteOneDonation)
+router.get('/', donationController.getDonations)
+router.get('/:id', donationController.getOneDonation)
+router.post('/', donationController.postOneDonation)
+router.put('/:id', donationController.updateOneDonation)
+router.delete('/:id', donationController.deleteOneDonation)
 
 export default router

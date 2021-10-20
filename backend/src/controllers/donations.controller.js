@@ -1,7 +1,35 @@
 import { response } from './../utils/response'
 import { Donation } from './../models/Donation.model'
 
-// GET ALL
+export const donationController = {
+  getDonations: async (req, res) => {
+    const [queryAnswer, status] = await Donation.getAll()
+    response(req, res, 'GET DONATIONS', queryAnswer, status)
+  },
+  getOneDonation: async (req, res) => {
+    const { id } = req.params
+    const [queryAnswer, status] = await Donation.getOne(id)
+    response(req, res, 'GET ONE DONATION', queryAnswer, status)
+  },
+  postOneDonation: async (req, res) => {
+    const donor = { ...req.body }
+    const [queryAnswer, status] = await Donation.postOne(donor)
+    response(req, res, 'POST ONE DONATION', queryAnswer, status)
+  },
+  updateOneDonation: async (req, res) => {
+    const donor = req.body
+    const id = req.params.id
+    const [queryAnswer, status] = await Donation.putOne(donor, id)
+    response(req, res, 'UPDATE ONE DONATION', queryAnswer, status)
+  },
+  deleteOneDonation: async (req, res) => {
+    const id = req.params.id
+    const [queryAnswer, status] = await Donation.deleteOne(id)
+    response(req, res, 'DELETE ONE USER', queryAnswer, status)
+  }
+}
+
+/* // GET ALL
 export const getDonation = async (req, res) => {
   const donations = await Donation.getAll()
   response(req, res, 'GET donations', donations, 200)
@@ -34,4 +62,4 @@ export const updateOneDonation = (req, res) => {
 export const deleteOneDonation = (req, res) => {
   console.log('ID to DELETE 😀', req.params.id)
   response(req, res, 'DELETE ONE Donation', {}, 201)
-}
+} */
