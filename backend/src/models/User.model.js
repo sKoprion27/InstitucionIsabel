@@ -2,7 +2,7 @@ import { db } from './../database/index'
 export const User = {
   getAll: async () => {
     const QUERY = `
-      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role as role, R.id as id_role
+      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role as role, U.creado as creado
       FROM usuarios U, roles R
       WHERE
       U.id_role = R.id
