@@ -46,7 +46,6 @@ export const UserEditForm = () => {
         <div className='user__btn__container'>
           <button type='submit' className='btn btn-success btn-lg' >Actualizar usuario</button>
         </div>
-
       </form>
     </>
   )

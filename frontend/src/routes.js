@@ -6,12 +6,13 @@ import { UserList } from './Pages/Users/UserList/index'
 import { UserEdit } from './Pages/Users/UserEdit/index'
 import { GuestGuard } from './Components/GuestGuard'
 import { AuthGuard } from './Components/AuthGuard'
-import { DashboardLayout } from './Pages/Dashboard'
+import { DashboardLayout } from './Pages/DashboardLayout'
 import { DonorList } from './Pages/Donors/DonorList'
 import { Profile } from './Pages/Profile/'
 import { DonorEdit } from './Pages/Donors/DonorEdit/index'
 import { DonationsList } from './Pages/Donations/DonationsList/index'
 import { DonationEdit } from './Pages/Donations/DonationEdit'
+import { UserAdd } from './Pages/Users/UserAdd/index'
 
 export const routes = [
   {
@@ -40,6 +41,10 @@ export const routes = [
           {
             path: '',
             element: <UserList />
+          },
+          {
+            path: 'add',
+            element: <UserAdd />
           },
           {
             path: ':id',
