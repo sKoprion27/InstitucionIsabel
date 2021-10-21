@@ -48,6 +48,7 @@ export const userController = {
   changePasswordUser: async (req, res) => {
     const { id } = req.params
     const passwordHashed = encrypt.createHash(req.body.password)
+    console.log(passwordHashed)
     const [queryAnswer, status] = await User.putOneByField('password', passwordHashed, id)
     response(req, res, 'UPDATE ONE USER', queryAnswer, status)
   }

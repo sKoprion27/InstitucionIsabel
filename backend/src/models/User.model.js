@@ -2,11 +2,9 @@ import { db } from './../database/index'
 export const User = {
   getAll: async () => {
     const QUERY = `
-      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role as role, U.creado as creado
-      FROM usuarios U, roles R
+      SELECT U.id, nombre, apellido, correo_electronico, U.creado as creado
+      FROM usuarios U
       WHERE
-      U.id_role = R.id
-      AND
       U.existe = true
       ORDER BY U.id
     `
@@ -20,11 +18,9 @@ export const User = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role as role
+      SELECT U.id, nombre, apellido, correo_electronico
       FROM usuarios U, roles R
       WHERE
-      U.id_role = R.id
-      AND
       U.id = $1
       AND U.existe = true
     `
@@ -63,7 +59,6 @@ export const User = {
   },
   me: () => {
 
-
   },
   getOneByField: async (field = '', param) => {
     const QUERY = `
@@ -71,8 +66,6 @@ export const User = {
       FROM usuarios U, roles R
       WHERE
       U.${field} = $1
-      AND
-      U.id_role = R.id
       AND
       U.existe = true
     `
