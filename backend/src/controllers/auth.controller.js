@@ -48,13 +48,10 @@ export const authController = {
     }
   },
   me1: async (req, res) => {
-    const { id } = req.body
-    console.log('ID_ME', id)
     try {
-      const [queryAnswer, status] = await User.me('id', id)
-      const { password, creado, existe, ...user } = queryAnswer
+      const [queryAnswer, status] = await User.me(req.params.id)
 
-      response(req, res, 'ME', user, status)
+      response(req, res, 'ME', queryAnswer, status)
     } catch (error) {
       console.log(error)
     }

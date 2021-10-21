@@ -196,7 +196,7 @@ ADD CONSTRAINT FK_id_usuario
 FOREIGN KEY(id_usuario)
 REFERENCES usuarios(id);
 
-ALTER TABLE roles_permisos
+ALTER TABLE roles_usuarios
 ADD CONSTRAINT FK_id_role
 FOREIGN KEY(id_role)
 REFERENCES roles(id);
@@ -393,7 +393,7 @@ INSERT INTO usuarios(nombre, apellido, "password", correo_electronico) VALUES
 ('Laura','Rivero', 'Password','tesorero@tec.mx'),
 ('Julio','Ramirez','Password','contador@tec.mx'),
 ('Alejandro','Polo', 'Password','presidente@tec.mx'),
-('Daniel','Cu','Password','admin@tec.mx');
+('Daniel','Cu','Password','admin@tec.mx'),
 ('David','Cu','Password','superadmin@tec.mx');
 
 -- Insertar datos tabla roles_usuarios
