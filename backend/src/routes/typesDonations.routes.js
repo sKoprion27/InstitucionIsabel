@@ -1,10 +1,12 @@
 import { Router } from 'express'
-import { getTypesDonations, getOneTypesDonation, postOneTypesDonation } from '../controllers/typesDonations.controller'
+import { typesDonationController } from '../controllers/typesDonations.controller'
 import { validateTypeDonations } from '../middlewares/TypesDonations.schema'
 const router = Router()
 
-router.get('/', getTypesDonations)
-router.get('/:id', getOneTypesDonation)
-router.post('/', validateTypeDonations, postOneTypesDonation)
+router.get('/', typesDonationController.getTypesDonations)
+router.get('/:id', typesDonationController.getOneTypesDonation)
+router.post('/', validateTypeDonations, typesDonationController.postOneTypesDonation)
+router.put('/:id', typesDonationController.updateOneTypesDonation)
+router.delete('/:id', typesDonationController.deleteOneTypesDonation)
 
 export default router

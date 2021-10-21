@@ -1,24 +1,39 @@
 import { response } from '../utils/response'
-import { TypesDonations } from '../models/TypesDonations.model'
+import { TypesDonation } from '../models/TypesDonations.model'
 
-// GET ALL
-export const getTypesDonations = async (req, res) => {
-  const typesDonations = await TypesDonations.getAll() // plurar
-  response(req, res, 'GET TypesDonations', typesDonations, 200)
-}
-// GET ONE
-export const getOneTypesDonation = async (req, res) => {
-  const { id } = req.params // preguntar que hacer params
-  const typesDonation = await TypesDonations.getOne(id)
-  response(req, res, `GET ONE TypesDonations ${id}`, typesDonation, 200)
-}
+export const typesDonationController = {
+  // GET ALL
+  getTypesDonations: async (req, res) => {
+    const [queryAnswer, status] = await TypesDonation.getAll()
+    response(req, res, 'GET DONATION TYPES', queryAnswer, status)
+  },
 
-// POST ONE
+  // GET ONE
+  getOneTypesDonation: async (req, res) => {
+    const { id } = req.params
+    const [queryAnswer, status] = await TypesDonation.getOne(id)
+    response(req, res, 'GET ONE DONATION TYPE', queryAnswer, status)
+  },
 
-export const postOneTypesDonation = async (req, res) => {
-  const typesDonations = req.body
-  console.log(typesDonations)
-  await TypesDonations.postOne(typesDonations)
-  console.log(':)')
-  response(req, res, `POST ONE TypesDonation ${JSON.stringify(typesDonations)}`, ':D', 201)
+  // POST ONE
+  postOneTypesDonation: async (req, res) => {
+    const type = { ...req.body }
+    const [queryAnswer, status] = await TypesDonation.postOne(type)
+    response(req, res, 'POST ONE DONATION', queryAnswer, status)
+  },
+
+  // UPDATE ONE
+  updateOneTypesDonation: async (req, res) => {
+    const type = req.body
+    const id = req.params.id
+    const [queryAnswer, status] = await TypesDonation.putOne(type, id)
+    response(req, res, 'UPDATE ONE DONATION TYPE', queryAnswer, status)
+  },
+
+  // DELETE ONE
+  deleteOneTypesDonation: async (req, res) => {
+    const id = req.params.id
+    const [queryAnswer, status] = await TypesDonation.deleteOne(id)
+    response(req, res, 'DELETE ONE DONATION TYPE', queryAnswer, status)
+  }
 }
