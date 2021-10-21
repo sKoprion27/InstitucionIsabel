@@ -20,6 +20,7 @@ CREATE TABLE usuarios(
   existe BOOLEAN DEFAULT TRUE
 );
 
+
 -- Crear tabla de roles_usuarios
 CREATE TABLE roles_usuarios (
   id SERIAL PRIMARY KEY,
@@ -87,6 +88,7 @@ CREATE TABLE donadores(
   existe BOOLEAN DEFAULT TRUE
 );
 
+ALTER SEQUENCE donadores_id_seq RESTART WITH 1;
 -- DONACIONES
 
 -- Crear tabla de beneficiarios
@@ -139,6 +141,7 @@ CREATE TABLE donaciones(
   existe BOOLEAN DEFAULT TRUE
 );
 
+ALTER SEQUENCE donaciones_id_seq RESTART WITH 1;
 -- Crear tabla donaciones_beneficiarios
 CREATE TABLE donaciones_beneficiarios(
   id SERIAL PRIMARY KEY,
@@ -517,7 +520,7 @@ INSERT INTO donadores(id_cfdi, id_estado, nombre_contacto, telefono, razon_socia
 (13, 28, 'Gorden Scamwell', '3898184643', 'Klocko, Zboncak and Hickle', 'SGRB371463', 'gscamwelle@yahoo.com', '16340', '8791 Del Sol Hill', false),
 (20, 22, 'Olivier Duding', '4333566437', 'Hirthe-Predovic', 'JESU538632', 'odudingf@gov.uk', '40427', '9 Calypso Hill', false),
 (10, 22, 'Axe Toulmin', '1637669950', 'Cummings Inc', 'ZCBY887320', 'atoulming@loc.gov', '58528', '59 Portage Crossing', true),
-(23, 29, 'Ed Gaines', '1827728895', 'Reichel-Turner', 'KNGP974679', 'egainesh@histats.com', '41451', '94499 Tomscot Place', false),
+(22, 29, 'Ed Gaines', '1827728895', 'Reichel-Turner', 'KNGP974679', 'egainesh@histats.com', '41451', '94499 Tomscot Place', false),
 (7, 4, 'Frederick Dassindale', '1285547574', 'O''Connell Group', 'SSOP197920', 'fdassindalei@cocolog-nifty.com', '98640', '9 Debs Junction', true),
 (2, 28, 'Pepito Cyseley', '5222369046', 'Abernathy-Feeney', 'NILL491518', 'pcyseleyj@surveymonkey.com', '52219', '50737 Sunfield Parkway', true),
 (6, 15, 'Burty Boldecke', '9162687933', 'Wisoky, Bartoletti and Crooks', 'YTYH386180', 'bboldeckek@mapquest.com', '41001', '10 Columbus Point', false),
@@ -527,7 +530,7 @@ INSERT INTO donadores(id_cfdi, id_estado, nombre_contacto, telefono, razon_socia
 (2, 27, 'Jonis Shreenan', '1616253143', 'Conn-O''Connell', 'ONWE685594', 'jshreenano@sitemeter.com', '61783', '52254 Dixon Drive', true),
 (20, 20, 'Ber Newlands', '6947680728', 'Heaney-Mraz', 'GZII226718', 'bnewlandsp@cam.ac.uk', '86896', '11253 Arapahoe Terrace', false),
 (19, 22, 'Druci Rush', '3677683455', 'Schulist, Wilkinson and Farrell', 'UYIM221132', 'drushq@reverbnation.com', '47004', '6 Bayside Drive', true),
-(23, 15, 'Velvet Esposito', '2381907108', 'Beier, Walsh and Kulas', 'DQQK320819', 'vespositor@cdbaby.com', '19553', '7004 Algoma Point', true),
+(22, 15, 'Velvet Esposito', '2381907108', 'Beier, Walsh and Kulas', 'DQQK320819', 'vespositor@cdbaby.com', '19553', '7004 Algoma Point', true),
 (9, 18, 'Curtice Codd', '7761120819', 'Bailey-Haag', 'LIKY658598', 'ccodds@rakuten.co.jp', '13765', '7178 Blaine Hill', false),
 (11, 1, 'Leodora Cloke', '7869226022', 'Fritsch, Stiedemann and Veum', 'NYXP453478', 'lcloket@businessweek.com', '87895', '09976 Monument Avenue', false);
 
@@ -635,11 +638,11 @@ INSERT INTO donaciones_categorias(id_categoria, id_donacion) VALUES
 (1,18),
 (1,19),
 (1,20),
-(1,21),
-(1,22),
-(1,23),
-(1,24),
-(1,25),
+(3,3),
+(3,2),
+(3,3),
+(3,4),
+(3,5),
 (2,1),
 (2,2),
 (2,3),
