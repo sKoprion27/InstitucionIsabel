@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import { getBeneficiaries, getOneBeneficiary, postOneBeneficiary, updateOneBeneficiary, deleteOneBeneficiary } from './../controllers/beneficiaries.controller'
+import { beneficiaryController } from './../controllers/beneficiaries.controller'
 
 const router = Router()
 
-router.get('/', getBeneficiaries)
-router.get('/:id', getOneBeneficiary)
-router.post('/', postOneBeneficiary)
-router.put('/:id', updateOneBeneficiary)
-router.delete('/:id', deleteOneBeneficiary)
+router.get('/', beneficiaryController.getBeneficiaries)
+router.get('/:id', beneficiaryController.getOneBeneficiary)
+router.post('/', beneficiaryController.postOneBeneficiary)
+router.put('/:id', beneficiaryController.updateOneBeneficiary)
+router.delete('/:id', beneficiaryController.deleteOneBeneficiary)
 
 export default router

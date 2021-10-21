@@ -1,36 +1,39 @@
 import { response } from './../utils/response'
 import { Beneficiary } from './../models/Beneficiary.model'
 
-// GET ALL
-export const getBeneficiaries = async (req, res) => {
-  const beneficiaries = await Beneficiary.getAll()
-  response(req, res, 'GET Beneficiaries', beneficiaries, 200)
-}
+export const beneficiaryController = {
+  // GET ALL
+  getBeneficiaries: async (req, res) => {
+    const [queryAnswer, status] = await Beneficiary.getAll()
+    response(req, res, 'GET BENEFICIARIES', queryAnswer, status)
+  },
 
-// GET ONE
-export const getOneBeneficiary = async (req, res) => {
-  const { id } = req.params
-  const beneficiary = await Donor.getOne(id)
-  response(req, res, 'GET ONE Beneficiary', beneficiary, 200)
-}
+  // GET ONE
+  getOneBeneficiary: async (req, res) => {
+    const { id } = req.params
+    const [queryAnswer, status] = await Beneficiary.getOne(id)
+    response(req, res, 'GET ONE BENEFICIARY', queryAnswer, status)
+  },
 
-// POST ONE
-export const postOneBeneficiary = async (req, res) => {
-  const beneficiary = {
-    ...req.body
+  // POST ONE
+  postOneBeneficiary: async (req, res) => {
+    const donor = { ...req.body }
+    const [queryAnswer, status] = await Beneficiary.postOne(donor)
+    response(req, res, 'POST ONE BENEFICIARY', queryAnswer, status)
+  },
+
+  // UPDATE ONE
+  updateOneBeneficiary: async (req, res) => {
+    const beneficiary = req.body
+    const id = req.params.id
+    const [queryAnswer, status] = await Beneficiary.putOne(beneficiary, id)
+    response(req, res, 'UPDATE ONE BENEFICIARY', queryAnswer, status)
+  },
+
+  // DELETE ONE
+  deleteOneBeneficiary: async (req, res) => {
+    const id = req.params.id
+    const [queryAnswer, status] = await Beneficiary.deleteOne(id)
+    response(req, res, 'DELETE ONE BENIFICIARY', queryAnswer, status)
   }
-  const queryAnswer = await Beneficiary.postOne(beneficiary)
-  response(req, res, 'POST ONE BENEFICIARY', queryAnswer, 201)
-}
-
-// UPDATE ONE
-export const updateOneBeneficiary = (req, res) => {
-  const { id } = req.params
-  res.status(201).json({ message: 'UPDATE this beneficiary: ' + id + ' ✏️' })
-}
-
-// DELETE ONE
-export const deleteOneBeneficiary = (req, res) => {
-  const { id } = req.params
-  res.status(201).json({ message: 'DELETE this beneficiary: ' + id + ' 😢' })
 }
