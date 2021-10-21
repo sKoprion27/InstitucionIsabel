@@ -17,8 +17,8 @@ export const beneficiaryController = {
 
   // POST ONE
   postOneBeneficiary: async (req, res) => {
-    const donor = { ...req.body }
-    const [queryAnswer, status] = await Beneficiary.postOne(donor)
+    const beneficiary = { ...req.body }
+    const [queryAnswer, status] = await Beneficiary.postOne(beneficiary)
     response(req, res, 'POST ONE BENEFICIARY', queryAnswer, status)
   },
 
