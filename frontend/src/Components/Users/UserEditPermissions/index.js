@@ -1,4 +1,4 @@
-import { permissions } from '../../../mock/permissions.mock'
+import { roles } from '../../../mock/permissions.mock'
 
 export const UserEditPermissions = () => {
   return (
@@ -12,7 +12,7 @@ export const UserEditPermissions = () => {
         <div className='row justify-content-center'>
 
           {
-            permissions.map(p => {
+            roles.map(p => {
               return (
                 <div key={p} className='col-12 col-md-3'>
                   <div className='card'>

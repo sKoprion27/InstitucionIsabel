@@ -5,12 +5,11 @@ const config = {
       user: 'postgres',
       host: '127.0.0.1',
       database: 'institucion_isabel',
+      client_encoding: 'LATIN1',
       password: process.env.DB_PASSWORD_DEV,
       port: 5432
     },
-    jwt_token: {
-      privateKey: 'password'
-    }
+    jwt_token: { privateKey: 'password' }
   }
 }
 

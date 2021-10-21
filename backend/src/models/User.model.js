@@ -61,6 +61,10 @@ export const User = {
       return ['ERROR GET BY FIELD 🤯', 404]
     }
   },
+  me: () => {
+
+
+  },
   getOneByField: async (field = '', param) => {
     const QUERY = `
       SELECT U.id, nombre, apellido, correo_electronico, "password"

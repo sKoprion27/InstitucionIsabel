@@ -1,25 +1,34 @@
 -- BASE DE DATOS
-
+\c postgres;
 DROP DATABASE IF EXISTS institucion_isabel;
 CREATE DATABASE institucion_isabel;
 \c institucion_isabel;
 
+SET client_encoding = 'LATIN1';
 -- CREAR TABLAS
 
 -- USUARIOS
 
 -- Crear tabla de usuarios
-
 CREATE TABLE usuarios(
   id SERIAL PRIMARY KEY,
   nombre TEXT NOT NULL,
   apellido TEXT NOT NULL,
   "password" TEXT NOT NULL,
   correo_electronico TEXT NULL,
+  creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+  existe BOOLEAN DEFAULT TRUE
+);
+
+-- Crear tabla de roles_usuarios
+CREATE TABLE roles_usuarios (
+  id SERIAL PRIMARY KEY,
+  id_usuario INTEGER NOT NULL,
   id_role INTEGER NOT NULL,
   creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
+
 -- Crear tabla de roles
 CREATE TABLE roles (
   id SERIAL PRIMARY KEY,
@@ -27,6 +36,7 @@ CREATE TABLE roles (
   creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
+
 -- Crear tabla permisos
 CREATE TABLE permisos(
   id SERIAL PRIMARY KEY,
@@ -34,6 +44,7 @@ CREATE TABLE permisos(
   creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
+
 -- Crear tabla roles_permisos
 CREATE TABLE roles_permisos(
   id SERIAL PRIMARY KEY,
@@ -43,6 +54,7 @@ CREATE TABLE roles_permisos(
   existe BOOLEAN DEFAULT TRUE
 );
 -- DONADORES
+
 -- Crear tabla CFDIS
 CREATE TABLE cfdis(
   id SERIAL PRIMARY KEY,
@@ -175,6 +187,17 @@ REFERENCES roles (id);
 ALTER TABLE usuarios
 ADD CONSTRAINT unique_correo UNIQUE (correo_electronico);
 
+-- constraint tabla roles_usuarios
+ALTER TABLE roles_usuarios
+ADD CONSTRAINT FK_id_usuario
+FOREIGN KEY(id_usuario)
+REFERENCES usuarios(id);
+
+ALTER TABLE roles_permisos
+ADD CONSTRAINT FK_id_role
+FOREIGN KEY(id_role)
+REFERENCES roles(id);
+
 -- constraint tabla roles_permisos
 ALTER TABLE roles_permisos
 ADD CONSTRAINT FK_id_permiso
@@ -251,7 +274,7 @@ REFERENCES categorias(id);
 
 -- USUARIOS
 
--- Insertar datos tabla permisos - 10
+-- Insertar datos tabla permisos
 
 INSERT INTO permisos(nombre_permiso) VALUES
 ('Iniciar sesión'),
@@ -363,12 +386,19 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 
 -- Insertar datos tabla usuarios - 20
 
-INSERT INTO usuarios(nombre, apellido, "password", correo_electronico, id_role) VALUES
-('Laura','Rivero', 'Password','tesorero@tec.mx', 1),
-('Julio','Ramirez','Password','contador@tec.mx', 2),
-('Alejandro','Polo', 'Password','presidente@tec.mx', 3),
-('Daniel','Cu','Password','admin@tec.mx', 4);
+INSERT INTO usuarios(nombre, apellido, "password", correo_electronico) VALUES
+('Laura','Rivero', 'Password','tesorero@tec.mx'),
+('Julio','Ramirez','Password','contador@tec.mx'),
+('Alejandro','Polo', 'Password','presidente@tec.mx'),
+('Daniel','Cu','Password','admin@tec.mx');
 
+-- Insertar datos tabla roles_usuarios
+
+INSERT INTO roles_usuarios(id_usuario , id_role) VALUES
+(1,1),
+(2,2),
+(3,3),
+(4,4);
 
 -- DONACIONES
 

@@ -1,5 +1,5 @@
 
-export const permissions = [
+export const permissions2 = [
   'Iniciar sesión',
   'Cerrar sesión',
   'Registrar donaciones',
@@ -37,4 +37,11 @@ export const permissions = [
   'Modificar usuarios',
   'Eliminar usuarios',
   'Consultar usuarios'
+]
+
+export const roles = [
+  'ADMIN',
+  'CONTADOR',
+  'PRESIDENTE',
+  'TESORERO'
 ]
