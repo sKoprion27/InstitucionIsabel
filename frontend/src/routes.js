@@ -13,6 +13,8 @@ import { DonorEdit } from './Pages/Donors/DonorEdit/index'
 import { DonationsList } from './Pages/Donations/DonationsList/index'
 import { DonationEdit } from './Pages/Donations/DonationEdit'
 import { UserAdd } from './Pages/Users/UserAdd/index'
+import { BeneficiaryList } from './Pages/Beneficiaries/BeneficiaryList'
+import { BeneficiaryEdit } from './Pages/Beneficiaries/BeneficiaryEdit'
 
 export const routes = [
   {
@@ -75,6 +77,19 @@ export const routes = [
           {
             path: ':id',
             element: <DonationEdit />
+          }
+        ]
+      },
+      {
+        path: 'beneficiarios',
+        children: [
+          {
+            path: '',
+            element: <BeneficiaryList />
+          },
+          {
+            path: ':id',
+            element: <BeneficiaryEdit />
           }
         ]
       },
