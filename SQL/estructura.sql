@@ -394,6 +394,7 @@ INSERT INTO usuarios(nombre, apellido, "password", correo_electronico) VALUES
 ('Julio','Ramirez','Password','contador@tec.mx'),
 ('Alejandro','Polo', 'Password','presidente@tec.mx'),
 ('Daniel','Cu','Password','admin@tec.mx');
+('David','Cu','Password','superadmin@tec.mx');
 
 -- Insertar datos tabla roles_usuarios
 
@@ -401,7 +402,9 @@ INSERT INTO roles_usuarios(id_usuario , id_role) VALUES
 (1,1),
 (2,2),
 (3,3),
-(4,4);
+(4,4),
+(5,1),
+(5,4);
 
 -- DONACIONES
 

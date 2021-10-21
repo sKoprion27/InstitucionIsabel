@@ -384,5 +384,5 @@ VALUES ($1, $2, '', '', '', $3, $4);
 
 -- 15.5) Actualizar una nota
 UPDATE notas
-SET id_donacion = $1, id_usuario = $2, titulo = '', contenido = '', fecha_limite = '', estado_completado = $3, estado_activo = $4 
+SET id_donacion = $1, id_usuario = $2, titulo = '', contenido = '', fecha_limite = '', estado_completado = $3, estado_activo = $4
 WHERE id = $5 AND existe = true;

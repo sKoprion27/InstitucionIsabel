@@ -46,5 +46,17 @@ export const authController = {
     } catch (error) {
       console.log(error)
     }
+  },
+  me1: async (req, res) => {
+    const { id } = req.body
+    console.log('ID_ME', id)
+    try {
+      const [queryAnswer, status] = await User.me('id', id)
+      const { password, creado, existe, ...user } = queryAnswer
+
+      response(req, res, 'ME', user, status)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

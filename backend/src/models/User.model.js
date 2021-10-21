@@ -57,8 +57,26 @@ export const User = {
       return ['ERROR GET BY FIELD 🤯', 404]
     }
   },
-  me: () => {
-
+  me: async () => {
+    const QUERY = `
+      SELECT U.id, nombre, apellido, correo_electronico, "password", id_role as roles
+      FROM usuarios U, roles_usuarios RU
+      WHERE
+      RU.id_usuario = U.id
+      AND
+      U.existe = true
+    `
+    try {
+      const { rows, rowCount } = await db.query(QUERY)
+      if (rowCount === 0) {
+        return ['ERROR GET BY FIELD 🤯', 404]
+      } else {
+        return [rows[0], 200]
+      }
+    } catch (error) {
+      console.log('ERROR GET BY FIELD 🤯', error)
+      return ['ERROR GET BY FIELD 🤯', 404]
+    }
   },
   getOneByField: async (field = '', param) => {
     const QUERY = `
