@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom'
 import './style.scss'
 import { routesSidebar } from './../../../mock/routes.mock'
+import logo from '../../../img/logo.jpg'
 export const Sidebar = () => {
   return (
-    <div className='col-4 col-md-3'>
+    <div className='col-4 col-md-2'>
       <div className='sidebar'>
-        <h2>Menú</h2>
+        <Link to='/'>
+          <img className='sidebar__logo' src={logo} alt='Logo institución isabel' />
+        </Link>
         <ul className='sidebar__menu'>
           {
             routesSidebar.map(route => {

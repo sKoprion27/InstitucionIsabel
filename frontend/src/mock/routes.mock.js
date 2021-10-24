@@ -1,15 +1,24 @@
-import { MdOutlineSupervisorAccount } from 'react-icons/md'
+import {
+  MdOutlineSupervisorAccount,
+  MdOutlinePermIdentity,
+  MdOutlinePayment,
+  MdEditNote,
+  MdOutlineCategory,
+  MdOutlineScatterPlot,
+  MdEmojiPeople,
+  MdOutlineFavoriteBorder
+} from 'react-icons/md'
 
 export const routesSidebar = [
   {
     link: 'usuarios',
     name: 'Usuarios',
-    icon: <MdOutlineSupervisorAccount />
+    icon: <MdOutlinePermIdentity />
   },
   {
     link: 'donaciones',
     name: 'Donaciones',
-    icon: <MdOutlineSupervisorAccount />
+    icon: <MdOutlineFavoriteBorder />
   },
   {
     link: 'donadores',
@@ -19,26 +28,26 @@ export const routesSidebar = [
   {
     link: 'beneficiarios',
     name: 'Beneficiarios',
-    icon: <MdOutlineSupervisorAccount />
+    icon: <MdEmojiPeople />
   },
   {
     link: 'categorias',
     name: 'Categorias',
-    icon: <MdOutlineSupervisorAccount />
+    icon: <MdOutlineCategory />
   },
   {
     link: 'metodos-pago',
     name: 'Métodos de pago',
-    icon: <MdOutlineSupervisorAccount />
+    icon: <MdOutlinePayment />
   },
   {
     link: 'tipo-donacion',
     name: 'Tipo de donación',
-    icon: <MdOutlineSupervisorAccount />
+    icon: <MdOutlineScatterPlot />
   },
   {
     link: 'notas',
     name: 'Notas',
-    icon: <MdOutlineSupervisorAccount />
+    icon: <MdEditNote />
   }
 ]

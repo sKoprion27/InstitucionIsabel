@@ -9,16 +9,16 @@ export const Navbar = () => {
     auth.logout()
   }
   return (
-    <nav className='navbar navbar-light bg-light'>
+    <nav className='navbar navbar-light bg-light sticky-top'>
       <div className='container-fluid'>
         <Link to='/' className='navbar-brand'>
-          Institución Isabel
+          Sistema de donaciones
         </Link>
 
         <div className='options'>
           <div className='options__profile'>
-            <Link to='perfil' className='btn btn-primary options__profile__btn'>
-              {auth.user.nombre} <MdManageAccounts size={24} />
+            <Link to='perfil' className='options__profile__btn'>
+              Mi cuenta<MdManageAccounts size={24} />
             </Link>
           </div>
           <button className='btn btn-danger' onClick={handlerLogout}>

@@ -9,7 +9,7 @@ export const DashboardLayout = () => {
   return (
     <div className='container-fluid'>
       <Navbar />
-      <div className='row'>
+      <div className='row justify-content-center'>
         <Sidebar />
         {/* Renders children */}
         <ContainerGrid>
