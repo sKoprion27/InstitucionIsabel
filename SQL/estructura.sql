@@ -1,16 +1,14 @@
 -- BASE DE DATOS
 \c postgres;
 DROP DATABASE IF EXISTS institucion_isabel;
-CREATE DATABASE institucion_isabel
-WITH
-ENCODING = 'UTF8'
-LC_CTYPE = 'Spanish_Mexico.1252';
-
+CREATE DATABASE institucion_isabel;
 \c institucion_isabel;
+
 SET client_encoding = 'LATIN1';
 -- CREAR TABLAS
 
 -- USUARIOS
+
 -- Crear tabla de usuarios
 CREATE TABLE usuarios(
   id SERIAL PRIMARY KEY,
@@ -543,12 +541,12 @@ INSERT INTO donadores(id_cfdi, id_estado, nombre_contacto, telefono, razon_socia
 
 INSERT INTO beneficiarios(nombre_beneficiario, descripcion) VALUES
 ('ninos de la institucion','Esta donacion es material didactico para los ninos de la institucion'),
-('colaboradores','Esta donacion se utilizará para la compensacion de los colaboradores'),
+('colaboradores','Esta donacion se utilizara para la compensacion de los colaboradores'),
 ('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),
 ('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
 ('Personal de la institucion','Esta donacion es para comprar juguetes para los ninos'),
 ('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
-('colaboradores','Esta donacion se utilizará para la compensacion de los colaboradores'),
+('colaboradores','Esta donacion se utilizara para la compensacion de los colaboradores'),
 ('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
 ('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
 ('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
@@ -557,7 +555,7 @@ INSERT INTO beneficiarios(nombre_beneficiario, descripcion) VALUES
 ('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
 ('ninos de la institucion','Esta donacion es para comprar juguetes para los ninos'),
 ('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
-('colaboradores','Esta donacion se utilizará para la compensacion de los colaboradores'),
+('colaboradores','Esta donacion se utilizara para la compensacion de los colaboradores'),
 ('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
 ('Personal de la institucion','Esta donacion es para comprar juguetes para los ninos'),
 ('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
@@ -686,11 +684,11 @@ INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALU
 ('Eliminar donador','Este donador se cambio de pais ', '4-10-2021',3,5),
 ('Eliminar donacion','La donacion se cancelo', '5-10-2021',3,6),
 ('Modificar pago','No esta bien el monto', '6-10-2021',3,7),
-('Modificar nombre de proveedor','Tiene una letra de más','7-10-2021',3,8),
+('Modificar nombre de proveedor','Tiene una letra de mas','7-10-2021',3,8),
 ('Modificar RFC del proovedor','Tiene mal su RFC', '8-10-2021',3,8),
 ('Modificar Apellido Contador','Poner los dos apellidos', '9-10-2021',3,9),
 ('Agrega donacion de unicef ','No esta en el sistema esta donacion','10-10-2021',3,10),
-('Modificar rfc unicef','Está mal su RFC', '11-10-2021',3,1),
+('Modificar rfc unicef','Esta mal su RFC', '11-10-2021',3,1),
 ('Modificar domicilio a donador ','Se cambio de domicilio fiscal', '12-10-2021',3,2),
 ('Modificar usuario','Tiene mal su nombre', '14-10-2021',3,4),
 ('Modificar proovedor','Tiene mal su direccion', '15-10-2021',3,5),
