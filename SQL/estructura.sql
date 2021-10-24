@@ -482,7 +482,7 @@ INSERT INTO estados(nombre) VALUES
 ('Hidalgo'),
 ('Jalisco'),
 ('Mexico'),
-('Michoacán'),
+('Michoacan'),
 ('Morelos'),
 ('Nayarit'),
 ('Nuevo Leon'),
@@ -497,7 +497,7 @@ INSERT INTO estados(nombre) VALUES
 ('Tamaulipas'),
 ('Tlaxcala'),
 ('Veracruz'),
-('Yucatán'),
+('Yucatan'),
 ('Zacatecas');
 
 -- Insertar datos de la tabla donadores - 20
