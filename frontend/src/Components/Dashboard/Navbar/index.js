@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from './../../../hooks/useAuth'
 import { MdManageAccounts } from 'react-icons/md'
 
-export const Navbar = () => {
+export const Navbar = ({ toggle }) => {
   const auth = useAuth()
   const handlerLogout = () => {
     auth.logout()
@@ -11,9 +11,7 @@ export const Navbar = () => {
   return (
     <nav className='navbar navbar-light bg-light sticky-top'>
       <div className='container-fluid'>
-        <Link to='/' className='navbar-brand'>
-          Sistema de donaciones
-        </Link>
+        <button className='btn btn-primary' onClick={toggle}>Menú</button>
 
         <div className='options'>
           <div className='options__profile'>
