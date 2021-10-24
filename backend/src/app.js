@@ -8,6 +8,7 @@ const app = express()
 const PORT = 4000 || process.env.PORT
 
 // Middlewares de configuracion inicial
+
 app.use(cors()) // Una configuracion de seguridad entre headers
 app.use(json()) // Parsea lo que llega al servidor en formato json
 app.use(cookieParser()) // Generar el rastero de las cookies
