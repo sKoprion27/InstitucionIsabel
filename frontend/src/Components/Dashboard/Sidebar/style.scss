@@ -1,5 +1,5 @@
 .sidebar {
-  width: 300px;
+  width: 250px;
   border: 1px solid #adb5bd;
   text-align: center;
   padding-top: 20px;
@@ -18,7 +18,7 @@
 
 .sidebar__item {
   list-style: none;
-  font-size: 20px;
+  font-size: 16px;
   margin: 2px;
   padding: 5px;
 
@@ -31,7 +31,7 @@
     }
 
     svg {
-      font-size: 30px;
+      font-size: 20px;
       margin-right: 30px;
     }
   }
