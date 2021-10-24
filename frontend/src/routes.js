@@ -15,6 +15,14 @@ import { DonationEdit } from './Pages/Donations/DonationEdit'
 import { UserAdd } from './Pages/Users/UserAdd/index'
 import { BeneficiaryList } from './Pages/Beneficiaries/BeneficiaryList'
 import { BeneficiaryEdit } from './Pages/Beneficiaries/BeneficiaryEdit'
+import { PaymentList } from './Pages/PaymentMethods/PaymentList/index'
+import { PaymentEdit } from './Pages/PaymentMethods/PaymentEdit'
+import { CategoryList } from './Pages/Categories/CategoryList/index'
+import { CategoryEdit } from './Pages/Categories/CategoryEdit'
+import { TypeDonationList } from './Pages/TypeDonation/TypeDonationList/index'
+import { TypeDonationEdit } from './Pages/TypeDonation/TypeDonationEdit/index'
+import { NoteList } from './Pages/Notes/NoteList/index'
+import { NoteEdit } from './Pages/Notes/NoteEdit/index'
 
 export const routes = [
   {
@@ -90,6 +98,58 @@ export const routes = [
           {
             path: ':id',
             element: <BeneficiaryEdit />
+          }
+        ]
+      },
+      {
+        path: 'metodos-pago',
+        children: [
+          {
+            path: '',
+            element: <PaymentList />
+          },
+          {
+            path: ':id',
+            element: <PaymentEdit />
+          }
+        ]
+      },
+      {
+        path: 'categorias',
+        children: [
+          {
+            path: '',
+            element: <CategoryList />
+          },
+          {
+            path: ':id',
+            element: <CategoryEdit />
+          }
+        ]
+      },
+      {
+        path: 'tipo-donacion',
+        children: [
+          {
+            path: '',
+            element: <TypeDonationList />
+          },
+          {
+            path: ':id',
+            element: <TypeDonationEdit />
+          }
+        ]
+      },
+      {
+        path: 'notas',
+        children: [
+          {
+            path: '',
+            element: <NoteList />
+          },
+          {
+            path: ':id',
+            element: <NoteEdit />
           }
         ]
       },
