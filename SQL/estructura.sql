@@ -425,16 +425,16 @@ INSERT INTO metodos_pago(nombre, descripcion) VALUES
 -- Crear datos de la tabla categorias
 
 INSERT INTO categorias(nombre, descripcion) VALUES
-('Tecnologia','Computadoras para los niños de la institucion'),
-('Inmobiliario','Sillas para los niños de la institucion'),
-('Materiales','Materiales de arte para los niños de la institucion'),
-('Inmobiliario','Sillones para los niños de la institucion'),
-('Tecnologia','Ipads para los niños de la institucion'),
-('Materiales','Materiales de escritura para los niños de la institucion'),
-('Tecnologia','Pantallas para dar clases a los niños de la institucion'),
-('Inmobiliario','Mesas para los niños de la institucion'),
-('Tecnologia','Teclados extra para los niños de la institucion'),
-('Materiales','Materiales de construccion para los niños de la institucion');
+('Tecnologia','Computadoras para los ninos de la institucion'),
+('Inmobiliario','Sillas para los ninos de la institucion'),
+('Materiales','Materiales de arte para los ninos de la institucion'),
+('Inmobiliario','Sillones para los ninos de la institucion'),
+('Tecnologia','Ipads para los ninos de la institucion'),
+('Materiales','Materiales de escritura para los ninos de la institucion'),
+('Tecnologia','Pantallas para dar clases a los ninos de la institucion'),
+('Inmobiliario','Mesas para los ninos de la institucion'),
+('Tecnologia','Teclados extra para los ninos de la institucion'),
+('Materiales','Materiales de construccion para los ninos de la institucion');
 
 
 -- Insertar datos de la tabla CFDIS
@@ -540,27 +540,27 @@ INSERT INTO donadores(id_cfdi, id_estado, nombre_contacto, telefono, razon_socia
 -- Insertar datos de la tabla beneficiarios
 
 INSERT INTO beneficiarios(nombre_beneficiario, descripcion) VALUES
-('niños de la institucion','Esta donacion es material didactico para los niños de la institucion'),
+('ninos de la institucion','Esta donacion es material didactico para los ninos de la institucion'),
 ('colaboradores','Esta donacion se utilizará para la compensacion de los colaboradores'),
-('niños de la institucion','Esta donacion es para comprar materiales de arte para los niños'),
-('niños de la institucion','Esta donacion es para introducir nuevos cursos para los niños'),
-('Personal de la institucion','Esta donacion es para comprar juguetes para los niños'),
-('niños de la institucion','Esta donacion es para introducir nuevos cursos para los niños'),
-('colaboradores','Esta donacion se utilizará para la compensacion de los colaboradores'),
-('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
-('niños de la institucion','Esta donacion es para introducir nuevos cursos para los niños'),
-('niños de la institucion','Esta donacion es para la compra de productos de higiene (papel de baño, jabon, etc) para la utilizacion de los niños'),
-('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
-('niños de la institucion','Esta donacion es para comprar materiales de arte para los niños'),
-('niños de la institucion','Esta donacion es para la compra de productos de higiene (papel de baño, jabon, etc) para la utilizacion de los niños'),
-('niños de la institucion','Esta donacion es para comprar juguetes para los niños'),
-('niños de la institucion','Esta donacion es para introducir nuevos cursos para los niños'),
+('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),
+('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
+('Personal de la institucion','Esta donacion es para comprar juguetes para los ninos'),
+('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
 ('colaboradores','Esta donacion se utilizará para la compensacion de los colaboradores'),
 ('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
-('Personal de la institucion','Esta donacion es para comprar juguetes para los niños'),
-('niños de la institucion','Esta donacion es para la compra de productos de higiene (papel de baño, jabon, etc) para la utilizacion de los niños'),
-('niños de la institucion','Esta donacion es para comprar materiales de arte para los niños'),
-('niños de la institucion','Esta donacion es para la compra de productos de higiene (papel de baño, jabon, etc) para la utilizacion de los niños');
+('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
+('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
+('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
+('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),
+('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
+('ninos de la institucion','Esta donacion es para comprar juguetes para los ninos'),
+('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
+('colaboradores','Esta donacion se utilizará para la compensacion de los colaboradores'),
+('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
+('Personal de la institucion','Esta donacion es para comprar juguetes para los ninos'),
+('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
+('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),
+('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos');
 
 -- Insertar datos de la tabla tipo_donacion
 
@@ -570,7 +570,7 @@ INSERT INTO tipo_donaciones(nombre, descripcion) VALUES
 ('inmuebles','Donacion de una propiedad'),
 ('puntual','Donacion de una cantidad una sola vez'),
 ('recurrente','Donacion realizada cada mes'),
-('microdonacion','Donacion masiva de pequeñas cantidades');
+('microdonacion','Donacion masiva de pequenas cantidades');
 
 -- Insertar datos donaciones
 INSERT INTO donaciones(id_donador, id_metodo_pago, id_tipo_donacion, nombre, monto) VALUES
@@ -599,7 +599,7 @@ INSERT INTO donaciones(id_donador, id_metodo_pago, id_tipo_donacion, nombre, mon
 
 INSERT INTO donaciones_beneficiarios(id_beneficiario, id_donacion, destino_donacion) VALUES
 (1,1, 'Crear un nuevo salon de clases'),
-(1,2, 'Para los niños de la casa hogar'),
+(1,2, 'Para los ninos de la casa hogar'),
 (1,3, 'Para el evento de diciembre'),
 (1,4, 'Para el evento de verano'),
 (1,5, 'Configurar el nuevo internet'),
@@ -678,7 +678,7 @@ INSERT INTO donaciones_categorias(id_categoria, id_donacion) VALUES
 
 INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALUES
 ('Modificar nombre de proveedor','Este proveedor cambio de razon social', '20-10-2021',3,2),
-('Modificar correo de facturacion','Este proveedor marco en la mañana y necesita que le llegue su factura', '1-10-2021',3,2),
+('Modificar correo de facturacion','Este proveedor marco en la manana y necesita que le llegue su factura', '1-10-2021',3,2),
 ('Agregar proveedor','Este proveedor no existe', '2-10-2021',3,3),
 ('Agregar donacion','No esta donacion de cemex', '3-10-2021',3,4),
 ('Eliminar donador','Este donador se cambio de pais ', '4-10-2021',3,5),
@@ -694,6 +694,6 @@ INSERT INTO notas(titulo, contenido, fecha_limite, id_usuario, id_donacion) VALU
 ('Modificar proovedor','Tiene mal su direccion', '15-10-2021',3,5),
 ('Modificar nombre','Esta mal escrito el nombre', '16-10-2021',3,6),
 ('Modificar direccion','Se cambio de estado', '17-10-2021',3,7),
-('Modificar contraseña','Se le olvido la contraseña', '18-10-2021',3,8),
+('Modificar contrasena','Se le olvido la contrasena', '18-10-2021',3,8),
 ('Modificar correo','Tiene mal el dominio', '19-10-2021',3,9),
 ('Agregar usuario','No esta dado de alta TELEVISA en proveedores','20-10-2021',3,10);
