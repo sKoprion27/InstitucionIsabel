@@ -65,7 +65,6 @@ export const UserList = () => {
                       <td>{user.nombre}</td>
                       <td>{user.apellido}</td>
                       <td>{user.correo_electronico}</td>
-                      <td>{user.role}</td>
                       <td>{formatDateTable(user.creado)}</td>
                       <td className='users__buttons'>
                         <Link to={`${user.id}`} className='btn btn-success'>

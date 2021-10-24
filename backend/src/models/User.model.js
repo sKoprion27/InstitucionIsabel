@@ -58,17 +58,33 @@ export const User = {
     }
   },
   me: async (id) => {
-    console.log(id, '😀😆')
-    const QUERY = `
-      SELECT *
-      FROM roles_usuarios
+    console.log(id, '😀 😆')
+    const QUERY1 = `
+      SELECT R.nombre_role as role
+      FROM roles R, roles_usuarios RU
+      WHERE RU.id_role = R.id
+      AND
+      RU.id_usuario = $1
+    `
+    const QUERY2 = `
+      SELECT nombre, apellido, correo_electronico
+      FROM usuarios
+      WHERE
+      id = $1
     `
     try {
-      const { rows, rowCount } = await db.query(QUERY)
+      const { rows, rowCount } = await db.query(QUERY1, [id])
+      const resp = await db.query(QUERY2, [id])
+
+      const resultado = {
+        nombre: resp.rows[0].nombre,
+        apellido: resp.rows[0].apellido,
+        roles: rows
+      }
       if (rowCount === 0) {
         return ['ERROR ME 🤯', 404]
       } else {
-        return [rows[0], 200]
+        return [resultado, 200]
       }
     } catch (error) {
       console.log('ERROR ME🤯', error)

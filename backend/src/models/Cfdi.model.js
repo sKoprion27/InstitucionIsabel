@@ -1,4 +1,11 @@
 import { db } from './../database/index'
+import config from './../config/index'
+const { Pool } = require('pg')
+
+const { databaseConfig } = config
+
+const pool = new Pool(databaseConfig)
+
 export const Cfdi = {
   getAll: async () => {
     const QUERY = `
@@ -8,7 +15,19 @@ export const Cfdi = {
       ORDER BY id ASC
     `
     try {
-      const { rows } = await db.query(QUERY)
+      // const { rows } = await db.query(QUERY)
+      // console.log(rows, '😀')
+      const rows = pool.query("SET client_encoding to 'latin1';", function (err, empty_result_to_fix_encoding) {
+        if (err) {
+          console.log(err, empty_result_to_fix_encoding)
+        }
+        return pool.query('SELECT * FROM cfdis', function (err, result) {
+          console.log(err)
+          console.log(result)
+          return result.rows
+        })
+      })
+
       return [rows, 200]
     } catch (error) {
       console.log('ERROR GET ALL CFDIS 🤯', error)

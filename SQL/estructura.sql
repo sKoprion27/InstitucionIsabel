@@ -1,14 +1,16 @@
 -- BASE DE DATOS
 \c postgres;
 DROP DATABASE IF EXISTS institucion_isabel;
-CREATE DATABASE institucion_isabel;
-\c institucion_isabel;
+CREATE DATABASE institucion_isabel
+WITH
+ENCODING = 'UTF8'
+LC_CTYPE = 'Spanish_Mexico.1252';
 
+\c institucion_isabel;
 SET client_encoding = 'LATIN1';
 -- CREAR TABLAS
 
 -- USUARIOS
-
 -- Crear tabla de usuarios
 CREATE TABLE usuarios(
   id SERIAL PRIMARY KEY,
