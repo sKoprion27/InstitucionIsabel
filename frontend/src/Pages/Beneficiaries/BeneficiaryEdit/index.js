@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { getOneBeneficiary } from '../../../helpers/beneficiaries.helpers'
 import { BeneficiaryEditForm } from './../../../Components/Beneficiaries/BeneficiaryEditForm'
+import { Link } from 'react-router-dom'
 
 export const BeneficiaryEdit = () => {
   const { id } = useParams()
@@ -20,8 +21,13 @@ export const BeneficiaryEdit = () => {
   }, [id])
   return (
     <div className='row justify-content-center'>
-      <h1 className='text-center'>Editar Beneficiario</h1>
-      <div className='col-6'>
+      <div className='user__header'>
+        <h1 className='text-center'>Editar Beneficiario</h1>
+        <Link to='/dashboard/beneficiarios' className='btn btn-primary btn-lg' >
+          Regresar
+        </Link>
+      </div>
+      <div className='col-12 col-md-6'>
         <BeneficiaryEditForm {...beneficiary} />
       </div>
     </div>
