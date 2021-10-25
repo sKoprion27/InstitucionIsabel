@@ -1,11 +1,13 @@
-.user__form{
+.user__form {
   border: 1px solid #adb5bd;
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 10px;
 }
-.user__btn__container{
+
+.user__btn__container {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around !important;
+
 }

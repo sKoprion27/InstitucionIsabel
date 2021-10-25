@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react'
-import { getAllUsers } from '../../../helpers/users.helpers'
 import { Link } from 'react-router-dom'
-import './style.scss'
+import { Modal } from '../../../Components/Dashboard/Modal'
+import { NavPage } from '../../../Components/Dashboard/NavPage'
+import { getAllUsers } from '../../../helpers/users.helpers'
+import { MdDelete, MdVisibility } from 'react-icons/md'
+import { useAuth } from './../../../hooks/useAuth'
 import { formatDateTable, formatKeyTable } from './../../../utils/index'
-import { MdDelete, MdOutlineMode } from 'react-icons/md'
+import './style.scss'
 export const UserList = () => {
+  const auth = useAuth()
   const [users, setUsers] = useState([])
   const [usersFilter, setUsersFilter] = useState([])
+  const [fetchDelete, setFetchDelete] = useState(false)
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -18,7 +23,7 @@ export const UserList = () => {
       }
     }
     getUsers()
-  }, [])
+  }, [fetchDelete])
 
   const handlerFinder = ({ target }) => {
     console.log(users.filter(user => user.nombre.includes(target.value)))
@@ -30,12 +35,11 @@ export const UserList = () => {
   }
   return (
     <div className='container users'>
+      <NavPage title='Lista de usuarios' onePage />
       <div className='row'>
-        <h2>Lista de usuarios</h2>
         <div className='user__options'>
           <div className='user__options__buttons'>
             <Link to='add' className='btn btn-primary'>Agregar usuario</Link>
-            <button to='add' className='btn btn-primary'>Descargar excel</button>
           </div>
           <div className='user__finder'>
             <label>Buscar usuario</label>
@@ -68,12 +72,36 @@ export const UserList = () => {
                       <td>{formatDateTable(user.creado)}</td>
                       <td className='users__buttons'>
                         <Link to={`${user.id}`} className='btn btn-success'>
-                          <MdOutlineMode /> Editar
+                          <MdVisibility />
+                          Ver más
                         </Link>
-                        <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${user.id}`}>
-                          <MdDelete /> Eliminar
-                        </button>
-                        <Modal id={user.id} />
+                        {
+                          auth.user.id === user.id
+                            ? (<span
+                              className='d-inline-block'
+                              tabIndex={0} data-bs-toggle='popover'
+                              data-bs-trigger='hover focus' data-bs-content='Disabled popover'
+                            >
+                              <button className='btn btn-danger' type='button' disabled>
+                                <MdDelete />
+                                Eliminar
+                              </button>
+                            </span>)
+                            : (<button
+                              className='btn btn-danger'
+                              data-bs-toggle='modal'
+                              data-bs-target={`#deleteModal${user.id}`}
+                            >
+                              <MdDelete />
+                              Eliminar
+                            </button>)
+                        }
+
+                        <Modal
+                          id={user.id}
+                          path='users'
+                          setFetchDelete={setFetchDelete}
+                        />
                       </td>
                     </tr>
                   )
@@ -84,26 +112,5 @@ export const UserList = () => {
         </div>
       </div >
     </div >
-  )
-}
-
-const Modal = ({ id }) => {
-  return (
-    <div className='modal fade' id={`deleteModal${id}`} tabIndex={-1} aria-labelledby='deleteModalLabel' aria-hidden='true'>
-      <div className='modal-dialog'>
-        <div className='modal-content'>
-          <div className='modal-header'>
-            <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close' />
-          </div>
-          <div className='modal-body'>
-            <h3>Estas seguro que deseas eliminar este elemento</h3>
-          </div>
-          <div className='modal-footer justify-content-center'>
-            <button type='button' className='btn btn-success'>Si, guardar cambios</button>
-            <button type='button' className='btn btn-warning' data-bs-dismiss='modal'>Cancelar</button>
-          </div>
-        </div>
-      </div>
-    </div>
   )
 }

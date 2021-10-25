@@ -16,6 +16,11 @@ export const getAllRoles = async () => {
 }
 
 export const updateUser = async (user, id) => {
-  const { data } = await Axios.put(`${URL_API}/users/${id}`)
+  const { data } = await Axios.put(`${URL_API}/users/${id}`, user)
+  return data.response
+}
+
+export const deleteOne = async (id, path) => {
+  const { data } = await Axios.delete(`${URL_API}/${path}/${id}`)
   return data.response
 }

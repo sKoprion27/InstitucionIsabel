@@ -4,11 +4,25 @@ import { validatePasswordUser, validateUserFields } from './../middlewares/users
 
 const router = Router()
 
-router.get('/', userController.getUsers)
-router.get('/:id', userController.getOneUser)
-router.post('/', validateUserFields, userController.postOneUser)
-router.put('/:id', userController.updateOneUser)
-router.put('/:id/password', validatePasswordUser, userController.changePasswordUser)
-router.delete('/:id', userController.deleteOneUser)
+router.get('/',
+  userController.getUsers
+)
+router.get('/:id',
+  userController.getOneUser
+)
+router.post('/',
+  validateUserFields,
+  userController.postOneUser
+)
+router.put('/:id',
+  userController.updateOneUser
+)
+router.put('/:id/password',
+  validatePasswordUser,
+  userController.changePasswordUser
+)
+router.delete('/:id',
+  userController.deleteOneUser
+)
 
 export default router

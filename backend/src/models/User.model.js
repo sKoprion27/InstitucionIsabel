@@ -131,13 +131,12 @@ export const User = {
       SET
       nombre = $2,
       apellido = $3,
-      correo_electronico = $4,
-      id_role = $5
+      correo_electronico = $4
       WHERE id = $1
       AND
       existe = true
     `
-    const values = [id, user.nombre, user.apellido, user.correo_electronico, user.id_role]
+    const values = [id, user.nombre, user.apellido, user.correo_electronico]
     try {
       const { rowCount } = await db.query(UPDATE, values)
 
@@ -178,6 +177,8 @@ export const User = {
       UPDATE usuarios
       SET existe = false
       WHERE id = $1
+      AND
+      existe = true
     `
     try {
       const { rowCount } = await db.query(DELETE, [id])
