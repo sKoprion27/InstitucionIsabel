@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+/* eslint-disable no-undef */
+import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Modal } from '../../../Components/Dashboard/Modal'
 import { NavPage } from '../../../Components/Dashboard/NavPage'
@@ -12,6 +13,7 @@ export const UserList = () => {
   const [users, setUsers] = useState([])
   const [usersFilter, setUsersFilter] = useState([])
   const [fetchDelete, setFetchDelete] = useState(false)
+
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -39,11 +41,20 @@ export const UserList = () => {
       <div className='row'>
         <div className='user__options'>
           <div className='user__options__buttons'>
-            <Link to='add' className='btn btn-primary'>Agregar usuario</Link>
+            <Link
+              to='add'
+              className='btn btn-primary'
+            >
+              Agregar usuario
+            </Link>
           </div>
           <div className='user__finder'>
             <label>Buscar usuario</label>
-            <input type='text' className='form-control' onChange={handlerFinder} placeholder='Ejemplo' />
+            <input type='text'
+              className='form-control'
+              onChange={handlerFinder}
+              placeholder='Ejemplo'
+            />
           </div>
         </div>
         <div className='table-responsive'>
@@ -71,7 +82,9 @@ export const UserList = () => {
                       <td>{user.correo_electronico}</td>
                       <td>{formatDateTable(user.creado)}</td>
                       <td className='users__buttons'>
-                        <Link to={`${user.id}`} className='btn btn-success'>
+                        <Link
+                          to={`${user.id}`}
+                          className='btn btn-success'>
                           <MdVisibility />
                           Ver más
                         </Link>
@@ -79,10 +92,14 @@ export const UserList = () => {
                           auth.user.id === user.id
                             ? (<span
                               className='d-inline-block'
-                              tabIndex={0} data-bs-toggle='popover'
-                              data-bs-trigger='hover focus' data-bs-content='Disabled popover'
+                              tabIndex={0}
+                              data-bs-toggle='popover'
+                              data-bs-trigger='hover focus'
+                              data-bs-content='Disabled popover'
                             >
-                              <button className='btn btn-danger' type='button' disabled>
+                              <button
+                                className='btn btn-danger'
+                                type='button' disabled>
                                 <MdDelete />
                                 Eliminar
                               </button>
