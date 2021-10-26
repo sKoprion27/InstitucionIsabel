@@ -25,6 +25,7 @@ export const userController = {
       ...req.body,
       password: passwordHashed
     }
+    console.log(user)
     const [queryAnswer, status] = await User.postOne(user)
     response(req, res, 'POST ONE USER', queryAnswer, status)
   },

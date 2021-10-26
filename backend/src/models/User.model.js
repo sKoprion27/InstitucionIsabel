@@ -114,11 +114,14 @@ export const User = {
   },
   postOne: async (user) => {
     const INSERTION = `
-    INSERT INTO usuarios (nombre, apellido, "password", correo_electronico, id_role)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO usuarios (nombre, apellido, "password", correo_electronico)
+    VALUES ($1, $2, $3, $4)
     `
     try {
-      await db.query(INSERTION, [user.nombre, user.apellido, user.password, user.correo_electronico, user.id_role])
+      await db.query(
+        INSERTION,
+        [user.nombre, user.apellido, user.password, user.correo_electronico]
+      )
       return ['POST USER', 201]
     } catch (error) {
       console.log('ERROR POST USER 🤯', error)
