@@ -1,19 +1,48 @@
-import { postOneUser } from '../../../helpers/users.helpers'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { getAllRoles, postOneUser } from '../../../helpers/users.helpers'
+import { useEffect, useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
 import { NavPage } from '../../../Components/Dashboard/NavPage'
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
+import './style.scss'
 
 export const UserAdd = () => {
-  const [fetchAdd, setFetchAdd] = useState(false)
-  const { register, handleSubmit, reset, formState: { errors } } = useForm()
+  const { register, handleSubmit, reset, control, formState: { errors } } = useForm()
+  const [show, setShow] = useState(false)
+  const [roles, setRoles] = useState([{ value: 0, label: 'default' }])
+
+  const animatedComponents = makeAnimated()
+
+  useEffect(() => {
+    const getRoles = async () => {
+      const roles = await getAllRoles()
+      const options = roles.map(r => {
+        return {
+          value: r.id,
+          label: r.nombre_role
+        }
+      })
+      setRoles(options)
+    }
+    getRoles()
+  }, [roles])
+
+  const handlerShowPassword = () => {
+    setShow(!show)
+  }
 
   const handlerSubmit = async (data) => {
     try {
-      await postOneUser(data)
-      setFetchAdd(!fetchAdd)
+      console.log(data)
+      const { roles, ...user } = data
+      console.log(user)
+      await postOneUser(user)
+
       alert('Usuario creado')
       reset({})
     } catch (error) {
+      alert('ERROR')
       console.log(error, 'Crear usuario')
     }
   }
@@ -27,6 +56,7 @@ export const UserAdd = () => {
             className='user__form'
             onSubmit={handleSubmit(handlerSubmit)}
           >
+
             <div className='mb-3'>
               <label className='form-label'>Nombre</label>
               <input
@@ -34,12 +64,15 @@ export const UserAdd = () => {
                 type='text'
                 className='form-control'
                 name='nombre'
+                autoComplete={'off'}
+                placeholder='Escribe nombre'
                 {
                 ...register('nombre', {
                   required: true
                 })
                 }
               />
+
               {errors.nombre?.type === 'required' &&
                 (<span className='text-danger'>El nombre es requerido</span>)
               }
@@ -51,6 +84,8 @@ export const UserAdd = () => {
                 type='text'
                 className='form-control'
                 name='apellido'
+                placeholder='Escribe apellido'
+                autoComplete={'off'}
                 {...register('apellido', {
                   required: true
                 })}
@@ -61,12 +96,45 @@ export const UserAdd = () => {
               }
             </div>
             <div className='mb-3'>
-              <label className='form-label'>Email</label>
+              <label className='form-label'>Selecciona los roles</label>
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                defaultValue={10}
+                name='roles'
+                render={({ field: { onChange, value, ref } }) => (
+                  <Select
+                    inputRef={ref}
+                    placeholder='Roles de usuario'
+                    closeMenuOnSelect
+                    components={animatedComponents}
+                    className='form-control'
+                    isMulti
+                    value={roles.find(c => c.value === value)}
+                    onChange={val => onChange(val.value)}
+                    options={roles}
+                    noOptionsMessage={'No hay más opciones disponibles'}
+                  />
+                )}
+              />
+
+              {errors.roles?.type === 'required' &&
+                (<span
+                  className='text-danger'
+                >
+                  Selecciona al menos un role
+                </span>)
+              }
+            </div>
+            <div className='mb-3'>
+              <label className='form-label'>Correo electrónico</label>
               <input
                 onChange={register}
                 type='text'
                 className='form-control'
                 name='correo_electronico'
+                autoComplete={'off'}
+                placeholder='Escribe correo electrónico'
                 {...register('correo_electronico', {
                   required: true
                 })}
@@ -80,9 +148,11 @@ export const UserAdd = () => {
               <label className='form-label'>Contraseña</label>
               <input
                 onChange={register}
-                type='password'
+                type={show ? 'text' : 'password'}
                 className='form-control'
                 name='password'
+                autoComplete={'off'}
+                placeholder='Escribe contraseña'
                 {...register('password', {
                   required: true
                 })}
@@ -93,12 +163,26 @@ export const UserAdd = () => {
               }
             </div>
 
-            <button
-              type='submit'
-              className='btn btn-primary'
-            >
-              Agregar usuario
-            </button>
+            {
+              show
+                ? (<div className='show-password' onClick={handlerShowPassword}>
+                  <MdVisibilityOff />
+                  <span className='text-muted'>Ocultar contraseña</span>
+                </div>)
+                : (<div className='show-password' onClick={handlerShowPassword}>
+                  <MdVisibility />
+                  <span className='text-muted'>Mostrar contraseña</span>
+                </div>)
+            }
+
+            <div className='w-100 d-flex justify-content-center'>
+              <button
+                type='submit'
+                className='btn btn-primary'
+              >
+                Agregar usuario
+              </button>
+            </div>
           </form>
         </div>
       </div>
