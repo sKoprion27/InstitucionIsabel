@@ -1,6 +1,7 @@
 import { response } from './../utils/response'
 import { encrypt } from './../lib/encrypt'
 import { User } from './../models/User.model'
+import { RoleUser } from '../models/RoleUser'
 
 export const userController = {
 
@@ -20,14 +21,27 @@ export const userController = {
   // POST ONE
 
   postOneUser: async (req, res) => {
-    const passwordHashed = encrypt.createHash(req.body.password)
+    const { password, roles, id } = req.body
+    const hash = encrypt.createHash(password)
     const user = {
       ...req.body,
-      password: passwordHashed
+      password: hash
     }
-    console.log(user)
-    const [queryAnswer, status] = await User.postOne(user)
-    response(req, res, 'POST ONE USER', queryAnswer, status)
+    const { rows } = await User.postOne({ id, ...user })
+    console.log(rows)
+
+    if (roles.length > 1) {
+      for (const role of roles) {
+        console.log(role)
+        const [queryAnswer, status] = await RoleUser.postOne(role.id, rows[0].id)
+        console.log(queryAnswer, status)
+      }
+    } else {
+      const [queryAnswer, status] = await RoleUser.postOne(roles[0].id, rows[0].id)
+      console.log(queryAnswer, status)
+    }
+
+    response(req, res, 'POST ONE USER', rows[0], 201)
   },
 
   // UPDATE ONE

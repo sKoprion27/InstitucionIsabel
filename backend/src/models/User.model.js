@@ -116,17 +116,12 @@ export const User = {
     const INSERTION = `
     INSERT INTO usuarios (nombre, apellido, "password", correo_electronico)
     VALUES ($1, $2, $3, $4)
+    RETURNING id;
     `
-    try {
-      await db.query(
-        INSERTION,
-        [user.nombre, user.apellido, user.password, user.correo_electronico]
-      )
-      return ['POST USER', 201]
-    } catch (error) {
-      console.log('ERROR POST USER 🤯', error)
-      return ['ERROR POST USER 🤯', 400]
-    }
+    return db.query(
+      INSERTION,
+      [user.nombre, user.apellido, user.password, user.correo_electronico]
+    )
   },
   putOne: async (user, id) => {
     const UPDATE = `

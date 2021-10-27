@@ -39,10 +39,18 @@ export const UserAdd = () => {
 
   const handlerSubmit = async (data) => {
     try {
-      const { roles, ...user } = data
-      console.log(user, '😀')
-      await postOneUser(user)
-
+      // console.log(data)
+      const roles = data.roles.map(role => {
+        return {
+          id: role.value,
+          label: role.label
+        }
+      })
+      const dataPost = {
+        ...data,
+        roles
+      }
+      await postOneUser(dataPost)
       alert('Usuario creado')
       reset({})
       reset({ roles: '' })
