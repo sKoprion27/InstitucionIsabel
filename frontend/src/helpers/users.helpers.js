@@ -30,3 +30,8 @@ export const getAllRoles = async () => {
   const { data } = await Axios.get(`${URL_API}/roles`)
   return data.response
 }
+
+export const postOneUserRoles = async (id, roles) => {
+  const { data } = await Axios.post(`${URL_API}/roles`, { id, roles })
+  return data.response
+}

@@ -8,7 +8,12 @@ import makeAnimated from 'react-select/animated'
 import './style.scss'
 
 export const UserAdd = () => {
-  const { register, handleSubmit, reset, control, formState: { errors } } = useForm()
+  const {
+    register,
+    handleSubmit,
+    reset, control,
+    formState: { errors }
+  } = useForm()
   const [show, setShow] = useState(false)
   const [roles, setRoles] = useState([{ value: 0, label: 'default' }])
 
@@ -26,7 +31,7 @@ export const UserAdd = () => {
       setRoles(options)
     }
     getRoles()
-  }, [roles])
+  }, [])
 
   const handlerShowPassword = () => {
     setShow(!show)
@@ -34,13 +39,13 @@ export const UserAdd = () => {
 
   const handlerSubmit = async (data) => {
     try {
-      console.log(data)
       const { roles, ...user } = data
-      console.log(user)
+      console.log(user, '😀')
       await postOneUser(user)
 
       alert('Usuario creado')
       reset({})
+      reset({ roles: '' })
     } catch (error) {
       alert('ERROR')
       console.log(error, 'Crear usuario')
@@ -100,24 +105,20 @@ export const UserAdd = () => {
               <Controller
                 control={control}
                 rules={{ required: true }}
-                defaultValue={10}
+                defaultValue={false}
                 name='roles'
-                render={({ field: { onChange, value, ref } }) => (
+                render={({ field }) => (
                   <Select
-                    inputRef={ref}
                     placeholder='Roles de usuario'
                     closeMenuOnSelect
                     components={animatedComponents}
                     className='form-control'
                     isMulti
-                    value={roles.find(c => c.value === value)}
-                    onChange={val => onChange(val.value)}
                     options={roles}
-                    noOptionsMessage={'No hay más opciones disponibles'}
+                    {...field}
                   />
                 )}
               />
-
               {errors.roles?.type === 'required' &&
                 (<span
                   className='text-danger'
@@ -151,7 +152,7 @@ export const UserAdd = () => {
                 type={show ? 'text' : 'password'}
                 className='form-control'
                 name='password'
-                autoComplete={'off'}
+                autoComplete='new-password'
                 placeholder='Escribe contraseña'
                 {...register('password', {
                   required: true
