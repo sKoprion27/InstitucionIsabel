@@ -7,7 +7,8 @@ import {
 
 // Middleware validator
 export const validateUserFields = async (req, res, next) => {
-  const { err } = await validator.validateSchema(userPostSchema, req.body)
+  const { id, ...body } = req.body
+  const { err } = await validator.validateSchema(userPostSchema, body)
   console.log(err)
   if (!err) {
     next()

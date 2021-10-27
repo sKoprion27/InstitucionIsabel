@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 // Config file
 const { privateKey } = config.jwt_token
 
-// Intern use functions
+// Validate a token
 const isValidToken = ({ token }) => {
   try {
     const decodedToken = jwt.verify(token, privateKey)

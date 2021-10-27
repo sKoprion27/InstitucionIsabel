@@ -10,11 +10,11 @@ import notFoundRouter from './notFound.routes'
 import typesDonationsRouter from './typesDonations.routes'
 import beneficiariesRouter from './beneficiaries.routes'
 import paymentMethodsRouter from './paymentMethods.routes'
-// import { auth } from '../lib/auth'
+import { auth } from '../lib/auth'
 
 export const initRoutes = (app) => {
   app.use('/auth', authRouter)
-  // app.use(auth.verifyToken) // si se activa pide token
+  app.use(auth.verifyToken) // si se activa pide token
   app.use('/users', usersRouter)
   app.use('/roles', rolesRouter)
   app.use('/donors', donorsRouter)
