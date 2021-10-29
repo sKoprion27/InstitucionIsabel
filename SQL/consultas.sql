@@ -1,3 +1,16 @@
+SELECT U.nombre, U.apellido, U.correo_electronico
+FROM
+usuarios U,
+roles R,
+roles_usuarios RU,
+roles_permisos RP
+WHERE
+RU.id_usuario = 1
+AND
+RU.id_usuario = 1
+AND
+RU.id_role = R.id;
+
 -- 1) Consultar Usuarios
 SELECT U.id, nombre, apellido, correo_electronico, R.nombre_role Rol
 FROM usuarios U, roles R

@@ -1,13 +1,13 @@
 
 import { useState } from 'react'
 import { deleteOne } from './../../../helpers/users.helpers'
-export const Modal = ({ id, path, setFetchDelete }) => {
+export const Modal = ({ id, path, setFetchAction, disabledElement }) => {
   const [show, setShow] = useState(false)
   const handlerDelete = async (e) => {
     try {
       await deleteOne(id, path)
       setShow(!show)
-      setFetchDelete((fetchDelete) => !fetchDelete)
+      setFetchAction((fetchAction) => !fetchAction)
       document.querySelector('.modal-backdrop').remove()
     } catch (error) {
       console.log(error, 'Deleted one')
@@ -33,7 +33,7 @@ export const Modal = ({ id, path, setFetchDelete }) => {
             {
               !show
                 ? (<h3>Estas seguro que deseas eliminar este elemento</h3>)
-                : (<h3>Elemento eliminado</h3>)
+                : (<h3>Elemento {disabledElement ? 'deshabilitado' : 'eliminado'}</h3>)
             }
           </div>
           <div className='modal-footer justify-content-center'>

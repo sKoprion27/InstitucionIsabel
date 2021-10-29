@@ -57,39 +57,36 @@ export const User = {
       return ['ERROR GET BY FIELD 🤯', 404]
     }
   },
-  me: async (id) => {
-    console.log(id, '😀 😆')
-    const QUERY1 = `
-      SELECT R.nombre_role as role
-      FROM roles R, roles_usuarios RU
-      WHERE RU.id_role = R.id
-      AND
-      RU.id_usuario = $1
-    `
-    const QUERY2 = `
+  me: async (id_usuario) => {
+    const QUERY = `
       SELECT nombre, apellido, correo_electronico
       FROM usuarios
       WHERE
       id = $1
     `
-    try {
-      const { rows, rowCount } = await db.query(QUERY1, [id])
-      const resp = await db.query(QUERY2, [id])
-
-      const resultado = {
-        nombre: resp.rows[0].nombre,
-        apellido: resp.rows[0].apellido,
-        roles: rows
-      }
-      if (rowCount === 0) {
-        return ['ERROR ME 🤯', 404]
-      } else {
-        return [resultado, 200]
-      }
-    } catch (error) {
-      console.log('ERROR ME🤯', error)
-      return ['ERROR ME 🤯', 404]
-    }
+    return db.query(QUERY, [id_usuario])
+  },
+  getRoles: async (id_usuario) => {
+    const QUERY = `
+      SELECT R.id, R.nombre_role as nombre
+      FROM roles_usuarios RU, roles R
+      WHERE
+      id_role = R.id
+      AND
+      id_usuario = $1
+    `
+    return db.query(QUERY, [id_usuario])
+  },
+  getPermissions: async (id_role) => {
+    const QUERY = `
+      SELECT P.id, P.nombre_permiso as nombre
+      FROM roles_permisos RP, permisos P
+      WHERE
+      id_permiso = P.id
+      AND
+      id_role = $1
+    `
+    return db.query(QUERY, [id_role])
   },
   getOneByField: async (field = '', param) => {
     const QUERY = `

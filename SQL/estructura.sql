@@ -408,6 +408,7 @@ INSERT INTO roles_usuarios(id_usuario , id_role) VALUES
 (3,3),
 (4,4),
 (5,1),
+(5,2),
 (5,4);
 
 -- DONACIONES

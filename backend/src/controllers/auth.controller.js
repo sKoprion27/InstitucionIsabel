@@ -36,24 +36,92 @@ export const authController = {
     response(req, res, 'LOGIN', token, 200)
   },
   me: async (req, res) => {
-    const { id } = req.body
-    console.log('ID_ME', id)
     try {
-      const [queryAnswer, status] = await User.getOneByField('id', id)
-      const { password, creado, existe, ...user } = queryAnswer
+      // usuarios
+      const user = await User.me(req.body.id)
 
-      response(req, res, 'ME', user, status)
+      const roles = await User.getRoles(req.body.id)// roles_usuarios
+
+      let result = {
+        ...user.rows[0],
+        roles: roles.rows,
+        permissions: new Set()
+      }
+
+      // roles_permisos
+      if (result.roles.length === 1) {
+        const permissions = await User.getPermissions(roles.rows[0].id)
+        result = {
+          ...result,
+          permissions: [...permissions.rows]
+        }
+      } else {
+        for (const role of result.roles) {
+          const permissions = await User.getPermissions(role.id)
+          result = {
+            ...result,
+            permissions: [...permissions.rows, ...result.permissions]
+          }
+        }
+      }
+
+      result = {
+        ...result,
+        permissions:
+          Array.from(new Set(result.permissions
+            .map(JSON.stringify)))
+            .map(JSON.parse)
+      }
+
+      response(req, res, 'ME1', result, 200)
     } catch (error) {
       console.log(error)
+      response(req, res, 'ME1', 'Error', 500)
     }
   },
   me1: async (req, res) => {
+    console.log(req.params.id)
     try {
-      const [queryAnswer, status] = await User.me(req.params.id)
+      // usuarios
+      const user = await User.me(req.params.id)
 
-      response(req, res, 'ME', queryAnswer, status)
+      const roles = await User.getRoles(req.params.id)// roles_usuarios
+
+      let result = {
+        ...user.rows[0],
+        roles: roles.rows,
+        permissions: new Set()
+      }
+
+      // roles_permisos
+      if (result.roles.length === 1) {
+        const permissions = await User.getPermissions(roles.rows[0].id)
+        result = {
+          ...result,
+          permissions: [...permissions.rows]
+        }
+      } else {
+        for (const role of result.roles) {
+          const permissions = await User.getPermissions(role.id)
+          result = {
+            ...result,
+            permissions: [...permissions.rows, ...result.permissions]
+          }
+        }
+      }
+
+      result = {
+        ...result,
+        permissions:
+          Array.from(new Set(result.permissions
+            .map(JSON.stringify)))
+            .map(JSON.parse)
+      }
+
+      response(req, res, 'ME1', result, 200)
     } catch (error) {
       console.log(error)
+      response(req, res, 'ME1', 'Error', 500)
     }
   }
 }

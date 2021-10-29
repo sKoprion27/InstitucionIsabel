@@ -10,7 +10,7 @@ import notFoundRouter from './notFound.routes'
 import typesDonationsRouter from './typesDonations.routes'
 import beneficiariesRouter from './beneficiaries.routes'
 import paymentMethodsRouter from './paymentMethods.routes'
-import { auth } from '../lib/auth'
+// import { auth } from '../lib/auth'
 
 export const initRoutes = (app) => {
   app.use('/auth', authRouter)

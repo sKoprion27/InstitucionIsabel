@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NavPage } from '../../Components/Dashboard/NavPage'
+import { useAuth } from '../../hooks/useAuth'
 
 export const Profile = () => {
   const [edit, setEdit] = useState(false)
   const { register, handleSubmit, watch, formState: { errors } } = useForm()
   const onSubmit = data => console.log(data)
+  const auth = useAuth()
   return (
     <div className='container'>
       <NavPage title='Perfil' />
@@ -26,6 +28,9 @@ export const Profile = () => {
             </div>
             <button type='submit' className='btn btn-primary'>Actualizar</button>
           </form>
+          {
+            JSON.stringify(auth.user)
+          }
         </div>
       </div>
     </div>

@@ -6,13 +6,13 @@ import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { getAllUsers } from '../../../helpers/users.helpers'
 import { MdDelete, MdVisibility } from 'react-icons/md'
 import { useAuth } from './../../../hooks/useAuth'
-import { formatDateTable, formatKeyTable } from './../../../utils/index'
+import { formatKeyTable } from './../../../utils/index'
 import './style.scss'
 export const UserList = () => {
   const auth = useAuth()
   const [users, setUsers] = useState([])
   const [usersFilter, setUsersFilter] = useState([])
-  const [fetchDelete, setFetchDelete] = useState(false)
+  const [fetchAction, setFetchAction] = useState(false)
 
   useEffect(() => {
     const getUsers = async () => {
@@ -25,7 +25,7 @@ export const UserList = () => {
       }
     }
     getUsers()
-  }, [fetchDelete])
+  }, [fetchAction])
 
   const handlerFinder = ({ target }) => {
     console.log(users.filter(user => user.nombre.includes(target.value)))
@@ -62,11 +62,14 @@ export const UserList = () => {
             <thead className='text-center'>
               <tr>
                 {
-                  users.length > 0 && (Object.keys(users[0]).map((key, index) => {
-                    return (
-                      <th key={index} scope='col'>{formatKeyTable(key)}</th>
-                    )
-                  }))
+                  users.length > 0 &&
+                  (Object.keys(users[0])
+                    .filter(key => (key !== 'id') && (key !== 'creado'))
+                    .map((key, index) => {
+                      return (
+                        <th key={index} scope='col'>{formatKeyTable(key)}</th>
+                      )
+                    }))
                 }
                 <th scope='col'>OPCIONES</th>
               </tr>
@@ -76,11 +79,9 @@ export const UserList = () => {
                 usersFilter.map((user) => {
                   return (
                     <tr key={user.id}>
-                      <td scope='row'>{user.id}</td>
                       <td>{user.nombre}</td>
                       <td>{user.apellido}</td>
                       <td>{user.correo_electronico}</td>
-                      <td>{formatDateTable(user.creado)}</td>
                       <td className='users__buttons'>
                         <Link
                           to={`${user.id}`}
@@ -88,6 +89,32 @@ export const UserList = () => {
                           <MdVisibility />
                           Ver más
                         </Link>
+                        {
+                          auth.user.id === user.id
+                            ? (<span
+                              className='d-inline-block'
+                              tabIndex={0}
+                              data-bs-toggle='popover'
+                              data-bs-trigger='hover focus'
+                              data-bs-content='Disabled popover'
+                            >
+                              <button
+                                className='btn btn-warning'
+                                type='button' disabled>
+                                <MdDelete />
+                                Deshabilitar
+                              </button>
+                            </span>)
+                            : (<button
+                              className='btn btn-warning'
+                              data-bs-toggle='modal'
+                              data-bs-target={`#deleteModal${user.id}`}
+                            >
+                              <MdDelete />
+                              Deshabilitar
+                            </button>)
+                        }
+
                         {
                           auth.user.id === user.id
                             ? (<span
@@ -117,7 +144,7 @@ export const UserList = () => {
                         <Modal
                           id={user.id}
                           path='users'
-                          setFetchDelete={setFetchDelete}
+                          setFetchAction={setFetchAction}
                         />
                       </td>
                     </tr>
