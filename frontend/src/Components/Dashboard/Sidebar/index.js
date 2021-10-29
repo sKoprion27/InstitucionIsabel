@@ -18,7 +18,6 @@ export const Sidebar = () => {
 
     >
       <SideNavItem
-
         user={{
           image: logo,
           email: user.correo_electronico,
@@ -29,14 +28,14 @@ export const Sidebar = () => {
       {
         routesSidebar.map(route => {
           return (
-            <SideNavItem
-              icon={route.icon}
-              key={route.name}
-            >
-              <Link to={route.link} className='black-text'>
+            <Link key={route.name} to={route.link} className='black-text'>
+              <SideNavItem
+                icon={route.icon}
+                href={null}
+              >
                 {route.name}
-              </Link>
-            </SideNavItem>
+              </SideNavItem>
+            </Link>
           )
         })
       }
