@@ -1,11 +1,17 @@
+/* eslint-disable no-useless-escape */
 import './style.scss'
 import { useState } from 'react'
 import { useAuth } from './../../hooks/useAuth'
 import bg from '../../img/login.jpg'
 import logo from '../../img/logo.jpg'
 import { Notification } from '../../Components/Dashboard/Notification'
+import { Button, Icon } from 'react-materialize'
+import { useForm } from 'react-hook-form'
+
 export const Login = () => {
   const { login } = useAuth()
+
+  const { register, handleSubmit, formState: { errors } } = useForm()
 
   const [credentials, setCredentials] = useState({
     correo_electronico: 'admin@tec.mx',
@@ -14,23 +20,21 @@ export const Login = () => {
 
   const [show, setShow] = useState(true)
   const [error, setError] = useState(null)
+  const [loading, setSetLoading] = useState(false)
 
   const { correo_electronico, password } = credentials
 
-  const handlerOnChange = (e) => {
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value
-    })
-  }
-  const handlerSubmit = async (e) => {
-    e.preventDefault()
+  const onSubmit = async (data) => {
+    console.log(data)
     try {
-      await login(correo_electronico, password)
-    } catch (error) {
-      setError('Crendenciales incorrectas')
+      setSetLoading(true)
+      await login(data)
+      setSetLoading(false)
+    } catch ({ response }) {
+      setError(response.data.message)
       setTimeout(() => {
         setError(null)
+        setSetLoading(false)
       }, 2000)
     }
   }
@@ -40,49 +44,97 @@ export const Login = () => {
         backgroundImage: `url(${bg})`
       }
     }>
-      <div className='container-fluid login'>
+      <div className='login'>
         <div className='login__img-container'>
           <img className='login__logo' src={logo} alt='logo isabel ' />
         </div>
-        <h1 className='text-center'>Iniciar sesión</h1>
-        <p className='text-center'>Sistema de donaciones</p>
-        <div className='row justify-content-center mt-4 '>
-          <div className='col'>
-            <form onSubmit={handlerSubmit}>
-              <div className='mb-3'>
-                <label htmlFor='emailInput' className='form-label'>
-                  Email
+        <h1>Iniciar sesión</h1>
+        <p>Sistema de donaciones</p>
+        <div className='row'>
+          <div className='form_container'>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className='input-field'>
+                <label htmlFor='emailInput'>
+                  Correo electrónico
                 </label>
-                <input onChange={handlerOnChange} value={correo_electronico} type='email' className='form-control' name='correo_electronico'
-                  placeholder='ejemplo@isabel.com' />
+                <input
+
+                  type='email'
+                  name='correo_electronico'
+                  autoComplete='off'
+                  {...register('correo_electronico', {
+                    required: {
+                      value: true,
+                      message: 'Esta campo es requerido'
+                    },
+                    pattern: {
+                      value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: 'Ingresa un correo válido'
+                    }
+                  })}
+                />
+                {errors.correo_electronico &&
+                  <span
+                    className='red-text error-alert'
+                  >
+                    {errors.correo_electronico.message}
+                  </span>
+                }
               </div>
-              <div className='mb-3'>
-                <label htmlFor='passwordInput' className='form-label'>
+              <div className='input-field '>
+                <label
+                  htmlFor='passwordInput'
+                >
                   Contraseña
                 </label>
-                <input onChange={handlerOnChange} placeholder='Tu contraseña' value={password} type={show ? 'password' : 'text'} className='form-control' name='password' />
-              </div>
-              <div className='mb-3 login__container-show'>
-                {
-                  credentials.password.length > 0 && (
-                    <ShowPassword setShow={setShow} show={show} />
-                  )
-                }
+                <input
 
+                  type={show ? 'password' : 'text'}
+                  name='password'
+                  autoComplete='off'
+                  {...register('password', {
+                    required: true,
+                    minLength: {
+                      value: 8,
+                      message: 'Tu contraseña al menos tiene 8 caracteres'
+                    }
+                  })}
+                />
+                {errors.password &&
+                  <span
+                    className='red-text error-alert'
+                  >
+                    {errors.password.message}
+                  </span>
+                }
               </div>
-              <div className='justify-content-center d-flex'>
-                <button type='submit' className='btn btn-primary btn-lg w-100'>
-                  Ingresar
-                </button>
+              <div className='login__container-show'>
+                <ShowPassword setShow={setShow} show={show} />
               </div>
+              <Button
+                node='button'
+                type='submit'
+                waves='light'
+                large
+                disabled={loading}
+              >
+                Ingresar
+                <Icon right>
+                  send
+                </Icon>
+              </Button>
             </form>
-            {
-              error
-                ? <Notification type='error' message={error} />
-                : (<div className='text-center mt-4 login__info'>
-                  Si desconoces tus accesos contacta a tu administrador
-                </div>)
-            }
+            <div className='login__info'>
+              {
+                error
+                  ? <p className='red-text'>
+                    {error}
+                  </p>
+                  : (<p>
+                    Si desconoces tus accesos contacta a tu administrador
+                  </p>)
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -92,15 +144,13 @@ export const Login = () => {
 
 const ShowPassword = ({ setShow, show }) => {
   return (
-    <p className='text-center login__show-password' onClick={() => setShow(!show)}>
+    <p className='login__show-password' onClick={() => setShow(!show)}>
       {
         show ? 'Mostrar contraseña' : 'Ocultar contraseña'
       }
-      <span className='material-icons material-icons-outlined ' >
-        {
-          show ? 'visibility' : 'visibility_off'
-        }
-      </span>
+      {
+        show ? <Icon>visibility</Icon> : <Icon>visibility_off</Icon>
+      }
     </p>
   )
 }

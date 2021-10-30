@@ -99,7 +99,7 @@ export const AuthProvider = (props) => {
     initialize()
   }, [])
 
-  const login = async (correo_electronico, password) => {
+  const login = async ({ correo_electronico, password }) => {
     const token = await loginService(correo_electronico, password)
 
     const user = await whoIamService(token)
