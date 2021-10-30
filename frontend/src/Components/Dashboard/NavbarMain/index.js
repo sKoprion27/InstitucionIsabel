@@ -1,7 +1,6 @@
 
 import { useAuth } from '../../../hooks/useAuth'
-import { Sidebar } from '../Sidebar'
-import { Navbar, NavItem, Icon } from 'react-materialize'
+import { Navbar, NavItem, Icon, Dropdown, Divider } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import './style.scss'
 
@@ -35,9 +34,34 @@ export const NavbarMain = () => {
           preventScrolling: true
         }}
       >
-        <NavItem onClick={handlerLogout}>
-          Cerrar sesión
-        </NavItem>
+
+        <Dropdown
+          id='Dropdown_14'
+          options={{
+            alignment: 'left',
+            autoTrigger: true,
+            closeOnClick: true,
+            constrainWidth: true,
+            container: null,
+            coverTrigger: true,
+            hover: false,
+            inDuration: 150,
+            onCloseEnd: null,
+            onCloseStart: null,
+            onOpenEnd: null,
+            onOpenStart: null,
+            outDuration: 250
+          }}
+          trigger={<a href='#!'>{auth.user.nombre} {auth.user.apellido}{' '}<Icon right>arrow_drop_down</Icon></a>}
+        >
+          <NavItem onClick={handlerLogout}>
+            Cerrar sesión
+          </NavItem>
+          <Divider />
+          <Link to='/dashboard/perfil'>
+            Mi cuenta
+          </Link>
+        </Dropdown>
       </Navbar>
 
     </>
