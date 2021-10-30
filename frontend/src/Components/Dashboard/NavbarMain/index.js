@@ -2,6 +2,8 @@
 import { useAuth } from '../../../hooks/useAuth'
 import { Sidebar } from '../Sidebar'
 import { Navbar, NavItem, Icon } from 'react-materialize'
+import { Link } from 'react-router-dom'
+import './style.scss'
 
 export const NavbarMain = () => {
   const auth = useAuth()
@@ -12,8 +14,15 @@ export const NavbarMain = () => {
   return (
     <>
       <Navbar
+        className='navbar'
         alignLinks='right'
+        brand={
+          <Link to='/dashboard' className='brand-logo'>
+            Institución Isabel
+          </Link>
+        }
         sidenav={null}
+        fixed
         options={{
           draggable: false,
           edge: 'left',
@@ -25,7 +34,6 @@ export const NavbarMain = () => {
           outDuration: 200,
           preventScrolling: true
         }}
-
       >
         <NavItem onClick={handlerLogout}>
           Cerrar sesión

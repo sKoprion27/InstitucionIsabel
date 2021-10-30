@@ -16,64 +16,60 @@ export const DonorList = () => {
     getDonors()
   }, [])
   return (
-    <div className='container donors'>
-      <div className='row'>
-        <h4>Lista de Donadores</h4>
-        <div className='table-responsive'>
-          <table className='table table-hover'>
-            <thead>
-              <tr>
-                {
-                  donors.length > 0 && (Object.keys(donors[0]).map((key, index) => {
-                    return (
-                      <th key={index} scope='col'>{formatKey(key)}</th>
-                    )
-                  }))
-                }
-                <th scope='col'>OPCIONES</th>
-              </tr>
-            </thead>
-            <tbody>
+    <div className='row'>
+      <h4>Lista de Donadores</h4>
+      <div className='table-responsive'>
+        <table className='table table-hover'>
+          <thead>
+            <tr>
               {
-                donors.map((donor) => {
-                  let regimenFiscal
-                  if (donor.regimen_fiscal) {
-                    regimenFiscal = 'Persona Física'
-                  } else {
-                    regimenFiscal = 'Persona Moral'
-                  }
+                donors.length > 0 && (Object.keys(donors[0]).map((key, index) => {
                   return (
-                    <tr key={donor.id}>
-                      <td scope='row'>{donor.id}</td>
-                      <td>{donor.telefono}</td>
-                      <td>{donor.razon_social}</td>
-                      <td>{donor.rfc}</td>
-                      <td>{donor.correo_electronico}</td>
-                      <td>{donor.codigo_postal}</td>
-                      <td>{donor.domicilio_fiscal}</td>
-                      <td>{regimenFiscal}</td>
-                      <td>{donor.estado}</td>
-                      <td>{donor.clave_cfdi}</td>
-                      <td>{donor.decripcion_cfdi}</td>
-                      <td>
-                        <Link to={`${donor.id}`} className='btn btn-success'>
-                          <MdOutlineMode /> Editar
-                        </Link>
-                        <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${donor.id}`}>
-                          <MdDelete /> Eliminar
-                        </button>
-
-                      </td>
-                    </tr>
+                    <th key={index} scope='col'>{formatKey(key)}</th>
                   )
-                })
+                }))
               }
+              <th scope='col'>OPCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              donors.map((donor) => {
+                let regimenFiscal
+                if (donor.regimen_fiscal) {
+                  regimenFiscal = 'Persona Física'
+                } else {
+                  regimenFiscal = 'Persona Moral'
+                }
+                return (
+                  <tr key={donor.id}>
+                    <td scope='row'>{donor.id}</td>
+                    <td>{donor.telefono}</td>
+                    <td>{donor.razon_social}</td>
+                    <td>{donor.rfc}</td>
+                    <td>{donor.correo_electronico}</td>
+                    <td>{donor.codigo_postal}</td>
+                    <td>{donor.domicilio_fiscal}</td>
+                    <td>{regimenFiscal}</td>
+                    <td>{donor.estado}</td>
+                    <td>{donor.clave_cfdi}</td>
+                    <td>{donor.decripcion_cfdi}</td>
+                    <td>
+                      <Link to={`${donor.id}`} className='btn btn-success'>
+                        <MdOutlineMode /> Editar
+                      </Link>
+                      <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${donor.id}`}>
+                        <MdDelete /> Eliminar
+                      </button>
 
-            </tbody>
-          </table>
+                    </td>
+                  </tr>
+                )
+              })
+            }
 
-        </div>
-
+          </tbody>
+        </table>
       </div>
     </div>
   )

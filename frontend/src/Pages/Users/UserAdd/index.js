@@ -95,7 +95,7 @@ export const UserAdd = () => {
               <input
                 onChange={register}
                 type='text'
-                className='form-control'
+                className='input-field'
                 name='apellido'
                 placeholder='Escribe apellido'
                 autoComplete={'off'}
@@ -114,13 +114,14 @@ export const UserAdd = () => {
                 control={control}
                 rules={{ required: true }}
                 defaultValue={false}
+
                 name='roles'
                 render={({ field }) => (
                   <Select
                     placeholder='Roles de usuario'
                     closeMenuOnSelect
                     components={animatedComponents}
-                    className='form-control'
+                    className='input-field'
                     isMulti
                     options={roles}
                     {...field}

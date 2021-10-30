@@ -1,23 +1,25 @@
 import { Outlet } from 'react-router-dom'
-import { ContainerGrid } from '../../Components/ContainerGrid'
 import { NavbarMain } from '../../Components/Dashboard/NavbarMain'
-import { Row, Col } from 'react-materialize'
+import { Container, Row, Col } from 'react-materialize'
 import { Sidebar } from '../../Components/Dashboard/Sidebar'
+import './style.scss'
 
 export const DashboardLayout = () => {
   return (
-    <Row>
-
-      <Col m={2}>
-        <Sidebar />
-      </Col>
-
-      <Col m={10}>
+    <>
+      <header>
         <NavbarMain />
-        <ContainerGrid>
-          <Outlet />
-        </ContainerGrid>
-      </Col>
-    </Row>
+        <Sidebar />
+      </header>
+      <main className='has-fixed-sidenav'>
+        <Container>
+          <Row>
+            <Col s={12}>
+              <Outlet />
+            </Col>
+          </Row>
+        </Container>
+      </main>
+    </>
   )
 }

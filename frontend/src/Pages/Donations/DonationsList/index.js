@@ -16,54 +16,52 @@ export const DonationsList = () => {
     getDonations()
   }, [])
   return (
-    <div className='container donations'>
-      <div className='row'>
-        <h4>Lista de Donaciones</h4>
-        <div className='table-responsive'>
-          <table className='table table-hover'>
-            <thead>
-              <tr>
-                {
-                  donations.length > 0 && (Object.keys(donations[0]).map((key, index) => {
-                    return (
-                      <th key={index} scope='col'>{formatKey(key)}</th>
-                    )
-                  }))
-                }
-                <th scope='col'>OPCIONES</th>
-              </tr>
-            </thead>
-            <tbody>
+    <div className='row'>
+      <h4>Lista de Donaciones</h4>
+      <div className='table-responsive'>
+        <table className='table table-hover'>
+          <thead>
+            <tr>
               {
-                donations.map((donation) => {
+                donations.length > 0 && (Object.keys(donations[0]).map((key, index) => {
                   return (
-                    <tr key={donation.id}>
-                      <td scope='row'>{donation.id}</td>
-                      <td>{donation.nombre_donacion}</td>
-                      <td>{donation.monto}</td>
-                      <td>{donation.metodo_pago}</td>
-                      <td>{donation.tipo_donacion}</td>
-                      <td>{donation.razon_social}</td>
-                      <td>{donation.rfc}</td>
-                      <td>
-                      <Link to={`${donation.id}`} className='btn btn-success'>
-                          <MdOutlineMode /> Editar
-                        </Link>
-                        <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${donation.id}`}>
-                          <MdDelete /> Eliminar
-                        </button>
-                      </td>
-                    </tr>
+                    <th key={index} scope='col'>{formatKey(key)}</th>
                   )
-                })
+                }))
               }
+              <th scope='col'>OPCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              donations.map((donation) => {
+                return (
+                  <tr key={donation.id}>
+                    <td scope='row'>{donation.id}</td>
+                    <td>{donation.nombre_donacion}</td>
+                    <td>{donation.monto}</td>
+                    <td>{donation.metodo_pago}</td>
+                    <td>{donation.tipo_donacion}</td>
+                    <td>{donation.razon_social}</td>
+                    <td>{donation.rfc}</td>
+                    <td>
+                      <Link to={`${donation.id}`} className='btn btn-success'>
+                        <MdOutlineMode /> Editar
+                      </Link>
+                      <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${donation.id}`}>
+                        <MdDelete /> Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })
+            }
 
-            </tbody>
-          </table>
-
-        </div>
+          </tbody>
+        </table>
 
       </div>
+
     </div>
   )
 }

@@ -36,7 +36,7 @@ export const UserList = () => {
     }
   }
   return (
-    <div className='container users'>
+    <>
       <NavPage title='Lista de usuarios' onePage />
       <div className='row'>
         <div className='user__options'>
@@ -155,6 +155,6 @@ export const UserList = () => {
           </table>
         </div>
       </div >
-    </div >
+    </ >
   )
 }

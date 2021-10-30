@@ -1,4 +1,11 @@
-.layout__sidebar,
-.layout__main-contet {
-  transition: all 300ms ease !important;
+@import "../../mixins/responsive.scss";
+
+.has-fixed-sidenav {
+  @include mobile {
+    padding-left: 0;
+  }
+
+  @include desktop {
+    padding-left: 300px;
+  }
 }
