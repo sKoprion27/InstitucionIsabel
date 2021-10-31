@@ -18,7 +18,7 @@ export const Sidebar = () => {
         user={{
           image: logo,
           email: user.correo_electronico,
-          name: user.nombre
+          name: `${user.nombre} ${user.apellido}`
         }}
         userView
       />

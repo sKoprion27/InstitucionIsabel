@@ -1,38 +1,128 @@
-import { useState } from 'react'
+import { getOneUser, updateUser } from '../../helpers/users.helpers'
+import { useEffect, useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { NavPage } from '../../Components/Dashboard/NavPage'
 import { useAuth } from '../../hooks/useAuth'
+import { NavPage } from '../../Components/Dashboard/NavPage'
 
 export const Profile = () => {
   const [edit, setEdit] = useState(false)
-  const { register, handleSubmit, watch, formState: { errors } } = useForm()
-  const onSubmit = data => console.log(data)
+  const [fetchUpdate, setFetchUpdate] = useState(false)
+  const { register, handleSubmit, reset, formState: { errors } } = useForm()
   const auth = useAuth()
+  useEffect(() => {
+    reset(auth.user)
+  }, [])
+  const handlerSubmit = async (data) => {
+    try {
+      await updateUser(data, auth.user.id)
+      setFetchUpdate(!fetchUpdate)
+      alert('Usuario actualizado')
+      setEdit(false)
+    } catch (error) {
+      console.log(error, 'Update user')
+    }
+  }
+  const handlerEdit = () => {
+    setEdit(!edit)
+  }
   return (
-    <div className='container'>
+    <>
       <NavPage title='Perfil' />
-      <div className='row justify-content-center '>
-        <div className='col-8 col-md-5'>
-          <form>
-            <div className='mb-3'>
-              <label className='form-label'>Nombre</label>
-              <input type='text' className='form-control' />
-            </div>
-            <div className='mb-3'>
-              <label className='form-label'>Nombre</label>
-              <input type='text' className='form-control' />
-            </div>
-            <div className='mb-3'>
-              <label className='form-label'>Nombre</label>
-              <input type='text' className='form-control' />
-            </div>
-            <button type='submit' className='btn btn-primary'>Actualizar</button>
-          </form>
-          {
-            JSON.stringify(auth.user)
+      <form
+        className='user__form'
+        onSubmit={handleSubmit(handlerSubmit)}
+      >
+        <div>
+          <label>Nombre</label>
+          <input
+            onChange={register}
+            type='text'
+            name='nombre'
+            {
+            ...register('nombre', {
+              required: {
+                value: true,
+                message: 'El nombre es requerido'
+              }
+            })
+            }
+            disabled={!edit} />
+          {errors.nombre &&
+            (<span className='red-text'>
+              {errors.nombre.message}
+            </span>)
           }
         </div>
-      </div>
-    </div>
+        <div>
+          <label>Apellidos</label>
+          <input
+            onChange={register}
+            type='text'
+            name='apellido'
+            {...register('apellido', {
+              required: {
+                value: true,
+                message: 'El apellido es requerido'
+              }
+            })}
+            disabled={!edit}
+          />
+          {errors.apellido &&
+            (<span className='red-text'>
+              {errors.apellido.message}
+            </span>)
+          }
+        </div>
+        <div>
+          <label>Email</label>
+          <input
+            onChange={register}
+            type='text'
+            name='correo_electronico'
+            {...register('correo_electronico', {
+              required: {
+                value: true,
+                message: 'El correo electronico es requerido'
+              }
+            })}
+            disabled={!edit}
+          />
+          {errors.correo_electronico &&
+            (<span className='red-text'>
+              {errors.correo_electronico.message}
+            </span>)
+          }
+        </div>
+
+        <div className='user__btn__container'>
+          <button
+            type='submit'
+            className='btn'
+            disabled={!edit}
+          >
+            Actualizar
+          </button>
+
+          <Link
+            to='password'
+          >
+            <button type='button' className='btn indigo'
+              disabled={!edit}>
+              Reestablecer contraseña
+            </button>
+          </Link>
+          <button
+            type='button'
+            className={`btn ${!edit || 'red'} `}
+            onClick={handlerEdit}
+          >
+            {
+              edit ? 'Cancelar' : 'Editar'
+            }
+          </button>
+        </div>
+      </form>
+    </>
   )
 }
