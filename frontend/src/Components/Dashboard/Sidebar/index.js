@@ -4,17 +4,15 @@ import logo from '../../../img/logo.jpg'
 import { SideNav, SideNavItem, Button, Icon } from 'react-materialize'
 import { useAuth } from '../../../hooks/useAuth'
 import './style.scss'
+import { NavItems } from '../NavItems'
 
 export const Sidebar = () => {
   const { user } = useAuth()
   return (
     <SideNav
       id='sidenav-left'
-      className='grey hide-on-med-and-dow sidenav'
+      className='indigo white-text hide-on-med-and-dow sidenav'
       fixed
-      options={{
-        draggable: true
-      }}
     >
       <SideNavItem
         user={{
@@ -24,22 +22,8 @@ export const Sidebar = () => {
         }}
         userView
       />
-      {
-        routesSidebar.map(route => {
-          return (
-            <Link key={route.name} to={route.link} className='black-text'>
-              <SideNavItem
-                icon={route.icon}
-                href={null}
-                waves
-              >
-                {route.name}
+      <NavItems />
 
-              </SideNavItem>
-            </Link>
-          )
-        })
-      }
     </SideNav>
   )
 }

@@ -3,6 +3,7 @@ import { useAuth } from '../../../hooks/useAuth'
 import { Navbar, NavItem, Icon, Dropdown, Divider } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import './style.scss'
+import { NavItems } from '../NavItems'
 
 export const NavbarMain = () => {
   const auth = useAuth()
@@ -13,7 +14,7 @@ export const NavbarMain = () => {
   return (
     <>
       <Navbar
-        className='navbar'
+        className='navbar indigo'
         alignLinks='right'
         brand={
           <Link to='/dashboard' className='brand-isabel'>
@@ -21,7 +22,7 @@ export const NavbarMain = () => {
           </Link>
         }
         id='mobile-nav'
-        sidenav={null}
+        sidenav={<NavItems navbar />}
         fixed
         options={{
           draggable: false,
@@ -37,7 +38,7 @@ export const NavbarMain = () => {
       >
 
         <Dropdown
-          id='Dropdown_14'
+          id='Dropdown-menu'
           options={{
             alignment: 'left',
             autoTrigger: true,

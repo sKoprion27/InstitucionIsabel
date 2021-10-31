@@ -1,20 +1,15 @@
-.user__options {
+.menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .user__finder {
-    width: 50%;
-    display: flex;
-    justify-content: space-around;
-
-    input {
-      width: 50%;
-    }
+  div {
+    margin-top: 30px !important;
+    min-width: 60%;
   }
 }
 
-.users__buttons {
+.options {
   display: flex;
   justify-content: space-around;
   align-items: center;

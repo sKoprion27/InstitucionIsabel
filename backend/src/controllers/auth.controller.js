@@ -12,6 +12,7 @@ import { encrypt } from './../lib/encrypt'
 export const authController = {
   login: async (req, res) => {
     const { correo_electronico, password } = req.body
+    console.log(req.body)
 
     const [queryAnswer, status] = await User.getOnePassword(correo_electronico)
 
@@ -45,7 +46,7 @@ export const authController = {
       let result = {
         ...user.rows[0],
         roles: roles.rows,
-        permissions: new Set()
+        permisos: []
       }
 
       // roles_permisos
@@ -53,22 +54,22 @@ export const authController = {
         const permissions = await User.getPermissions(roles.rows[0].id)
         result = {
           ...result,
-          permissions: [...permissions.rows]
+          permisos: [...permissions.rows]
         }
       } else {
         for (const role of result.roles) {
           const permissions = await User.getPermissions(role.id)
           result = {
             ...result,
-            permissions: [...permissions.rows, ...result.permissions]
+            permisos: [...permissions.rows, ...result.permisos]
           }
         }
       }
 
       result = {
         ...result,
-        permissions:
-          Array.from(new Set(result.permissions
+        permisos:
+          Array.from(new Set(result.permisos
             .map(JSON.stringify)))
             .map(JSON.parse)
       }

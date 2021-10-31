@@ -5,9 +5,7 @@ export const validator = {
       const user = await schema.validateAsync(data, {
         abortEarly: false,
         errors: {
-          wrap: {
-            label: false
-          },
+          wrap: { label: false },
           stack: true
         },
         externals: false

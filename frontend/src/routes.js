@@ -23,6 +23,8 @@ import { TypeDonationList } from './Pages/TypeDonation/TypeDonationList/index'
 import { TypeDonationEdit } from './Pages/TypeDonation/TypeDonationEdit/index'
 import { NoteList } from './Pages/Notes/NoteList/index'
 import { NoteEdit } from './Pages/Notes/NoteEdit/index'
+import { PermissionGuard } from './Components/PermissionGuard'
+import { NotPermission } from './Components/NotPermission'
 
 export const routes = [
   {
@@ -50,15 +52,27 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <UserList />
+            element: (
+              <PermissionGuard permiso='Consultar usuarios'>
+                <UserList />
+              </PermissionGuard>
+            )
           },
           {
             path: 'add',
-            element: <UserAdd />
+            element: (
+              <PermissionGuard permiso='Registrar usuarios'>
+                <UserAdd />
+              </PermissionGuard>
+            )
           },
           {
             path: ':id',
-            element: <UserEdit />
+            element: (
+              <PermissionGuard permiso='Modificar usuarios'>
+                <UserEdit />
+              </PermissionGuard>
+            )
           }
         ]
       },
@@ -67,11 +81,17 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <DonorList />
+            element: (
+              <PermissionGuard permiso='Consultar donadores'>
+                <DonorList />
+              </PermissionGuard>)
           },
           {
             path: ':id',
-            element: <DonorEdit />
+            element: (
+              <PermissionGuard permiso='Modificar donadores'>
+                <DonorList />
+              </PermissionGuard>)
           }
         ]
       },
@@ -80,11 +100,19 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <DonationsList />
+            element: (
+              <PermissionGuard permiso='Consultar donaciones'>
+                <DonationsList />
+              </PermissionGuard>
+            )
           },
           {
             path: ':id',
-            element: <DonationEdit />
+            element: (
+              <PermissionGuard permiso='Modificar donaciones'>
+                <DonationEdit />
+              </PermissionGuard>
+            )
           }
         ]
       },
@@ -93,11 +121,19 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <BeneficiaryList />
+            element: (
+              <PermissionGuard permiso='Consultar beneficiario donacion'>
+                <BeneficiaryList />
+              </PermissionGuard>
+            )
           },
           {
             path: ':id',
-            element: <BeneficiaryEdit />
+            element: (
+              <PermissionGuard permiso='Modificar beneficiario donacion'>
+                <BeneficiaryEdit />
+              </PermissionGuard>
+            )
           }
         ]
       },
@@ -106,11 +142,19 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <PaymentList />
+            element: (
+              <PermissionGuard permiso='Consultar metodos de pago'>
+                <PaymentList />
+              </PermissionGuard>
+            )
           },
           {
             path: ':id',
-            element: <PaymentEdit />
+            element: (
+              <PermissionGuard permiso='Modificar metodo de pago'>
+                <PaymentEdit />
+              </PermissionGuard>
+            )
           }
         ]
       },
@@ -119,11 +163,19 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <CategoryList />
+            element: (
+              <PermissionGuard permiso='Consultar categoria donativo'>
+                <CategoryList />
+              </PermissionGuard>
+            )
           },
           {
             path: ':id',
-            element: <CategoryEdit />
+            element: (
+              <PermissionGuard permiso='Modificar categoria donativo'>
+                <CategoryEdit />
+              </PermissionGuard>
+            )
           }
         ]
       },
@@ -132,11 +184,19 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <TypeDonationList />
+            element: (
+              <PermissionGuard permiso='Consultar tipo de donativo'>
+                <TypeDonationList />
+              </PermissionGuard>
+            )
           },
           {
             path: ':id',
-            element: <TypeDonationEdit />
+            element: (
+              <PermissionGuard permiso='Modificar tipo de donativo'>
+                <TypeDonationEdit />
+              </PermissionGuard>
+            )
           }
         ]
       },
@@ -145,17 +205,34 @@ export const routes = [
         children: [
           {
             path: '',
-            element: <NoteList />
+            element: (
+              <PermissionGuard permiso='Consultar listado completo de notas'>
+                <NoteList />
+              </PermissionGuard>
+            )
           },
           {
             path: ':id',
-            element: <NoteEdit />
+            element: (
+              <PermissionGuard permiso='Modificar notas'>
+                <NoteEdit />
+              </PermissionGuard>
+            )
           }
         ]
       },
       {
         path: 'perfil',
         element: <Profile />
+      },
+      {
+        path: 'permisos',
+        children: [
+          {
+            path: '',
+            element: <NotPermission />
+          }
+        ]
       },
       {
         path: '*',

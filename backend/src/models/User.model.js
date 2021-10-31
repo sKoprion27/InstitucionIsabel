@@ -59,7 +59,7 @@ export const User = {
   },
   me: async (id_usuario) => {
     const QUERY = `
-      SELECT nombre, apellido, correo_electronico
+      SELECT id, nombre, apellido, correo_electronico
       FROM usuarios
       WHERE
       id = $1

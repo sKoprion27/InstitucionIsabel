@@ -73,9 +73,7 @@ export const Login = () => {
                 }
               </div>
               <div className='input-field '>
-                <label
-                  htmlFor='passwordInput'
-                >
+                <label >
                   Contraseña
                 </label>
                 <input
@@ -84,7 +82,10 @@ export const Login = () => {
                   name='password'
                   autoComplete='off'
                   {...register('password', {
-                    required: true,
+                    required: {
+                      value: true,
+                      message: 'Esta campo es requerido'
+                    },
                     minLength: {
                       value: 8,
                       message: 'Tu contraseña al menos tiene 8 caracteres'
@@ -105,7 +106,6 @@ export const Login = () => {
               <Button
                 node='button'
                 type='submit'
-                waves='light'
                 large
                 disabled={loading}
               >

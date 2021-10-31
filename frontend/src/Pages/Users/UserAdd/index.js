@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { getAllRoles, postOneUser } from '../../../helpers/users.helpers'
 import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
@@ -83,7 +84,7 @@ export const UserAdd = () => {
               }
             />
             {errors.nombre?.type === 'required' &&
-              (<span className='text-danger'>El nombre es requerido</span>)
+              (<span className='red-text'>El nombre es requerido</span>)
             }
           </div>
           <div className='input-field'>
@@ -100,7 +101,7 @@ export const UserAdd = () => {
 
             />
             {errors.apellido?.type === 'required' &&
-              (<span className='text-danger'>El apellido es requerido</span>)
+              (<span className='red-text'>El apellido es requerido</span>)
             }
           </div>
           <div className='input-select'>
@@ -123,7 +124,7 @@ export const UserAdd = () => {
             />
             {errors.roles?.type === 'required' &&
               (<span
-                className='text-danger'
+                className='red-text'
               >
                 Selecciona al menos un role
               </span>)
@@ -137,12 +138,21 @@ export const UserAdd = () => {
               name='correo_electronico'
               autoComplete={'off'}
               {...register('correo_electronico', {
-                required: true
+                required: {
+                  value: true,
+                  message: 'El correo electronico es requerido'
+                },
+                pattern: {
+                  value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: 'Ingresa un correo válido'
+                }
               })}
 
             />
-            {errors.correo_electronico?.type === 'required' &&
-              (<span className='text-danger'>El correo electronico es requerido</span>)
+            {errors.correo_electronico &&
+              (<span className='red-text'>
+                {errors.correo_electronico.message}
+              </span>)
             }
           </div>
           <div className='input-field'>
@@ -153,12 +163,25 @@ export const UserAdd = () => {
               name='password'
               autoComplete='new-password'
               {...register('password', {
-                required: true
+                required: {
+                  value: true,
+                  message: 'La contraseña es requerida'
+                },
+                minLength: {
+                  value: 8,
+                  message: 'La contraseña debe contener al menos 8 caracteres'
+                },
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
+                  message: 'La contraseña debe contener al menos una mayúscula y un numero'
+                }
               })}
 
             />
-            {errors.password?.type === 'required' &&
-              (<span className='text-danger'>La contraseña es requerida</span>)
+            {errors.password &&
+              (<span className='red-text'>
+                {errors.password.message}
+              </span>)
             }
           </div>
 

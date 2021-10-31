@@ -1,69 +1,63 @@
-
-import { useState } from 'react'
-import { deleteOne } from './../../../helpers/users.helpers'
-export const Modal = ({ id, path, setFetchAction, disabledElement }) => {
-  const [show, setShow] = useState(false)
-  const handlerDelete = async (e) => {
-    try {
-      await deleteOne(id, path)
-      setShow(!show)
-      setFetchAction((fetchAction) => !fetchAction)
-      document.querySelector('.modal-backdrop').remove()
-    } catch (error) {
-      console.log(error, 'Deleted one')
-    }
+import React, { useEffect, useRef } from 'react'
+import M from 'materialize-css'
+import 'materialize-css/dist/css/materialize.min.css'
+import { Icon } from 'react-materialize'
+import { useAuth } from '../../../hooks/useAuth'
+export const Modal = ({ id }) => {
+  const auth = useAuth()
+  const modalRef = useRef()
+  const options = {
+    onOpenStart: () => {
+      console.log('Open Start')
+    },
+    onOpenEnd: () => {
+      console.log('Open End')
+    },
+    onCloseStart: () => {
+      console.log('Close Start')
+    },
+    onCloseEnd: () => {
+      console.log('Close End')
+    },
+    inDuration: 250,
+    outDuration: 250,
+    opacity: 0.5,
+    dismissible: false,
+    startingTop: '4%',
+    endingTop: '10%'
   }
+
+  useEffect(() => {
+    M.Modal.init(modalRef.current, options)
+  }, [])
   return (
-    <div className='modal fade'
-      id={`deleteModal${id}`}
-      tabIndex={-1}
-      aria-labelledby='deleteModalLabel'
-      aria-hidden='true'
-    >
-      <div className='modal-dialog'>
+    <>
+      <button
+        className='btn red modal-trigger'
+        data-target={`modal-delete${id}`}
+        type='button' disabled={auth.user.id === id}>
+        <Icon>delete</Icon>
+      </button>
+
+      <div
+        ref={modalRef}
+        id={`modal-delete${id}`}
+        className='modal bottom-sheet'
+      >
         <div className='modal-content'>
-          <div className='modal-header'>
-            <button type='button'
-              className='btn-close'
-              data-bs-dismiss='modal'
-              aria-label='Close'
-            />
-          </div>
-          <div className='modal-body'>
-            {
-              !show
-                ? (<h3>Estas seguro que deseas eliminar este elemento</h3>)
-                : (<h3>Elemento {disabledElement ? 'deshabilitado' : 'eliminado'}</h3>)
-            }
-          </div>
-          <div className='modal-footer justify-content-center'>
-            {
-              !show
-                ? (<>
-                  <button
-                    type='button'
-                    className='btn btn-success'
-                    onClick={handlerDelete}
-                  >
-                    Si, guardar cambios
-                  </button>
-                  <button
-                    type='button'
-                    className='btn btn-danger'
-                    data-bs-dismiss='modal'>
-                    Cancelar
-                  </button>
-                </>)
-                : (<button
-                  type='button'
-                  className='btn btn-danger'
-                  data-bs-dismiss='modal'>
-                  Cerrar
-                </button>)
-            }
-          </div>
+          <h4>Estas seguro de eliminar este elemento</h4>
+          <p>Esta acción es irreversible</p>
+          {id}
+        </div>
+        <div className='modal-footer'>
+          <button className='modal-close waves-effect red white-text btn'>
+            Cancelar
+          </button>
+          <button className='waves-effect waves-green green white-text btn'>
+            Aceptar
+          </button>
         </div>
       </div>
-    </div>
+    </>
   )
 }
