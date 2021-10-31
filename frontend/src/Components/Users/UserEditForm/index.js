@@ -40,17 +40,16 @@ export const UserEditForm = ({ id }) => {
   }
   return (
     <>
-      <h3 className='text-muted'>Información de usuario</h3>
+      <p>Información de usuario</p>
       <form
         className='user__form'
         onSubmit={handleSubmit(handlerSubmit)}
       >
-        <div className='mb-3'>
-          <label className='form-label'>Nombre</label>
+        <div>
+          <label>Nombre</label>
           <input
             onChange={register}
             type='text'
-            className='form-control'
             name='nombre'
             {
             ...register('nombre', {
@@ -62,12 +61,11 @@ export const UserEditForm = ({ id }) => {
             (<span className='text-danger'>El nombre es requerido</span>)
           }
         </div>
-        <div className='mb-3'>
+        <div>
           <label className='form-label'>Apellidos</label>
           <input
             onChange={register}
             type='text'
-            className='form-control'
             name='apellido'
             {...register('apellido', {
               required: true
@@ -78,12 +76,11 @@ export const UserEditForm = ({ id }) => {
             (<span className='text-danger'>El apellido es requerido</span>)
           }
         </div>
-        <div className='mb-3'>
-          <label className='form-label'>Email</label>
+        <div>
+          <label>Email</label>
           <input
             onChange={register}
             type='text'
-            className='form-control'
             name='correo_electronico'
             {...register('correo_electronico', {
               required: true

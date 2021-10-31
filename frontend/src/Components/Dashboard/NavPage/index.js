@@ -1,19 +1,16 @@
+import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
+import './style.scss'
 export const NavPage = ({ title, path = '/', onePage }) => {
   return (
-    <div className='container-fluid'>
-      <div className='row justify-content-between '>
-        <div className='col-4'>
-          <h2>{title}</h2>
-        </div>
-        {
-          !onePage && (<div className='col-2'>
-            <Link to={path} className='btn btn-primary btn-lg'>
-              Regresar
-            </Link>
-          </div>)
-        }
-      </div>
+    <div className='navpage'>
+      <h2>{title}</h2>
+      {
+        !onePage && (
+          <Link to={path} className='btn button-back'>
+            <Icon>arrow_back</Icon> <span className='hide-on-small-and-down'>Regresar</span>
+          </Link>)
+      }
     </div>
   )
 }

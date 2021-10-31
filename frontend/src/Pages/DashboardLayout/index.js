@@ -14,9 +14,9 @@ export const DashboardLayout = () => {
       <main className='has-fixed-sidenav'>
         <Container>
           <Row>
-            <Col s={12}>
+            <div className='col s12  m8 offset-m2'>
               <Outlet />
-            </Col>
+            </div>
           </Row>
         </Container>
       </main>

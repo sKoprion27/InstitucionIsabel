@@ -1,0 +1,18 @@
+.navpage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 40px;
+    padding-bottom: 15px;
+  }
+}
+
+
+.button-back {
+  display: flex !important;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}

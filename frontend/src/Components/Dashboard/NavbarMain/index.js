@@ -16,10 +16,11 @@ export const NavbarMain = () => {
         className='navbar'
         alignLinks='right'
         brand={
-          <Link to='/dashboard' className='brand-logo'>
+          <Link to='/dashboard' className='brand-isabel'>
             Institución Isabel
           </Link>
         }
+        id='mobile-nav'
         sidenav={null}
         fixed
         options={{

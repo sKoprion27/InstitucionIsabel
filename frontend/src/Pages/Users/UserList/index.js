@@ -57,9 +57,9 @@ export const UserList = () => {
             />
           </div>
         </div>
-        <div className='table-responsive'>
-          <table className='table table-hover'>
-            <thead className='text-center'>
+        <div className='responsive-table'>
+          <table className='highlight striped'>
+            <thead>
               <tr>
                 {
                   users.length > 0 &&

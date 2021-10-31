@@ -1,31 +1,22 @@
 /* eslint-disable no-useless-escape */
-import './style.scss'
 import { useState } from 'react'
 import { useAuth } from './../../hooks/useAuth'
 import bg from '../../img/login.jpg'
 import logo from '../../img/logo.jpg'
-import { Notification } from '../../Components/Dashboard/Notification'
 import { Button, Icon } from 'react-materialize'
 import { useForm } from 'react-hook-form'
+import './style.scss'
 
 export const Login = () => {
   const { login } = useAuth()
 
   const { register, handleSubmit, formState: { errors } } = useForm()
 
-  const [credentials, setCredentials] = useState({
-    correo_electronico: 'admin@tec.mx',
-    password: 'password'
-  })
-
   const [show, setShow] = useState(true)
   const [error, setError] = useState(null)
   const [loading, setSetLoading] = useState(false)
 
-  const { correo_electronico, password } = credentials
-
   const onSubmit = async (data) => {
-    console.log(data)
     try {
       setSetLoading(true)
       await login(data)

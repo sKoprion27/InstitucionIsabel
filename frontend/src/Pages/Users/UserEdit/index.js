@@ -7,13 +7,9 @@ export const UserEdit = () => {
   const { id } = useParams()
 
   return (
-    <div className='container'>
+    <>
       <NavPage title='Editar usuario' path='/dashboard/usuarios' />
-      <div className='row justify-content-center'>
-        <div className='col-10 col-md-6'>
-          <UserEditForm id={id} />
-        </div>
-      </div>
-    </div>
+      <UserEditForm id={id} />
+    </>
   )
 }
