@@ -28,7 +28,7 @@ export const updateUser = async (user, id) => {
   return data.response
 }
 
-export const deleteOne = async (id, path) => {
+export const deleteOneElement = async (id, path) => {
   const { data } = await Axios.delete(`${URL_API}/${path}/${id}`)
   return data.response
 }

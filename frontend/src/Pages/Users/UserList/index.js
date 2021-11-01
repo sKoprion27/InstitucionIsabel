@@ -13,7 +13,7 @@ export const UserList = () => {
   const auth = useAuth()
   const [users, setUsers] = useState([])
   const [usersFilter, setUsersFilter] = useState([])
-  const [fetchAction] = useState(false)
+  const [fetchAction, setFetchAction] = useState(false)
 
   useEffect(() => {
     const getUsers = async () => {
@@ -92,7 +92,7 @@ export const UserList = () => {
                       >
                         <Icon>person_add_disabled</Icon>
                       </button>
-                      <Modal id={user.id} />
+                      <Modal id={user.id} path='users' setFetch={setFetchAction} />
                     </td>
                   </tr>
                 )

@@ -49,5 +49,10 @@ export const routesSidebar = [
     link: 'notas',
     name: 'Notas',
     icon: <MdEditNote />
+  },
+  {
+    link: 'perfil',
+    name: 'Mi Perfil',
+    icon: <MdEditNote />
   }
 ]

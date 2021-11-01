@@ -65,7 +65,7 @@ export const AuthProvider = (props) => {
         if (token) {
           try {
             const user = await whoIamService(token)
-            console.log('DISPATCH INITIALIZE TOKEN', user)
+            // console.log('DISPATCH INITIALIZE TOKEN', user)
             dispatch({
               type: 'INITIALIZE',
               payload: {

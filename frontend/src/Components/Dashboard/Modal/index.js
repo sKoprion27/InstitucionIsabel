@@ -3,22 +3,11 @@ import M from 'materialize-css'
 import 'materialize-css/dist/css/materialize.min.css'
 import { Icon } from 'react-materialize'
 import { useAuth } from '../../../hooks/useAuth'
-export const Modal = ({ id }) => {
+import { deleteOneElement } from '../../../helpers/users.helpers'
+export const Modal = ({ id, path, setFetch }) => {
   const auth = useAuth()
   const modalRef = useRef()
   const options = {
-    onOpenStart: () => {
-      console.log('Open Start')
-    },
-    onOpenEnd: () => {
-      console.log('Open End')
-    },
-    onCloseStart: () => {
-      console.log('Close Start')
-    },
-    onCloseEnd: () => {
-      console.log('Close End')
-    },
     inDuration: 250,
     outDuration: 250,
     opacity: 0.5,
@@ -30,6 +19,16 @@ export const Modal = ({ id }) => {
   useEffect(() => {
     M.Modal.init(modalRef.current, options)
   }, [])
+
+  const handlerRemove = async () => {
+    try {
+      await deleteOneElement(id, path)
+      setFetch((fetch) => setFetch(!fetch))
+    } catch (error) {
+      console.log(error)
+      alert('Error')
+    }
+  }
   return (
     <>
       <button
@@ -47,13 +46,12 @@ export const Modal = ({ id }) => {
         <div className='modal-content'>
           <h4>Estas seguro de eliminar este elemento</h4>
           <p>Esta acción es irreversible</p>
-          {id}
         </div>
         <div className='modal-footer'>
           <button className='modal-close waves-effect red white-text btn'>
             Cancelar
           </button>
-          <button className='waves-effect waves-green green white-text btn'>
+          <button className='modal-close waves-effect waves-green green white-text btn' onClick={handlerRemove}>
             Aceptar
           </button>
         </div>

@@ -15,7 +15,10 @@ export const userController = {
   getOneUser: async (req, res) => {
     const { id } = req.params
     const [queryAnswer, status] = await User.getOne(id)
-    response(req, res, 'GET ONE USER', queryAnswer, status)
+    response(req, res, 'GET ONE USER', {
+      ...queryAnswer,
+      roles: [{ nombre: 'TESORERO', id: 1 }, { nombre: 'ADMIN', id: 4 }]
+    }, status)
   },
 
   // POST ONE
