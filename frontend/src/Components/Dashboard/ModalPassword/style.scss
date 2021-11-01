@@ -1,0 +1,50 @@
+@import "../../../mixins/responsive.scss";
+
+.overlay__modal {
+  background:
+    rgba($color: #000000,
+      $alpha: 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10000;
+  transition: all 300ms ease;
+}
+
+.modal__container {
+  z-index: 10001;
+  padding: 50px;
+  border-radius: 5px;
+  position: absolute;
+  left: 0;
+  top: calc(100vh /3);
+
+  @include desktop {
+    left: calc(100vw /2.5);
+    ;
+  }
+}
+
+.modal__password {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__error {
+  display: flex;
+  justify-content: center;
+  min-height: 30px;
+}
+
+.modal__options {
+  min-width: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}

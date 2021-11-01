@@ -11,6 +11,13 @@ export const getOneUser = async (id) => {
   return data.response
 }
 
+export const changeUserPassword = async (id, { password }) => {
+  const { data } = await Axios.put(
+    `${URL_API}/users/${id}/password`,
+    { password }
+  )
+  return data.response
+}
 export const postOneUser = async (user) => {
   const { data } = await Axios.post(`${URL_API}/users`, user)
   return data.response

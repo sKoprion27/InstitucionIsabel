@@ -1,12 +1,13 @@
-import { getOneUser, updateUser } from '../../helpers/users.helpers'
+import { updateUser } from '../../helpers/users.helpers'
 import { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../hooks/useAuth'
 import { NavPage } from '../../Components/Dashboard/NavPage'
+import { ModalPassword } from '../../Components/Dashboard/ModalPassword'
 
 export const Profile = () => {
   const [edit, setEdit] = useState(false)
+  const [activeModal, setActiveModal] = useState(false)
   const [fetchUpdate, setFetchUpdate] = useState(false)
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
   const auth = useAuth()
@@ -104,14 +105,15 @@ export const Profile = () => {
             Actualizar
           </button>
 
-          <Link
-            to='password'
+          <button
+            className='btn indigo modal-trigger'
+            type='button'
+            onClick={() => { setActiveModal(!activeModal) }}
+            disabled={!edit}
           >
-            <button type='button' className='btn indigo'
-              disabled={!edit}>
-              Reestablecer contraseña
-            </button>
-          </Link>
+            Reestablecer contraseña
+          </button>
+
           <button
             type='button'
             className={`btn ${!edit || 'red'} `}
@@ -123,6 +125,9 @@ export const Profile = () => {
           </button>
         </div>
       </form>
+      {
+        activeModal && (<ModalPassword id={auth.user.id} changeVisibility={setActiveModal} />)
+      }
     </>
   )
 }

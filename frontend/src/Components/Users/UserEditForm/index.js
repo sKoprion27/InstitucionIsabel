@@ -103,14 +103,14 @@ export const UserEditForm = ({ id }) => {
           <Link
             to='password'
           >
-            <button type='button' className='btn btn-primary  '
+            <button type='button' className='btn indigo'
               disabled={!edit}>
               Reestablecer contraseña
             </button>
           </Link>
           <button
             type='button'
-            className={`btn btn-${edit ? 'danger' : 'primary'} `}
+            className={`btn ${edit ? 'red' : 'teal'} `}
             onClick={handlerEdit}
           >
             {
