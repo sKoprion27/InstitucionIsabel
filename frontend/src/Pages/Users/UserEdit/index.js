@@ -29,6 +29,7 @@ export const UserEdit = () => {
     const getUser = async () => {
       try {
         const user = await getOneUser(id)
+        console.log({ user })
         const optionRolesSelected = user.roles.map(role => {
           return {
             label: role.nombre,

@@ -304,6 +304,7 @@ INSERT INTO permisos(nombre_permiso) VALUES
 ('Modificar tipo de donativo'),
 ('Consultar tipo de donativo'),
 ('Eliminar tipo de donativo'),
+('Registrar notas'),
 ('Modificar notas'),
 ('Eliminar notas'),
 ('Consultar listado completo de notas'),

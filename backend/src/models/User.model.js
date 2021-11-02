@@ -17,24 +17,20 @@ export const User = {
     }
   },
   getOne: async (id) => {
+    console.log(id, '😀')
     const QUERY = `
-      SELECT U.id, nombre, apellido, correo_electronico
-      FROM usuarios U, roles R
+      SELECT U.nombre, U.apellido, U.correo_electronico, R.nombre_role as role, R.id as id_role
+      FROM usuarios U, roles_usuarios RU, roles R
       WHERE
-      U.id = $1
-      AND U.existe = true
+      RU.id_usuario = $1
+      AND
+      RU.id_usuario = U.id
+      AND
+      RU.id_role = R.id
+      AND
+      U.existe = true
     `
-    try {
-      const { rows, rowCount } = await db.query(QUERY, [id])
-      if (rowCount === 0) {
-        return ['ERROR GET ONE USER NOT FOUND 🤯', 404]
-      } else {
-        return [rows[0], 200]
-      }
-    } catch (error) {
-      console.log('ERROR GET ONE USER 🤯', error)
-      return ['ERROR GET ONE USER 🤯', 400]
-    }
+    return db.query(QUERY, [id])
   },
   getOnePassword: async (correo_electronico) => {
     const QUERY = `

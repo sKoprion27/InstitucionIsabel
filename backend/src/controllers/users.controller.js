@@ -14,11 +14,45 @@ export const userController = {
   // GET ONE
   getOneUser: async (req, res) => {
     const { id } = req.params
-    const [queryAnswer, status] = await User.getOne(id)
-    response(req, res, 'GET ONE USER', {
-      ...queryAnswer,
-      roles: [{ nombre: 'TESORERO', id: 1 }, { nombre: 'ADMIN', id: 4 }]
-    }, status)
+
+    try {
+      const { rows, rowCount } = await User.getOne(id)
+      if (rowCount === 1) {
+        console.log(rows)
+        const user = {
+          nombre: rows[0].nombre,
+          apellido: rows[0].apellido,
+          correo_electronico: rows[0].correo_electronico,
+          roles: [{
+            id: rows[0].id_role,
+            nombre: rows[0].role
+          }]
+        }
+        console.log(user)
+        response(req, res, 'GET ONE', user, 200)
+      } else {
+        let user = {
+          nombre: rows[0].nombre,
+          apellido: rows[0].apellido,
+          correo_electronico: rows[0].correo_electronico
+        }
+        const roles = rows.map(row => {
+          const role = {
+            id: row.id_role,
+            nombre: row.role
+          }
+          return role
+        })
+        user = {
+          ...user,
+          roles: roles
+        }
+        response(req, res, 'GET ONE', user, 200)
+      }
+    } catch (error) {
+      console.log(error, 'error')
+      response(req, res, null, null, 500)
+    }
   },
 
   // POST ONE
@@ -32,7 +66,6 @@ export const userController = {
     }
     const { rows } = await User.postOne({ id, ...user })
     console.log(rows)
-
     if (roles.length > 1) {
       for (const role of roles) {
         console.log(role)
@@ -43,7 +76,6 @@ export const userController = {
       const [queryAnswer, status] = await RoleUser.postOne(roles[0].id, rows[0].id)
       console.log(queryAnswer, status)
     }
-
     response(req, res, 'POST ONE USER', rows[0], 201)
   },
 

@@ -29,7 +29,7 @@ export const Profile = () => {
   }
   return (
     <>
-      <NavPage title='Perfil' />
+      <NavPage title='Perfil' path='/dashboard' />
       <form
         className='user__form'
         onSubmit={handleSubmit(handlerSubmit)}
