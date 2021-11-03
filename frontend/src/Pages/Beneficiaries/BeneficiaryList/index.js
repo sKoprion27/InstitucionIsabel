@@ -1,69 +1,44 @@
+import { NavPage } from '../../../Components/Dashboard/NavPage'
+import { MenuPage } from '../../../Components/Dashboard/MenuPage'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { MdDelete, MdOutlineMode } from 'react-icons/md'
-import { getAllBeneficiaries } from './../../../helpers/beneficiaries.helpers'
+import { useFinder } from '../../../hooks/useFinder'
+import { TableList } from '../../../Components/Dashboard/TableList'
+import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
+
 export const BeneficiaryList = () => {
-  const [beneficiaries, setBeneficiaries] = useState([])
+  const [didFetch, setDidFetch] = useState(false)
+  const {
+    setOriginalList,
+    setListFilter,
+    originalList,
+    listFiltered,
+    handlerFinder
+  } = useFinder()
+
   useEffect(() => {
-    const getBeneficiaries = async () => {
+    const getList = async () => {
       try {
         const beneficiaries = await getAllBeneficiaries()
-        setBeneficiaries(beneficiaries)
+        setOriginalList(beneficiaries)
+        setListFilter(beneficiaries)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
+        alert('ERROR')
       }
     }
-    getBeneficiaries()
-  }, [])
+    getList()
+  }, [didFetch])
+
   return (
-    <div className='row'>
-      <h4>Lista de Beneficiarios</h4>
-      <div className='table-responsive'>
-        <table className='table table-hover'>
-          <thead>
-            <tr>
-              {
-                beneficiaries.length > 0 && (Object.keys(beneficiaries[0]).map((key, index) => {
-                  return (
-                    <th key={index} scope='col'>{formatKey(key)}</th>
-                  )
-                }))
-              }
-              <th scope='col'>OPCIONES</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              beneficiaries.map((beneficiary) => {
-                return (
-                  <tr key={beneficiary.id}>
-                    <td scope='row'>{beneficiary.id}</td>
-                    <td>{beneficiary.nombre_beneficiario}</td>
-                    <td>{beneficiary.descripcion}</td>
-                    <td>
-                      <Link to={`${beneficiary.id}`} className='btn btn-success'>
-                        <MdOutlineMode /> Editar
-                      </Link>
-                      <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${beneficiary.id}`}>
-                        <MdDelete /> Eliminar
-                      </button>
-
-                    </td>
-                  </tr>
-                )
-              })
-            }
-
-          </tbody>
-        </table>
-
-      </div>
-
-    </div>
+    <>
+      <NavPage title='Lista de beneficiarios' onePage />
+      <MenuPage name='beneficiario' handler={handlerFinder} />
+      <TableList
+        arrayList={originalList}
+        arrayListFiltered={listFiltered}
+        setFetchAction={setDidFetch}
+        fields={['nombre', 'descripcion']}
+      />
+    </>
   )
-}
-
-const formatKey = (key) => {
-  const format = key.replace(/_/g, ' ').toUpperCase()
-  return format
 }
