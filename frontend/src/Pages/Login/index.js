@@ -22,11 +22,16 @@ export const Login = () => {
       await login(data)
       setSetLoading(false)
     } catch ({ response }) {
-      setError(response.data.message)
-      setTimeout(() => {
-        setError(null)
-        setSetLoading(false)
-      }, 2000)
+      if (response) {
+        setError(response.data.message)
+        setTimeout(() => {
+          setError(null)
+          setSetLoading(false)
+        }, 2000)
+        return
+      }
+      setSetLoading(false)
+      setError('No podemos conectarnos al servidor')
     }
   }
   return (
