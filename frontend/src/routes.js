@@ -2,29 +2,35 @@ import { NotFound } from './Components/NotFound'
 import { Login } from './Pages/Login'
 import { Home } from './Pages/Home/'
 import { Navigate } from 'react-router-dom'
-import { UserList } from './Pages/Users/UserList/index'
-import { UserEdit } from './Pages/Users/UserEdit/index'
+import { UserList } from './Pages/Users/UserList'
+import { UserEdit } from './Pages/Users/UserEdit'
 import { GuestGuard } from './Components/GuestGuard'
 import { AuthGuard } from './Components/AuthGuard'
-import { DashboardLayout } from './Pages/DashboardLayout'
+import { DashboardLayout, PageLayout } from './Pages/DashboardLayout'
 import { DonorList } from './Pages/Donors/DonorList'
 import { Profile } from './Pages/Profile/'
-import { DonorEdit } from './Pages/Donors/DonorEdit/index'
-import { DonationsList } from './Pages/Donations/DonationsList/index'
+import { DonorEdit } from './Pages/Donors/DonorEdit/'
+import { DonationsList } from './Pages/Donations/DonationsList'
+import { DonorAdd } from './Pages/Donors/DonorAdd'
 import { DonationEdit } from './Pages/Donations/DonationEdit'
-import { UserAdd } from './Pages/Users/UserAdd/index'
+import { DonationAdd } from './Pages/Donations/DonationAdd'
+import { UserAdd } from './Pages/Users/UserAdd'
 import { BeneficiaryList } from './Pages/Beneficiaries/BeneficiaryList'
 import { BeneficiaryEdit } from './Pages/Beneficiaries/BeneficiaryEdit'
-import { PaymentList } from './Pages/PaymentMethods/PaymentList/index'
+import { PaymentList } from './Pages/PaymentMethods/PaymentList'
 import { PaymentEdit } from './Pages/PaymentMethods/PaymentEdit'
-import { CategoryList } from './Pages/Categories/CategoryList/index'
+import { CategoryList } from './Pages/Categories/CategoryList'
 import { CategoryEdit } from './Pages/Categories/CategoryEdit'
-import { TypeDonationList } from './Pages/TypeDonation/TypeDonationList/index'
-import { TypeDonationEdit } from './Pages/TypeDonation/TypeDonationEdit/index'
-import { NoteList } from './Pages/Notes/NoteList/index'
-import { NoteEdit } from './Pages/Notes/NoteEdit/index'
+import { TypeDonationList } from './Pages/TypeDonation/TypeDonationList'
+import { TypeDonationEdit } from './Pages/TypeDonation/TypeDonationEdit'
+import { NoteList } from './Pages/Notes/NoteList'
+import { NoteEdit } from './Pages/Notes/NoteEdit'
 import { PermissionGuard } from './Components/PermissionGuard'
 import { NotPermission } from './Components/NotPermission'
+import { BeneficiaryAdd } from './Pages/Beneficiaries/BeneficiaryAdd'
+import { PaymentAdd } from './Pages/PaymentMethods/PaymentAdd'
+import { CategoryAdd } from './Pages/Categories/CategoryAdd'
+import { TypeDonationAdd } from './Pages/TypeDonation/TypeDonationAdd'
 
 export const routes = [
   {
@@ -62,7 +68,9 @@ export const routes = [
             path: 'add',
             element: (
               <PermissionGuard permiso='Registrar usuarios'>
-                <UserAdd />
+                <PageLayout onePage>
+                  <UserAdd />
+                </PageLayout>
               </PermissionGuard>
             )
           },
@@ -70,7 +78,9 @@ export const routes = [
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar usuarios'>
-                <UserEdit />
+                <PageLayout onePage>
+                  <UserEdit />
+                </PageLayout>
               </PermissionGuard>
             )
           }
@@ -90,7 +100,18 @@ export const routes = [
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar donadores'>
-                <DonorList />
+                <PageLayout onePage>
+                  <DonorEdit />
+                </PageLayout>
+              </PermissionGuard>)
+          },
+          {
+            path: ':id',
+            element: (
+              <PermissionGuard permiso='Registrar donadores'>
+                <PageLayout onePage>
+                  <DonorAdd />
+                </PageLayout>
               </PermissionGuard>)
           }
         ]
@@ -110,7 +131,19 @@ export const routes = [
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar donaciones'>
-                <DonationEdit />
+                <PageLayout onePage>
+                  <DonationEdit />
+                </PageLayout>
+              </PermissionGuard>
+            )
+          },
+          {
+            path: 'add',
+            element: (
+              <PermissionGuard permiso='Registrar donaciones'>
+                <PageLayout onePage>
+                  <DonationAdd />
+                </PageLayout>
               </PermissionGuard>
             )
           }
@@ -131,7 +164,19 @@ export const routes = [
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar beneficiario donacion'>
-                <BeneficiaryEdit />
+                <PageLayout onePage>
+                  <BeneficiaryEdit />
+                </PageLayout>
+              </PermissionGuard>
+            )
+          },
+          {
+            path: 'add',
+            element: (
+              <PermissionGuard permiso='Registrar beneficiario donacion'>
+                <PageLayout onePage>
+                  <BeneficiaryAdd />
+                </PageLayout>
               </PermissionGuard>
             )
           }
@@ -152,7 +197,19 @@ export const routes = [
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar metodo de pago'>
-                <PaymentEdit />
+                <PageLayout onePage>
+                  <PaymentEdit />
+                </PageLayout>
+              </PermissionGuard>
+            )
+          },
+          {
+            path: 'add',
+            element: (
+              <PermissionGuard permiso='Registrar metodo de pago'>
+                <PageLayout onePage>
+                  <PaymentAdd />
+                </PageLayout>
               </PermissionGuard>
             )
           }
@@ -176,6 +233,14 @@ export const routes = [
                 <CategoryEdit />
               </PermissionGuard>
             )
+          },
+          {
+            path: 'add',
+            element: (
+              <PermissionGuard permiso='Registrar categoria donativo'>
+                <CategoryAdd />
+              </PermissionGuard>
+            )
           }
         ]
       },
@@ -195,6 +260,14 @@ export const routes = [
             element: (
               <PermissionGuard permiso='Modificar tipo de donativo'>
                 <TypeDonationEdit />
+              </PermissionGuard>
+            )
+          },
+          {
+            path: 'add',
+            element: (
+              <PermissionGuard permiso='Registrar tipo de donativo'>
+                <TypeDonationAdd />
               </PermissionGuard>
             )
           }
@@ -223,14 +296,22 @@ export const routes = [
       },
       {
         path: 'perfil',
-        element: <Profile />
+        element: (
+          <PageLayout onePage>
+            <Profile />
+          </PageLayout>
+        )
       },
       {
         path: 'permisos',
         children: [
           {
             path: '',
-            element: <NotPermission />
+            element: (
+              <PageLayout onePage>
+                <NotPermission />
+              </PageLayout>
+            )
           }
         ]
       },
