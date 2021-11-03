@@ -22,7 +22,7 @@ export const initRoutes = (app) => {
   app.use('/donations', donationsRouter)
   app.use('/beneficiaries', beneficiariesRouter)
   app.use('/categories', categoriesRouter)
-  app.use('/typesDonations', typesDonationsRouter)
+  app.use('/types-donations', typesDonationsRouter)
   app.use('/notes', notesRouter)
   app.use('/cfdis', cfdisRouter)
   app.use('/states', statesRouter)
