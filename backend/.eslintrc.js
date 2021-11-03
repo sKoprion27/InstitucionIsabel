@@ -18,6 +18,11 @@ module.exports = {
     'object-curly-newline': ['error', { multiline: true }],
     'prefer-regex-literals': ['off'],
     'no-useless-return': 'off',
-    camelcase: 'off'
+    camelcase: 'off',
+    'space-before-function-paren': ['error', {
+      anonymous: 'always',
+      named: 'never',
+      asyncArrow: 'always'
+    }]
   }
 }

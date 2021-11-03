@@ -44,7 +44,7 @@ export const UserAdd = () => {
       const roles = data.roles.map(role => {
         return {
           id: role.value,
-          label: role.label
+          nombre: role.label
         }
       })
       const dataPost = {

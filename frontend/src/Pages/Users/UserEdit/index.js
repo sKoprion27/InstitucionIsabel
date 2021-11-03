@@ -3,21 +3,35 @@ import {
   getOneUser,
   updateUser
 } from '../../../helpers/users.helpers'
-import { useEffect, useState } from 'react'
-import { Link, Navigate, useParams } from 'react-router-dom'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  useEffect,
+  useState
+} from 'react'
+import {
+  Navigate,
+  useParams
+} from 'react-router-dom'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
 
 import './style.scss'
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+import { ModalPassword } from '../../../Components/Dashboard/ModalPassword'
+import { useAuth } from '../../../hooks/useAuth'
 
 export const UserEdit = () => {
+  const auth = useAuth()
   const { id } = useParams()
   const [edit, setEdit] = useState(false)
   const [fetchUpdate, setFetchUpdate] = useState(false)
+  const [activeModal, setActiveModal] = useState(false)
   const [roles, setRoles] = useState([])
   const animatedComponents = makeAnimated()
+
   const {
     register,
     handleSubmit,
@@ -29,7 +43,6 @@ export const UserEdit = () => {
     const getUser = async () => {
       try {
         const user = await getOneUser(id)
-        console.log({ user })
         const optionRolesSelected = user.roles.map(role => {
           return {
             label: role.nombre,
@@ -40,7 +53,6 @@ export const UserEdit = () => {
           ...user,
           roles: optionRolesSelected
         }
-        console.log(userData)
         reset(userData)
       } catch (error) {
         setEdit(null)
@@ -58,13 +70,27 @@ export const UserEdit = () => {
           label: r.nombre_role
         }
       })
+
       setRoles(options)
     }
     getRoles()
   }, [])
   const handlerSubmit = async (data) => {
     try {
-      await updateUser(data, id)
+      const roles = data.roles.map(role => {
+        return {
+          id: role.value,
+          nombre: role.label
+        }
+      })
+      const dataPost = {
+        ...data,
+        roles
+      }
+      await updateUser(dataPost, id)
+      if (Number(id) === auth.user.id) {
+        await auth.updateUserContext()
+      }
       setFetchUpdate(!fetchUpdate)
       alert('Usuario actualizado')
       setEdit(false)
@@ -171,14 +197,10 @@ export const UserEdit = () => {
             Actualizar
           </button>
 
-          <Link
-            to='password'
-          >
-            <button type='button' className='btn indigo'
-              disabled={!edit}>
-              Reestablecer contraseña
-            </button>
-          </Link>
+          <button type='button' className='btn indigo'
+            disabled={!edit} onClick={() => setActiveModal(!activeModal)}>
+            Reestablecer contraseña
+          </button>
           <button
             type='button'
             className={`btn ${edit ? 'red' : 'teal'} `}
@@ -190,6 +212,9 @@ export const UserEdit = () => {
           </button>
         </div>
       </form>
+      {
+        activeModal && (<ModalPassword id={id} changeVisibility={setActiveModal} />)
+      }
     </>
   )
 }

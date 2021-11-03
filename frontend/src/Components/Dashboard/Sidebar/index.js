@@ -6,7 +6,8 @@ import './style.scss'
 import { NavItems } from '../NavItems'
 
 export const Sidebar = () => {
-  const { user } = useAuth()
+  const auth = useAuth()
+
   return (
     <SideNav
       id='sidenav-left'
@@ -17,10 +18,10 @@ export const Sidebar = () => {
         <div className='user-view'>
           <img src={logo} className='circle' alt='logo' />
           <Link to='/dashboard/perfil' className='name white-text'>
-            {`${user.nombre} ${user.apellido}`}
+            {`${auth.user.nombre} ${auth.user.apellido}`}
           </Link>
           <span className='email'>
-            {user.correo_electronico}
+            {auth.user.correo_electronico}
           </span>
         </div>
       </li>

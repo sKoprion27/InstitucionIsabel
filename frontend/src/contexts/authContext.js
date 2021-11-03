@@ -34,10 +34,16 @@ const handlers = {
   }),
   REGISTER: (state, action) => {
     const { user } = action.payload
-
     return {
       ...state,
       isAuthenticated: true,
+      user
+    }
+  },
+  UPDATE_USER: (state, action) => {
+    const { user } = action.payload
+    return {
+      ...state,
       user
     }
   }
@@ -77,7 +83,7 @@ export const AuthProvider = (props) => {
             console.log(error)
           }
         } else {
-          console.log('DISPATCH INITIALIZE NOT TOKEN')
+          // console.log('DISPATCH INITIALIZE NOT TOKEN')
           dispatch({
             type: 'INITIALIZE',
             payload: {
@@ -101,11 +107,8 @@ export const AuthProvider = (props) => {
 
   const login = async ({ correo_electronico, password }) => {
     const token = await loginService(correo_electronico, password)
-
     const user = await whoIamService(token)
-
     localStorage.setItem('TOKEN_ISABEL', token)
-
     dispatch({
       type: 'LOGIN',
       payload: {
@@ -119,10 +122,21 @@ export const AuthProvider = (props) => {
     dispatch({ type: 'LOGOUT' })
   }
 
+  const updateUserContext = async () => {
+    const user = await whoIamService(localStorage.getItem('TOKEN_ISABEL'))
+    dispatch({
+      type: 'UPDATE_USER',
+      payload: {
+        user
+      }
+    })
+  }
+
   const values = {
     ...state,
     login,
-    logout
+    logout,
+    updateUserContext
   }
 
   return (

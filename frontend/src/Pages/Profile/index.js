@@ -17,8 +17,9 @@ export const Profile = () => {
   const handlerSubmit = async (data) => {
     try {
       await updateUser(data, auth.user.id)
+      await auth.updateUserContext()
       setFetchUpdate(!fetchUpdate)
-      alert('Usuario actualizado')
+      alert('Perfil actualizado')
       setEdit(false)
     } catch (error) {
       console.log(error, 'Update user')
@@ -95,6 +96,14 @@ export const Profile = () => {
             </span>)
           }
         </div>
+        <div>
+          <label>Roles</label>
+          {
+            auth.user.roles.map(role => (
+              <input key={role.id} type='text' value={role.nombre} disabled />
+            ))
+          }
+        </div>
 
         <div className='user__btn__container'>
           <button
@@ -111,7 +120,7 @@ export const Profile = () => {
             onClick={() => { setActiveModal(!activeModal) }}
             disabled={!edit}
           >
-            Reestablecer contraseña
+            Cambiar contraseña
           </button>
 
           <button
