@@ -1,81 +1,62 @@
+import { NavPage } from '../../../Components/Dashboard/NavPage'
+import { MenuPage } from '../../../Components/Dashboard/MenuPage'
 import { useEffect, useState } from 'react'
 import { getAllDonors } from '../../../helpers/donors.helpers'
-import { Link } from 'react-router-dom'
-import { MdDelete, MdOutlineMode } from 'react-icons/md'
+import { useFinder } from '../../../hooks/useFinder'
+import { TableList } from '../../../Components/Dashboard/TableList'
+
+import { Card, Icon } from 'react-materialize'
+
 export const DonorList = () => {
-  const [donors, setDonors] = useState([])
+  const [didFetch, setDidFetch] = useState(false)
+  const {
+    setOriginalList,
+    setListFilter,
+    originalList,
+    listFiltered,
+    handlerFinder
+  } = useFinder()
+
   useEffect(() => {
-    const getDonors = async () => {
+    const getList = async () => {
       try {
         const donors = await getAllDonors()
-        setDonors(donors)
+        setOriginalList(donors)
+        setListFilter(donors)
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
+        alert('ERROR')
       }
     }
-    getDonors()
-  }, [])
+    getList()
+  }, [didFetch])
+
   return (
-    <div className='row'>
-      <h4>Lista de Donadores</h4>
-      <div className='table-responsive'>
-        <table className='table table-hover'>
-          <thead>
-            <tr>
-              {
-                donors.length > 0 && (Object.keys(donors[0]).map((key, index) => {
-                  return (
-                    <th key={index} scope='col'>{formatKey(key)}</th>
-                  )
-                }))
-              }
-              <th scope='col'>OPCIONES</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              donors.map((donor) => {
-                let regimenFiscal
-                if (donor.regimen_fiscal) {
-                  regimenFiscal = 'Persona Física'
-                } else {
-                  regimenFiscal = 'Persona Moral'
-                }
-                return (
-                  <tr key={donor.id}>
-                    <td scope='row'>{donor.id}</td>
-                    <td>{donor.telefono}</td>
-                    <td>{donor.razon_social}</td>
-                    <td>{donor.rfc}</td>
-                    <td>{donor.correo_electronico}</td>
-                    <td>{donor.codigo_postal}</td>
-                    <td>{donor.domicilio_fiscal}</td>
-                    <td>{regimenFiscal}</td>
-                    <td>{donor.estado}</td>
-                    <td>{donor.clave_cfdi}</td>
-                    <td>{donor.decripcion_cfdi}</td>
-                    <td>
-                      <Link to={`${donor.id}`} className='btn btn-success'>
-                        <MdOutlineMode /> Editar
-                      </Link>
-                      <button className='btn btn-danger' data-bs-toggle='modal' data-bs-target={`#deleteModal${donor.id}`}>
-                        <MdDelete /> Eliminar
-                      </button>
+    <>
+      <NavPage title='Lista de donadores' onePage />
+      <MenuPage name='donador' type='nombre' handler={handlerFinder} />
+      <TableList
+        arrayList={originalList}
+        arrayListFiltered={listFiltered}
+        setFetchAction={setDidFetch}
+        path='donors'
+        fields={['nombre', 'descripcion']}
+      />
 
-                    </td>
-                  </tr>
-                )
-              })
-            }
-
-          </tbody>
-        </table>
-      </div>
-    </div>
+      <Card
+        actions={[
+          <a key='1' href='#'>This is a link</a>,
+          <a key='2' href='#'>This is a link</a>
+        ]}
+        className='blue-grey darken-1 hoverable'
+        closeIcon={<Icon>close</Icon>}
+        revealIcon={<Icon>more_vert</Icon>}
+        textClassName='white-text'
+        title='Card title'
+      >
+        <Icon> phonelink_off </Icon>
+        I am a very simple card.
+      </Card>
+    </>
   )
-}
-
-const formatKey = (key) => {
-  const format = key.replace(/_/g, ' ').toUpperCase()
-  return format
 }
