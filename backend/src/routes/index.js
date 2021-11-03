@@ -10,6 +10,7 @@ import notFoundRouter from './notFound.routes'
 import typesDonationsRouter from './typesDonations.routes'
 import beneficiariesRouter from './beneficiaries.routes'
 import paymentMethodsRouter from './paymentMethods.routes'
+import categoriesRouter from './categories.routes'
 // import { auth } from '../lib/auth'
 
 export const initRoutes = (app) => {
@@ -20,10 +21,11 @@ export const initRoutes = (app) => {
   app.use('/donors', donorsRouter)
   app.use('/donations', donationsRouter)
   app.use('/beneficiaries', beneficiariesRouter)
+  app.use('/categories', categoriesRouter)
   app.use('/typesDonations', typesDonationsRouter)
   app.use('/notes', notesRouter)
   app.use('/cfdis', cfdisRouter)
   app.use('/states', statesRouter)
-  app.use('/paymentMethods', paymentMethodsRouter)
+  app.use('/payment-methods', paymentMethodsRouter)
   app.use('/*', notFoundRouter)
 }

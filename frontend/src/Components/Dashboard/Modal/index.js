@@ -34,7 +34,11 @@ export const Modal = ({ id, path, setFetch }) => {
       <button
         className='btn red modal-trigger'
         data-target={`modal-delete${id}`}
-        type='button' disabled={auth.user.id === id}>
+        type='button' disabled={
+          (path === 'users'
+            ? auth.user.id === id
+            : false)
+        }>
         <Icon>delete</Icon>
       </button>
 

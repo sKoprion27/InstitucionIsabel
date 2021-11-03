@@ -1,0 +1,47 @@
+<div className='responsive-table'>
+        <table className='highlight striped'>
+          <thead>
+            <tr>
+              {
+                users.length > 0 &&
+                (Object.keys(users[0])
+                  .filter(key => (key !== 'id') && (key !== 'creado'))
+                  .map((key, index) => {
+                    return (
+                      <th key={index}>{formatKeyTable(key)}</th>
+                    )
+                  }))
+              }
+              <th>OPCIONES</th>
+            </tr>
+          </thead>
+          <tbody className='text-center'>
+            {
+              usersFilter.map((user) => {
+                return (
+                  <tr key={user.id}>
+                    <td>{user.nombre}</td>
+                    <td>{user.apellido}</td>
+                    <td>{user.correo_electronico}</td>
+                    <td className='options'>
+                      <Link
+                        to={`${user.id}`}
+                        className='btn btn-success'>
+                        <Icon>edit</Icon>
+                      </Link>
+                      <button
+                        className='btn orange'
+                        type='button'
+                        disabled={auth.user.id === user.id}
+                      >
+                        <Icon>person_add_disabled</Icon>
+                      </button>
+                      <Modal id={user.id} path='users' setFetch={setFetchAction} />
+                    </td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </table>
+      </div>
