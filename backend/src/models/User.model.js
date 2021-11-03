@@ -6,7 +6,7 @@ export const User = {
       FROM usuarios U
       WHERE
       U.existe = true
-      ORDER BY U.id
+      ORDER BY U.id DESC
     `
     try {
       const { rows } = await db.query(QUERY)

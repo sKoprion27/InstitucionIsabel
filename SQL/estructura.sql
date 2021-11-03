@@ -94,7 +94,7 @@ ALTER SEQUENCE donadores_id_seq RESTART WITH 1;
 -- Crear tabla de beneficiarios
 CREATE TABLE beneficiarios(
   id SERIAL PRIMARY KEY NOT NULL,
-  nombre_beneficiario TEXT NOT NULL,
+  nombre TEXT NOT NULL,
   descripcion TEXT NOT NULL,
   creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
@@ -545,7 +545,7 @@ INSERT INTO donadores(id_cfdi, id_estado, nombre_contacto, telefono, razon_socia
 
 -- Insertar datos de la tabla beneficiarios
 
-INSERT INTO beneficiarios(nombre_beneficiario, descripcion) VALUES
+INSERT INTO beneficiarios(nombre, descripcion) VALUES
 ('ninos de la institucion','Esta donacion es material didactico para los ninos de la institucion'),
 ('colaboradores','Esta donacion se utilizara para la compensacion de los colaboradores'),
 ('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),

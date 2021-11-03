@@ -5,21 +5,15 @@ export const PaymentMethod = {
       SELECT id, nombre, descripcion
       FROM metodos_pago
       WHERE existe = true
-      ORDER BY id ASC
+      ORDER BY id DESC
     `
-    try {
-      const { rows } = await db.query(QUERY)
-      return [rows, 200]
-    } catch (error) {
-      console.log('ERROR GET ALL PAYMENT METHODS 🤯', error)
-      return ['ERROR GET ALL PAYMENT METHODS 🤯', 400]
-    }
+    return db.query(QUERY)
   },
   getOne: async (id) => {
     const QUERY = `
       SELECT id, nombre, descripcion
       FROM metodos_pago
-      WHERE id = $1 
+      WHERE id = $1
       AND existe = true
     `
     try {
