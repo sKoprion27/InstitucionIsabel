@@ -1,4 +1,4 @@
-.layout {
+.layout-permisos {
   min-height: 60vh;
   margin-top: calc(100vh / 6);
   display: flex !important;
@@ -12,7 +12,7 @@
   }
 }
 
-.notfound {
+.permisos {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,6 +23,6 @@
 
   i {
     margin-left: 50px;
-    font-size: 80px;
+    font-size: 60px;
   }
 }

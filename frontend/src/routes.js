@@ -317,7 +317,11 @@ export const routes = [
       },
       {
         path: '*',
-        element: <NotFound />
+        element: (
+          <PageLayout onePage>
+            <NotFound />
+          </PageLayout>
+        )
       }
     ]
   },
