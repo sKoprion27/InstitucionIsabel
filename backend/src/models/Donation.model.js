@@ -2,7 +2,7 @@ import { db } from './../database/index'
 export const Donation = {
   getAll: async () => {
     const QUERY = `
-      SELECT D.id, D.nombre nombre_donacion, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
+      SELECT D.id, D.nombre nombre, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
       FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
       WHERE D.id_donador = N.id 
       AND D.id_metodo_pago = M.id 
@@ -20,7 +20,7 @@ export const Donation = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT D.id, D.nombre nombre_donacion, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
+      SELECT D.id, D.nombre nombre, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
       FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
       WHERE D.id_donador = N.id 
       AND D.id_metodo_pago = M.id 
