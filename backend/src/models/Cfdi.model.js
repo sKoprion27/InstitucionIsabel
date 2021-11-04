@@ -21,7 +21,7 @@ export const Cfdi = {
         if (err) {
           console.log(err, empty_result_to_fix_encoding)
         }
-        return pool.query('SELECT * FROM cfdis', function (err, result) {
+        return pool.query(QUERY, function (err, result) {
           console.log(err)
           console.log(result)
           return result.rows

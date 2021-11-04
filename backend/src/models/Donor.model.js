@@ -2,7 +2,7 @@ import { db } from '../database/index'
 export const Donor = {
   getAll: async () => {
     const QUERY = `
-      SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre Estado, C.clave Clave_CFDI, C.descripcion Decripcion_CFDI
+      SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre Estado, C.clave Clave_CFDI
       FROM donadores D, cfdis C, estados E
       WHERE D.id_cfdi = C.id 
       AND D.id_estado = E.id 
@@ -13,7 +13,7 @@ export const Donor = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre estado, C.clave Clave_CFDI, C.descripcion Descripcion_CFDI
+      SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre estado, C.clave Clave_CFDI
       FROM donadores D, cfdis C, estados E
       WHERE D.id_cfdi = C.id 
       AND D.id_estado = E.id 

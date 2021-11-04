@@ -5,14 +5,14 @@ import { useParams } from 'react-router'
 export const DonationEditForm = () => {
   const { id } = useParams()
   const [donation, setDonation] = useState({
-    nombre_donacion: '',
+    nombre: '',
     monto: '',
     metodo_pago: '',
     tipo_donacion: '',
     razon_social: '',
     rfc: ''
   })
-  const { nombre_donacion, monto, metodo_pago, tipo_donacion, razon_social, rfc } = donation
+  const { nombre, monto, metodo_pago, tipo_donacion, razon_social, rfc } = donation
 
   useEffect(() => {
     const getDonation = async () => {
@@ -50,7 +50,7 @@ export const DonationEditForm = () => {
     <form className='donor__form' onSubmit={handlerSubmit}>
       <div className='mb-3'>
         <label className='form-label'>Nombre Donacion</label>
-        <input onChange={handlerChange} type='text' className='form-control' name='nombre_donacion' value={nombre_donacion} />
+        <input onChange={handlerChange} type='text' className='form-control' name='nombre' value={nombre} />
       </div>
       <div className='mb-3'>
         <label className='form-label'>Monto</label>

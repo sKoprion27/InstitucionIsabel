@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
+import { getAllStates } from '../../../helpers/states.helpers'
 
 export const BeneficiaryList = () => {
   const [didFetch, setDidFetch] = useState(false)
@@ -38,7 +39,7 @@ export const BeneficiaryList = () => {
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='beneficiaries'
-        fields={['nombre', 'descripcion']}
+        // fields={['nombre', 'descripcion']}
       />
     </>
   )

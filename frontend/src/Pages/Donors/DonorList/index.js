@@ -42,20 +42,6 @@ export const DonorList = () => {
         backend='donors'
         fields={['nombre', 'descripcion']}
       />
-      <Card
-        actions={[
-          <a key='1' href='#'>This is a link</a>,
-          <a key='2' href='#'>This is a link</a>
-        ]}
-        className='blue-grey darken-1 hoverable'
-        closeIcon={<Icon>close</Icon>}
-        revealIcon={<Icon>more_vert</Icon>}
-        textClassName='white-text'
-        title='Card title'
-      >
-        <Icon> phonelink_off </Icon>
-        I am a very simple card.
-      </Card>
     </>
   )
 }
