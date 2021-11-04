@@ -37,6 +37,7 @@ export const BeneficiaryList = () => {
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
+        backend='beneficiaries'
         fields={['nombre', 'descripcion']}
       />
     </>

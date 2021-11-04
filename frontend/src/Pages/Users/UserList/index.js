@@ -37,7 +37,7 @@ export const UserList = () => {
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
-        path='users'
+        backend='users'
       />
     </ >
   )

@@ -37,6 +37,7 @@ export const TypeDonationList = () => {
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
+        backend='types-donations'
         fields={['nombre', 'descripcion']}
       />
     </>

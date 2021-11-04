@@ -3,8 +3,13 @@ import { Donor } from './../models/Donor.model'
 
 export const donorController = {
   getDonors: async (req, res) => {
-    const [queryAnswer, status] = await Donor.getAll()
-    response(req, res, 'GET DONORS', queryAnswer, status)
+    try {
+      const { rows } = await Donor.getAll()
+      response(req, res, 'GET DONORS', rows, 200)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR GET DONORS', null, 500)
+    }
   },
 
   getOneDonor: async (req, res) => {

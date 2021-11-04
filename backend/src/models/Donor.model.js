@@ -9,13 +9,7 @@ export const Donor = {
       AND D.existe = true
       ORDER BY D.id ASC
     `
-    try {
-      const { rows } = await db.query(QUERY)
-      return [rows, 200]
-    } catch (error) {
-      console.log('ERROR GET ALL DONORS 🤯', error)
-      return ['ERROR GET ALL DONORS 🤯', 400]
-    }
+    return db.query(QUERY)
   },
   getOne: async (id) => {
     const QUERY = `

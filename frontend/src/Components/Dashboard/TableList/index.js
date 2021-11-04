@@ -9,7 +9,7 @@ export const TableList = ({
   arrayListFiltered = [],
   setFetchAction,
   fields = [],
-  path = ''
+  backend = ''
 }) => {
   const auth = useAuth()
   return (
@@ -54,7 +54,7 @@ export const TableList = ({
                             <Icon>edit</Icon>
                           </Link>
                           {
-                            path === 'users' && (<button
+                            backend === 'users' && (<button
                               className='btn orange'
                               type='button'
                               disabled={auth.user.id === element.id}
@@ -64,7 +64,7 @@ export const TableList = ({
                           }
                           <Modal
                             id={element.id}
-                            path={path}
+                            path={backend}
                             setFetch={setFetchAction}
                           />
                         </td>

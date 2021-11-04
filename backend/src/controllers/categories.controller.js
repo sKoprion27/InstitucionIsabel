@@ -15,30 +15,53 @@ export const categoryController = {
 
   // GET ONE
   getOne: async (req, res) => {
-    const { id } = req.params
-    const [queryAnswer, status] = await Category.getOne(id)
-    response(req, res, 'GET ONE Category', queryAnswer, status)
+    try {
+      const { id } = req.params
+      const { rows, rowCount } = await Category.getOne(id)
+      if (rowCount === 0) {
+        response(req, res, 'ERROR GET ONE Category', null, 500)
+      }
+      response(req, res, 'GET ONE Category', rows[0], 200)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR GET ONE Category', null, 500)
+    }
   },
 
   // POST ONE
   postOne: async (req, res) => {
-    const Category = { ...req.body }
-    const [queryAnswer, status] = await Category.postOne(Category)
-    response(req, res, 'POST ONE Category', queryAnswer, status)
+    try {
+      const category = { ...req.body }
+      const { rowCount } = await Category.postOne(category)
+      response(req, res, 'POST ONE Category', rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR POST ONE Category', null, 500)
+    }
   },
 
   // UPDATE ONE
   updateOne: async (req, res) => {
-    const Category = req.body
-    const id = req.params.id
-    const [queryAnswer, status] = await Category.putOne(Category, id)
-    response(req, res, 'UPDATE ONE Category', queryAnswer, status)
+    try {
+      const Category = req.body
+      const id = req.params.id
+      const { rowCount } = await Category.putOne(Category, id)
+      response(req, res, 'UPDATE ONE Category', rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR UPDATE ONE Category', null, 500)
+    }
   },
 
   // DELETE ONE
   deleteOne: async (req, res) => {
-    const id = req.params.id
-    const [queryAnswer, status] = await Category.deleteOne(id)
-    response(req, res, 'DELETE ONE BENIFICIARY', queryAnswer, status)
+    try {
+      const id = req.params.id
+      const { rowCount } = await Category.deleteOne(id)
+      response(req, res, 'DELETE ONE BENIFICIARY', rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR DELETE ONE BENIFICIARY', null, 500)
+    }
   }
 }

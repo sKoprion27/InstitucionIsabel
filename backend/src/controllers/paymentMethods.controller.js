@@ -17,7 +17,10 @@ export const paymentMethodController = {
   getOnePaymentMethod: async (req, res) => {
     try {
       const { id } = req.params
-      const { rows } = await PaymentMethod.getOne(id)
+      const { rows, rowCount } = await PaymentMethod.getOne(id)
+      if (rowCount === 0) {
+        response(req, res, 'ERROR GET ONE PAYMENT METHOD', null, 500)
+      }
       response(req, res, 'GET ONE PAYMENT METHOD', rows[0], 200)
     } catch (error) {
       console.log(error)

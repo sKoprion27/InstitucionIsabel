@@ -17,7 +17,10 @@ export const beneficiaryController = {
   getOneBeneficiary: async (req, res) => {
     const { id } = req.params
     try {
-      const { rows } = await Beneficiary.getOne(id)
+      const { rows, rowCount } = await Beneficiary.getOne(id)
+      if (rowCount === 0) {
+        response(req, res, 'ERROR GET BENEFICIARIES', null, 500)
+      }
       response(req, res, 'GET BENEFICIARIES', rows, 200)
     } catch (error) {
       console.log(error)

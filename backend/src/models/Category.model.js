@@ -1,4 +1,4 @@
-import { db } from '../database/index'
+import { db } from '../database/'
 export const Category = {
   getAll: () => {
     const QUERY = `
@@ -11,45 +11,45 @@ export const Category = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT id, nombre_beneficiario, descripcion
-      FROM beneficiarios
+      SELECT id, nombre, descripcion
+      FROM categorias
       WHERE id = $1
       AND existe = true
     `
     return db.query(QUERY, [id])
   },
-  postOne: async (beneficiary) => {
+  postOne: async (category) => {
     const INSERTION = `
-      INSERT INTO beneficiarios(
+      INSERT INTO categorias(
         nombre_beneficiario, descripcion)
       VALUES ($1, $2);
     `
     return db
       .query(INSERTION,
         [
-          beneficiary.nombre_beneficiario,
-          beneficiary.descripcion
+          category.nombre,
+          category.descripcion
         ]
       )
   },
-  putOne: async (beneficiary, id) => {
+  putOne: async (category, id) => {
     const UPDATE = `
-      UPDATE beneficiarios
-      SET nombre_beneficiario = $2,
+      UPDATE categorias
+      SET nombre = $2,
       descripcion = $3
       WHERE id = $1
       AND existe = true
     `
     const values = [
       id,
-      beneficiary.nombre_beneficiario,
-      beneficiary.descripcion
+      category.nombre,
+      category.descripcion
     ]
     return db.query(UPDATE, values)
   },
   deleteOne: async (id) => {
     const DELETE = `
-      UPDATE beneficiarios
+      UPDATE categorias
       SET existe = false
       WHERE id = $1
     `

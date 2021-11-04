@@ -39,10 +39,9 @@ export const DonorList = () => {
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
-        path='donors'
+        backend='donors'
         fields={['nombre', 'descripcion']}
       />
-
       <Card
         actions={[
           <a key='1' href='#'>This is a link</a>,

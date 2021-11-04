@@ -6,6 +6,7 @@ import { initRoutes } from './routes/index'
 
 const app = express()
 const PORT = 4000 || process.env.PORT
+app.disable('etag')
 
 // Middlewares de configuracion inicial
 

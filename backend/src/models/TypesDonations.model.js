@@ -31,8 +31,10 @@ export const TypesDonation = {
       UPDATE tipo_donaciones
       SET nombre = $2,
       descripcion = $3
-      WHERE id = $1
-      AND existe = true
+      WHERE
+      id = $1
+      AND
+      existe = true
     `
     const values = [
       id,

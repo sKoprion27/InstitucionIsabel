@@ -28,11 +28,6 @@ export const updateUser = async (user, id) => {
   return data.response
 }
 
-export const deleteOneElement = async (id, path) => {
-  const { data } = await Axios.delete(`${URL_API}/${path}/${id}`)
-  return data.response
-}
-
 export const getAllRoles = async () => {
   const { data } = await Axios.get(`${URL_API}/roles`)
   return data.response
@@ -40,5 +35,10 @@ export const getAllRoles = async () => {
 
 export const postOneUserRoles = async (id, roles) => {
   const { data } = await Axios.post(`${URL_API}/roles`, { id, roles })
+  return data.response
+}
+
+export const deleteOneElement = async (id, path) => {
+  const { data } = await Axios.delete(`${URL_API}/${path}/${id}`)
   return data.response
 }

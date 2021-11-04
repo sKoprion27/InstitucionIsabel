@@ -1,10 +1,17 @@
+.NOT_FOUND {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .layout {
-  min-height: 60vh;
-  margin-top: calc(100vh / 6);
   display: flex !important;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 400px;
 
   a {
     margin-top: 40px;

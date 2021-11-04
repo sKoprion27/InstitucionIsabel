@@ -17,7 +17,11 @@ export const typesDonationController = {
   getOneTypesDonation: async (req, res) => {
     try {
       const { id } = req.params
-      const { rows } = await TypesDonation.getOne(id)
+      const { rows, rowCount } = await TypesDonation.getOne(id)
+      if (rowCount === 0) {
+        response(req, res, 'ERROR GET ONE DONATION TYPE', null, 500)
+        return
+      }
       response(req, res, 'GET ONE DONATION TYPE', rows[0], 200)
     } catch (error) {
       console.log(error)
@@ -41,6 +45,7 @@ export const typesDonationController = {
   updateOneTypesDonation: async (req, res) => {
     try {
       const type = req.body
+      console.log(type, 'TYPE')
       const id = req.params.id
       const { rowCount } = await TypesDonation.putOne(type, id)
       response(req, res, 'UPDATE ONE DONATION TYPE', rowCount, 201)

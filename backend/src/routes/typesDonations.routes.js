@@ -5,8 +5,15 @@ const router = Router()
 
 router.get('/', typesDonationController.getTypesDonations)
 router.get('/:id', typesDonationController.getOneTypesDonation)
-router.post('/', validateTypeDonations, typesDonationController.postOneTypesDonation)
-router.put('/:id', typesDonationController.updateOneTypesDonation)
-router.delete('/:id', typesDonationController.deleteOneTypesDonation)
+router.post('/',
+  validateTypeDonations,
+  typesDonationController.postOneTypesDonation
+)
+router.put('/:id',
+  typesDonationController.updateOneTypesDonation
+)
+router.delete('/:id',
+  typesDonationController.deleteOneTypesDonation
+)
 
 export default router

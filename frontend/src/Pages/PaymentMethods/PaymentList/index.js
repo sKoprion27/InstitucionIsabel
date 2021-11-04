@@ -37,7 +37,7 @@ export const PaymentList = () => {
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
-        path='payment-methods'
+        backend='payment-methods'
         fields={['nombre', 'descripcion']}
       />
     </>
