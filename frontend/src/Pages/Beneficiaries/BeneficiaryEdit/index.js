@@ -1,35 +1,141 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import { getOneBeneficiary } from '../../../helpers/beneficiaries.helpers'
-import { BeneficiaryEditForm } from './../../../Components/Beneficiaries/BeneficiaryEditForm'
-import { Link } from 'react-router-dom'
+import {
+  useEffect,
+  useState
+} from 'react'
+import {
+  Navigate,
+  useParams
+} from 'react-router-dom'
+import {
+  useForm
+} from 'react-hook-form'
+
+import { NavPage } from '../../../Components/Dashboard/NavPage'
+
+import { Card } from 'react-materialize'
+
+import {
+  getOneBeneficiary,
+  updateBeneficiary
+} from '../../../helpers/beneficiaries.helpers'
 
 export const BeneficiaryEdit = () => {
   const { id } = useParams()
-  const [beneficiary, setBeneficiary] = useState({})
+  const [edit, setEdit] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm()
 
   useEffect(() => {
-    const getBeneficiary = async () => {
+    const getOne = async () => {
       try {
         const beneficiary = await getOneBeneficiary(id)
-        setBeneficiary(beneficiary)
+        reset(beneficiary)
       } catch (error) {
         console.log(error)
+        setEdit(null)
       }
     }
-    getBeneficiary()
-  }, [id])
+    getOne()
+  }, [id, edit])
+
+  const handlerSubmit = async (data) => {
+    try {
+      await updateBeneficiary(data, id)
+      setEdit(!edit)
+    } catch (error) {
+      console.log(error)
+      alert('ERROR')
+    }
+  }
+  const handlerEdit = () => {
+    setEdit(!edit)
+  }
+
+  if (edit === null) {
+    return <Navigate to='/dashboard/NOTFOUND' />
+  }
+
   return (
-    <div className='row justify-content-center'>
-      <div className='user__header'>
-        <h1 className='text-center'>Editar Beneficiario</h1>
-        <Link to='/dashboard/beneficiarios' className='btn btn-primary btn-lg' >
-          Regresar
-        </Link>
-      </div>
-      <div className='col-12 col-md-6'>
-        <BeneficiaryEditForm {...beneficiary} />
-      </div>
-    </div>
+    <>
+      <NavPage title='Editar beneficiario' path='/dashboard/beneficiarios' />
+      <Card className='hoverable'>
+        <p>Información</p>
+        <form
+          className='user__form '
+          onSubmit={handleSubmit(handlerSubmit)}
+        >
+          <div>
+            <label>Nombre</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {
+              ...register('nombre', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })
+              }
+              disabled={!edit} />
+            {errors.nombre &&
+              (<span className='red-text'>
+                {
+                  errors.nombre.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Descripción</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {...register('descripcion', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.descripcion &&
+              (<span className='red-text'>
+                {
+                  errors.descripcion.message
+                }
+              </span>)
+            }
+          </div>
+
+          <div className='user__btn__container'>
+            <button
+              type='submit'
+              className='btn btn-success  '
+              disabled={!edit}
+            >
+              Actualizar
+            </button>
+
+            <button
+              type='button'
+              className={`btn ${edit ? 'red' : 'teal'} `}
+              onClick={handlerEdit}
+            >
+              {
+                edit ? 'Cancelar' : 'Editar'
+              }
+            </button>
+          </div>
+        </form>
+      </Card>
+    </>
   )
 }

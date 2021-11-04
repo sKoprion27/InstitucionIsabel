@@ -20,8 +20,9 @@ export const beneficiaryController = {
       const { rows, rowCount } = await Beneficiary.getOne(id)
       if (rowCount === 0) {
         response(req, res, 'ERROR GET BENEFICIARIES', null, 500)
+        return
       }
-      response(req, res, 'GET BENEFICIARIES', rows, 200)
+      response(req, res, 'GET BENEFICIARIES', rows[0], 200)
     } catch (error) {
       console.log(error)
       response(req, res, 'ERROR GET BENEFICIARIES', null, 500)

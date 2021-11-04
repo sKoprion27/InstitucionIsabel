@@ -7,6 +7,7 @@ import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import './style.scss'
+import { Card } from 'react-materialize'
 
 export const UserAdd = () => {
   const {
@@ -64,7 +65,7 @@ export const UserAdd = () => {
   return (
     <>
       <NavPage title='Agregar usuario' path='/dashboard/usuarios' />
-      <div>
+      <Card className='hoverable'>
         <form
           className='user__form'
           onSubmit={handleSubmit(handlerSubmit)}
@@ -206,7 +207,7 @@ export const UserAdd = () => {
             </button>
           </div>
         </form>
-      </div>
+      </Card>
     </>
   )
 }

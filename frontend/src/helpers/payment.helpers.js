@@ -12,6 +12,6 @@ export const getOnePayment = async (id) => {
 }
 
 export const updateOnePayment = async (payment, id) => {
-  const { data } = await Axios.put(`${URL_API}/payment-methods/${id}`)
+  const { data } = await Axios.put(`${URL_API}/payment-methods/${id}`, payment)
   return data.response
 }

@@ -31,7 +31,7 @@ export const CategoryList = () => {
 
   return (
     <>
-      <NavPage title='Lista de categorias' onePage />
+      <NavPage title='Lista de categorias de donación' onePage />
       <MenuPage name='categoria' handler={handlerFinder} />
       <TableList
         arrayList={originalList}

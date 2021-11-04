@@ -10,8 +10,12 @@ export const getOneCategory = async (id) => {
   const { data } = await Axios.get(`${URL_API}/categories/${id}`)
   return data.response
 }
+export const postCategory = async (category) => {
+  const { data } = await Axios.post(`${URL_API}/categories/`, category)
+  return data.response
+}
 
-export const updateCategory = async (donor, id) => {
-  const { data } = await Axios.put(`${URL_API}/categories/${id}`)
+export const updateCategory = async (category, id) => {
+  const { data } = await Axios.put(`${URL_API}/categories/${id}`, category)
   return data.response
 }

@@ -22,6 +22,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { ModalPassword } from '../../../Components/Dashboard/ModalPassword'
 import { useAuth } from '../../../hooks/useAuth'
+import { Card } from 'react-materialize'
 
 export const UserEdit = () => {
   const auth = useAuth()
@@ -102,116 +103,118 @@ export const UserEdit = () => {
     setEdit(!edit)
   }
   if (edit === null) {
-    return <Navigate to='/dashboard/usuarios' />
+    return <Navigate to='/dashboard/NOTFOUND' />
   }
   return (
     <>
       <NavPage title='Editar usuario' path='/dashboard/usuarios' />
-      <p>Información de usuario</p>
-      <form
-        className='user__form'
-        onSubmit={handleSubmit(handlerSubmit)}
-      >
-        <div>
-          <label>Nombre</label>
-          <input
-            onChange={register}
-            type='text'
-            name='nombre'
-            {
-            ...register('nombre', {
-              required: true
-            })
+      <Card className='hoverable'>
+        <p>Información de usuario</p>
+        <form
+          className='user__form'
+          onSubmit={handleSubmit(handlerSubmit)}
+        >
+          <div>
+            <label>Nombre</label>
+            <input
+              onChange={register}
+              type='text'
+              name='nombre'
+              {
+              ...register('nombre', {
+                required: true
+              })
+              }
+              disabled={!edit} />
+            {errors.nombre?.type === 'required' &&
+              (<span className='red-text'>El nombre es requerido</span>)
             }
-            disabled={!edit} />
-          {errors.nombre?.type === 'required' &&
-            (<span className='red-text'>El nombre es requerido</span>)
-          }
-        </div>
-        <div>
-          <label>Apellidos</label>
-          <input
-            onChange={register}
-            type='text'
-            name='apellido'
-            {...register('apellido', {
-              required: true
-            })}
-            disabled={!edit}
-          />
-          {errors.apellido?.type === 'required' &&
-            (<span className='red-text'>El apellido es requerido</span>)
-          }
-        </div>
+          </div>
+          <div>
+            <label>Apellidos</label>
+            <input
+              onChange={register}
+              type='text'
+              name='apellido'
+              {...register('apellido', {
+                required: true
+              })}
+              disabled={!edit}
+            />
+            {errors.apellido?.type === 'required' &&
+              (<span className='red-text'>El apellido es requerido</span>)
+            }
+          </div>
 
-        <div className='input-select'>
-          <label>Selecciona los roles</label>
-          <Controller
-            control={control}
-            rules={{ required: true }}
-            name='roles'
+          <div className='input-select'>
+            <label>Selecciona los roles</label>
+            <Controller
+              control={control}
+              rules={{ required: true }}
+              name='roles'
 
-            render={({ field }) => (
-              <Select
-                placeholder='Roles de usuario'
-                closeMenuOnSelect
-                components={animatedComponents}
-                isMulti
-                options={roles}
-                {...field}
-                isDisabled={!edit}
-              />
-            )}
-          />
-          {errors.roles?.type === 'required' &&
-            (<span
-              className='red-text'
+              render={({ field }) => (
+                <Select
+                  placeholder='Roles de usuario'
+                  closeMenuOnSelect
+                  components={animatedComponents}
+                  isMulti
+                  options={roles}
+                  {...field}
+                  isDisabled={!edit}
+                />
+              )}
+            />
+            {errors.roles?.type === 'required' &&
+              (<span
+                className='red-text'
+              >
+                Selecciona al menos un role
+              </span>)
+            }
+          </div>
+
+          <div>
+            <label>Email</label>
+            <input
+              onChange={register}
+              type='text'
+              name='correo_electronico'
+              {...register('correo_electronico', {
+                required: true
+              })}
+              disabled={!edit}
+            />
+            {errors.correo_electronico?.type === 'required' &&
+              (<span className='red-text'>El correo electronico es requerido</span>)
+            }
+          </div>
+
+          <div className='user__btn__container'>
+            <button
+              type='submit'
+              className='btn btn-success  '
+              disabled={!edit}
             >
-              Selecciona al menos un role
-            </span>)
-          }
-        </div>
+              Actualizar
+            </button>
 
-        <div>
-          <label>Email</label>
-          <input
-            onChange={register}
-            type='text'
-            name='correo_electronico'
-            {...register('correo_electronico', {
-              required: true
-            })}
-            disabled={!edit}
-          />
-          {errors.correo_electronico?.type === 'required' &&
-            (<span className='red-text'>El correo electronico es requerido</span>)
-          }
-        </div>
-
-        <div className='user__btn__container'>
-          <button
-            type='submit'
-            className='btn btn-success  '
-            disabled={!edit}
-          >
-            Actualizar
-          </button>
-
-          <button type='button' className='btn indigo'
-            disabled={!edit} onClick={() => setActiveModal(!activeModal)}>
-            Reestablecer contraseña
-          </button>
-          <button
-            type='button'
-            className={`btn ${edit ? 'red' : 'teal'} `}
-            onClick={handlerEdit}
-          >
-            {
-              edit ? 'Cancelar' : 'Editar'
-            }
-          </button>
-        </div>
-      </form>
+            <button type='button' className='btn indigo'
+              disabled={!edit} onClick={() => setActiveModal(!activeModal)}>
+              Reestablecer contraseña
+            </button>
+            <button
+              type='button'
+              className={`btn ${edit ? 'red' : 'teal'} `}
+              onClick={handlerEdit}
+            >
+              {
+                edit ? 'Cancelar' : 'Editar'
+              }
+            </button>
+          </div>
+        </form>
+      </Card>
       {
         activeModal && (<ModalPassword id={id} changeVisibility={setActiveModal} />)
       }

@@ -10,7 +10,12 @@ export const getOneBeneficiary = async (id) => {
   return data.response
 }
 
-export const updateBeneficiary = async (donor, id) => {
-  const { data } = await Axios.put(`${URL_API}/beneficiaries/${id}`)
+export const postBeneficiary = async (beneficiary) => {
+  const { data } = await Axios.put(`${URL_API}/beneficiaries`, beneficiary)
+  return data.response
+}
+
+export const updateBeneficiary = async (beneficiary, id) => {
+  const { data } = await Axios.put(`${URL_API}/beneficiaries/${id}`, beneficiary)
   return data.response
 }

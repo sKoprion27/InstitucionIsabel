@@ -20,6 +20,7 @@ export const categoryController = {
       const { rows, rowCount } = await Category.getOne(id)
       if (rowCount === 0) {
         response(req, res, 'ERROR GET ONE Category', null, 500)
+        return
       }
       response(req, res, 'GET ONE Category', rows[0], 200)
     } catch (error) {
@@ -43,9 +44,9 @@ export const categoryController = {
   // UPDATE ONE
   updateOne: async (req, res) => {
     try {
-      const Category = req.body
+      const category = req.body
       const id = req.params.id
-      const { rowCount } = await Category.putOne(Category, id)
+      const { rowCount } = await Category.putOne(category, id)
       response(req, res, 'UPDATE ONE Category', rowCount, 201)
     } catch (error) {
       console.log(error)

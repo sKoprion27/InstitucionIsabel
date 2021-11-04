@@ -2,7 +2,7 @@ import { db } from '../database/index'
 export const Beneficiary = {
   getAll: async () => {
     const QUERY = `
-      SELECT id, nombre, descripcion as descripción
+      SELECT id, nombre, descripcion
       FROM beneficiarios
       WHERE existe = true
       ORDER BY id DESC
@@ -11,7 +11,7 @@ export const Beneficiary = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT id, nombre, descripcion as descripción
+      SELECT id, nombre, descripcion
       FROM beneficiarios
       WHERE id = $1
       AND existe = true

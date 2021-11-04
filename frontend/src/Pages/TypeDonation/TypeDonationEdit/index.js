@@ -12,6 +12,7 @@ import {
 
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { getOneTypeDonation, updateTypeDonation } from '../../../helpers/typedonations.helpers'
+import { Card } from 'react-materialize'
 
 export const TypeDonationEdit = () => {
   const { id } = useParams()
@@ -57,78 +58,79 @@ export const TypeDonationEdit = () => {
   return (
     <>
       <NavPage title='Editar tipo de donación' path='/dashboard/tipo-donacion' />
-      <p>Información</p>
-      <form
-        className='user__form'
-        onSubmit={handleSubmit(handlerSubmit)}
-      >
-        <div>
-          <label>Nombre</label>
-          <input
-            onChange={register}
-            type='text'
-            autoComplete='off'
-            {
-            ...register('nombre', {
-              required: {
-                value: true,
-                message: 'Este campo es requerido'
-              }
-            })
-            }
-            disabled={!edit} />
-          {errors.nombre &&
-            (<span className='red-text'>
+      <Card className='hoverable'>
+        <p>Información</p>
+        <form
+          className='user__form '
+          onSubmit={handleSubmit(handlerSubmit)}
+        >
+          <div>
+            <label>Nombre</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
               {
-                errors.nombre.message
+              ...register('nombre', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })
               }
-            </span>)
-          }
-        </div>
-        <div>
-          <label>Descripción</label>
-          <input
-            onChange={register}
-            type='text'
-            autoComplete='off'
-            {...register('descripcion', {
-              required: {
-                value: true,
-                message: 'Este campo es requerido'
-              }
-            })}
-            disabled={!edit}
-          />
-          {errors.descripcion &&
-            (<span className='red-text'>
-              {
-                errors.descripcion.message
-              }
-            </span>)
-          }
-        </div>
-
-        <div className='user__btn__container'>
-          <button
-            type='submit'
-            className='btn btn-success  '
-            disabled={!edit}
-          >
-            Actualizar
-          </button>
-
-          <button
-            type='button'
-            className={`btn ${edit ? 'red' : 'teal'} `}
-            onClick={handlerEdit}
-          >
-            {
-              edit ? 'Cancelar' : 'Editar'
+              disabled={!edit} />
+            {errors.nombre &&
+              (<span className='red-text'>
+                {
+                  errors.nombre.message
+                }
+              </span>)
             }
-          </button>
-        </div>
-      </form>
+          </div>
+          <div>
+            <label>Descripción</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {...register('descripcion', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.descripcion &&
+              (<span className='red-text'>
+                {
+                  errors.descripcion.message
+                }
+              </span>)
+            }
+          </div>
 
+          <div className='user__btn__container'>
+            <button
+              type='submit'
+              className='btn btn-success  '
+              disabled={!edit}
+            >
+              Actualizar
+            </button>
+
+            <button
+              type='button'
+              className={`btn ${edit ? 'red' : 'teal'} `}
+              onClick={handlerEdit}
+            >
+              {
+                edit ? 'Cancelar' : 'Editar'
+              }
+            </button>
+          </div>
+        </form>
+      </Card>
     </>
   )
 }
