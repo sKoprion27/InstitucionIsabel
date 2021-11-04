@@ -76,7 +76,7 @@ CREATE TABLE donadores(
   id SERIAL PRIMARY KEY,
   id_cfdi INTEGER NOT NULL,
   id_estado INTEGER NOT NULL,
-  nombre_contacto TEXT NOT NULL,
+  nombre TEXT NOT NULL,
   telefono TEXT NOT NULL,
   razon_social TEXT NOT NULL,
   rfc TEXT NOT NULL,
@@ -505,7 +505,7 @@ INSERT INTO estados(nombre) VALUES
 ('Zacatecas');
 
 -- Insertar datos de la tabla donadores - 20
-INSERT INTO donadores(id_cfdi, id_estado, nombre_contacto, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal) VALUES
+INSERT INTO donadores(id_cfdi, id_estado, nombre, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal) VALUES
 (1,1,'Manuel Andrade', '4424747494', 'Elctriquesos SA', 'ELECT1020ORE', 'manuel@random.com', 76770, 'Cuautemoc 87', true),
 (2,2,'Andrea Peralta', '5540804030', 'Salmon SA', 'SADM102050', 'andrea@random.com', 85000, 'Cedro 7', true),
 (3,3,'Jesus Perez', '5540802330', 'Tecmis SA', 'ELECT1020ORE', 'jesus@random.com', 45006, 'Colores 57', true),

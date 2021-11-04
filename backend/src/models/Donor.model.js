@@ -2,7 +2,7 @@ import { db } from '../database/index'
 export const Donor = {
   getAll: async () => {
     const QUERY = `
-      SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre Estado, C.clave Clave_CFDI
+      SELECT D.id, telefono, razon_social, D.nombre nombre, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre Estado, C.clave Clave_CFDI, C.descripcion Descripcion_CFDI
       FROM donadores D, cfdis C, estados E
       WHERE D.id_cfdi = C.id 
       AND D.id_estado = E.id 
@@ -13,7 +13,7 @@ export const Donor = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT D.id, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre estado, C.clave Clave_CFDI
+      SELECT D.id, telefono, razon_social, D.nombre nombre, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre estado, C.clave Clave_CFDI, C.descripcion Descripcion_CFDI
       FROM donadores D, cfdis C, estados E
       WHERE D.id_cfdi = C.id 
       AND D.id_estado = E.id 
@@ -35,7 +35,7 @@ export const Donor = {
   postOne: async (donor) => {
     const INSERTION = `
       INSERT INTO donadores(
-        id_cfdi, id_estado, nombre_contacto, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal)
+        id_cfdi, id_estado, nombre, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     `
     try {
@@ -49,19 +49,19 @@ export const Donor = {
   putOne: async (donor, id) => {
     const UPDATE = `
       UPDATE donadores
-      SET id_cfdi = $2, 
-      id_estado = $3, 
-      nombre_contacto = $4, 
-      telefono = $5, 
-      razon_social = $6, 
-      rfc = $7, 
-      correo_electronico = $8, 
-      codigo_postal = $9, 
-      domicilio_fiscal = $10, 
-      regimen_fiscal = $11
+      SET telefono = $2, 
+      razon_social = $3, 
+      nombre = $4, 
+      rfc = $5, 
+      correo_electronico = $6,
+      codigo_postal = $7,
+      domicilio_fiscal = $8, 
+      regimen_fiscal = $9,
+      id_estado = $10, 
+      id_cfdi = $11
       WHERE id = $1 and existe = true
     `
-    const values = [id, donor.id_cfdi, donor.id_estado, donor.nombre_contacto, donor.telefono, donor.razon_social, donor.rfc, donor.correo_electronico, donor.codigo_postal, donor.domicilio_fiscal, donor.regimen_fiscal]
+    const values = [id, donor.telefono, donor.razon_social, donor.nombre, donor.rfc, donor.correo_electronico, donor.codigo_postal, donor.domicilio_fiscal, donor.regimen_fiscal, donor.id_estado, donor.domicilio_fiscal, donor.id_cfdi]
     try {
       const { rowCount } = await db.query(UPDATE, values)
 
