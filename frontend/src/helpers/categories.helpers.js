@@ -11,7 +11,7 @@ export const getOneCategory = async (id) => {
   return data.response
 }
 export const postCategory = async (category) => {
-  const { data } = await Axios.post(`${URL_API}/categories/`, category)
+  const { data } = await Axios.post(`${URL_API}/categories`, category)
   return data.response
 }
 

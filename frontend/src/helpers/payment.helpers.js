@@ -11,6 +11,11 @@ export const getOnePayment = async (id) => {
   return data.response
 }
 
+export const postOnePayment = async (payment) => {
+  const { data } = await Axios.post(`${URL_API}/payment-methods`, payment)
+  return data.response
+}
+
 export const updateOnePayment = async (payment, id) => {
   const { data } = await Axios.put(`${URL_API}/payment-methods/${id}`, payment)
   return data.response

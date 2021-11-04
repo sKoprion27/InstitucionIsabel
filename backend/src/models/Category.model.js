@@ -21,7 +21,7 @@ export const Category = {
   postOne: async (category) => {
     const INSERTION = `
       INSERT INTO categorias(
-        nombre_beneficiario, descripcion)
+        nombre, descripcion)
       VALUES ($1, $2);
     `
     return db

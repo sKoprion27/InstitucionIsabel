@@ -230,7 +230,9 @@ export const routes = [
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar categoria donativo'>
-                <CategoryEdit />
+                <PageLayout onePage>
+                  <CategoryEdit />
+                </PageLayout>
               </PermissionGuard>
             )
           },
@@ -238,7 +240,9 @@ export const routes = [
             path: 'add',
             element: (
               <PermissionGuard permiso='Registrar categoria donativo'>
-                <CategoryAdd />
+                <PageLayout onePage>
+                  <CategoryAdd />
+                </PageLayout>
               </PermissionGuard>
             )
           }

@@ -8,9 +8,9 @@ import {
 
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { postTypeDonation } from '../../../helpers/typedonations.helpers'
-import { Button, Card } from 'react-materialize'
-
-import FeatureDiscoveryPrompt from 'material-ui-feature-discovery-prompt'
+import { Card, Button } from 'react-materialize'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { ModalElement } from '../../../Components/ModalHelp'
 
 export const TypeDonationAdd = () => {
   const [loading, setLoading] = useState(false)
@@ -26,18 +26,25 @@ export const TypeDonationAdd = () => {
     try {
       setLoading(true)
       await postTypeDonation(data)
-      setLoading(false)
+      toastInit('Elemento agregado')
+      setTimeout(() => {
+        setLoading(false)
+        reset()
+      }, 1000)
     } catch (error) {
+      toastInit('Error al agregar', 'red lighten-2')
+      setLoading(false)
       console.log(error)
-      alert('ERROR')
     }
   }
 
   return (
     <>
-      <NavPage title='Agregar tipo de donación' path='/dashboard/tipo-donacion' />
+      <NavPage
+        title='Agregar tipo de donación'
+        path='/dashboard/tipo-donacion'
+      />
       <Card className='hoverable'>
-        <p>Los tipos de donaciones son utiles para definir de que tipo es el</p>
         <form
           onSubmit={handleSubmit(handlerSubmit)}
         >
@@ -88,17 +95,19 @@ export const TypeDonationAdd = () => {
           </div>
 
           <div className='user__btn__container'>
-            <button
+            <Button
               type='submit'
               className='btn btn-success'
               disabled={loading}
             >
               Agregar
-            </button>
-
+            </Button>
           </div>
         </form>
       </Card>
+      <ModalElement
+        message='Los tipos de donaciones son utiles para definir de que tipo es el donativo.'
+      />
     </>
   )
 }
