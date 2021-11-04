@@ -72,7 +72,7 @@ export const DonorEdit = () => {
     getStates()
   }, [])
 
-  /* useEffect(() => {
+  useEffect(() => {
     const getCfdis = async () => {
       const cfdis = await getAllCfdis()
       const options = cfdis.map(c => {
@@ -85,7 +85,7 @@ export const DonorEdit = () => {
       setCfdi(options)
     }
     getCfdis()
-  }, []) */
+  }, [])
 
   const handlerSubmit = async (data) => {
     try {
@@ -112,7 +112,7 @@ export const DonorEdit = () => {
       alert('Usuario actualizado')
       setEdit(false)
     } catch (error) {
-      console.log(error, 'Update user')
+      console.log(error, 'Update donor')
     }
   }
   const handlerEdit = () => {
@@ -248,7 +248,7 @@ export const DonorEdit = () => {
             (<span
               className='red-text'
             >
-              Selecciona al menos un role
+              Selecciona un regimen fiscal
             </span>)
           }
         </div>
@@ -275,7 +275,7 @@ export const DonorEdit = () => {
             (<span
               className='red-text'
             >
-              Selecciona al menos un role
+              Selecciona un estado
             </span>)
           }
         </div>
@@ -302,7 +302,7 @@ export const DonorEdit = () => {
             (<span
               className='red-text'
             >
-              Selecciona al menos un role
+              Selecciona un cfdi
             </span>)
           }
         </div>

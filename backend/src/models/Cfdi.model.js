@@ -1,37 +1,18 @@
 import { db } from './../database/index'
-import config from './../config/index'
-const { Pool } = require('pg')
-
-const { databaseConfig } = config
-
-const pool = new Pool(databaseConfig)
-
 export const Cfdi = {
   getAll: async () => {
     const QUERY = `
-      SELECT id, clave, descripcion
-      FROM cfdis
-      WHERE existe = true
-      ORDER BY id ASC
+    SELECT id, clave, descripcion
+    FROM cfdis
+    WHERE existe = true
+    ORDER BY id ASC
     `
     try {
-      // const { rows } = await db.query(QUERY)
-      // console.log(rows, '😀')
-      const rows = pool.query("SET client_encoding to 'latin1';", function (err, empty_result_to_fix_encoding) {
-        if (err) {
-          console.log(err, empty_result_to_fix_encoding)
-        }
-        return pool.query(QUERY, function (err, result) {
-          console.log(err)
-          console.log(result)
-          return result.rows
-        })
-      })
-
+      const { rows } = await db.query(QUERY)
       return [rows, 200]
     } catch (error) {
-      console.log('ERROR GET ALL CFDIS 🤯', error)
-      return ['ERROR GET ALL CFDIS 🤯', 400]
+      console.log('ERROR GET ALL CFDIs 🤯', error)
+      return ['ERROR GET ALL CFDIs 🤯', 400]
     }
   },
   getOne: async (id) => {
