@@ -101,6 +101,7 @@ export const DonorEdit = () => {
           nombre: cfdi.label
         }
       })
+
       const dataPost = {
         ...data,
         states,
@@ -126,7 +127,7 @@ export const DonorEdit = () => {
       <NavPage title='Editar donador' path='/dashboard/donadores' />
       <p>Información de usuario</p>
       <form
-        className='user__form'
+        className='donor__form'
         onSubmit={handleSubmit(handlerSubmit)}
       >
         <div>
@@ -158,6 +159,23 @@ export const DonorEdit = () => {
           />
           {errors.razon_social?.type === 'required' &&
             (<span className='red-text'>La razon social es requerido</span>)
+          }
+        </div>
+
+        <div>
+          <label>Nombre</label>
+          <input
+            onChange={register}
+            type='text'
+            name='nombre'
+            {
+            ...register('nombre', {
+              required: true
+            })
+            }
+            disabled={!edit} />
+          {errors.nombre?.type === 'required' &&
+            (<span className='red-text'>El nombre es requerido</span>)
           }
         </div>
 
@@ -237,11 +255,11 @@ export const DonorEdit = () => {
                 placeholder='Regimen Fiscal'
                 closeMenuOnSelect
                 components={animatedComponents}
-                isMulti
-                options={states}
+                options={cfdis}
                 {...field}
                 isDisabled={!edit}
               />
+
             )}
           />
           {errors.states?.type === 'required' &&
