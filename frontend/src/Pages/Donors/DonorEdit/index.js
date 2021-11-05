@@ -33,7 +33,17 @@ export const DonorEdit = () => {
   const [activeModal, setActiveModal] = useState(false)
   const [states, setStates] = useState([])
   const [cfdis, setCfdi] = useState([])
+  const [donor, setDonor] = useState({})
   const animatedComponents = makeAnimated()
+  const [tiposRegimenes, setTipoRegimenes] = useState([{
+    label: 'PERSONA MORAL',
+    value: true
+  },
+  {
+    label: 'PERSONA FISICA',
+    value: false
+  }
+  ])
 
   const {
     register,
@@ -46,9 +56,18 @@ export const DonorEdit = () => {
     const getDonor = async () => {
       try {
         const donor = await getOneDonor(id)
-        const donorData = {
-          ...donor
+
+        const regimen_fiscal = {
+          label: donor.regimen_fiscal ? 'PERSONA MORAL' : 'PERSONA FISICA',
+          value: donor.regimen_fiscal
         }
+
+        const donorData = {
+          ...donor,
+          regimen_fiscal: regimen_fiscal
+        }
+
+        setDonor(donorData)
         reset(donorData)
       } catch (error) {
         setEdit(null)
@@ -88,27 +107,9 @@ export const DonorEdit = () => {
   }, [])
 
   const handlerSubmit = async (data) => {
+    console.log(data)
     try {
-      const states = data.states.map(state => {
-        return {
-          id: state.value,
-          nombre: state.label
-        }
-      })
-      const cfdis = data.cfdis.map(cfdi => {
-        return {
-          id: cfdi.value,
-          nombre: cfdi.label
-        }
-      })
-
-      const dataPost = {
-        ...data,
-        states,
-        cfdis
-      }
-      await updateDonor(dataPost, id)
-
+      await updateDonor(data, id)
       setFetchUpdate(!fetchUpdate)
       alert('Usuario actualizado')
       setEdit(false)
@@ -124,6 +125,9 @@ export const DonorEdit = () => {
   }
   return (
     <>
+      {
+        JSON.stringify(donor)
+      }
       <NavPage title='Editar donador' path='/dashboard/donadores' />
       <p>Información de usuario</p>
       <form
@@ -255,7 +259,7 @@ export const DonorEdit = () => {
                 placeholder='Regimen Fiscal'
                 closeMenuOnSelect
                 components={animatedComponents}
-                options={cfdis}
+                options={tiposRegimenes}
                 {...field}
                 isDisabled={!edit}
               />
@@ -276,8 +280,7 @@ export const DonorEdit = () => {
           <Controller
             control={control}
             rules={{ required: true }}
-            name='regimen_fiscal'
-
+            name='estado'
             render={({ field }) => (
               <Select
                 placeholder='Estado'
@@ -303,7 +306,7 @@ export const DonorEdit = () => {
           <Controller
             control={control}
             rules={{ required: true }}
-            name='regimen_fiscal'
+            name='clave_cfdi'
 
             render={({ field }) => (
               <Select

@@ -13,11 +13,11 @@ import {
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 
 import { Card } from 'react-materialize'
+
 import {
-  getOnePayment,
-  updateOnePayment
-} from '../../../helpers/payment.helpers'
-import { getOneDonation } from '../../../helpers/donations.helpers'
+  getOneDonation,
+  updateDonation
+} from '../../../helpers/donations.helpers'
 
 export const DonationEdit = () => {
   const { id } = useParams()
@@ -36,13 +36,16 @@ export const DonationEdit = () => {
     const getOne = async () => {
       try {
         const donation = await getOneDonation(id)
-        const esta_facturado =
-          donation.esta_facturado !== null || 'No esta facturado'
+        const esta_facturado = donation.esta_facturado === null ? 'PERSONA MORAL' : 'PERSONA FISICA'
+
         setDonation(donation)
-        reset({
+
+        const nuevaDonacion = {
           ...donation,
           esta_facturado
-        })
+        }
+
+        reset(nuevaDonacion)
       } catch (error) {
         console.log(error)
         setEdit(null)
@@ -55,7 +58,7 @@ export const DonationEdit = () => {
 
   const handlerSubmit = async (data) => {
     try {
-      await updateOnePayment(data, id)
+      await updateDonation(data, id)
       setEdit(!edit)
     } catch (error) {
       console.log(error)
