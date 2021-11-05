@@ -4,15 +4,28 @@ import { Donation } from './../models/Donation.model'
 export const donationController = {
   // GET ALL
   getDonations: async (req, res) => {
-    const [queryAnswer, status] = await Donation.getAll()
-    response(req, res, 'GET DONATIONS', queryAnswer, status)
+    try {
+      const { rows } = await Donation.getAll()
+      response(req, res, 'GET DONATIONS', rows, 200)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR GET DONATIONS', null, 500)
+    }
   },
 
   // GET ONE
   getOneDonation: async (req, res) => {
     const { id } = req.params
-    const [queryAnswer, status] = await Donation.getOne(id)
-    response(req, res, 'GET ONE DONATION', queryAnswer, status)
+    try {
+      const { rows, rowCount } = await Donation.getOne(id)
+      if (rowCount === 0) {
+        response(req, res, 'ERROR GET ONE DONATION', null, 500)
+      }
+      response(req, res, 'GET ONE DONATION', rows[0], 200)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR GET ONE DONATION', null, 500)
+    }
   },
 
   // POST ONE

@@ -10,7 +10,11 @@ export const getOneDonation = async (id) => {
   return data.response
 }
 
-export const updateDonation = async (donor, id) => {
-  const { data } = await Axios.put(`${URL_API}/donations/${id}`)
+export const postDonation = async (donation) => {
+  const { data } = await Axios.post(`${URL_API}/donations`, donation)
+  return data.response
+}
+export const updateDonation = async (donation, id) => {
+  const { data } = await Axios.put(`${URL_API}/donations/${id}`, donation)
   return data.response
 }

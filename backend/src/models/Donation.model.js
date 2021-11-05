@@ -1,44 +1,62 @@
 import { db } from './../database/index'
 export const Donation = {
-  getAll: async () => {
+  getAll: () => {
     const QUERY = `
-      SELECT D.id, D.nombre nombre, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
-      FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
-      WHERE D.id_donador = N.id 
-      AND D.id_metodo_pago = M.id 
-      AND D.id_tipo_donacion = T.id 
-      AND D.existe = true
-      ORDER BY D.id ASC
+      SELECT
+      D.id,
+      D.nombre,
+      D.monto,
+      D.foto_donacion,
+      D.esta_facturado as facturado,
+      P.razon_social as donador,
+      M.nombre metodo_pago,
+      T.nombre tipo_donacion
+      FROM
+      donaciones D,
+      donadores P,
+      metodos_pago M,
+      tipo_donaciones T
+      WHERE
+      D.id_donador = P.id
+      AND
+      D.id_metodo_pago = M.id
+      AND
+      D.id_tipo_donacion = T.id
+      AND
+      D.existe = true
+      ORDER BY D.id DESC
     `
-    try {
-      const { rows } = await db.query(QUERY)
-      return [rows, 200]
-    } catch (error) {
-      console.log('ERROR GET ALL DONATIONS 🤯', error)
-      return ['ERROR GET ALL DONATIONS 🤯', 400]
-    }
+    return db.query(QUERY)
   },
-  getOne: async (id) => {
+  getOne: (id) => {
     const QUERY = `
-      SELECT D.id, D.nombre nombre, monto, M.nombre metodo_pago, T.nombre Tipo_Donacion, N.razon_social, N.rfc
-      FROM donaciones D, donadores N, metodos_pago M, tipo_donaciones T
-      WHERE D.id_donador = N.id 
-      AND D.id_metodo_pago = M.id 
-      AND D.id_tipo_donacion = T.id 
-      AND D.id = $1 
-      AND D.existe = true;
+      SELECT
+      D.id,
+      D.nombre,
+      D.monto,
+      D.foto_donacion,
+      D.esta_facturado,
+      P.razon_social,
+      M.id metodo_pago,
+      T.id tipo_donacion
+      FROM
+      donaciones D,
+      donadores P,
+      metodos_pago M,
+      tipo_donaciones T
+      WHERE
+      D.id = $1
+      AND
+      D.id_donador = P.id
+      AND
+      D.id_metodo_pago = M.id
+      AND
+      D.id_tipo_donacion = T.id
+      AND
+      D.existe = true
+      ORDER BY D.id DESC
     `
-    try {
-      const { rows, rowCount } = await db.query(QUERY, [id])
-      if (rowCount === 0) {
-        return ['ERROR GET ONE DONATION NOT FOUND 🤯', 404]
-      } else {
-        return [rows[0], 200]
-      }
-    } catch (error) {
-      console.log('ERROR GET ONE DONATION 🤯', error)
-      return ['ERROR GET ONE DONATION 🤯', 400]
-    }
+    return db.query(QUERY, [id])
   },
   postOne: async (donation) => {
     const INSERTION = `
