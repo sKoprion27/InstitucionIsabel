@@ -4,6 +4,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 import { Icon } from 'react-materialize'
 import { useAuth } from '../../../hooks/useAuth'
 import { deleteOneElement } from '../../../helpers/users.helpers'
+import './style.scss'
 export const Modal = ({ id, path, setFetch }) => {
   const auth = useAuth()
   const modalRef = useRef()
@@ -47,17 +48,19 @@ export const Modal = ({ id, path, setFetch }) => {
         id={`modal-delete${id}`}
         className='modal bottom-sheet'
       >
-        <div className='modal-content'>
-          <h4>Estas seguro de eliminar este elemento</h4>
-          <p>Esta acción es irreversible</p>
-        </div>
-        <div className='modal-footer'>
-          <button className='modal-close waves-effect red white-text btn'>
-            Cancelar
-          </button>
-          <button className='modal-close waves-effect waves-green green white-text btn' onClick={handlerRemove}>
-            Aceptar
-          </button>
+        <div className='modal-layout'>
+          <div className='modal-content'>
+            <h4>Estas seguro de eliminar este elemento</h4>
+            <p>Esta acción es irreversible</p>
+          </div>
+          <div className='footer'>
+            <button className='modal-close waves-effect red white-text btn'>
+              Cancelar
+            </button>
+            <button className='modal-close waves-effect waves-green green white-text btn' onClick={handlerRemove}>
+              Aceptar
+            </button>
+          </div>
         </div>
       </div>
     </>

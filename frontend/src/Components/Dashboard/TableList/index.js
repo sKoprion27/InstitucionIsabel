@@ -2,7 +2,9 @@ import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
 import { formatKeyTable } from '../../../utils'
+import { MaterialBox } from '../MaterialBox'
 import { Modal } from '../Modal'
+import './style.scss'
 
 export const TableList = ({
   arrayList = [],
@@ -43,7 +45,15 @@ export const TableList = ({
                             .filter(key => (key !== 'id') && (key !== 'creado'))
                             .map(key => {
                               return (
-                                <td key={key}>{element[key]}</td>
+                                <>
+                                  {
+                                    key === 'foto_donacion'
+                                      ? (
+                                        <MaterialBox element={element} keyValue={key} />)
+                                      : (
+                                        <td key={key}>{element[key]}</td>)
+                                  }
+                                </>
                               )
                             })
                         }

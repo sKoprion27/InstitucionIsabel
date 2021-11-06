@@ -36,7 +36,7 @@ export const DonationEdit = () => {
     const getOne = async () => {
       try {
         const response = await getOneDonation(id)
-        setDonation(response.donation)
+        setDonation(response)
         reset(response.donation)
       } catch (error) {
         console.log(error)

@@ -26,10 +26,11 @@ export const donationController = {
         response(req, res, 'ERROR GET ONE DONATION', null, 500)
         return
       }
+      // {}
       const getDonation = {
-        donation: { ...donation.rows[0] },
-        metodos_pago: paymentMethods.rows,
-        tipos_donacion: typesDonations.rows
+        donation: { ...donation.rows[0] }, // {}
+        metodos_pago: paymentMethods.rows, // []
+        tipos_donacion: typesDonations.rows// []
       }
       response(req, res, 'GET ONE DONATION', getDonation, 200)
     } catch (error) {
