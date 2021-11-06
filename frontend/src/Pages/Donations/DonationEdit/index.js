@@ -35,17 +35,9 @@ export const DonationEdit = () => {
   useEffect(() => {
     const getOne = async () => {
       try {
-        const donation = await getOneDonation(id)
-        const esta_facturado = donation.esta_facturado === null ? 'PERSONA MORAL' : 'PERSONA FISICA'
-
-        setDonation(donation)
-
-        const nuevaDonacion = {
-          ...donation,
-          esta_facturado
-        }
-
-        reset(nuevaDonacion)
+        const response = await getOneDonation(id)
+        setDonation(response.donation)
+        reset(response.donation)
       } catch (error) {
         console.log(error)
         setEdit(null)
