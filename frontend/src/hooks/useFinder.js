@@ -10,7 +10,10 @@ export const useFinder = () => {
       setListFilter(originalList)
     } else {
       setListFilter(
-        listFiltered.filter(element => element.nombre.includes(target.value))
+        listFiltered.filter(element => (
+          element.nombre.includes(target.value) ||
+          element.descripcion.includes(target.value)
+        ))
       )
     }
   }

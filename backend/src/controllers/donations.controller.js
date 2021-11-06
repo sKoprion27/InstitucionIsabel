@@ -23,6 +23,9 @@ export const donationController = {
     const { id } = req.params
     try {
       const donation = await Donation.getOne(id)
+      const donationCategories = await Donation.getCategories(id)
+      const donationBeneficiaries = await Donation.getBeneficiaries(id)
+
       const paymentMethods = await PaymentMethod.getAll()
       const typesDonations = await TypesDonation.getAll()
       const donors = await Donor.getAll()
@@ -35,7 +38,11 @@ export const donationController = {
       }
       // {}
       const getDonation = {
-        donation: { ...donation.rows[0] }, // {}
+        donation: {
+          ...donation.rows[0],
+          categorias: donationCategories.rows,
+          beneficiarios: donationBeneficiaries.rows
+        }, // {}
         metodos_pago: paymentMethods.rows, // []
         tipos_donacion: typesDonations.rows, // []
         donadores: donors.rows,

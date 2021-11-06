@@ -3,6 +3,7 @@ import {
   useState
 } from 'react'
 import {
+  Link,
   Navigate,
   useParams
 } from 'react-router-dom'
@@ -23,32 +24,14 @@ import {
 
 import './style.scss'
 import { MaterialBox } from '../../../Components/Dashboard/MaterialBox'
-
-const convertToSelectOptions = (arr, key = 'nombre') => {
-  return arr.map(value => {
-    return {
-      label: value[key],
-      value: value.id
-    }
-  })
-}
-
-const filterSelectsOptiones = (arr, arrIds) => {
-  const filterData = arr.filter(element => {
-    for (const id of arrIds) {
-      if (id === element.id) {
-        return element
-      }
-    }
-    return null
-  })
-}
+import { convertToSelectOptions, filterSelectsOptiones, formatDateTable } from '../../../utils'
 
 export const DonationEdit = () => {
   const { id } = useParams()
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(false)
   const [urlFoto, setUrlFoto] = useState('')
+  const [idDonador, setIdDonador] = useState(null)
   const [options, setOptions] = useState({
     donors: [],
     paymentMethods: [],
@@ -69,6 +52,8 @@ export const DonationEdit = () => {
       try {
         const response = await getOneDonation(id)
         setUrlFoto(response.donation.foto_donacion)
+        setIdDonador(response.donation.id_donador)
+
         setOptions({
           donors: convertToSelectOptions(response.donadores, 'razon_social'),
           paymentMethods: convertToSelectOptions(response.metodos_pago),
@@ -77,13 +62,36 @@ export const DonationEdit = () => {
           beneficiaries: convertToSelectOptions(response.beneficiarios)
         })
 
+        console.log(response.donation)
+
         const initialStateForm = {
           ...response.donation,
-          donor: {},
-          payment_method: {},
-          type_donation: {},
-          categories: [],
-          beneficiaries: []
+          esta_facturado: formatDateTable(response.donation.esta_facturado),
+          donor: filterSelectsOptiones(
+            response.donadores,
+            [{ id: response.donation.id_donador }],
+            'razon_social'
+          ),
+          payment_method: filterSelectsOptiones(
+            response.metodos_pago,
+            [{ id: response.donation.id_metodo_pago }],
+            'nombre'
+          ),
+          type_donation: filterSelectsOptiones(
+            response.tipos_donacion, // 02784772
+            [{ id: response.donation.id_tipo_donacion }],
+            'nombre'
+          ),
+          categories: filterSelectsOptiones(
+            response.categorias, // 02784772
+            [...response.donation.categorias],
+            'nombre'
+          ),
+          beneficiaries: filterSelectsOptiones(
+            response.beneficiarios, // 02784772
+            [...response.donation.beneficiarios],
+            'nombre'
+          )
         }
         reset(initialStateForm)
       } catch (error) {
@@ -224,6 +232,14 @@ export const DonationEdit = () => {
               </span>)
             }
           </div>
+          <div className='input-field'>
+            <Link
+              className='teal-text'
+              target='_blank' to={`/dashboard/donadores/${idDonador}`}
+            >
+              Clik para ver detalle de donador
+            </Link>
+          </div>
           {/* SELECT MÉTODO DE PAGO */}
           <div className='input-select'>
             <label>Selecciona un método de pago</label>
@@ -349,6 +365,15 @@ export const DonationEdit = () => {
                 {errors.beneficiaries.message}
               </span>)
             }
+          </div>
+          {/* CAMBIO DE FOTO */}
+          <div className='file-field input-field'>
+            <div className='btn indigo darken-1 white-text' disabled={!edit}>
+              <span>Cambiar foto</span>
+              <input
+                type='file'
+              />
+            </div>
           </div>
           {/* BOTONES DE OPCIONES */}
           <div className='user__btn__container'>

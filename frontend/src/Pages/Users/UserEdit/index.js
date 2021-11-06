@@ -198,10 +198,6 @@ export const UserEdit = () => {
               Actualizar
             </button>
 
-            <button type='button' className='btn indigo'
-              disabled={!edit} onClick={() => setActiveModal(!activeModal)}>
-              Reestablecer contraseña
-            </button>
             <button
               type='button'
               className={`btn ${edit ? 'red' : 'teal'} `}
@@ -210,6 +206,10 @@ export const UserEdit = () => {
               {
                 edit ? 'Cancelar' : 'Editar'
               }
+            </button>
+            <button type='button' className='btn indigo'
+              onClick={() => setActiveModal(!activeModal)}>
+              Reestablecer contraseña
             </button>
           </div>
         </form>

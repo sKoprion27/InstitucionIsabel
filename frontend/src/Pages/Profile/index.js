@@ -117,15 +117,6 @@ export const Profile = () => {
             </button>
 
             <button
-              className='btn indigo modal-trigger'
-              type='button'
-              onClick={() => { setActiveModal(!activeModal) }}
-              disabled={!edit}
-            >
-              Cambiar contraseña
-            </button>
-
-            <button
               type='button'
               className={`btn ${!edit || 'red'} `}
               onClick={handlerEdit}
@@ -133,6 +124,14 @@ export const Profile = () => {
               {
                 edit ? 'Cancelar' : 'Editar'
               }
+            </button>
+
+            <button
+              className='btn indigo modal-trigger'
+              type='button'
+              onClick={() => { setActiveModal(!activeModal) }}
+            >
+              Cambiar contraseña
             </button>
           </div>
         </form>

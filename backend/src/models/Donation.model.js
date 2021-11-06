@@ -36,9 +36,10 @@ export const Donation = {
       D.monto,
       D.foto_donacion,
       D.esta_facturado,
+      P.id as id_donador,
       P.razon_social,
-      M.id metodo_pago,
-      T.id tipo_donacion
+      M.id as id_metodo_pago,
+      T.id as id_tipo_donacion
       FROM
       donaciones D,
       donadores P,
@@ -57,6 +58,24 @@ export const Donation = {
       ORDER BY D.id DESC
     `
     return db.query(QUERY, [id])
+  },
+  getBeneficiaries: async (id_donacion) => {
+    const QUERY = `
+    SELECT B.id
+    FROM donaciones_beneficiarios B
+    WHERE
+    id_donacion = $1
+    `
+    return db.query(QUERY, [id_donacion])
+  },
+  getCategories: async (id_donacion) => {
+    const QUERY = `
+    SELECT C.id
+    FROM donaciones_categorias C
+    WHERE
+    id_donacion = $1
+    `
+    return db.query(QUERY, [id_donacion])
   },
   postOne: async (donation) => {
     const INSERTION = `

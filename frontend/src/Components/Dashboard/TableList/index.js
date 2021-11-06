@@ -1,7 +1,7 @@
 import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
-import { formatKeyTable } from '../../../utils'
+import { formatDateTable, formatKeyTable } from '../../../utils'
 import { MaterialBox } from '../MaterialBox'
 import { Modal } from '../Modal'
 import './style.scss'
@@ -25,7 +25,7 @@ export const TableList = ({
                 .filter(key => (key !== 'id') && (key !== 'creado'))
                 .map((key, index) => {
                   return (
-                    <th key={index}>{formatKeyTable(key)}</th>
+                    <th key={key + index}>{formatKeyTable(key)}</th>
                   )
                 }))
             }
@@ -37,27 +37,36 @@ export const TableList = ({
             arrayListFiltered.length >= 1 && (
               <>
                 {
-                  arrayListFiltered.map((element) => {
+                  arrayListFiltered.map((element, index) => {
                     return (
-                      <tr key={element.id}>
+                      <tr key={element + index} className='table-row' >
                         {
                           Object.keys(element)
                             .filter(key => (key !== 'id') && (key !== 'creado'))
-                            .map(key => {
+                            .map((key) => {
                               return (
                                 <>
                                   {
                                     key === 'foto_donacion'
                                       ? (
-                                        <MaterialBox element={element} keyValue={key} />)
+                                        <MaterialBox
+                                          element={element}
+                                          keyValue={key}
+                                        />)
                                       : (
-                                        <td key={key}>{element[key]}</td>)
+                                        <td>
+                                          {
+                                            key === 'facturado'
+                                              ? formatDateTable(element[key])
+                                              : element[key]
+                                          }
+                                        </td>)
                                   }
                                 </>
                               )
                             })
                         }
-                        <td className='options'>
+                        <td className='table-row__options'>
                           <Link
                             to={`${element.id}`}
                             className='btn btn-success'>
