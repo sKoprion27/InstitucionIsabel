@@ -1,6 +1,10 @@
 import { response } from './../utils/response'
 import { Donation } from './../models/Donation.model'
 import { PaymentMethod } from '../models/PaymentMethod.model'
+import { TypesDonation } from '../models/TypesDonations.model'
+import { Donor } from '../models/Donor.model'
+import { Beneficiary } from '../models/Beneficiary.model'
+import { Category } from '../models/Category.model'
 
 export const donationController = {
   // GET ALL
@@ -20,7 +24,10 @@ export const donationController = {
     try {
       const donation = await Donation.getOne(id)
       const paymentMethods = await PaymentMethod.getAll()
-      const typesDonations = await PaymentMethod.getAll()
+      const typesDonations = await TypesDonation.getAll()
+      const donors = await Donor.getAll()
+      const beneficiaries = await Beneficiary.getAll()
+      const categories = await Category.getAll()
 
       if (donation.rowCount === 0) {
         response(req, res, 'ERROR GET ONE DONATION', null, 500)
@@ -30,7 +37,10 @@ export const donationController = {
       const getDonation = {
         donation: { ...donation.rows[0] }, // {}
         metodos_pago: paymentMethods.rows, // []
-        tipos_donacion: typesDonations.rows// []
+        tipos_donacion: typesDonations.rows, // []
+        donadores: donors.rows,
+        categorias: categories.rows,
+        beneficiarios: beneficiaries.rows
       }
       response(req, res, 'GET ONE DONATION', getDonation, 200)
     } catch (error) {

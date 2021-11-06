@@ -18,21 +18,20 @@ import {
 
 import './style.scss'
 import { NavPage } from '../../../Components/Dashboard/NavPage'
-import Select from 'react-select'
-import makeAnimated from 'react-select/animated'
 import { ModalPassword } from '../../../Components/Dashboard/ModalPassword'
 import { useAuth } from '../../../hooks/useAuth'
 import { Card } from 'react-materialize'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
 
 export const UserEdit = () => {
   const auth = useAuth()
   const { id } = useParams()
+  const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(false)
   const [fetchUpdate, setFetchUpdate] = useState(false)
   const [activeModal, setActiveModal] = useState(false)
   const [roles, setRoles] = useState([])
-  const animatedComponents = makeAnimated()
-
   const {
     register,
     handleSubmit,

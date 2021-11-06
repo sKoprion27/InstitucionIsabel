@@ -13,7 +13,7 @@ export const MaterialBox = ({ element, keyValue }) => {
         keyValue
           ? (<img ref={refMaterialBox} src={element[keyValue]} className='materialboxed img-responsive z-depth-4' alt='' />)
           : (
-            <img ref={refMaterialBox} src={element} className='materialboxed img-responsive z-depth-4' alt='' />)
+            <img ref={refMaterialBox} src={element} className='materialboxed img-responsive z-depth-4' alt='Foto donación' />)
       }
     </>
   )
