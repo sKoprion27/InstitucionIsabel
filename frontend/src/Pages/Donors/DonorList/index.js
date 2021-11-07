@@ -1,9 +1,9 @@
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { MenuPage } from '../../../Components/Dashboard/MenuPage'
 import { useEffect, useState } from 'react'
-import { getAllDonors } from '../../../helpers/donors.helpers'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
+import { getAllDonors } from '../../../helpers/donors.helpers'
 
 import { Card, Icon } from 'react-materialize'
 

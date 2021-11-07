@@ -14,26 +14,18 @@ import {
   Controller,
   useForm
 } from 'react-hook-form'
-import {
-  getAllStates
-} from '../../../helpers/states.helpers'
-import {
-  getAllCfdis
-} from '../../../helpers/cfdis.helpers'
 
 import './style.scss'
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+import { convertToSelectOptions, filterSelectsOptiones, formatDateTable } from '../../../utils'
 
 export const DonorEdit = () => {
   const { id } = useParams()
   const [edit, setEdit] = useState(false)
-  const [fetchUpdate, setFetchUpdate] = useState(false)
-  const [activeModal, setActiveModal] = useState(false)
-  const [states, setStates] = useState([])
-  const [cfdis, setCfdi] = useState([])
-  const [donor, setDonor] = useState({})
+  const [idState, setIdState] = useState(null)
+  const [idCfdi, setIdCfdi] = useState(null)
   const animatedComponents = makeAnimated()
   const [tiposRegimenes, setTipoRegimenes] = useState([{
     label: 'PERSONA MORAL',
@@ -44,6 +36,10 @@ export const DonorEdit = () => {
     value: false
   }
   ])
+  const [options, setOptions] = useState({
+    states: [],
+    cfdis: []
+  })
 
   const {
     register,
@@ -53,81 +49,58 @@ export const DonorEdit = () => {
   } = useForm()
 
   useEffect(() => {
-    const getDonor = async () => {
+    const getOne = async () => {
       try {
-        const donor = await getOneDonor(id)
+        const response = await getOneDonor(id)
+        setIdState(response.donation.id_estado)
+        setIdCfdi(response.donation.id_cfdi)
 
-        const regimen_fiscal = {
-          label: donor.regimen_fiscal ? 'PERSONA MORAL' : 'PERSONA FISICA',
-          value: donor.regimen_fiscal
+        setOptions({
+          states: convertToSelectOptions(response.estados),
+          cfdis: convertToSelectOptions(response.cfdis)
+        })
+
+        const initialStateForm = {
+          ...response.donor,
+          state: filterSelectsOptiones(
+            response.estados,
+            [{ id: response.donor.id_estado }],
+            'nombre'
+          ),
+          cfdi: filterSelectsOptiones(
+            response.cfdis, // 02784772
+            [{ id: response.donor.id_cfdi }],
+            'clave'
+          )
         }
-
-        const donorData = {
-          ...donor,
-          regimen_fiscal: regimen_fiscal
-        }
-
-        setDonor(donorData)
-        reset(donorData)
+        reset(initialStateForm)
       } catch (error) {
+        console.log(error)
         setEdit(null)
       }
     }
-    getDonor()
+    getOne()
   }, [id, edit])
 
-  useEffect(() => {
-    const getStates = async () => {
-      const states = await getAllStates()
-      const options = states.map(e => {
-        return {
-          value: e.id,
-          label: e.nombre
-        }
-      })
-
-      setStates(options)
-    }
-    getStates()
-  }, [])
-
-  useEffect(() => {
-    const getCfdis = async () => {
-      const cfdis = await getAllCfdis()
-      const options = cfdis.map(c => {
-        return {
-          value: c.id,
-          label: c.clave
-        }
-      })
-
-      setCfdi(options)
-    }
-    getCfdis()
-  }, [])
-
   const handlerSubmit = async (data) => {
-    console.log(data)
     try {
       await updateDonor(data, id)
-      setFetchUpdate(!fetchUpdate)
-      alert('Usuario actualizado')
-      setEdit(false)
+      setEdit(!edit)
     } catch (error) {
-      console.log(error, 'Update donor')
+      console.log(error)
+      alert('ERROR')
     }
   }
   const handlerEdit = () => {
     setEdit(!edit)
   }
+
   if (edit === null) {
-    return <Navigate to='/dashboard/usuarios' />
+    return <Navigate to='/dashboard/NOTFOUND' />
   }
+
   return (
     <>
-      {
-        JSON.stringify(donor)
-      }
       <NavPage title='Editar donador' path='/dashboard/donadores' />
       <p>Información de usuario</p>
       <form
@@ -279,14 +252,19 @@ export const DonorEdit = () => {
           <label>Selecciona el estado</label>
           <Controller
             control={control}
-            rules={{ required: true }}
-            name='estado'
+            rules={{
+              required: {
+                value: true,
+                message: 'Selecciona un estado'
+              }
+            }}
+            name='state'
             render={({ field }) => (
               <Select
                 placeholder='Estado'
                 closeMenuOnSelect
                 components={animatedComponents}
-                options={states}
+                options={options.states}
                 {...field}
                 isDisabled={!edit}
               />
@@ -305,7 +283,12 @@ export const DonorEdit = () => {
           <label>Selecciona el CFDI</label>
           <Controller
             control={control}
-            rules={{ required: true }}
+            rules={{
+              required: {
+                value: true,
+                message: 'Selecciona un cfdi'
+              }
+            }}
             name='clave_cfdi'
 
             render={({ field }) => (
@@ -313,7 +296,7 @@ export const DonorEdit = () => {
                 placeholder='CFDI'
                 closeMenuOnSelect
                 components={animatedComponents}
-                options={cfdis}
+                options={options.cfdis}
                 {...field}
                 isDisabled={!edit}
               />
