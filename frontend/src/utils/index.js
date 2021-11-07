@@ -24,6 +24,13 @@ export const filterSelectsOptiones = (arrCatalogo, arrIds, key) => {
 
 export const convertToSelectOptions = (arr, key = 'nombre') => {
   return arr.map(value => {
+    if (key === 'razon_social') {
+      return {
+        label: `${value[key]} - ${value.nombre} `,
+        value: value.id
+      }
+    }
+
     return {
       label: value[key],
       value: value.id
