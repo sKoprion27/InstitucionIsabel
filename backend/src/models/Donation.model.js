@@ -62,18 +62,22 @@ export const Donation = {
   getBeneficiaries: async (id_donacion) => {
     const QUERY = `
     SELECT B.id
-    FROM donaciones_beneficiarios B
+    FROM donaciones_beneficiarios D, beneficiarios B
     WHERE
-    id_donacion = $1
+    D.id_donacion = $1
+    AND
+    D.id_beneficiario = B.id
     `
     return db.query(QUERY, [id_donacion])
   },
   getCategories: async (id_donacion) => {
     const QUERY = `
     SELECT C.id
-    FROM donaciones_categorias C
+    FROM donaciones_categorias D, categorias C
     WHERE
-    id_donacion = $1
+    D.id_donacion = $1
+    AND
+    D.id_categoria = C.id
     `
     return db.query(QUERY, [id_donacion])
   },

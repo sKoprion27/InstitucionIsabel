@@ -11,8 +11,7 @@ export const useFinder = () => {
     } else {
       setListFilter(
         listFiltered.filter(element => (
-          element.nombre.includes(target.value) ||
-          element.descripcion.includes(target.value)
+          element.nombre.includes(target.value)
         ))
       )
     }

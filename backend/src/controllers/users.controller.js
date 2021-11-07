@@ -2,6 +2,7 @@ import { response } from './../utils/response'
 import { encrypt } from './../lib/encrypt'
 import { User } from './../models/User.model'
 import { RoleUser } from '../models/RoleUser'
+import { arrayDiference } from '../utils'
 
 export const userController = {
 
@@ -106,13 +107,13 @@ export const userController = {
 
         if (currentRoles.length > newRoles.length) {
           console.log('CURRENT ROLES THAN __ DELETE')
-          const rolesDelete = rolesDifference(currentRoles, newRoles, 'nombre')
+          const rolesDelete = arrayDiference(currentRoles, newRoles, 'nombre')
           for (const role of rolesDelete) {
             await RoleUser.deleteOne(role.id, id)
           }
         } else if (newRoles.length > currentRoles.length) {
           console.log('NEW ROLES THAN __ UPDATE')
-          const roleUpdate = rolesDifference(newRoles, currentRoles, 'nombre')
+          const roleUpdate = arrayDiference(newRoles, currentRoles, 'nombre')
           console.log(roleUpdate)
           for (const role of roleUpdate) {
             console.log(role.id, id)
@@ -153,10 +154,3 @@ export const userController = {
 
 // newRoles [1,2,3,4,5]
 // currentRoles [1,2,3] 4,5 Update
-function rolesDifference(array1, array2, compareField) {
-  return array1.filter(function (current) {
-    return array2.filter(function (current_b) {
-      return current_b[compareField] === current[compareField]
-    }).length === 0
-  })
-}

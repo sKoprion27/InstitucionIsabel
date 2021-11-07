@@ -66,33 +66,34 @@ export const DonationEdit = () => {
 
         const initialStateForm = {
           ...response.donation,
-          esta_facturado: formatDateTable(response.donation.esta_facturado),
-          donor: filterSelectsOptiones(
+          esta_facturado: formatDateTable(response.donation.esta_facturado)[0],
+          id_donador: filterSelectsOptiones(
             response.donadores,
             [{ id: response.donation.id_donador }],
             'razon_social'
-          ),
-          payment_method: filterSelectsOptiones(
+          )[0],
+          id_metodo_pago: filterSelectsOptiones(
             response.metodos_pago,
             [{ id: response.donation.id_metodo_pago }],
             'nombre'
-          ),
-          type_donation: filterSelectsOptiones(
-            response.tipos_donacion, // 02784772
+          )[0],
+          id_tipo_donacion: filterSelectsOptiones(
+            response.tipos_donacion, // catalogo
             [{ id: response.donation.id_tipo_donacion }],
             'nombre'
-          ),
-          categories: filterSelectsOptiones(
-            response.categorias, // 02784772
-            [...response.donation.categorias],
+          )[0],
+          categorias: filterSelectsOptiones(
+            response.categorias, // catalogo
+            response.donation.categorias,
             'nombre'
           ),
-          beneficiaries: filterSelectsOptiones(
-            response.beneficiarios, // 02784772
-            [...response.donation.beneficiarios],
+          beneficiarios: filterSelectsOptiones(
+            response.beneficiarios, // catalogo
+            response.donation.beneficiarios,
             'nombre'
           )
         }
+        console.log('INITIAL', initialStateForm)
         reset(initialStateForm)
       } catch (error) {
         console.log(error)
@@ -106,7 +107,23 @@ export const DonationEdit = () => {
 
   const handlerSubmit = async (data) => {
     try {
-      await updateDonation(data, id)
+      console.log('🐊', data)
+      const updateData = {
+        donation: {
+          nombre: data.nombre,
+          monto: data.monto,
+          esta_facturado: data.esta_facturado,
+          id_donador: data.id_donador.value,
+          id_metodo_pago: data.id_metodo_pago.value,
+          id_tipo_donacion: data.id_tipo_donacion.value,
+          foto_donacion: data.foto_donacion
+        },
+        categories: [...data.categorias.map(c => { return { id: c.value } })],
+        beneficiaries: [...data.beneficiarios.map(b => { return { id: b.value } })]
+      }
+      console.log('😀', updateData)
+
+      await updateDonation(updateData, id)
       setEdit(!edit)
     } catch (error) {
       console.log(error)
@@ -212,7 +229,7 @@ export const DonationEdit = () => {
                   message: 'Selecciona al menos un donador'
                 }
               }}
-              name='donor'
+              name='id_donador'
               render={({ field }) => (
                 <Select
                   placeholder='Donador'
@@ -251,7 +268,7 @@ export const DonationEdit = () => {
                   message: 'Selecciona al menos un método de pago'
                 }
               }}
-              name='payment_method'
+              name='id_metodo_pago'
               render={({ field }) => (
                 <Select
                   placeholder='Método de pago'
@@ -282,7 +299,7 @@ export const DonationEdit = () => {
                   message: 'Selecciona el tipo de donación'
                 }
               }}
-              name='type_donation'
+              name='id_tipo_donacion'
               render={({ field }) => (
                 <Select
                   placeholder='Tipo donativo'
@@ -313,7 +330,7 @@ export const DonationEdit = () => {
                   message: 'Selecciona al menos una categoria'
                 }
               }}
-              name='categories'
+              name='categorias'
               render={({ field }) => (
                 <Select
                   placeholder='Categorias de donativo'
@@ -334,7 +351,7 @@ export const DonationEdit = () => {
               </span>)
             }
           </div>
-          {/* SELECT BENEFICIARIOS_DONACIONES */}
+          {/* SELECT DONACIONES_BENEFICIARIOS */}
           <div className='input-select'>
             <label>Selecciona los beneficiarios del donativo</label>
             <Controller
@@ -345,7 +362,7 @@ export const DonationEdit = () => {
                   message: 'Selecciona al menos una beneficiario'
                 }
               }}
-              name='beneficiaries'
+              name='beneficiarios'
               render={({ field }) => (
                 <Select
                   placeholder='Beneficiarios del donativo'
@@ -367,14 +384,7 @@ export const DonationEdit = () => {
             }
           </div>
           {/* CAMBIO DE FOTO */}
-          <div className='file-field input-field'>
-            <div className='btn indigo darken-1 white-text' disabled={!edit}>
-              <span>Cambiar foto</span>
-              <input
-                type='file'
-              />
-            </div>
-          </div>
+
           {/* BOTONES DE OPCIONES */}
           <div className='user__btn__container'>
             <button

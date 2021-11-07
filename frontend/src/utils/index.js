@@ -7,12 +7,11 @@ export const formatKeyTable = (key) => {
   return format
 }
 
-export const filterSelectsOptiones = (arr, arrIds, key) => {
-  console.log(arr, arrIds)
+export const filterSelectsOptiones = (arrCatalogo, arrIds, key) => {
   const filterData = []
-  for (const element of arr) {
-    for (const idObject of arrIds) {
-      if (element.id === idObject.id) {
+  for (const element of arrCatalogo) {
+    for (const object of arrIds) {
+      if (element.id === object.id) {
         filterData.push({
           label: element[key],
           value: element.id
@@ -20,11 +19,7 @@ export const filterSelectsOptiones = (arr, arrIds, key) => {
       }
     }
   }
-  if (filterData.length === 0) {
-    return filterData[0]
-  } else {
-    return filterData
-  }
+  return filterData
 }
 
 export const convertToSelectOptions = (arr, key = 'nombre') => {

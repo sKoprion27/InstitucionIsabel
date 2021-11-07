@@ -5,6 +5,9 @@ import { TypesDonation } from '../models/TypesDonations.model'
 import { Donor } from '../models/Donor.model'
 import { Beneficiary } from '../models/Beneficiary.model'
 import { Category } from '../models/Category.model'
+import { DonationBeneficiary } from '../models/DonationBeneficiary'
+import { arrayDiference } from '../utils'
+import { DonationCategory } from '../models/DonationCategory'
 
 export const donationController = {
   // GET ALL
@@ -71,14 +74,85 @@ export const donationController = {
   // UPDATE ONE
   updateOneDonation: async (req, res) => {
     try {
-      const donor = req.body
-      const id = req.params.id
-      const { rowCount } = await Donation.putOne(donor, id)
-      if (rowCount === 0) {
+      // New data
+      console.log('CONTROLLER PUT')
+      const { id } = req.params
+      const { donation } = req.body
+
+      // Insert data donation
+      const donationInsert = await Donation.putOne(donation, id)
+
+      if (donationInsert.rowCount === 0) {
+        console.log('ERR')
         response(req, res, 'ERROR UPDATE ONE DONATION', null, 500)
         return
       }
-      response(req, res, 'UPDATE ONE DONATION', rowCount, 201)
+
+      // Compare data categories
+      const { categories } = req.body
+      // Current data
+      const donationCategories = await Donation.getCategories(id)
+
+      if (donationCategories.rows.length > categories.length) {
+        console.log('CURRENT CATEGORIES THAN __ DELETE')
+        const categoriesDelete = arrayDiference(
+          donationCategories.rows,
+          categories,
+          'id'
+        )
+        // console.log('categoriesDelete', categoriesDelete)
+        for (const category of categoriesDelete) {
+          await DonationCategory.deleteOne(id, category.id)
+        }
+      } else if (categories.length > donationCategories.rows.length) {
+        // console.log('NEW CATEGORIES THAN __ UPDATE')
+
+        const categoriesUpdate = arrayDiference(
+          categories,
+          donationCategories.rows,
+          'id'
+        )
+
+        // console.log('categoriesUpdate', categoriesUpdate)
+
+        for (const category of categoriesUpdate) {
+          await DonationCategory.postOne(id, category.id)
+        }
+      } else {
+        console.log('NO DIFF CATEGORIES')
+      }
+
+      // Compare data beneficiaries
+      const { beneficiaries } = req.body
+      const donationBeneficiaries = await Donation.getBeneficiaries(id)
+
+      if (donationBeneficiaries.rows.length > beneficiaries.length) {
+        console.log('CURRENT beneficiaries THAN __ DELETE')
+        const beneficiaryDelete = arrayDiference(
+          donationBeneficiaries.rows,
+          beneficiaries,
+          'id'
+        )
+        for (const beneficiary of beneficiaryDelete) {
+          await DonationBeneficiary.deleteOne(id, beneficiary.id)
+        }
+      } else if (beneficiaries.length > donationBeneficiaries.rows.length) {
+        console.log('NEW beneficiaries THAN __ UPDATE')
+
+        const beneficiariesUpdate = arrayDiference(
+          beneficiaries,
+          donationBeneficiaries.rows,
+          'id'
+        )
+        console.log(beneficiariesUpdate)
+        for (const beneficiary of beneficiariesUpdate) {
+          await DonationBeneficiary.postOne(id, beneficiary.id)
+        }
+      } else {
+        console.log('NO DIFF beneficiaries')
+      }
+
+      response(req, res, 'UPDATE ONE DONATION', '', 201)
     } catch (error) {
       console.log(error)
       response(req, res, 'ERROR UPDATE ONE DONATION', null, 500)
@@ -87,8 +161,18 @@ export const donationController = {
 
   // DELETE ONE
   deleteOneDonation: async (req, res) => {
-    const id = req.params.id
-    const [queryAnswer, status] = await Donation.deleteOne(id)
-    response(req, res, 'DELETE ONE USER', queryAnswer, status)
+    try {
+      const id = req.params.id
+      const { rowCount } = await Donation.deleteOne(id)
+
+      if (rowCount === 0) {
+        response(req, res, 'ERROR DELETE ONE USER', null, 500)
+        return
+      }
+      response(req, res, 'DELETE ONE USER', rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR DELETE ONE USER', null, 500)
+    }
   }
 }
