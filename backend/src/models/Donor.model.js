@@ -40,7 +40,9 @@ export const Donor = {
       regimen_fiscal, 
       E.nombre estado, 
       C.clave Clave_CFDI, 
-      C.descripcion Descripcion_CFDI
+      C.descripcion Descripcion_CFDI,
+      D.id_estado as id_estado,
+      D.id_cfdi as id_cfdi
       FROM donadores D, cfdis C, estados E
       WHERE D.id_cfdi = C.id 
       AND D.id_estado = E.id 

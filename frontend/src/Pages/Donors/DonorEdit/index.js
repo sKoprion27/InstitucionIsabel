@@ -24,7 +24,7 @@ import {
 
 import './style.scss'
 import { MaterialBox } from '../../../Components/Dashboard/MaterialBox'
-import { convertToSelectOptions, filterSelectsOptiones, formatDateTable } from '../../../utils'
+import { convertToSelectOptions, filterSelectsOptiones, formatDateTable, convertToSelectOptionsCFDI } from '../../../utils'
 
 export const DonorEdit = () => {
   const { id } = useParams()
@@ -41,8 +41,7 @@ export const DonorEdit = () => {
   ])
   const [options, setOptions] = useState({
     states: [],
-    cfdis: [],
-    fiscal_regimens: []
+    cfdis: []
   })
 
   const {
@@ -59,20 +58,20 @@ export const DonorEdit = () => {
         const response = await getOneDonor(id)
         setOptions({
           states: convertToSelectOptions(response.estados),
-          cfdis: convertToSelectOptions(response.cfdis)
+          cfdis: convertToSelectOptionsCFDI(response.cfdis)
         })
 
         console.log(response.donor)
 
         const initialStateForm = {
           ...response.donor,
-          estado: formatDateTable(response.donor.estado)[0],
+
           id_estado: filterSelectsOptiones(
             response.estados,
             [{ id: response.donor.id_estado }],
             'nombre'
           )[0],
-          cfdi: filterSelectsOptiones(
+          id_cfdi: filterSelectsOptiones(
             response.cfdis,
             [{ id: response.donor.id_cfdi }],
             'clave'
@@ -103,9 +102,7 @@ export const DonorEdit = () => {
           regimen_fiscal: data.regimen_fiscal,
           estado: data.id_estado.value,
           cfdi: data.id_cfdi.value
-        },
-        states: [...data.estados.map(c => { return { id: c.value } })],
-        cfdis: [...data.cfdis.map(b => { return { id: b.value } })]
+        }
       }
       console.log('😀', updateData)
 
@@ -120,9 +117,9 @@ export const DonorEdit = () => {
     setEdit(!edit)
   }
 
-  /* if (edit === null) {
+  if (edit === null) {
     return <Navigate to='/dashboard/NOTFOUND' />
-  } */
+  }
 
   return (
     <>
@@ -179,12 +176,56 @@ export const DonorEdit = () => {
             }
           </div>
           <div>
-            <label>Facturado</label>
+            <label>Nombre</label>
             <input
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('esta_facturado', {
+              {...register('nombre', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.descripcion &&
+              (<span className='red-text'>
+                {
+                  errors.descripcion.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Correo Electrónico</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {...register('correo_electronico', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.descripcion &&
+              (<span className='red-text'>
+                {
+                  errors.descripcion.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Domicilio Fiscal</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {...register('domicilio_fiscal', {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
@@ -202,7 +243,7 @@ export const DonorEdit = () => {
           </div>
           {/* SELECT MÉTODO DE PAGO */}
           <div className='input-select'>
-            <label>Selecciona un método de pago</label>
+            <label>Selecciona el régimen fiscal</label>
             <Controller
               control={control}
               rules={{
@@ -211,13 +252,13 @@ export const DonorEdit = () => {
                   message: 'Selecciona al menos un método de pago'
                 }
               }}
-              name='id_metodo_pago'
+              name='regimen_fiscal'
               render={({ field }) => (
                 <Select
-                  placeholder='Método de pago'
+                  placeholder='Régimen Fiscal'
                   closeMenuOnSelect
                   components={animatedComponents}
-                  options={options.paymentMethods}
+                  options={options.fiscal_regimens}
                   {...field}
                   isDisabled={!edit}
                 />
@@ -231,24 +272,24 @@ export const DonorEdit = () => {
               </span>)
             }
           </div>
-          {/* SELECT TIPO DE DONACIÓN */}
+          {/* SELECT ESTADO */}
           <div className='input-select'>
-            <label>Selecciona que tipo de donativo</label>
+            <label>Selecciona el Estado</label>
             <Controller
               control={control}
               rules={{
                 required: {
                   value: true,
-                  message: 'Selecciona el tipo de donación'
+                  message: 'Selecciona el Estado'
                 }
               }}
               name='id_tipo_donacion'
               render={({ field }) => (
                 <Select
-                  placeholder='Tipo donativo'
+                  placeholder='Estado'
                   closeMenuOnSelect
                   components={animatedComponents}
-                  options={options.typesDonations}
+                  options={options.states}
                   {...field}
                   isDisabled={!edit}
                 />
@@ -262,25 +303,24 @@ export const DonorEdit = () => {
               </span>)
             }
           </div>
-          {/* SELECT CATEGORIAS_DONACIONES */}
+          {/* SELECT CFDIS */}
           <div className='input-select'>
-            <label>Selecciona las categorias del donativo</label>
+            <label>Selecciona el CFDI</label>
             <Controller
               control={control}
               rules={{
                 required: {
                   value: true,
-                  message: 'Selecciona al menos una categoria'
+                  message: 'Selecciona un CFDI'
                 }
               }}
-              name='categorias'
+              name='cfdis'
               render={({ field }) => (
                 <Select
-                  placeholder='Categorias de donativo'
+                  placeholder='Claves de CFDI'
                   closeMenuOnSelect
                   components={animatedComponents}
-                  options={options.categories}
-                  isMulti
+                  options={options.cfdis}
                   {...field}
                   isDisabled={!edit}
                 />
@@ -294,39 +334,6 @@ export const DonorEdit = () => {
               </span>)
             }
           </div>
-          {/* SELECT DONACIONES_BENEFICIARIOS */}
-          <div className='input-select'>
-            <label>Selecciona los beneficiarios del donativo</label>
-            <Controller
-              control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona al menos una beneficiario'
-                }
-              }}
-              name='beneficiarios'
-              render={({ field }) => (
-                <Select
-                  placeholder='Beneficiarios del donativo'
-                  closeMenuOnSelect
-                  isMulti
-                  components={animatedComponents}
-                  options={options.beneficiaries}
-                  {...field}
-                  isDisabled={!edit}
-                />
-              )}
-            />
-            {errors.beneficiaries &&
-              (<span
-                className='red-text'
-              >
-                {errors.beneficiaries.message}
-              </span>)
-            }
-          </div>
-          {/* CAMBIO DE FOTO */}
 
           {/* BOTONES DE OPCIONES */}
           <div className='user__btn__container'>

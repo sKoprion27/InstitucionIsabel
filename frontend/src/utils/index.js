@@ -30,3 +30,12 @@ export const convertToSelectOptions = (arr, key = 'nombre') => {
     }
   })
 }
+
+export const convertToSelectOptionsCFDI = (arr, key = 'clave') => {
+  return arr.map(value => {
+    return {
+      label: value[key],
+      value: value.id
+    }
+  })
+}
