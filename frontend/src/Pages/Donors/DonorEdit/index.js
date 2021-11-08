@@ -120,9 +120,9 @@ export const DonorEdit = () => {
     setEdit(!edit)
   }
 
-  if (edit === null) {
+  /* if (edit === null) {
     return <Navigate to='/dashboard/NOTFOUND' />
-  }
+  } */
 
   return (
     <>
