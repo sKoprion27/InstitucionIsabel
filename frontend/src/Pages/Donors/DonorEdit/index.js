@@ -95,20 +95,21 @@ export const DonorEdit = () => {
       console.log('🐊', data)
       const updateData = {
         donor: {
+          telefono: data.telefono,
+          razon_social: data.razon_social,
           nombre: data.nombre,
-          monto: data.monto,
-          esta_facturado: data.esta_facturado,
-          id_donador: data.id_donador.value,
-          id_metodo_pago: data.id_metodo_pago.value,
-          id_tipo_donacion: data.id_tipo_donacion.value,
-          foto_donacion: data.foto_donacion
+          correo_electronico: data.correo_electronico,
+          domicilio_fiscal: data.domicilio_fiscal,
+          regimen_fiscal: data.regimen_fiscal,
+          estado: data.id_estado.value,
+          cfdi: data.id_cfdi.value
         },
         states: [...data.estados.map(c => { return { id: c.value } })],
         cfdis: [...data.cfdis.map(b => { return { id: b.value } })]
       }
       console.log('😀', updateData)
 
-      await updateDonation(updateData, id)
+      await updateDonor(updateData, id)
       setEdit(!edit)
     } catch (error) {
       console.log(error)
@@ -125,25 +126,21 @@ export const DonorEdit = () => {
 
   return (
     <>
-      <NavPage title='Editar donador' path='/dashboard/donaciones' />
+      <NavPage title='Editar donador' path='/dashboard/donadores' />
       <Card className='hoverable'>
         <h6 className='teal-text'>Información</h6>
-        <div className='img-donacion'>
-          <p>Foto de la donación</p>
-          <MaterialBox element={urlFoto} keyValue={null} />
-        </div>
         <form
           className='user__form '
           onSubmit={handleSubmit(handlerSubmit)}
         >
           <div>
-            <label>Nombre</label>
+            <label>Telefono</label>
             <input
               onChange={register}
               type='text'
               autoComplete='off'
               {
-              ...register('nombre', {
+              ...register('telefono', {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
@@ -160,12 +157,12 @@ export const DonorEdit = () => {
             }
           </div>
           <div>
-            <label>Monto</label>
+            <label>Razón Social</label>
             <input
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('monto', {
+              {...register('razon_social', {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
@@ -202,45 +199,6 @@ export const DonorEdit = () => {
                 }
               </span>)
             }
-          </div>
-          {/* SELECT DONDADOR */}
-          <div className='input-select'>
-            <label>Selecciona donador</label>
-            <Controller
-              control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona al menos un donador'
-                }
-              }}
-              name='id_donador'
-              render={({ field }) => (
-                <Select
-                  placeholder='Donador'
-                  closeMenuOnSelect
-                  components={animatedComponents}
-                  options={options.donors}
-                  {...field}
-                  isDisabled={!edit}
-                />
-              )}
-            />
-            {errors.donors &&
-              (<span
-                className='red-text'
-              >
-                {errors.donors.message}
-              </span>)
-            }
-          </div>
-          <div className='input-field'>
-            <Link
-              className='teal-text'
-              target='_blank' to={`/dashboard/donadores/${idDonador}`}
-            >
-              Clik para ver detalle de donador
-            </Link>
           </div>
           {/* SELECT MÉTODO DE PAGO */}
           <div className='input-select'>
