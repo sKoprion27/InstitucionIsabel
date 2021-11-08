@@ -70,16 +70,30 @@ export const Donor = {
   postOne: async (donor) => {
     const INSERTION = `
       INSERT INTO donadores(
-        id_cfdi, id_estado, nombre, telefono, razon_social, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal)
+        id_cfdi, 
+        id_estado, 
+        nombre, 
+        telefono, 
+        razon_social, 
+        rfc, 
+        correo_electronico, 
+        codigo_postal, 
+        domicilio_fiscal, regimen_fiscal)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     `
-    try {
-      await db.query(INSERTION, [donor.id_cfdi, donor.id_estado, donor.nombre_contacto, donor.telefono, donor.razon_social, donor.rfc, donor.correo_electronico, donor.codigo_postal, donor.domicilio_fiscal, donor.regimen_fiscal])
-      return ['POST DONOR', 201]
-    } catch (error) {
-      console.log('ERROR POST DONOR 🤯', error)
-      return ['ERROR POST DONOR 🤯', 400]
-    }
+    const VALUES = [
+      donor.id_cfdi,
+      donor.id_estado,
+      donor.nombre_contacto,
+      donor.telefono,
+      donor.razon_social,
+      donor.rfc,
+      donor.correo_electronico,
+      donor.codigo_postal,
+      donor.domicilio_fiscal,
+      donor.regimen_fiscal
+    ]
+    return db.query(INSERTION, VALUES)
   },
   putOne: async (donor, id) => {
     const UPDATE = `
@@ -96,18 +110,21 @@ export const Donor = {
       id_cfdi = $11
       WHERE id = $1 and existe = true
     `
-    const values = [id, donor.telefono, donor.razon_social, donor.nombre, donor.rfc, donor.correo_electronico, donor.codigo_postal, donor.domicilio_fiscal, donor.regimen_fiscal, donor.id_estado, donor.domicilio_fiscal, donor.id_cfdi]
-    try {
-      const { rowCount } = await db.query(UPDATE, values)
-
-      if (rowCount === 0) {
-        return ['ERROR  UPDATE NOT FOUND', 404]
-      }
-      return ['UPDATE ONE DONOR', 201]
-    } catch (error) {
-      console.log('ERROR UPDATE DONOR 🤯', error)
-      return ['ERROR UPDATE DONOR 🤯', 400]
-    }
+    const VALUES = [
+      id,
+      donor.telefono,
+      donor.razon_social,
+      donor.nombre,
+      donor.rfc,
+      donor.correo_electronico,
+      donor.codigo_postal,
+      donor.domicilio_fiscal,
+      donor.regimen_fiscal,
+      donor.id_estado,
+      donor.domicilio_fiscal,
+      donor.id_cfdi
+    ]
+    return db.query(UPDATE, VALUES)
   },
   deleteOne: async (id) => {
     const DELETE = `
@@ -115,16 +132,6 @@ export const Donor = {
       SET existe = false
       WHERE id = $1
     `
-    try {
-      const { rowCount } = await db.query(DELETE, [id])
-
-      if (rowCount === 0) {
-        return ['ERROR DELETE NOT FOUND', 404]
-      }
-      return ['DELETE ONE DONOR', 201]
-    } catch (error) {
-      console.log('ERROR DELETE DONOR 🤯', error)
-      return ['ERROR DELETE DONOR 🤯', 400]
-    }
+    return db.query(DELETE, [id])
   }
 }
