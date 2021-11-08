@@ -29,24 +29,43 @@ export const Donor = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT D.id, telefono, razon_social, D.nombre nombre, rfc, correo_electronico, codigo_postal, domicilio_fiscal, regimen_fiscal, E.nombre estado, C.clave Clave_CFDI, C.descripcion Descripcion_CFDI
+      SELECT D.id, 
+      telefono, 
+      razon_social, 
+      D.nombre nombre, 
+      rfc, 
+      correo_electronico, 
+      codigo_postal, 
+      domicilio_fiscal, 
+      regimen_fiscal, 
+      E.nombre estado, 
+      C.clave Clave_CFDI, 
+      C.descripcion Descripcion_CFDI
       FROM donadores D, cfdis C, estados E
       WHERE D.id_cfdi = C.id 
       AND D.id_estado = E.id 
       AND D.id = $1 
       AND D.existe = true
     `
-    try {
-      const { rows, rowCount } = await db.query(QUERY, [id])
-      if (rowCount === 0) {
-        return ['ERROR GET ONE DONOR NOT FOUND 🤯', 404]
-      } else {
-        return [rows[0], 200]
-      }
-    } catch (error) {
-      console.log('ERROR GET ONE DONOR 🤯', error)
-      return ['ERROR GET ONE DONOR 🤯', 400]
-    }
+    return db.query(QUERY, [id])
+  },
+  getStates: async (id_donador) => {
+    const QUERY = `
+    SELECT E.id
+    FROM donadores D, estados E
+    WHERE D.id_estado = E.id 
+    AND D.id = $1;
+    `
+    return db.query(QUERY, [id_donador])
+  },
+  getCfdis: async (id_donador) => {
+    const QUERY = `
+    SELECT C.id
+    FROM donadores D, cfdis C
+    WHERE D.id_cfdi= C.id 
+    AND D.id = $1;
+    `
+    return db.query(QUERY, [id_donador])
   },
   postOne: async (donor) => {
     const INSERTION = `
