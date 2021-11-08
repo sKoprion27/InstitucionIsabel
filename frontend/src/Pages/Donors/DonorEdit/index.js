@@ -41,7 +41,7 @@ export const DonorEdit = () => {
   ])
   const [options, setOptions] = useState({
     states: [],
-    dfdis: [],
+    cfdis: [],
     fiscal_regimens: []
   })
 

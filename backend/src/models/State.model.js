@@ -7,13 +7,7 @@ export const State = {
       WHERE existe = true
       ORDER BY id ASC
     `
-    try {
-      const { rows } = await db.query(QUERY)
-      return [rows, 200]
-    } catch (error) {
-      console.log('ERROR GET ALL STATES 🤯', error)
-      return ['ERROR GET ALL STATES 🤯', 400]
-    }
+    return db.query(QUERY)
   },
   getOne: async (id) => {
     const QUERY = `
