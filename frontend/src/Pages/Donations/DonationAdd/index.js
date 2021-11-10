@@ -19,6 +19,7 @@ import makeAnimated from 'react-select/animated'
 
 import {
   getOneDonation,
+  postDonation,
   updateDonation
 } from '../../../helpers/donations.helpers'
 
@@ -28,7 +29,7 @@ import { convertToSelectOptions, filterSelectsOptiones, formatDateTable } from '
 
 export const DonationAdd = () => {
   const animatedComponents = makeAnimated()
-  const [edit, setEdit] = useState(false)
+  const [edit, setEdit] = useState(true)
   const [urlFoto, setUrlFoto] = useState('')
   const [options, setOptions] = useState({
     donors: [],
@@ -69,32 +70,30 @@ export const DonationAdd = () => {
   // Use Effect for selects info
 
   const handlerSubmit = async (data) => {
+    alert('here')
     try {
-      console.log('🐊', data)
-      const updateData = {
+      setEdit(false)
+      const dataPost = {
         donation: {
           nombre: data.nombre,
           monto: data.monto,
-          esta_facturado: data.esta_facturado,
+          esta_facturado: false,
           id_donador: data.id_donador.value,
           id_metodo_pago: data.id_metodo_pago.value,
           id_tipo_donacion: data.id_tipo_donacion.value,
-          foto_donacion: data.foto_donacion
+          foto_donacion: null
         },
         categories: [...data.categorias.map(c => { return { id: c.value } })],
         beneficiaries: [...data.beneficiarios.map(b => { return { id: b.value } })]
       }
-      console.log('😀', updateData)
-
-      await updateDonation(updateData, 1)
-      setEdit(!edit)
+      console.log('😀', dataPost)
+      await postDonation(dataPost)
+      setEdit(true)
     } catch (error) {
       console.log(error)
       alert('ERROR')
+      setEdit(true)
     }
-  }
-  const handlerEdit = () => {
-    setEdit(!edit)
   }
 
   if (edit === null) {
@@ -115,7 +114,7 @@ export const DonationAdd = () => {
           onSubmit={handleSubmit(handlerSubmit)}
         >
           <div>
-            <label>Nombre</label>
+            <label>Nombre de la donación</label>
             <input
               onChange={register}
               type='text'
@@ -159,7 +158,7 @@ export const DonationAdd = () => {
               </span>)
             }
           </div>
-          <div>
+          {/* <div>
             <label>Facturado</label>
             <input
               onChange={register}
@@ -180,7 +179,7 @@ export const DonationAdd = () => {
                 }
               </span>)
             }
-          </div>
+          </div> */}
           {/* SELECT DONDADOR */}
           <div className='input-select'>
             <label>Selecciona donador</label>
@@ -347,17 +346,7 @@ export const DonationAdd = () => {
               className='btn btn-success  '
               disabled={!edit}
             >
-              Actualizar
-            </button>
-
-            <button
-              type='button'
-              className={`btn ${edit ? 'red' : 'teal'} `}
-              onClick={handlerEdit}
-            >
-              {
-                edit ? 'Cancelar' : 'Editar'
-              }
+              Agregar donación
             </button>
           </div>
         </form>

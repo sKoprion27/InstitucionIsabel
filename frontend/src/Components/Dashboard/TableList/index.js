@@ -56,9 +56,7 @@ export const TableList = ({
                                       : (
                                         <td>
                                           {
-                                            key === 'facturado'
-                                              ? formatDateTable(element[key])
-                                              : element[key]
+                                            element[key]
                                           }
                                         </td>)
                                   }

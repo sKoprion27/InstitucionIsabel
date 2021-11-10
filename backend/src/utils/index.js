@@ -5,3 +5,5 @@ export const arrayDiference = (array1, array2, compareField) => {
     }).length === 0
   })
 }
+
+// [{ nombre: 'Daniel ', value: 2 }]  [{ nombre: 'Laura ', value: 3 }, { nombre: 'Daniel ', value: 2 }]

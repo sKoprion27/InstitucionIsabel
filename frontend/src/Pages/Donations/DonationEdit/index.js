@@ -123,7 +123,7 @@ export const DonationEdit = () => {
       }
       console.log('😀', updateData)
 
-      await updateDonation(updateData, id)
+      await updateDonation(updateData, id)// envio al server
       setEdit(!edit)
     } catch (error) {
       console.log(error)
@@ -152,7 +152,7 @@ export const DonationEdit = () => {
           onSubmit={handleSubmit(handlerSubmit)}
         >
           <div>
-            <label>Nombre</label>
+            <label>Nombre de la donación</label>
             <input
               onChange={register}
               type='text'

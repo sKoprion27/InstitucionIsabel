@@ -93,6 +93,7 @@ export const Donation = {
       esta_facturado
       )
     VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING id;
     `
     const VALUES = [
       donation.id_donador,

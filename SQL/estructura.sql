@@ -136,7 +136,7 @@ CREATE TABLE donaciones(
   nombre TEXT NOT NULL,
   monto NUMERIC(10,2) NOT NULL,
   foto_donacion TEXT,
-  esta_facturado DATE,
+  esta_facturado BOOLEAN,
   creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );
@@ -579,27 +579,27 @@ INSERT INTO tipo_donaciones(nombre, descripcion) VALUES
 ('microdonacion','Donacion masiva de pequenas cantidades');
 
 -- Insertar datos donaciones
-INSERT INTO donaciones(id_donador, id_metodo_pago, id_tipo_donacion, nombre, monto, foto_donacion, esta_facturado) VALUES
-(1,1,1,'10 computadoras donador 1', 3001, null,'2021/04/21'),
-(1,2,2,'10 computadoras donador 1', 3002, 'https://source.unsplash.com/random','2021/08/19'),
-(1,2,2,'10 computadoras donador 1', 3003, 'https://source.unsplash.com/random','2021/10/30'),
-(1,1,1,'10 computadoras donador 1', 3004, 'https://source.unsplash.com/random','2021/08/24'),
-(1,2,2,'10 computadoras donador 1', 3005, 'https://source.unsplash.com/random','2021/01/29'),
-(2,1,1,'10 monitores donador 2', 4001, 'https://source.unsplash.com/random','2021/05/21'),
-(2,2,2,'10 monitores donador 2', 4002, 'https://source.unsplash.com/random','2020/12/23'),
-(2,2,2,'10 monitores donador 2', 4003, 'https://source.unsplash.com/random','2021/07/12'),
-(2,1,1,'10 monitores donador 2', 4004, 'https://source.unsplash.com/random','2021/02/27'),
-(2,2,2,'10 monitores donador 2', 4005, 'https://source.unsplash.com/random','2021/02/11'),
-(3,1,1,'10 teclados donador 3', 5001, 'https://source.unsplash.com/random','2021/06/26'),
-(3,2,2,'10 teclados donador 3', 5002, 'https://source.unsplash.com/random','2021/08/18'),
-(3,2,2,'10 teclados donador 3', 5003, 'https://source.unsplash.com/random','2021/08/11'),
-(3,1,1,'10 teclados donador 3', 5004, 'https://source.unsplash.com/random','2020/12/20'),
-(3,2,2,'10 teclados donador 3', 5005, 'https://source.unsplash.com/random','2021/06/11'),
-(4,1,1,'10 teclados donador 4', 6001, 'https://source.unsplash.com/random','2021/07/19'),
-(4,2,2,'10 teclados donador 4', 6002, 'https://source.unsplash.com/random','2021/01/11'),
-(4,2,2,'10 teclados donador 4', 6003, 'https://source.unsplash.com/random','2020/12/31'),
-(4,1,1,'10 teclados donador 4', 6004, null,'2021/06/13'),
-(4,2,2,'10 teclados donador 4', 6005, null,'2021/09/19');
+INSERT INTO donaciones(id_donador, id_metodo_pago, id_tipo_donacion, nombre, monto, foto_donacion) VALUES
+(1,1,1,'10 computadoras donador 1', 3001, null),
+(1,2,2,'10 computadoras donador 1', 3002, 'https://source.unsplash.com/random'),
+(1,2,2,'10 computadoras donador 1', 3003, 'https://source.unsplash.com/random'),
+(1,1,1,'10 computadoras donador 1', 3004, 'https://source.unsplash.com/random'),
+(1,2,2,'10 computadoras donador 1', 3005, 'https://source.unsplash.com/random'),
+(2,1,1,'10 monitores donador 2', 4001, 'https://source.unsplash.com/random'),
+(2,2,2,'10 monitores donador 2', 4002, 'https://source.unsplash.com/random'),
+(2,2,2,'10 monitores donador 2', 4003, 'https://source.unsplash.com/random'),
+(2,1,1,'10 monitores donador 2', 4004, 'https://source.unsplash.com/random'),
+(2,2,2,'10 monitores donador 2', 4005, 'https://source.unsplash.com/random'),
+(3,1,1,'10 teclados donador 3', 5001, 'https://source.unsplash.com/random'),
+(3,2,2,'10 teclados donador 3', 5002, 'https://source.unsplash.com/random'),
+(3,2,2,'10 teclados donador 3', 5003, 'https://source.unsplash.com/random'),
+(3,1,1,'10 teclados donador 3', 5004, 'https://source.unsplash.com/random'),
+(3,2,2,'10 teclados donador 3', 5005, 'https://source.unsplash.com/random'),
+(4,1,1,'10 teclados donador 4', 6001, 'https://source.unsplash.com/random'),
+(4,2,2,'10 teclados donador 4', 6002, 'https://source.unsplash.com/random'),
+(4,2,2,'10 teclados donador 4', 6003, 'https://source.unsplash.com/random'),
+(4,1,1,'10 teclados donador 4', 6004, null),
+(4,2,2,'10 teclados donador 4', 6005, null);
 
 -- Insertar datos de la tabla donaciones_beneficiarios - 50
 

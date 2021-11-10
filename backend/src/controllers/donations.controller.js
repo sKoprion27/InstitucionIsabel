@@ -62,12 +62,42 @@ export const donationController = {
   // POST ONE
   postOneDonation: async (req, res) => {
     try {
-      const donor = { ...req.body }
-      const { rowCount } = await Donation.postOne(donor)
-      response(req, res, 'POST ONE DONATION', rowCount, 201)
+      console.log('POST DONATION 😀', req.body)
+      const { donation } = req.body
+      const donationResponse = await Donation.postOne(donation)
+      const donationCreated = donationResponse.rows[0]
+
+      if (donationResponse.rowCount === 0) {
+        response(req, res, 'ERROR POST ONE DONATION', null, 500)
+        return
+      }
+
+      const { categories } = req.body
+
+      for (const category of categories) {
+        const categoryResponse = await DonationCategory
+          .postOne(donationCreated.id, category.id)
+
+        if (categoryResponse.rowCount === 0) {
+          response(req, res, 'ERROR POST ONE DONATION', null, 500)
+          return
+        }
+      }
+
+      const { beneficiaries } = req.body
+      for (const beneficiary of beneficiaries) {
+        const beneficiaryResponse = await DonationBeneficiary
+          .postOne(donationCreated.id, beneficiary.id)
+        if (beneficiaryResponse.rowCount === 0) {
+          response(req, res, 'ERROR POST ONE DONATION', null, 500)
+          return
+        }
+      }
+
+      response(req, res, 'POST ONE DONATION', donationResponse.rowCount, 201)
     } catch (error) {
       console.log(error)
-      response(req, res, 'POST ONE DONATION', null, 500)
+      response(req, res, 'ERROR POST ONE DONATION', null, 500)
     }
   },
 
@@ -78,21 +108,17 @@ export const donationController = {
       console.log('CONTROLLER PUT')
       const { id } = req.params
       const { donation } = req.body
-
       // Insert data donation
       const donationInsert = await Donation.putOne(donation, id)
-
       if (donationInsert.rowCount === 0) {
         console.log('ERR')
         response(req, res, 'ERROR UPDATE ONE DONATION', null, 500)
         return
       }
-
       // Compare data categories
       const { categories } = req.body
       // Current data
       const donationCategories = await Donation.getCategories(id)
-
       if (donationCategories.rows.length > categories.length) {
         console.log('CURRENT CATEGORIES THAN __ DELETE')
         const categoriesDelete = arrayDiference(
@@ -106,22 +132,18 @@ export const donationController = {
         }
       } else if (categories.length > donationCategories.rows.length) {
         // console.log('NEW CATEGORIES THAN __ UPDATE')
-
         const categoriesUpdate = arrayDiference(
           categories,
           donationCategories.rows,
           'id'
         )
-
         // console.log('categoriesUpdate', categoriesUpdate)
-
         for (const category of categoriesUpdate) {
           await DonationCategory.postOne(id, category.id)
         }
       } else {
         console.log('NO DIFF CATEGORIES')
       }
-
       // Compare data beneficiaries
       const { beneficiaries } = req.body
       const donationBeneficiaries = await Donation.getBeneficiaries(id)
