@@ -3,9 +3,7 @@ import {
   useState
 } from 'react'
 import {
-  Link,
-  Navigate,
-  useParams
+  Navigate
 } from 'react-router-dom'
 import {
   Controller,
@@ -17,20 +15,20 @@ import { Card } from 'react-materialize'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
-import {
-  getOneDonation,
-  postDonation,
-  updateDonation
-} from '../../../helpers/donations.helpers'
+import { postDonation } from '../../../helpers/donations.helpers'
 
 import './style.scss'
-import { MaterialBox } from '../../../Components/Dashboard/MaterialBox'
 import { convertToSelectOptions, filterSelectsOptiones, formatDateTable } from '../../../utils'
+import { getAllDonors } from '../../../helpers/donors.helpers'
+import { getAllPayments } from '../../../helpers/payment.helpers'
+import { getAllCategories } from '../../../helpers/categories.helpers'
+import { getAllTypesDonations } from '../../../helpers/typedonations.helpers'
+import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const DonationAdd = () => {
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(true)
-  const [urlFoto, setUrlFoto] = useState('')
   const [options, setOptions] = useState({
     donors: [],
     paymentMethods: [],
@@ -43,34 +41,38 @@ export const DonationAdd = () => {
     handleSubmit,
     reset,
     control,
+    setValue,
     formState: { errors }
   } = useForm()
 
   useEffect(() => {
-    const getOne = async () => {
+    const getInfoSelects = async () => {
       try {
-        const response = await getOneDonation(1)
-        setUrlFoto(response.donation.foto_donacion)
+        const donadores = await getAllDonors()
+        const metodos_pago = await getAllPayments()
+        const categorias = await getAllCategories()
+        const tipos_donacion = await getAllTypesDonations()
+        const beneficiarios = await getAllBeneficiaries()
 
         setOptions({
-          donors: convertToSelectOptions(response.donadores, 'razon_social'),
-          paymentMethods: convertToSelectOptions(response.metodos_pago),
-          categories: convertToSelectOptions(response.categorias),
-          typesDonations: convertToSelectOptions(response.tipos_donacion),
-          beneficiaries: convertToSelectOptions(response.beneficiarios)
+          donors: convertToSelectOptions(donadores, 'razon_social'),
+          paymentMethods: convertToSelectOptions(metodos_pago),
+          categories: convertToSelectOptions(categorias),
+          typesDonations: convertToSelectOptions(tipos_donacion),
+          beneficiaries: convertToSelectOptions(beneficiarios)
         })
       } catch (error) {
         console.log(error)
+        toastInit('Error al cargar la página', 'red lighten-2')
         setEdit(null)
       }
     }
-    getOne()
+    getInfoSelects()
   }, [edit])
 
   // Use Effect for selects info
 
   const handlerSubmit = async (data) => {
-    alert('here')
     try {
       setEdit(false)
       const dataPost = {
@@ -88,11 +90,19 @@ export const DonationAdd = () => {
       }
       console.log('😀', dataPost)
       await postDonation(dataPost)
+      toastInit('Elemento agregado')
       setEdit(true)
+      reset({})
+      setValue('id_donador', 'value', { shouldDirty: true })
+      setValue('id_metodo_pago', 'value', { shouldDirty: true })
+      setValue('id_tipo_donacion', 'value', { shouldDirty: true })
+      setValue('categorias', 'value', { shouldDirty: true })
+      setValue('beneficiarios', 'value', { shouldDirty: true })
     } catch (error) {
       console.log(error)
-      alert('ERROR')
+      toastInit('Error al agregar', 'red lighten-2')
       setEdit(true)
+      reset()
     }
   }
 
@@ -102,13 +112,10 @@ export const DonationAdd = () => {
 
   return (
     <>
-      <NavPage title='Editar donación' path='/dashboard/donaciones' />
+      <NavPage title='Agregar donación' path='/dashboard/donaciones' />
       <Card className='hoverable'>
         <h6 className='teal-text'>Información</h6>
-        <div className='img-donacion'>
-          <p>Foto de la donación</p>
-          <input type='file' />
-        </div>
+
         <form
           className='user__form '
           onSubmit={handleSubmit(handlerSubmit)}
@@ -146,14 +153,15 @@ export const DonationAdd = () => {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
-                }
+                },
+                validate: { isNumber: (value) => !isNaN(value) || 'Ingresa un número' }
               })}
               disabled={!edit}
             />
-            {errors.descripcion &&
+            {errors.monto &&
               (<span className='red-text'>
                 {
-                  errors.descripcion.message
+                  errors.monto.message
                 }
               </span>)
             }
@@ -184,6 +192,7 @@ export const DonationAdd = () => {
           <div className='input-select'>
             <label>Selecciona donador</label>
             <Controller
+              defaultValue={false}
               control={control}
               rules={{
                 required: {
@@ -203,11 +212,11 @@ export const DonationAdd = () => {
                 />
               )}
             />
-            {errors.donors &&
+            {errors.id_donador &&
               (<span
                 className='red-text'
               >
-                {errors.donors.message}
+                {errors.id_donador.message}
               </span>)
             }
           </div>
@@ -215,6 +224,7 @@ export const DonationAdd = () => {
           <div className='input-select'>
             <label>Selecciona un método de pago</label>
             <Controller
+              defaultValue={false}
               control={control}
               rules={{
                 required: {
@@ -234,11 +244,11 @@ export const DonationAdd = () => {
                 />
               )}
             />
-            {errors.payment_method &&
+            {errors.id_metodo_pago &&
               (<span
                 className='red-text'
               >
-                {errors.payment_method.message}
+                {errors.id_metodo_pago.message}
               </span>)
             }
           </div>
@@ -246,6 +256,7 @@ export const DonationAdd = () => {
           <div className='input-select'>
             <label>Selecciona que tipo de donativo</label>
             <Controller
+              defaultValue={false}
               control={control}
               rules={{
                 required: {
@@ -265,11 +276,11 @@ export const DonationAdd = () => {
                 />
               )}
             />
-            {errors.type_donation &&
+            {errors.id_tipo_donacion &&
               (<span
                 className='red-text'
               >
-                {errors.type_donation.message}
+                {errors.id_tipo_donacion.message}
               </span>)
             }
           </div>
@@ -278,6 +289,7 @@ export const DonationAdd = () => {
             <label>Selecciona las categorias del donativo</label>
             <Controller
               control={control}
+              defaultValue={false}
               rules={{
                 required: {
                   value: true,
@@ -297,11 +309,11 @@ export const DonationAdd = () => {
                 />
               )}
             />
-            {errors.categories &&
+            {errors.categorias &&
               (<span
                 className='red-text'
               >
-                {errors.categories.message}
+                {errors.categorias.message}
               </span>)
             }
           </div>
@@ -316,6 +328,7 @@ export const DonationAdd = () => {
                   message: 'Selecciona al menos una beneficiario'
                 }
               }}
+              defaultValue={false}
               name='beneficiarios'
               render={({ field }) => (
                 <Select
@@ -326,18 +339,23 @@ export const DonationAdd = () => {
                   options={options.beneficiaries}
                   {...field}
                   isDisabled={!edit}
+
                 />
               )}
             />
-            {errors.beneficiaries &&
+            {errors.beneficiarios &&
               (<span
                 className='red-text'
               >
-                {errors.beneficiaries.message}
+                {errors.beneficiarios.message}
               </span>)
             }
           </div>
-          {/* CAMBIO DE FOTO */}
+          {/* AGREGAR DE FOTO */}
+          <div className='img-donacion'>
+            <p>Foto de la donación</p>
+            <input type='file' />
+          </div>
 
           {/* BOTONES DE OPCIONES */}
           <div className='user__btn__container'>

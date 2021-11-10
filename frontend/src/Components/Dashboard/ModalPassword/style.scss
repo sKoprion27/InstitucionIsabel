@@ -7,13 +7,14 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 110vh;
   position: absolute;
   z-index: 10000;
   transition: all 300ms ease;
 }
 
 .modal__container {
+
   z-index: 10001;
   padding: 50px;
   border-radius: 5px;
@@ -28,6 +29,7 @@
 }
 
 .modal__password {
+
   margin-top: 20px;
   display: flex;
   flex-direction: column;

@@ -1,7 +1,7 @@
 import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
-import { formatDateTable, formatKeyTable } from '../../../utils'
+import { formatKeyTable } from '../../../utils'
 import { MaterialBox } from '../MaterialBox'
 import { Modal } from '../Modal'
 import './style.scss'

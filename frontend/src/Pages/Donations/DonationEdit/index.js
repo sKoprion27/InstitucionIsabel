@@ -13,7 +13,7 @@ import {
 } from 'react-hook-form'
 
 import { NavPage } from '../../../Components/Dashboard/NavPage'
-import { Card } from 'react-materialize'
+import { Card, TextInput } from 'react-materialize'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -66,7 +66,7 @@ export const DonationEdit = () => {
 
         const initialStateForm = {
           ...response.donation,
-          esta_facturado: formatDateTable(response.donation.esta_facturado)[0],
+          esta_facturado: response.donation.esta_facturado,
           id_donador: filterSelectsOptiones(
             response.donadores,
             [{ id: response.donation.id_donador }],
@@ -134,9 +134,9 @@ export const DonationEdit = () => {
     setEdit(!edit)
   }
 
-  if (edit === null) {
-    return <Navigate to='/dashboard/NOTFOUND' />
-  }
+  // if (edit === null) {
+  //   return <Navigate to='/dashboard/NOTFOUND' />
+  // }
 
   return (
     <>
@@ -184,14 +184,20 @@ export const DonationEdit = () => {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
+                },
+                validate: {
+                  isNumber: (value) => {
+                    console.log(!isNaN(value))
+                    return !isNaN(value) || 'Debe ser un número'
+                  }
                 }
               })}
               disabled={!edit}
             />
-            {errors.descripcion &&
+            {errors.monto &&
               (<span className='red-text'>
                 {
-                  errors.descripcion.message
+                  errors.monto.message
                 }
               </span>)
             }
@@ -202,13 +208,8 @@ export const DonationEdit = () => {
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('esta_facturado', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
-              disabled={!edit}
+              {...register('esta_facturado')}
+              disabled={true}
             />
             {errors.descripcion &&
               (<span className='red-text'>
@@ -241,11 +242,11 @@ export const DonationEdit = () => {
                 />
               )}
             />
-            {errors.donors &&
+            {errors.id_donador &&
               (<span
                 className='red-text'
               >
-                {errors.donors.message}
+                {errors.id_donador.message}
               </span>)
             }
           </div>
@@ -280,11 +281,11 @@ export const DonationEdit = () => {
                 />
               )}
             />
-            {errors.payment_method &&
+            {errors.id_metodo_pago &&
               (<span
                 className='red-text'
               >
-                {errors.payment_method.message}
+                {errors.id_metodo_pago.message}
               </span>)
             }
           </div>
@@ -311,11 +312,11 @@ export const DonationEdit = () => {
                 />
               )}
             />
-            {errors.type_donation &&
+            {errors.id_tipo_donacion &&
               (<span
                 className='red-text'
               >
-                {errors.type_donation.message}
+                {errors.id_tipo_donacion.message}
               </span>)
             }
           </div>
@@ -343,11 +344,11 @@ export const DonationEdit = () => {
                 />
               )}
             />
-            {errors.categories &&
+            {errors.categorias &&
               (<span
                 className='red-text'
               >
-                {errors.categories.message}
+                {errors.categorias.message}
               </span>)
             }
           </div>
@@ -375,16 +376,19 @@ export const DonationEdit = () => {
                 />
               )}
             />
-            {errors.beneficiaries &&
+            {errors.beneficiarios &&
               (<span
                 className='red-text'
               >
-                {errors.beneficiaries.message}
+                {errors.beneficiarios.message}
               </span>)
             }
           </div>
           {/* CAMBIO DE FOTO */}
 
+          <div className='input-field'>
+            <input type='file' />
+          </div>
           {/* BOTONES DE OPCIONES */}
           <div className='user__btn__container'>
             <button
