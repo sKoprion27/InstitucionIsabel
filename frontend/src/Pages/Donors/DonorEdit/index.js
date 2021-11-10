@@ -30,18 +30,18 @@ export const DonorEdit = () => {
   const { id } = useParams()
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(false)
-  const [tiposRegimenes, setTipoRegimenes] = useState([{
-    label: 'PERSONA MORAL',
-    value: true
-  },
-  {
-    label: 'PERSONA FISICA',
-    value: false
-  }
-  ])
   const [options, setOptions] = useState({
     states: [],
-    cfdis: []
+    cfdis: [],
+    regimen_fiscal: [{
+      label: 'PERSONA MORAL',
+      value: true
+    },
+    {
+      label: 'PERSONA FISICA',
+      value: false
+    }
+    ]
   })
 
   const {
@@ -61,7 +61,7 @@ export const DonorEdit = () => {
           cfdis: convertToSelectOptionsCFDI(response.cfdis)
         })
 
-        console.log(response.donor)
+        console.log(response)
 
         const initialStateForm = {
           ...response.donor,
@@ -74,10 +74,14 @@ export const DonorEdit = () => {
           id_cfdi: filterSelectsOptiones(
             response.cfdis,
             [{ id: response.donor.id_cfdi }],
-            'clave'
-          )[0]
+            'descripcion'
+          )[0],
+          regimen_fiscal: {
+            label: response.donor.regimen_fiscal ? 'PERSONA MORAL' : 'PERSONA FISICA',
+            value: response.donor.regimen_fiscal
+          }
         }
-        console.log('INITIAL', initialStateForm)
+        console.log('INITIAL DATA', initialStateForm)
         reset(initialStateForm)
       } catch (error) {
         console.log(error)
@@ -258,7 +262,7 @@ export const DonorEdit = () => {
                   placeholder='Régimen Fiscal'
                   closeMenuOnSelect
                   components={animatedComponents}
-                  options={options.fiscal_regimens}
+                  options={options.regimen_fiscal}
                   {...field}
                   isDisabled={!edit}
                 />
@@ -283,7 +287,7 @@ export const DonorEdit = () => {
                   message: 'Selecciona el Estado'
                 }
               }}
-              name='id_tipo_donacion'
+              name='id_estado'
               render={({ field }) => (
                 <Select
                   placeholder='Estado'
@@ -314,7 +318,7 @@ export const DonorEdit = () => {
                   message: 'Selecciona un CFDI'
                 }
               }}
-              name='cfdis'
+              name='id_cfdi'
               render={({ field }) => (
                 <Select
                   placeholder='Claves de CFDI'
