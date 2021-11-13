@@ -25,6 +25,8 @@ import { getAllCategories } from '../../../helpers/categories.helpers'
 import { getAllTypesDonations } from '../../../helpers/typedonations.helpers'
 import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 export const DonationAdd = () => {
   const animatedComponents = makeAnimated()
@@ -35,6 +37,56 @@ export const DonationAdd = () => {
     typesDonations: [],
     categories: []
   })
+  const schema = yup.object().shape({
+    foto_donacion: yup.mixed()
+      .test('required', 'Es requerida una imagen', (value) => {
+        return value && value.length
+      })
+      .test('fileSize', 'El archivo es muy pesado', (value, context) => {
+        return value && value[0] && value[0].size <= 200000
+      })
+      .test('type', 'Solo es válido JPEG, JPG, PNG', function (value) {
+        return value &&
+          value[0] &&
+          (value[0].type === 'image/jpeg' ||
+            value[0].type === 'image/png' ||
+            value[0].type === 'image/jpg')
+      }),
+    id_donador: yup.mixed()
+      .test('required', 'Selecciona un donador', (value) => {
+        return value
+      }),
+    id_metodo_pago: yup.mixed()
+      .test('required', 'Selecciona un método de pago', (value) => {
+        return value
+      }),
+    id_tipo_donacion: yup.mixed()
+      .test('required', 'Selecciona un tipo de donativo', (value) => {
+        return value
+      }),
+    categorias: yup.mixed()
+      .test('required', 'Selecciona al menos una categoria', (value) => {
+        return value && value.length
+      }),
+    beneficiarios: yup.mixed()
+      .test('required', 'Selecciona al menos un beneficiario', (value) => {
+        return value && value.length
+      }),
+    nombre: yup.mixed()
+      .test('required', 'Ingresa el nombre del donativo', (value) => {
+        return value && value.length
+      }),
+    monto: yup.mixed()
+      .test('required', 'Ingresa el monto de la donación', (value) => {
+        return value && value.length
+      })
+      .test('number', 'El numero debe ser un número', (value) => {
+        return !isNaN(value)
+      })
+      .test('positive', 'El numero debe ser positivo', (value) => {
+        return value > 0
+      })
+  })
 
   const {
     register,
@@ -43,7 +95,13 @@ export const DonationAdd = () => {
     control,
     setValue,
     formState: { errors }
-  } = useForm()
+  } = useForm({
+    resolver: yupResolver(schema)
+  })
+
+  const onChange = (e) => {
+    console.log(e.target.files[0])
+  }
 
   useEffect(() => {
     const getInfoSelects = async () => {
@@ -83,12 +141,12 @@ export const DonationAdd = () => {
           id_donador: data.id_donador.value,
           id_metodo_pago: data.id_metodo_pago.value,
           id_tipo_donacion: data.id_tipo_donacion.value,
-          foto_donacion: null
+          foto_donacion: data.foto_donacion[0]
         },
         categories: [...data.categorias.map(c => { return { id: c.value } })],
         beneficiaries: [...data.beneficiarios.map(b => { return { id: b.value } })]
       }
-      console.log('😀', dataPost)
+      console.log(dataPost)
       await postDonation(dataPost)
       toastInit('Elemento agregado')
       setEdit(true)
@@ -127,12 +185,7 @@ export const DonationAdd = () => {
               type='text'
               autoComplete='off'
               {
-              ...register('nombre', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })
+              ...register('nombre')
               }
               disabled={!edit} />
             {errors.nombre &&
@@ -149,13 +202,7 @@ export const DonationAdd = () => {
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('monto', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                },
-                validate: { isNumber: (value) => !isNaN(value) || 'Ingresa un número' }
-              })}
+              {...register('monto')}
               disabled={!edit}
             />
             {errors.monto &&
@@ -194,12 +241,6 @@ export const DonationAdd = () => {
             <Controller
               defaultValue={false}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona al menos un donador'
-                }
-              }}
               name='id_donador'
               render={({ field }) => (
                 <Select
@@ -226,12 +267,6 @@ export const DonationAdd = () => {
             <Controller
               defaultValue={false}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona al menos un método de pago'
-                }
-              }}
               name='id_metodo_pago'
               render={({ field }) => (
                 <Select
@@ -258,12 +293,6 @@ export const DonationAdd = () => {
             <Controller
               defaultValue={false}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona el tipo de donación'
-                }
-              }}
               name='id_tipo_donacion'
               render={({ field }) => (
                 <Select
@@ -290,12 +319,6 @@ export const DonationAdd = () => {
             <Controller
               control={control}
               defaultValue={false}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona al menos una categoria'
-                }
-              }}
               name='categorias'
               render={({ field }) => (
                 <Select
@@ -322,12 +345,6 @@ export const DonationAdd = () => {
             <label>Selecciona los beneficiarios del donativo</label>
             <Controller
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona al menos una beneficiario'
-                }
-              }}
               defaultValue={false}
               name='beneficiarios'
               render={({ field }) => (
@@ -352,9 +369,22 @@ export const DonationAdd = () => {
             }
           </div>
           {/* AGREGAR DE FOTO */}
+
           <div className='img-donacion'>
             <p>Foto de la donación</p>
-            <input type='file' />
+            <input
+              id='foto_donacion'
+              type='file'
+              {...register('foto_donacion')}
+              onChange={onChange}
+            />
+            {errors.foto_donacion &&
+              (<span
+                className='red-text'
+              >
+                {errors.foto_donacion.message}
+              </span>)
+            }
           </div>
 
           {/* BOTONES DE OPCIONES */}
