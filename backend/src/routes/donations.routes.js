@@ -11,7 +11,10 @@ router.post('/', multerUploadImage,
   donationMiddleware.addImageBody,
   donationController.postOneDonation
 )
-router.put('/:id', donationController.updateOneDonation)
+router.put('/:id',
+  multerUploadImage,
+  donationMiddleware.addImageBody,
+  donationController.updateOneDonation)
 router.delete('/:id', donationController.deleteOneDonation)
 
 export default router

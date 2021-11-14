@@ -24,6 +24,9 @@ export const postDonation = async ({ donation, foto_donacion }) => {
   return data.response
 }
 export const updateDonation = async (donation, id) => {
-  const { data } = await Axios.put(`${URL_API}/donations/${id}`, donation)
+  const form = new FormData()
+  form.append('foto_donacion', donation.foto_donacion)
+  form.append('donation', JSON.stringify(donation.data))
+  const { data } = await Axios.put(`${URL_API}/donations/${id}`, form)
   return data.response
 }

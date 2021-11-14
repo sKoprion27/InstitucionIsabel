@@ -26,7 +26,7 @@ import { getAllTypesDonations } from '../../../helpers/typedonations.helpers'
 import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+import { donationSchema } from '../../../utils/schemas'
 
 export const DonationAdd = () => {
   const animatedComponents = makeAnimated()
@@ -37,56 +37,6 @@ export const DonationAdd = () => {
     typesDonations: [],
     categories: []
   })
-  const schema = yup.object().shape({
-    foto_donacion: yup.mixed()
-      .test('required', 'Es requerida una imagen', (value) => {
-        return value && value.length
-      })
-      .test('fileSize', 'El archivo es muy pesado', (value, context) => {
-        return value && value[0] && value[0].size <= 200000
-      })
-      .test('type', 'Solo es válido JPEG, JPG, PNG', function (value) {
-        return value &&
-          value[0] &&
-          (value[0].type === 'image/jpeg' ||
-            value[0].type === 'image/png' ||
-            value[0].type === 'image/jpg')
-      }),
-    id_donador: yup.mixed()
-      .test('required', 'Selecciona un donador', (value) => {
-        return value
-      }),
-    id_metodo_pago: yup.mixed()
-      .test('required', 'Selecciona un método de pago', (value) => {
-        return value
-      }),
-    id_tipo_donacion: yup.mixed()
-      .test('required', 'Selecciona un tipo de donativo', (value) => {
-        return value
-      }),
-    categorias: yup.mixed()
-      .test('required', 'Selecciona al menos una categoria', (value) => {
-        return value && value.length
-      }),
-    beneficiarios: yup.mixed()
-      .test('required', 'Selecciona al menos un beneficiario', (value) => {
-        return value && value.length
-      }),
-    nombre: yup.mixed()
-      .test('required', 'Ingresa el nombre del donativo', (value) => {
-        return value && value.length
-      }),
-    monto: yup.mixed()
-      .test('required', 'Ingresa el monto de la donación', (value) => {
-        return value && value.length
-      })
-      .test('number', 'El numero debe ser un número', (value) => {
-        return !isNaN(value)
-      })
-      .test('positive', 'El numero debe ser positivo', (value) => {
-        return value > 0
-      })
-  })
 
   const {
     register,
@@ -96,7 +46,7 @@ export const DonationAdd = () => {
     setValue,
     formState: { errors }
   } = useForm({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(donationSchema)
   })
 
   const onChange = (e) => {
@@ -373,23 +323,24 @@ export const DonationAdd = () => {
           </div>
           {/* AGREGAR DE FOTO */}
 
-          <div className='img-donacion'>
-            <p>Foto de la donación</p>
-            <input
-              id='foto_donacion'
-              type='file'
-              {...register('foto_donacion')}
-              onChange={onChange}
-            />
+          <div className='img-container-input'>
+            <div className='img-donacion'>
+              <p>Foto de la donación</p>
+              <input
+                id='foto_donacion'
+                type='file'
+                {...register('foto_donacion')}
+                onChange={onChange}
+              />
+            </div>
             {errors.foto_donacion &&
               (<span
-                className='red-text'
+                className='red-text img-error'
               >
                 {errors.foto_donacion.message}
               </span>)
             }
           </div>
-
           {/* BOTONES DE OPCIONES */}
           <div className='user__btn__container'>
             <button

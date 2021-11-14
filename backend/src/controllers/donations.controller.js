@@ -118,7 +118,7 @@ export const donationController = {
         return
       }
       // Compare data categories
-      const { categories } = req.body
+      const { categories } = donation
       // Current data
       const donationCategories = await Donation.getCategories(id)
       if (donationCategories.rows.length > categories.length) {
@@ -147,7 +147,7 @@ export const donationController = {
         console.log('NO DIFF CATEGORIES')
       }
       // Compare data beneficiaries
-      const { beneficiaries } = req.body
+      const { beneficiaries } = donation
       const donationBeneficiaries = await Donation.getBeneficiaries(id)
 
       if (donationBeneficiaries.rows.length > beneficiaries.length) {
