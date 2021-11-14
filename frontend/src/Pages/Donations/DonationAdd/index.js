@@ -141,27 +141,30 @@ export const DonationAdd = () => {
           id_donador: data.id_donador.value,
           id_metodo_pago: data.id_metodo_pago.value,
           id_tipo_donacion: data.id_tipo_donacion.value,
-          foto_donacion: data.foto_donacion[0]
+          categories: [...data.categorias.map(c => { return { id: c.value } })],
+          beneficiaries: [...data.beneficiarios.map(b => { return { id: b.value } })]
         },
-        categories: [...data.categorias.map(c => { return { id: c.value } })],
-        beneficiaries: [...data.beneficiarios.map(b => { return { id: b.value } })]
+        foto_donacion: data.foto_donacion[0]
       }
-      console.log(dataPost)
       await postDonation(dataPost)
       toastInit('Elemento agregado')
       setEdit(true)
-      reset({})
-      setValue('id_donador', 'value', { shouldDirty: true })
-      setValue('id_metodo_pago', 'value', { shouldDirty: true })
-      setValue('id_tipo_donacion', 'value', { shouldDirty: true })
-      setValue('categorias', 'value', { shouldDirty: true })
-      setValue('beneficiarios', 'value', { shouldDirty: true })
+      resetForm()
     } catch (error) {
       console.log(error)
       toastInit('Error al agregar', 'red lighten-2')
       setEdit(true)
-      reset()
+      resetForm()
     }
+  }
+
+  const resetForm = () => {
+    reset({})
+    setValue('id_donador', 'value', { shouldDirty: true })
+    setValue('id_metodo_pago', 'value', { shouldDirty: true })
+    setValue('id_tipo_donacion', 'value', { shouldDirty: true })
+    setValue('categorias', 'value', { shouldDirty: true })
+    setValue('beneficiarios', 'value', { shouldDirty: true })
   }
 
   if (edit === null) {

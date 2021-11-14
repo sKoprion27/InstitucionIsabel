@@ -10,8 +10,17 @@ export const getOneDonation = async (id) => {
   return data.response
 }
 
-export const postDonation = async (donation) => {
-  const { data } = await Axios.post(`${URL_API}/donations`, donation)
+export const postDonation = async ({ donation, foto_donacion }) => {
+  const form = new FormData()
+  form.append('foto_donacion', foto_donacion)
+  form.append('donation', JSON.stringify(donation))
+  const { data } = await Axios.post(`${URL_API}/donations`, form, {
+    headers: {
+      Accept: 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'multipart/form-data'
+    }
+  })
   return data.response
 }
 export const updateDonation = async (donation, id) => {

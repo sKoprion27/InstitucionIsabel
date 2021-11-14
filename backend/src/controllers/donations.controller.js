@@ -8,6 +8,8 @@ import { Category } from '../models/Category.model'
 import { DonationBeneficiary } from '../models/DonationBeneficiary'
 import { arrayDiference } from '../utils'
 import { DonationCategory } from '../models/DonationCategory'
+import { cloudinaryUploader } from '../lib/cloudinary'
+import { dataUri } from '../lib/multer'
 
 export const donationController = {
   // GET ALL
@@ -62,8 +64,8 @@ export const donationController = {
   // POST ONE
   postOneDonation: async (req, res) => {
     try {
-      console.log('POST DONATION 😀', req.body)
       const { donation } = req.body
+
       const donationResponse = await Donation.postOne(donation)
       const donationCreated = donationResponse.rows[0]
 
@@ -72,7 +74,7 @@ export const donationController = {
         return
       }
 
-      const { categories } = req.body
+      const { categories } = donation
 
       for (const category of categories) {
         const categoryResponse = await DonationCategory
@@ -84,7 +86,7 @@ export const donationController = {
         }
       }
 
-      const { beneficiaries } = req.body
+      const { beneficiaries } = donation
       for (const beneficiary of beneficiaries) {
         const beneficiaryResponse = await DonationBeneficiary
           .postOne(donationCreated.id, beneficiary.id)
@@ -96,7 +98,7 @@ export const donationController = {
 
       response(req, res, 'POST ONE DONATION', donationResponse.rowCount, 201)
     } catch (error) {
-      console.log(error)
+      console.log(error, '🤡')
       response(req, res, 'ERROR POST ONE DONATION', null, 500)
     }
   },

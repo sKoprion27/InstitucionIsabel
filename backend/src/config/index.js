@@ -1,5 +1,5 @@
 require('dotenv').config()
-const config = {
+export const globalConfig = {
   DEV: {
     databaseConfig: {
       user: 'postgres',
@@ -9,8 +9,14 @@ const config = {
       password: process.env.DB_PASSWORD_DEV,
       port: 5432
     },
+    cloudinay: {
+      cloud_name: 'institucionisabel',
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+      secure: true
+    },
     jwt_token: { privateKey: 'password' }
   }
 }
 
-export default config.DEV
+export default globalConfig.DEV
