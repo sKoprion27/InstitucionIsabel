@@ -32,7 +32,11 @@ export const TypeDonationList = () => {
   return (
     <>
       <NavPage title='Lista de tipos de donaciones' onePage />
-      <MenuPage name='tipo de donación' handler={handlerFinder} />
+      <MenuPage
+        name='tipo de donación'
+        handler={handlerFinder}
+        backend='types-donations'
+      />
       <TableList
         arrayList={originalList}
         arrayListFiltered={listFiltered}

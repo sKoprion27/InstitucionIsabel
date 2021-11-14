@@ -17,7 +17,7 @@ import { Card } from 'react-materialize'
 import { getOneCategory, updateCategory } from '../../../helpers/categories.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
-export const CategoryEdit = () => {
+export const CategoryEdit = ({ justView }) => {
   const { id } = useParams()
   const [edit, setEdit] = useState(false)
 
@@ -61,7 +61,7 @@ export const CategoryEdit = () => {
 
   return (
     <>
-      <NavPage title='Editar categoria donación' path='/dashboard/categorias' />
+      <NavPage justView={justView} title='Editar categoria donación' path='/dashboard/categorias' />
       <Card className='hoverable'>
         <p>Información</p>
         <form
@@ -114,25 +114,27 @@ export const CategoryEdit = () => {
             }
           </div>
 
-          <div className='user__btn__container'>
-            <button
-              type='submit'
-              className='btn btn-success  '
-              disabled={!edit}
-            >
-              Actualizar
-            </button>
+          {
+            !justView && (<div className='user__btn__container'>
+              <button
+                type='submit'
+                className='btn btn-success  '
+                disabled={!edit}
+              >
+                Actualizar
+              </button>
 
-            <button
-              type='button'
-              className={`btn ${edit ? 'red' : 'teal'} `}
-              onClick={handlerEdit}
-            >
-              {
-                edit ? 'Cancelar' : 'Editar'
-              }
-            </button>
-          </div>
+              <button
+                type='button'
+                className={`btn ${edit ? 'red' : 'teal'} `}
+                onClick={handlerEdit}
+              >
+                {
+                  edit ? 'Cancelar' : 'Editar'
+                }
+              </button>
+            </div>)
+          }
         </form>
       </Card>
     </>

@@ -33,13 +33,17 @@ export const BeneficiaryList = () => {
   return (
     <>
       <NavPage title='Lista de beneficiarios' onePage />
-      <MenuPage name='beneficiario' handler={handlerFinder} />
+      <MenuPage
+        name='beneficiario'
+        handler={handlerFinder}
+        backend='beneficiaries'
+      />
       <TableList
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='beneficiaries'
-        // fields={['nombre', 'descripcion']}
+      // fields={['nombre', 'descripcion']}
       />
     </>
   )

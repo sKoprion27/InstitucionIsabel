@@ -32,7 +32,12 @@ export const UserList = () => {
   return (
     <>
       <NavPage title='Lista de usuarios' onePage />
-      <MenuPage handler={handlerFinder} name='usuario' type='nombre' />
+      <MenuPage
+        handler={handlerFinder}
+        name='usuario'
+        type='nombre'
+        backend='users'
+      />
       <TableList
         arrayList={originalList}
         arrayListFiltered={listFiltered}

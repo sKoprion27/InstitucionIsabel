@@ -1,7 +1,7 @@
 import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../../hooks/useAuth'
 import { formatKeyTable } from '../../../utils'
+import { PermissionGuard } from '../../PermissionGuard'
 import { MaterialBox } from '../MaterialBox'
 import { Modal } from '../Modal'
 import './style.scss'
@@ -13,7 +13,6 @@ export const TableList = ({
   fields = [],
   backend = ''
 }) => {
-  const auth = useAuth()
   return (
     <div className='responsive-table'>
       <table className='highlight striped'>
@@ -65,25 +64,7 @@ export const TableList = ({
                             })
                         }
                         <td className='table-row__options'>
-                          <Link
-                            to={`${element.id}`}
-                            className='btn btn-success'>
-                            <Icon>edit</Icon>
-                          </Link>
-                          {
-                            backend === 'users' && (<button
-                              className='btn orange'
-                              type='button'
-                              disabled={auth.user.id === element.id}
-                            >
-                              <Icon>person_add_disabled</Icon>
-                            </button>)
-                          }
-                          <Modal
-                            id={element.id}
-                            path={backend}
-                            setFetch={setFetchAction}
-                          />
+                          {checkPermission(backend, element, setFetchAction)}
                         </td>
                       </tr>
                     )
@@ -96,4 +77,192 @@ export const TableList = ({
       </table>
     </div>
   )
+}
+const checkPermission = (backend, element, setFetchAction) => {
+  switch (backend) {
+    case 'users': return (
+      <>
+        <PermissionGuard onePermision permiso='Consultar usuarios'>
+          <Link
+            to={`ver/${element.id}`}
+            className='btn orange'>
+            <Icon>visibility</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Modificar usuarios'>
+          <Link
+            to={`${element.id}`}
+            className='btn'>
+            <Icon>edit</Icon>
+          </Link>
+        </PermissionGuard>
+        {/* {
+          backend === 'users' && (<button
+            className='btn orange'
+            type='button'
+            disabled={auth.user.id === element.id}
+          >
+            <Icon>person_add_disabled</Icon>
+          </button>)
+        } */}
+        <PermissionGuard onePermision permiso='Eliminar usuarios'>
+          <Modal
+            id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+      </>
+    )
+    case 'donations': return (
+      <>
+        <PermissionGuard onePermision permiso='Consultar donaciones'>
+          <Link
+            to={`ver/${element.id}`}
+            className='btn orange'>
+            <Icon>visibility</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Modificar donaciones' >
+          <Link
+            to={`${element.id}`}
+            className='btn'>
+            <Icon>edit</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Eliminar donaciones'>
+          <Modal
+            id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+      </>
+    )
+    case 'payment-methods': return (
+      <>
+        <PermissionGuard onePermision permiso='Consultar metodos de pago'>
+          <Link
+            to={`ver/${element.id}`}
+            className='btn orange'>
+            <Icon>visibility</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Modificar metodo de pago' >
+          <Link
+            to={`${element.id}`}
+            className='btn'>
+            <Icon>edit</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Eliminar metodo de pago'>
+          <Modal
+            id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+      </>
+    )
+    case 'beneficiaries': return (
+      <>
+        <PermissionGuard onePermision permiso='Consultar beneficiario donacion'>
+          <Link
+            to={`ver/${element.id}`}
+            className='btn orange'>
+            <Icon>visibility</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Modificar beneficiario donacion' >
+          <Link
+            to={`${element.id}`}
+            className='btn'>
+            <Icon>edit</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Eliminar beneficiario donacion'>
+          <Modal
+            id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+      </>
+    )
+    case 'categories': return (
+      <>
+        <PermissionGuard onePermision permiso='Consultar categoria donativo'>
+          <Link
+            to={`ver/${element.id}`}
+            className='btn orange'>
+            <Icon>visibility</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Modificar categoria donativo' >
+          <Link
+            to={`${element.id}`}
+            className='btn'>
+            <Icon>edit</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Eliminar categoria donativo'>
+          <Modal
+            id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+      </>
+    )
+    case 'types-donations': return (
+      <>
+        <PermissionGuard onePermision permiso='Consultar tipo de donativo'>
+          <Link
+            to={`ver/${element.id}`}
+            className='btn orange'>
+            <Icon>visibility</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Modificar tipo de donativo' >
+          <Link
+            to={`${element.id}`}
+            className='btn'>
+            <Icon>edit</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Eliminar tipo de donativo'>
+          <Modal
+            id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+      </>
+    )
+    case 'donors': return (
+      <>
+        <PermissionGuard onePermision permiso='Consultar donadores' >
+          <Link
+            to={`ver/${element.id}`}
+            className='btn orange'>
+            <Icon>visibility</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Modificar donadores' >
+          <Link
+            to={`${element.id}`}
+            className='btn'>
+            <Icon>edit</Icon>
+          </Link>
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Eliminar donadores'>
+          <Modal
+            id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+      </>
+    )
+  }
 }

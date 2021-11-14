@@ -19,7 +19,7 @@ import {
 } from '../../../helpers/payment.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
-export const PaymentEdit = () => {
+export const PaymentEdit = ({ justView }) => {
   const { id } = useParams()
   const [edit, setEdit] = useState(false)
 
@@ -63,7 +63,7 @@ export const PaymentEdit = () => {
 
   return (
     <>
-      <NavPage title='Editar método de pago' path='/dashboard/metodos-pago' />
+      <NavPage justView={justView} title='Editar método de pago' path='/dashboard/metodos-pago' />
       <Card className='hoverable'>
         <p>Información</p>
         <form
@@ -116,25 +116,29 @@ export const PaymentEdit = () => {
             }
           </div>
 
-          <div className='user__btn__container'>
-            <button
-              type='submit'
-              className='btn btn-success  '
-              disabled={!edit}
-            >
-              Actualizar
-            </button>
+          {
+            !justView && (
+              <div className='user__btn__container'>
+                <button
+                  type='submit'
+                  className='btn btn-success  '
+                  disabled={!edit}
+                >
+                  Actualizar
+                </button>
 
-            <button
-              type='button'
-              className={`btn ${edit ? 'red' : 'teal'} `}
-              onClick={handlerEdit}
-            >
-              {
-                edit ? 'Cancelar' : 'Editar'
-              }
-            </button>
-          </div>
+                <button
+                  type='button'
+                  className={`btn ${edit ? 'red' : 'teal'} `}
+                  onClick={handlerEdit}
+                >
+                  {
+                    edit ? 'Cancelar' : 'Editar'
+                  }
+                </button>
+              </div>
+            )
+          }
         </form>
       </Card>
     </>

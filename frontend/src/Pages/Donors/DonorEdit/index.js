@@ -27,7 +27,7 @@ import { MaterialBox } from '../../../Components/Dashboard/MaterialBox'
 import { convertToSelectOptions, filterSelectsOptiones, formatDateTable, convertToSelectOptionsCFDI } from '../../../utils'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
-export const DonorEdit = () => {
+export const DonorEdit = ({ justView }) => {
   const { id } = useParams()
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(false)
@@ -129,7 +129,7 @@ export const DonorEdit = () => {
 
   return (
     <>
-      <NavPage title='Editar donador' path='/dashboard/donadores' />
+      <NavPage justView={justView} title='Editar donador' path='/dashboard/donadores' />
       <Card className='hoverable'>
         <h6 className='teal-text'>Información</h6>
         <form
@@ -342,25 +342,27 @@ export const DonorEdit = () => {
           </div>
 
           {/* BOTONES DE OPCIONES */}
-          <div className='user__btn__container'>
-            <button
-              type='submit'
-              className='btn btn-success  '
-              disabled={!edit}
-            >
-              Actualizar
-            </button>
+          {
+            !justView && (<div className='user__btn__container'>
+              <button
+                type='submit'
+                className='btn btn-success  '
+                disabled={!edit}
+              >
+                Actualizar
+              </button>
 
-            <button
-              type='button'
-              className={`btn ${edit ? 'red' : 'teal'} `}
-              onClick={handlerEdit}
-            >
-              {
-                edit ? 'Cancelar' : 'Editar'
-              }
-            </button>
-          </div>
+              <button
+                type='button'
+                className={`btn ${edit ? 'red' : 'teal'} `}
+                onClick={handlerEdit}
+              >
+                {
+                  edit ? 'Cancelar' : 'Editar'
+                }
+              </button>
+            </div>)
+          }
         </form>
       </Card>
     </>

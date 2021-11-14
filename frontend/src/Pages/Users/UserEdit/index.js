@@ -25,7 +25,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
-export const UserEdit = () => {
+export const UserEdit = ({ justView }) => {
   const auth = useAuth()
   const { id } = useParams()
   const animatedComponents = makeAnimated()
@@ -108,7 +108,7 @@ export const UserEdit = () => {
   }
   return (
     <>
-      <NavPage title='Editar usuario' path='/dashboard/usuarios' />
+      <NavPage title='Editar usuario' justView={justView} path='/dashboard/usuarios' />
       <Card className='hoverable'>
         <p>Información de usuario</p>
         <form
@@ -191,29 +191,31 @@ export const UserEdit = () => {
             }
           </div>
 
-          <div className='user__btn__container'>
-            <button
-              type='submit'
-              className='btn btn-success  '
-              disabled={!edit}
-            >
-              Actualizar
-            </button>
+          {
+            !justView && (<div className='user__btn__container'>
+              <button
+                type='submit'
+                className='btn btn-success  '
+                disabled={!edit}
+              >
+                Actualizar
+              </button>
 
-            <button
-              type='button'
-              className={`btn ${edit ? 'red' : 'teal'} `}
-              onClick={handlerEdit}
-            >
-              {
-                edit ? 'Cancelar' : 'Editar'
-              }
-            </button>
-            <button type='button' className='btn indigo'
-              onClick={() => setActiveModal(!activeModal)}>
-              Reestablecer contraseña
-            </button>
-          </div>
+              <button
+                type='button'
+                className={`btn ${edit ? 'red' : 'teal'} `}
+                onClick={handlerEdit}
+              >
+                {
+                  edit ? 'Cancelar' : 'Editar'
+                }
+              </button>
+              <button type='button' className='btn indigo'
+                onClick={() => setActiveModal(!activeModal)}>
+                Reestablecer contraseña
+              </button>
+            </div>)
+          }
         </form>
       </Card>
       {

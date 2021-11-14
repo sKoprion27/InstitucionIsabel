@@ -5,8 +5,6 @@ import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllDonors } from '../../../helpers/donors.helpers'
 
-import { Card, Icon } from 'react-materialize'
-
 export const DonorList = () => {
   const [didFetch, setDidFetch] = useState(false)
   const {
@@ -34,7 +32,12 @@ export const DonorList = () => {
   return (
     <>
       <NavPage title='Lista de donadores' onePage />
-      <MenuPage name='donador' type='nombre' handler={handlerFinder} />
+      <MenuPage
+        name='donador'
+        type='nombre'
+        handler={handlerFinder}
+        backend='donors'
+      />
       <TableList
         arrayList={originalList}
         arrayListFiltered={listFiltered}

@@ -75,6 +75,21 @@ export const routes = [
             )
           },
           {
+            path: 'ver',
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <PermissionGuard permiso='Consultar usuarios'>
+                    <PageLayout onePage>
+                      <UserEdit justView />
+                    </PageLayout>
+                  </PermissionGuard>
+                )
+              }
+            ]
+          },
+          {
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar usuarios'>
@@ -97,6 +112,21 @@ export const routes = [
               </PermissionGuard>)
           },
           {
+            path: 'ver',
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <PermissionGuard permiso='Consultar donadores'>
+                    <PageLayout onePage>
+                      <DonorEdit justView />
+                    </PageLayout>
+                  </PermissionGuard>
+                )
+              }
+            ]
+          },
+          {
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar donadores'>
@@ -106,7 +136,7 @@ export const routes = [
               </PermissionGuard>)
           },
           {
-            path: ':id',
+            path: 'add',
             element: (
               <PermissionGuard permiso='Registrar donadores'>
                 <PageLayout onePage>
@@ -126,6 +156,21 @@ export const routes = [
                 <DonationsList />
               </PermissionGuard>
             )
+          },
+          {
+            path: 'ver',
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <PermissionGuard permiso='Consultar donaciones'>
+                    <PageLayout onePage>
+                      <DonationEdit justView />
+                    </PageLayout>
+                  </PermissionGuard>
+                )
+              }
+            ]
           },
           {
             path: ':id',
@@ -161,6 +206,21 @@ export const routes = [
             )
           },
           {
+            path: 'ver',
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <PermissionGuard permiso='Consultar donaciones'>
+                    <PageLayout onePage>
+                      <BeneficiaryEdit justView />
+                    </PageLayout>
+                  </PermissionGuard>
+                )
+              }
+            ]
+          },
+          {
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar beneficiario donacion'>
@@ -192,6 +252,21 @@ export const routes = [
                 <PaymentList />
               </PermissionGuard>
             )
+          },
+          {
+            path: 'ver',
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <PermissionGuard permiso='Consultar metodos de pago'>
+                    <PageLayout onePage>
+                      <PaymentEdit justView />
+                    </PageLayout>
+                  </PermissionGuard>
+                )
+              }
+            ]
           },
           {
             path: ':id',
@@ -227,6 +302,21 @@ export const routes = [
             )
           },
           {
+            path: 'ver',
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <PermissionGuard permiso='Consultar categoria donativo'>
+                    <PageLayout onePage>
+                      <CategoryEdit justView />
+                    </PageLayout>
+                  </PermissionGuard>
+                )
+              }
+            ]
+          },
+          {
             path: ':id',
             element: (
               <PermissionGuard permiso='Modificar categoria donativo'>
@@ -258,6 +348,21 @@ export const routes = [
                 <TypeDonationList />
               </PermissionGuard>
             )
+          },
+          {
+            path: 'ver',
+            children: [
+              {
+                path: ':id',
+                element: (
+                  <PermissionGuard permiso='Consultar tipo de donativo'>
+                    <PageLayout onePage>
+                      <TypeDonationEdit justView />
+                    </PageLayout>
+                  </PermissionGuard>
+                )
+              }
+            ]
           },
           {
             path: ':id',

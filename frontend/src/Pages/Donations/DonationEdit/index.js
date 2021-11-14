@@ -30,12 +30,16 @@ import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { donationSchema } from '../../../utils/schemas'
 
-export const DonationEdit = () => {
+export const DonationEdit = ({ justView }) => {
   const { id } = useParams()
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(false)
   const [urlFoto, setUrlFoto] = useState('')
-  const [idDonador, setIdDonador] = useState(null)
+  const [idsOptions, setIdsOptions] = useState({
+    idDonador: '',
+    idMetodo: '',
+    idTipoDonacion: ''
+  })
   const [options, setOptions] = useState({
     donors: [],
     paymentMethods: [],
@@ -59,7 +63,12 @@ export const DonationEdit = () => {
         const response = await getOneDonation(id)
         console.log(response.donation)
         setUrlFoto(response.donation.foto_donacion)
-        setIdDonador(response.donation.id_donador)
+        const idOptions = {
+          idDonador: response.donation.id_donador,
+          idMetodo: response.donation.id_metodo_pago,
+          idTipoDonacion: response.donation.id_tipo_donacion
+        }
+        setIdsOptions(idOptions)
 
         setOptions({
           donors: convertToSelectOptions(response.donadores, 'razon_social'),
@@ -156,20 +165,22 @@ export const DonationEdit = () => {
 
   return (
     <>
-      <NavPage title='Editar donación' path='/dashboard/donaciones' />
+      <NavPage title='Editar donación' justView={justView} path='/dashboard/donaciones' />
       <Card className='hoverable'>
         <h6 className='teal-text'>Información</h6>
         <div className='img-donacion'>
           <p>Foto de la donación</p>
           <div className='img-wrapper-delete'>
             <MaterialBox element={urlFoto} keyValue={null} />
-            <button
-              className='btn red'
-              disabled={!edit || urlFoto === null}
-              onClick={handlerDeleteImage}
-            >
-              Eliminar foto
-            </button>
+            {
+              !justView && (<button
+                className='btn red'
+                disabled={!edit || urlFoto === null}
+                onClick={handlerDeleteImage}
+              >
+                Eliminar foto
+              </button>)
+            }
           </div>
         </div>
         <form
@@ -253,14 +264,16 @@ export const DonationEdit = () => {
               </span>)
             }
           </div>
-          <div className='input-field'>
-            <Link
-              className='teal-text'
-              target='_blank' to={`/dashboard/donadores/${idDonador}`}
-            >
-              Clik para ver detalle de donador
-            </Link>
-          </div>
+          {
+            justView && (<div className='input-field'>
+              <Link
+                className='teal-text'
+                target='_blank' to={`/dashboard/donadores/ver/${idsOptions.idDonador}`}
+              >
+                Clik para ver detalle de donador
+              </Link>
+            </div>)
+          }
           {/* SELECT MÉTODO DE PAGO */}
           <div className='input-select'>
             <label>Selecciona un método de pago</label>
@@ -286,6 +299,16 @@ export const DonationEdit = () => {
               </span>)
             }
           </div>
+          {
+            justView && (<div className='input-field'>
+              <Link
+                className='teal-text'
+                target='_blank' to={`/dashboard/metodos-pago/ver/${idsOptions.idMetodo}`}
+              >
+                Clik para ver detalle de método de pago
+              </Link>
+            </div>)
+          }
           {/* SELECT TIPO DE DONACIÓN */}
           <div className='input-select'>
             <label>Selecciona que tipo de donativo</label>
@@ -311,6 +334,16 @@ export const DonationEdit = () => {
               </span>)
             }
           </div>
+          {
+            justView && (<div className='input-field'>
+              <Link
+                className='teal-text'
+                target='_blank' to={`/dashboard/tipo-donacion/ver/${idsOptions.idTipoDonacion}`}
+              >
+                Clik para ver detalle de tipo de donativo
+              </Link>
+            </div>)
+          }
           {/* SELECT CATEGORIAS_DONACIONES */}
           <div className='input-select'>
             <label>Selecciona las categorias del donativo</label>
@@ -365,44 +398,48 @@ export const DonationEdit = () => {
           </div>
           {/* CAMBIO DE FOTO */}
 
-          <div className='img-container-input'>
-            <div className='img-donacion'>
-              <p>Foto de la donación</p>
-              <input
-                id='foto_donacion'
-                type='file'
-                {...register('foto_donacion')}
-                disabled={!edit}
-              />
-            </div>
-            {errors.foto_donacion &&
-              (<span
-                className='red-text  img-error'
-              >
-                {errors.foto_donacion.message}
-              </span>)
-            }
-          </div>
-          {/* BOTONES DE OPCIONES */}
-          <div className='user__btn__container'>
-            <button
-              type='submit'
-              className='btn btn-success  '
-              disabled={!edit}
-            >
-              Actualizar
-            </button>
-
-            <button
-              type='button'
-              className={`btn ${edit ? 'red' : 'teal'} `}
-              onClick={handlerEdit}
-            >
-              {
-                edit ? 'Cancelar' : 'Editar'
+          {
+            !justView && (<div className='img-container-input'>
+              <div className='img-donacion'>
+                <p>Foto de la donación</p>
+                <input
+                  id='foto_donacion'
+                  type='file'
+                  {...register('foto_donacion')}
+                  disabled={!edit}
+                />
+              </div>
+              {errors.foto_donacion &&
+                (<span
+                  className='red-text  img-error'
+                >
+                  {errors.foto_donacion.message}
+                </span>)
               }
-            </button>
-          </div>
+            </div>)
+          }
+          {/* BOTONES DE OPCIONES */}
+          {
+            !justView && (<div className='user__btn__container'>
+              <button
+                type='submit'
+                className='btn btn-success  '
+                disabled={!edit}
+              >
+                Actualizar
+              </button>
+
+              <button
+                type='button'
+                className={`btn ${edit ? 'red' : 'teal'} `}
+                onClick={handlerEdit}
+              >
+                {
+                  edit ? 'Cancelar' : 'Editar'
+                }
+              </button>
+            </div>)
+          }
         </form>
       </Card>
     </>
