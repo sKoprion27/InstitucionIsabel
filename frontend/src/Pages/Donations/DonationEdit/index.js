@@ -165,7 +165,7 @@ export const DonationEdit = () => {
             <MaterialBox element={urlFoto} keyValue={null} />
             <button
               className='btn red'
-              disabled={!edit}
+              disabled={!edit || urlFoto === null}
               onClick={handlerDeleteImage}
             >
               Eliminar foto
