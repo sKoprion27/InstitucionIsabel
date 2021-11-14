@@ -18,6 +18,7 @@ import {
   getOneBeneficiary,
   updateBeneficiary
 } from '../../../helpers/beneficiaries.helpers'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const BeneficiaryEdit = () => {
   const { id } = useParams()
@@ -46,10 +47,11 @@ export const BeneficiaryEdit = () => {
   const handlerSubmit = async (data) => {
     try {
       await updateBeneficiary(data, id)
+      toastInit('Elemento actualizado')
       setEdit(!edit)
     } catch (error) {
       console.log(error)
-      alert('ERROR')
+      toastInit('Error al actualizar', 'red lighten-2')
     }
   }
   const handlerEdit = () => {

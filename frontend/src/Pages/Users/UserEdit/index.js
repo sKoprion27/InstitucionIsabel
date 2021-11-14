@@ -23,6 +23,7 @@ import { useAuth } from '../../../hooks/useAuth'
 import { Card } from 'react-materialize'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const UserEdit = () => {
   const auth = useAuth()
@@ -92,10 +93,11 @@ export const UserEdit = () => {
         await auth.updateUserContext()
       }
       setFetchUpdate(!fetchUpdate)
-      alert('Usuario actualizado')
+      toastInit('Elemento actualizado')
       setEdit(false)
     } catch (error) {
       console.log(error, 'Update user')
+      toastInit('Error al actualizar', 'red lighten-2')
     }
   }
   const handlerEdit = () => {

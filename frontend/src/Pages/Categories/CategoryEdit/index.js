@@ -15,6 +15,7 @@ import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { Card } from 'react-materialize'
 
 import { getOneCategory, updateCategory } from '../../../helpers/categories.helpers'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const CategoryEdit = () => {
   const { id } = useParams()
@@ -44,9 +45,10 @@ export const CategoryEdit = () => {
     try {
       await updateCategory(data, id)
       setEdit(!edit)
+      toastInit('Elemento actualizado')
     } catch (error) {
       console.log(error)
-      alert('ERROR')
+      toastInit('Error al actualizar', 'red lighten-2')
     }
   }
   const handlerEdit = () => {

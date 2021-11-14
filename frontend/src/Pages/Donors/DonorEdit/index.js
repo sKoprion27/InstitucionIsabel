@@ -25,6 +25,7 @@ import {
 import './style.scss'
 import { MaterialBox } from '../../../Components/Dashboard/MaterialBox'
 import { convertToSelectOptions, filterSelectsOptiones, formatDateTable, convertToSelectOptionsCFDI } from '../../../utils'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const DonorEdit = () => {
   const { id } = useParams()
@@ -111,10 +112,11 @@ export const DonorEdit = () => {
       console.log('😀', updateData)
 
       await updateDonor(updateData, id)
+      toastInit('Elemento actualizado')
       setEdit(!edit)
     } catch (error) {
       console.log(error)
-      alert('ERROR')
+      toastInit('Error al actualizar', 'red lighten-2')
     }
   }
   const handlerEdit = () => {

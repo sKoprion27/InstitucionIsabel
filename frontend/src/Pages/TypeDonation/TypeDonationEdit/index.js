@@ -13,6 +13,7 @@ import {
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { getOneTypeDonation, updateTypeDonation } from '../../../helpers/typedonations.helpers'
 import { Card } from 'react-materialize'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const TypeDonationEdit = () => {
   const { id } = useParams()
@@ -41,10 +42,11 @@ export const TypeDonationEdit = () => {
   const handlerSubmit = async (data) => {
     try {
       await updateTypeDonation(data, id)
+      toastInit('Elemento actualizado')
       setEdit(!edit)
     } catch (error) {
       console.log(error)
-      alert('ERROR')
+      toastInit('Error al actualizar', 'red lighten-2')
     }
   }
   const handlerEdit = () => {

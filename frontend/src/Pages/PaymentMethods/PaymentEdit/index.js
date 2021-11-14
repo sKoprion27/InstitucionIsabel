@@ -17,6 +17,7 @@ import {
   getOnePayment,
   updateOnePayment
 } from '../../../helpers/payment.helpers'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const PaymentEdit = () => {
   const { id } = useParams()
@@ -45,10 +46,11 @@ export const PaymentEdit = () => {
   const handlerSubmit = async (data) => {
     try {
       await updateOnePayment(data, id)
+      toastInit('Elemento actualizado')
       setEdit(!edit)
     } catch (error) {
       console.log(error)
-      alert('ERROR')
+      toastInit('Error al actualizar', 'red lighten-2')
     }
   }
   const handlerEdit = () => {
