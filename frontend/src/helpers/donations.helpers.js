@@ -30,3 +30,8 @@ export const updateDonation = async (donation, id) => {
   const { data } = await Axios.put(`${URL_API}/donations/${id}`, form)
   return data.response
 }
+
+export const deletePhotoDonation = async (id) => {
+  const { data } = await Axios.delete(`${URL_API}/donations/${id}/photos`)
+  return data.response
+}

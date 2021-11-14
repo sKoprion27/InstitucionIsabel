@@ -8,8 +8,7 @@ import { Category } from '../models/Category.model'
 import { DonationBeneficiary } from '../models/DonationBeneficiary'
 import { arrayDiference } from '../utils'
 import { DonationCategory } from '../models/DonationCategory'
-import { cloudinaryUploader } from '../lib/cloudinary'
-import { dataUri } from '../lib/multer'
+import { cloudinaryAdmin, getPublicId } from '../lib/cloudinary'
 
 export const donationController = {
   // GET ALL
@@ -190,13 +189,36 @@ export const donationController = {
       const { rowCount } = await Donation.deleteOne(id)
 
       if (rowCount === 0) {
-        response(req, res, 'ERROR DELETE ONE USER', null, 500)
+        response(req, res, 'ERROR DELETE ONE DONATION', null, 500)
         return
       }
-      response(req, res, 'DELETE ONE USER', rowCount, 201)
+      response(req, res, 'DELETE ONE DONATION', rowCount, 201)
     } catch (error) {
       console.log(error)
-      response(req, res, 'ERROR DELETE ONE USER', null, 500)
+      response(req, res, 'ERROR DELETE ONE DONATION', null, 500)
+    }
+  },
+
+  // DELETE PHOTO DONATION
+  deletePhotos: async (req, res) => {
+    console.log('DELETE PHOTO')
+    try {
+      const { id } = req.params
+      const { rows } = await Donation.getOne(id)
+      const urlImageDelete = rows[0].foto_donacion
+      if (urlImageDelete) {
+        const publicId = getPublicId(urlImageDelete)
+        await cloudinaryAdmin.delete_resources(publicId)
+      }
+      const { rowCount } = await Donation.updatePhoto(id, null)
+      if (rowCount === 1) {
+        response(req, res, 'DELETE PHOTO DONATION', rowCount, 201)
+        return
+      }
+      response(req, res, 'ERROR DELETE PHOTO', null, 500)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR DELETE ONE DONATION', null, 500)
     }
   }
 }

@@ -16,5 +16,6 @@ router.put('/:id',
   donationMiddleware.addImageBody,
   donationController.updateOneDonation)
 router.delete('/:id', donationController.deleteOneDonation)
+router.delete('/:id/photos', donationController.deletePhotos)
 
 export default router

@@ -141,5 +141,13 @@ export const Donation = {
       WHERE id = $1
     `
     return db.query(DELETE, [id])
+  },
+  updatePhoto: async (id, value) => {
+    const DELETE = `
+      UPDATE donaciones
+      SET foto_donacion = $2
+      WHERE id = $1
+    `
+    return db.query(DELETE, [id, value])
   }
 }

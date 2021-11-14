@@ -61,7 +61,7 @@ export const CategoryEdit = () => {
 
   return (
     <>
-      <NavPage title='Editar beneficiario donación' path='/dashboard/categorias' />
+      <NavPage title='Editar categoria donación' path='/dashboard/categorias' />
       <Card className='hoverable'>
         <p>Información</p>
         <form

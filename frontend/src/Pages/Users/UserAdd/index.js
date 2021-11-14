@@ -8,6 +8,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import './style.scss'
 import { Card } from 'react-materialize'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const UserAdd = () => {
   const {
@@ -53,11 +54,11 @@ export const UserAdd = () => {
         roles
       }
       await postOneUser(dataPost)
-      alert('Usuario creado')
+      toastInit('Elemento agregado')
       reset({})
       reset({ roles: '' })
     } catch (error) {
-      alert('ERROR')
+      toastInit('Error al agregar', 'red lighten-2')
       console.log(error, 'Crear usuario')
     }
   }

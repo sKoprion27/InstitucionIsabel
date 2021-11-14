@@ -18,6 +18,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
 import {
+  deletePhotoDonation,
   getOneDonation,
   updateDonation
 } from '../../../helpers/donations.helpers'
@@ -139,6 +140,16 @@ export const DonationEdit = () => {
     setEdit(!edit)
   }
 
+  const handlerDeleteImage = async () => {
+    try {
+      toastInit('Foto eliminada')
+      await deletePhotoDonation(id)
+      setEdit(!edit)
+    } catch (error) {
+      toastInit('Error al eliminar foto', 'red lighten-2')
+    }
+  }
+
   // if (edit === null) {
   //   return <Navigate to='/dashboard/NOTFOUND' />
   // }
@@ -150,7 +161,16 @@ export const DonationEdit = () => {
         <h6 className='teal-text'>Información</h6>
         <div className='img-donacion'>
           <p>Foto de la donación</p>
-          <MaterialBox element={urlFoto} keyValue={null} />
+          <div className='img-wrapper-delete'>
+            <MaterialBox element={urlFoto} keyValue={null} />
+            <button
+              className='btn red'
+              disabled={!edit}
+              onClick={handlerDeleteImage}
+            >
+              Eliminar foto
+            </button>
+          </div>
         </div>
         <form
           className='user__form '
