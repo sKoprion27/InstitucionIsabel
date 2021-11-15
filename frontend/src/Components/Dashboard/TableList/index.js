@@ -2,6 +2,7 @@ import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import { formatKeyTable } from '../../../utils'
 import { PermissionGuard } from '../../PermissionGuard'
+import { InvoiceModal } from '../InvoiceModal'
 import { MaterialBox } from '../MaterialBox'
 import { Modal } from '../Modal'
 import './style.scss'
@@ -46,18 +47,7 @@ export const TableList = ({
                               return (
                                 <>
                                   {
-                                    key === 'foto_donacion'
-                                      ? (
-                                        <MaterialBox
-                                          element={element}
-                                          keyValue={key}
-                                        />)
-                                      : (
-                                        <td>
-                                          {
-                                            element[key]
-                                          }
-                                        </td>)
+                                    typeRender(key, element)
                                   }
                                 </>
                               )
@@ -78,6 +68,37 @@ export const TableList = ({
     </div>
   )
 }
+
+const typeRender = (key, element) => {
+  switch (key) {
+    case 'foto_donacion':
+      return (
+        <MaterialBox
+          element={element}
+          keyValue={key}
+        />)
+    case 'facturado':
+      return (
+        <td>
+          {
+            element[key] === null
+              ? (
+                <span className='red-text'>No facturado</span>)
+              : element[key]
+          }
+        </td>
+      )
+    default:
+      return (
+        <td>
+          {
+            element[key]
+          }
+        </td>
+      )
+  }
+}
+
 const checkPermission = (backend, element, setFetchAction) => {
   switch (backend) {
     case 'users': return (
@@ -133,6 +154,13 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Eliminar donaciones'>
           <Modal
             id={element.id}
+            path={backend}
+            setFetch={setFetchAction}
+          />
+        </PermissionGuard>
+        <PermissionGuard onePermision permiso='Marcar donacion facturada'>
+          <InvoiceModal
+            id={element.id + element.id}
             path={backend}
             setFetch={setFetchAction}
           />

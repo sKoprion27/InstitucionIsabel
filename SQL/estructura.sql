@@ -136,7 +136,7 @@ CREATE TABLE donaciones(
   nombre TEXT NOT NULL,
   monto NUMERIC(10,2) NOT NULL,
   foto_donacion TEXT,
-  esta_facturado BOOLEAN,
+  esta_facturado DATE,
   creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );

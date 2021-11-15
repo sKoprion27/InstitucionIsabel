@@ -25,8 +25,8 @@ export const Modal = ({ id, path, setFetch }) => {
   const handlerRemove = async () => {
     try {
       await deleteOneElement(id, path)
-      setFetch((fetch) => setFetch(!fetch))
       toastInit('Elemento eliminado')
+      setFetch((fetch) => setFetch(!fetch))
     } catch (error) {
       console.log(error)
       toastInit('Error al eliminar', 'red lighten-2')

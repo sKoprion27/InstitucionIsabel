@@ -1,0 +1,27 @@
+.modal-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-select {
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+
+  span {
+    width: 100% !important;
+    min-height: 30px;
+    align-content: center;
+    text-align: center;
+    padding-top: 5px;
+  }
+}
+
+.footer {
+  min-width: 300px !important;
+  display: flex !important;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}

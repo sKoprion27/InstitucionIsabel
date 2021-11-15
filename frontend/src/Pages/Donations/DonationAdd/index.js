@@ -89,7 +89,7 @@ export const DonationAdd = () => {
         donation: {
           nombre: data.nombre,
           monto: data.monto,
-          esta_facturado: false,
+          esta_facturado: null,
           id_donador: data.id_donador.value,
           id_metodo_pago: data.id_metodo_pago.value,
           id_tipo_donacion: data.id_tipo_donacion.value,
