@@ -3,15 +3,15 @@ import M from 'materialize-css'
 import 'materialize-css/dist/css/materialize.min.css'
 import { Icon } from 'react-materialize'
 import { useAuth } from '../../../hooks/useAuth'
-import { deleteOneElement } from '../../../helpers/users.helpers'
 import './style.scss'
 import { toastInit } from '../AlertToast'
 import { useForm } from 'react-hook-form'
+import { updateOneDonationInvoce } from '../../../helpers/donations.helpers'
 export const InvoiceModal = ({ id, path, setFetch }) => {
   const {
     register,
     handleSubmit,
-    reset, control,
+    reset,
     formState: { errors }
   } = useForm()
   const auth = useAuth()
@@ -29,13 +29,13 @@ export const InvoiceModal = ({ id, path, setFetch }) => {
     M.Modal.init(modalRef.current, options)
   }, [])
 
-  const handlerSubmit = (data) => {
+  const handlerSubmit = async (data) => {
     try {
       console.log(data)
+      await updateOneDonationInvoce(id, data)
       toastInit('Elemento facturado')
       reset()
       setFetch((fetch) => setFetch(!fetch))
-      modalRef.current.delete()
     } catch (error) {
       toastInit('Error al facturar', 'red lighten-2')
       reset()
@@ -45,7 +45,7 @@ export const InvoiceModal = ({ id, path, setFetch }) => {
     <>
       <button
         className='btn indigo modal-trigger'
-        data-target={`modal-delete${id}`}
+        data-target={`modal-invoice${id}`}
         type='button' disabled={
           (path === 'users'
             ? auth.user.id === id
@@ -56,7 +56,7 @@ export const InvoiceModal = ({ id, path, setFetch }) => {
 
       <div
         ref={modalRef}
-        id={`modal-delete${id}`}
+        id={`modal-invoice${id}`}
         className='modal'
       >
         <div className='modal-layout'>

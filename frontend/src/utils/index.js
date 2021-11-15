@@ -1,5 +1,5 @@
 export const formatDateTable = (date) => {
-  const format = date.split('T').join(' ').split('.000Z')
+  const format = date.split('T')[0]
   return format
 }
 export const formatKeyTable = (key) => {

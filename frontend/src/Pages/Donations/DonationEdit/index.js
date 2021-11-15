@@ -84,7 +84,10 @@ export const DonationEdit = ({ justView }) => {
         const initialStateForm = {
           nombre: response.donation.nombre,
           monto: response.donation.monto,
-          esta_facturado: response.donation.esta_facturado,
+          esta_facturado:
+            response.donation.esta_facturado
+              ? formatDateTable(response.donation.esta_facturado)
+              : '',
           id_donador: filterSelectsOptiones(
             response.donadores,
             [{ id: response.donation.id_donador }],
@@ -130,7 +133,7 @@ export const DonationEdit = ({ justView }) => {
         data: {
           nombre: data.nombre,
           monto: data.monto,
-          esta_facturado: data.esta_facturado,
+          esta_facturado: data.esta_facturado || null,
           id_donador: data.id_donador.value,
           id_metodo_pago: data.id_metodo_pago.value,
           id_tipo_donacion: data.id_tipo_donacion.value,
@@ -141,8 +144,8 @@ export const DonationEdit = ({ justView }) => {
       }
       await updateDonation(donation, id)// envio al server
       toastInit('Elemento actualizado')
-      setEdit(!edit)
       setLoading(false)
+      setEdit(!edit)
     } catch (error) {
       console.log(error)
       toastInit('Error al actualizar', 'red lighten-2')
@@ -230,10 +233,10 @@ export const DonationEdit = ({ justView }) => {
             <label>Facturado</label>
             <input
               onChange={register}
-              type='text'
+              type='date'
               autoComplete='off'
               {...register('esta_facturado')}
-              disabled={true}
+              disabled={!edit}
             />
             {errors.descripcion &&
               (<span className='red-text'>

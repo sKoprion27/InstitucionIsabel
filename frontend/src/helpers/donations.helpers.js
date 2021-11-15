@@ -35,3 +35,10 @@ export const deletePhotoDonation = async (id) => {
   const { data } = await Axios.delete(`${URL_API}/donations/${id}/photos`)
   return data.response
 }
+export const updateOneDonationInvoce = async (id, dataInvoice) => {
+  const { data } = await Axios.put(
+    `${URL_API}/donations/${id}/invoices`,
+    dataInvoice
+  )
+  return data.response
+}

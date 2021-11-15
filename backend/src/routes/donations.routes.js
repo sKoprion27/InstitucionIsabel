@@ -15,6 +15,7 @@ router.put('/:id',
   multerUploadImage,
   donationMiddleware.addImageBody,
   donationController.updateOneDonation)
+router.put('/:id/invoices', donationController.updateOneDonationInvoce)
 router.delete('/:id', donationController.deleteOneDonation)
 router.delete('/:id/photos', donationController.deletePhotos)
 

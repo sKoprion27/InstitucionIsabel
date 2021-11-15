@@ -181,7 +181,22 @@ export const donationController = {
       response(req, res, 'ERROR UPDATE ONE DONATION', null, 500)
     }
   },
-
+  updateOneDonationInvoce: async (req, res) => {
+    try {
+      const { esta_facturado } = req.body
+      console.log(esta_facturado, 'UP INVOICE')
+      const { id } = req.params
+      const { rowCount } = await Donation.updateOneDonationInvoce(id, esta_facturado)
+      if (rowCount === 0) {
+        response(req, res, 'ERROR INVOICE ONE DONATION', null, 500)
+        return
+      }
+      response(req, res, 'SUCCESS INVOICE ONE DONATION', rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR INVOICE ONE DONATION', null, 500)
+    }
+  },
   // DELETE ONE
   deleteOneDonation: async (req, res) => {
     try {

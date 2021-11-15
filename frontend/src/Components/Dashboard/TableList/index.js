@@ -1,6 +1,6 @@
 import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
-import { formatKeyTable } from '../../../utils'
+import { formatDateTable, formatKeyTable } from '../../../utils'
 import { PermissionGuard } from '../../PermissionGuard'
 import { InvoiceModal } from '../InvoiceModal'
 import { MaterialBox } from '../MaterialBox'
@@ -84,7 +84,14 @@ const typeRender = (key, element) => {
             element[key] === null
               ? (
                 <span className='red-text'>No facturado</span>)
-              : element[key]
+              : (
+                <span
+                  className='teal-text'
+                >
+                  {
+                    formatDateTable(element[key])
+                  }
+                </span>)
           }
         </td>
       )
@@ -160,7 +167,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         </PermissionGuard>
         <PermissionGuard onePermision permiso='Marcar donacion facturada'>
           <InvoiceModal
-            id={element.id + element.id}
+            id={element.id}
             path={backend}
             setFetch={setFetchAction}
           />
