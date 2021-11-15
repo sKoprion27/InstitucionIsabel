@@ -49,7 +49,7 @@ export const routesSidebar = [
   {
     link: 'tipo-donacion',
     name: 'Tipo de donación',
-    permission: 'Registrar tipo de donativo',
+    permission: 'Consultar tipo de donativo',
     icon: <MdOutlineScatterPlot />
   },
   {

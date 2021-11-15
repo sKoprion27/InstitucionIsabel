@@ -13,7 +13,7 @@ export const NavItems = ({ navbar }) => {
             return (
               <li key={route.name} className='waves-green'>
                 <Link key={route.name} to={route.link} className={!navbar ? 'white-text' : 'black-text'}>
-                  {route.name}
+                  {route.icon}  {route.name}
                 </Link>
               </li>
             )
