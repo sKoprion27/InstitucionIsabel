@@ -5,6 +5,7 @@ import { Icon } from 'react-materialize'
 import { useAuth } from '../../../hooks/useAuth'
 import { deleteOneElement } from '../../../helpers/users.helpers'
 import './style.scss'
+import { toastInit } from '../AlertToast'
 export const Modal = ({ id, path, setFetch }) => {
   const auth = useAuth()
   const modalRef = useRef()
@@ -25,9 +26,10 @@ export const Modal = ({ id, path, setFetch }) => {
     try {
       await deleteOneElement(id, path)
       setFetch((fetch) => setFetch(!fetch))
+      toastInit('Elemento eliminado')
     } catch (error) {
       console.log(error)
-      alert('Error')
+      toastInit('Error al eliminar', 'red lighten-2')
     }
   }
   return (

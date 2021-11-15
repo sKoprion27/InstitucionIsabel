@@ -52,12 +52,12 @@ export const routesSidebar = [
     permission: 'Consultar tipo de donativo',
     icon: <MdOutlineScatterPlot />
   },
-  {
-    link: 'notas',
-    name: 'Notas',
-    permission: 'Registrar notas',
-    icon: <MdEditNote />
-  },
+  // {
+  //   link: 'notas',
+  //   name: 'Notas',
+  //   permission: 'Registrar notas',
+  //   icon: <MdEditNote />
+  // },
   {
     link: 'perfil',
     name: 'Mi Perfil',

@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form'
 
 import { NavPage } from '../../../Components/Dashboard/NavPage'
-import { Card } from 'react-materialize'
+import { Card, ProgressBar } from 'react-materialize'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 
@@ -31,6 +31,7 @@ import { donationSchema } from '../../../utils/schemas'
 export const DonationAdd = () => {
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [options, setOptions] = useState({
     donors: [],
     paymentMethods: [],
@@ -82,6 +83,7 @@ export const DonationAdd = () => {
 
   const handlerSubmit = async (data) => {
     try {
+      setLoading(true)
       setEdit(false)
       const dataPost = {
         donation: {
@@ -99,6 +101,7 @@ export const DonationAdd = () => {
       await postDonation(dataPost)
       toastInit('Elemento agregado')
       setEdit(true)
+      setLoading(false)
       resetForm()
     } catch (error) {
       console.log(error)
@@ -346,11 +349,18 @@ export const DonationAdd = () => {
             <button
               type='submit'
               className='btn btn-success  '
-              disabled={!edit}
+              disabled={loading || !edit}
             >
               Agregar donación
             </button>
           </div>
+          {
+            loading && (
+              <div className='progress'>
+                <div className='indeterminate' />
+              </div>
+            )
+          }
         </form>
       </Card>
     </>

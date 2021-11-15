@@ -25,5 +25,13 @@ export const RoleUser = {
     id_usuario = $2
     `
     return db.query(DELETE, [id_role, id_usuario])
+  },
+  deleteALlUserRoles: async (id_usuario) => {
+    const DELETE = `
+    DELETE FROM roles_usuarios
+    WHERE
+    id_usuario = $1
+    `
+    return db.query(DELETE, [id_usuario])
   }
 }

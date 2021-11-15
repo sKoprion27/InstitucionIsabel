@@ -182,12 +182,21 @@ export const UserEdit = ({ justView }) => {
               type='text'
               name='correo_electronico'
               {...register('correo_electronico', {
-                required: true
+                required: {
+                  value: true,
+                  message: 'El correo electronico es requerido'
+                },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: 'Ingresa un correo válido. Revisa los espacios'
+                }
               })}
               disabled={!edit}
             />
-            {errors.correo_electronico?.type === 'required' &&
-              (<span className='red-text'>El correo electronico es requerido</span>)
+            {errors.correo_electronico &&
+              (<span className='red-text'>
+                {errors.correo_electronico.message}
+              </span>)
             }
           </div>
 

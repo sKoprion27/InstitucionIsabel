@@ -165,22 +165,10 @@ export const User = {
   },
   deleteOne: async (id) => {
     const DELETE = `
-      UPDATE usuarios
-      SET existe = false
+      DELETE FROM
+      usuarios
       WHERE id = $1
-      AND
-      existe = true
     `
-    try {
-      const { rowCount } = await db.query(DELETE, [id])
-
-      if (rowCount === 0) {
-        return ['ERROR DELETE NOT FOUND', 404]
-      }
-      return ['DELETE ONE USER', 201]
-    } catch (error) {
-      console.log('ERROR DELETE USER 🤯', error)
-      return ['ERROR DELETE USER 🤯', 400]
-    }
+    return db.query(DELETE, [id])
   }
 }

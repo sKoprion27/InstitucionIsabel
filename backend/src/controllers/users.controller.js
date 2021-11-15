@@ -3,6 +3,7 @@ import { encrypt } from './../lib/encrypt'
 import { User } from './../models/User.model'
 import { RoleUser } from '../models/RoleUser'
 import { arrayDiference } from '../utils'
+import { Note } from '../models/Notes.model'
 
 export const userController = {
 
@@ -134,9 +135,16 @@ export const userController = {
 
   // DELETE ONE
   deleteOneUser: async (req, res) => {
-    const id = req.params.id
-    const [queryAnswer, status] = await User.deleteOne(id)
-    response(req, res, 'DELETE ONE USER', queryAnswer, status)
+    try {
+      const { id } = req.params
+      await Note.deleteALlUserNotes(id) // Sin alcance
+      await RoleUser.deleteALlUserRoles(id)
+      const user = await User.deleteOne(id)
+      response(req, res, 'DELETE ONE USER', user.rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'DELETE ONE USER', null, 500)
+    }
   },
 
   // CHANGE PASSWORD

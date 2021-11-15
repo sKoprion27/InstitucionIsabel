@@ -444,6 +444,13 @@ export const DonationEdit = ({ justView }) => {
               </button>
             </div>)
           }
+          {
+            loading && (
+              <div className='progress'>
+                <div className='indeterminate' />
+              </div>
+            )
+          }
         </form>
       </Card>
     </>
