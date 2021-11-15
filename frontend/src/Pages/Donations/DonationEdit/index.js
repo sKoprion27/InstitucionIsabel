@@ -39,7 +39,8 @@ export const DonationEdit = ({ justView }) => {
   const [idsOptions, setIdsOptions] = useState({
     idDonador: '',
     idMetodo: '',
-    idTipoDonacion: ''
+    idTipoDonacion: '',
+    esta_facturado: null
   })
   const [options, setOptions] = useState({
     donors: [],
@@ -67,7 +68,8 @@ export const DonationEdit = ({ justView }) => {
         const idOptions = {
           idDonador: response.donation.id_donador,
           idMetodo: response.donation.id_metodo_pago,
-          idTipoDonacion: response.donation.id_tipo_donacion
+          idTipoDonacion: response.donation.id_tipo_donacion,
+          esta_facturado: response.donation.esta_facturado
         }
         setIdsOptions(idOptions)
 
@@ -231,20 +233,31 @@ export const DonationEdit = ({ justView }) => {
           </div>
           <div>
             <label>Facturado</label>
-            <input
-              onChange={register}
-              type='date'
-              autoComplete='off'
-              {...register('esta_facturado')}
-              disabled={!edit}
-            />
-            {errors.descripcion &&
-              (<span className='red-text'>
-                {
-                  errors.descripcion.message
-                }
-              </span>)
+            {
+              idsOptions.esta_facturado === null
+                ? (
+                  <>
+                    <input type='text' value='No facturado' disabled={true} />
+                  </>)
+                : (
+                  <>
+                    <input
+                      onChange={register}
+                      type='date'
+                      autoComplete='off'
+                      {...register('esta_facturado')}
+                      disabled={true}
+                    />
+                    {errors.descripcion &&
+                      (<span className='red-text'>
+                        {
+                          errors.descripcion.message
+                        }
+                      </span>)
+                    }
+                  </>)
             }
+
           </div>
           {/* SELECT DONDADOR */}
           <div className='input-select'>
