@@ -168,7 +168,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Marcar donacion facturada'>
           <InvoiceModal
             id={element.id}
-            path={backend}
+            facturado={element.facturado}
             setFetch={setFetchAction}
           />
         </PermissionGuard>

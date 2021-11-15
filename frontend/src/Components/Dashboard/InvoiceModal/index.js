@@ -7,7 +7,7 @@ import './style.scss'
 import { toastInit } from '../AlertToast'
 import { useForm } from 'react-hook-form'
 import { updateOneDonationInvoce } from '../../../helpers/donations.helpers'
-export const InvoiceModal = ({ id, path, setFetch }) => {
+export const InvoiceModal = ({ id, setFetch, facturado }) => {
   const {
     register,
     handleSubmit,
@@ -46,11 +46,7 @@ export const InvoiceModal = ({ id, path, setFetch }) => {
       <button
         className='btn indigo modal-trigger'
         data-target={`modal-invoice${id}`}
-        type='button' disabled={
-          (path === 'users'
-            ? auth.user.id === id
-            : false)
-        }>
+        type='button' disabled={facturado !== null}>
         <Icon>check_circle</Icon>
       </button>
 
