@@ -4,17 +4,28 @@
   align-items: flex-end;
 }
 
+.report-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.download-excel {
+  margin-top: 20px;
+}
+
 .finder {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 40%;
   max-width: 350px;
 
   .react-datepicker__input-container {
 
 
     min-width: 250px;
-// input {}
+    // input {}
   }
 }

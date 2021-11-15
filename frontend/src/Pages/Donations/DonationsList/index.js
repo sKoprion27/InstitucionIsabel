@@ -4,14 +4,16 @@ import { useEffect, useState } from 'react'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllDonations } from '../../../helpers/donations.helpers'
-import DatePicker, { registerLocale } from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
-import es from 'date-fns/locale/es'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { CSVLink } from 'react-csv'
 
 export const DonationsList = () => {
   const [didFetch, setDidFetch] = useState(false)
+
+  // States for use finder
   const {
     setOriginalList,
     setListFilter,
@@ -20,6 +22,21 @@ export const DonationsList = () => {
     handlerFinder
   } = useFinder()
 
+  // State for excel
+  const [excel, setExcel] = useState({
+    headers: [
+      { label: 'First Name', key: 'firstname' },
+      { label: 'Last Name', key: 'lastname' },
+      { label: 'Email', key: 'email' }
+    ],
+    data: [
+      { firstname: 'Ahmed', lastname: 'Tomi', email: 'ah@smthing.co.com' },
+      { firstname: 'Raed', lastname: 'Labes', email: 'rl@smthing.co.com' },
+      { firstname: 'Yezzi', lastname: 'Min l3b', email: 'ymin@cocococo.com' }
+    ]
+  })
+
+  // Get initial list
   useEffect(() => {
     const getList = async () => {
       try {
@@ -33,9 +50,12 @@ export const DonationsList = () => {
     }
     getList()
   }, [didFetch])
+
+  // States for date range
   const [dateRange, setDateRange] = useState([null, null])
   const [startDate, endDate] = dateRange
 
+  // Get range list
   const finderByRange = async () => {
     try {
       if (startDate === null || endDate === null) {
@@ -50,6 +70,7 @@ export const DonationsList = () => {
         })
         setOriginalList(donations)
         setListFilter(donations)
+
         toastInit('Lista actualizada')
       }
     } catch (error) {
@@ -67,31 +88,36 @@ export const DonationsList = () => {
         handler={handlerFinder}
         backend='donations'
       />
-      <div className='date-picker-options'>
-        <label>Selecciona rango de fechas de facturas</label>
-        <div className='finder'>
-          <button
-            className='btn'
-            onClick={finderByRange}
-          >
-            Filtrar
-          </button>
-          <DatePicker
+      <div className='report-area'>
+        <CSVLink className='btn download-excel' data={excel.data} headers={excel.headers}>
+          Descargar excel
+        </CSVLink>
+        <div className='date-picker-options'>
+          <label>Selecciona rango de fechas de facturas</label>
+          <div className='finder'>
+            <button
+              className='btn'
+              onClick={finderByRange}
+            >
+              Filtrar
+            </button>
+            <DatePicker
 
-            dateFormat='yyyy/MM/dd'
-            valueFormat='yyyy/MM/dd'
-            placeholderText='Click para seleccionar rango'
-            showTimeSelect={false}
-            selectsRange={true}
-            startDate={startDate}
-            endDate={endDate}
-            onChange={
-              (update) => {
-                setDateRange(update)
-              }}
-            isClearable={true}
-            withPortal
-          />
+              dateFormat='yyyy/MM/dd'
+              valueFormat='yyyy/MM/dd'
+              placeholderText='Click para seleccionar rango'
+              showTimeSelect={false}
+              selectsRange={true}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={
+                (update) => {
+                  setDateRange(update)
+                }}
+              isClearable={true}
+              withPortal
+            />
+          </div>
         </div>
       </div>
       <TableList
