@@ -5,7 +5,7 @@ import { donationController } from './../controllers/donations.controller'
 
 const router = Router()
 
-router.get('/', donationController.getDonations)
+router.get('/?', donationController.getDonations)
 router.get('/:id', donationController.getOneDonation)
 router.post('/', multerUploadImage,
   donationMiddleware.addImageBody,

@@ -1,5 +1,37 @@
 import { db } from './../database/index'
 export const Donation = {
+  getAllByRange: (startDate, endDate) => {
+    const QUERY = `
+      SELECT
+      D.id,
+      D.nombre,
+      D.monto,
+      D.foto_donacion,
+      D.esta_facturado as facturado,
+      P.razon_social as donador,
+      M.nombre metodo_pago,
+      T.nombre tipo_donacion
+      FROM
+      donaciones D,
+      donadores P,
+      metodos_pago M,
+      tipo_donaciones T
+      WHERE
+      D.id_donador = P.id
+      AND
+      D.id_metodo_pago = M.id
+      AND
+      D.id_tipo_donacion = T.id
+      AND
+      D.existe = true
+      AND
+      esta_facturado
+      BETWEEN $1 AND $2
+      ORDER BY D.id DESC
+    `
+    console.log(startDate, endDate)
+    return db.query(QUERY, [startDate, endDate])
+  },
   getAll: () => {
     const QUERY = `
       SELECT
