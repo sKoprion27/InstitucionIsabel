@@ -33,6 +33,7 @@ import { donationSchema } from '../../../utils/schemas'
 export const DonationEdit = ({ justView }) => {
   const { id } = useParams()
   const animatedComponents = makeAnimated()
+  const [loading, setLoading] = useState(false)
   const [edit, setEdit] = useState(false)
   const [urlFoto, setUrlFoto] = useState('')
   const [idsOptions, setIdsOptions] = useState({
@@ -124,6 +125,7 @@ export const DonationEdit = ({ justView }) => {
 
   const handlerSubmit = async (data) => {
     try {
+      setLoading(true)
       const donation = {
         data: {
           nombre: data.nombre,
@@ -140,9 +142,11 @@ export const DonationEdit = ({ justView }) => {
       await updateDonation(donation, id)// envio al server
       toastInit('Elemento actualizado')
       setEdit(!edit)
+      setLoading(false)
     } catch (error) {
       console.log(error)
       toastInit('Error al actualizar', 'red lighten-2')
+      setLoading(false)
     }
   }
   const handlerEdit = () => {
@@ -159,9 +163,9 @@ export const DonationEdit = ({ justView }) => {
     }
   }
 
-  // if (edit === null) {
-  //   return <Navigate to='/dashboard/NOTFOUND' />
-  // }
+  if (edit === null) {
+    return <Navigate to='/dashboard/NOTFOUND' />
+  }
 
   return (
     <>
@@ -424,7 +428,7 @@ export const DonationEdit = ({ justView }) => {
               <button
                 type='submit'
                 className='btn btn-success  '
-                disabled={!edit}
+                disabled={loading || !edit}
               >
                 Actualizar
               </button>

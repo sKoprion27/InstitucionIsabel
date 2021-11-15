@@ -397,11 +397,7 @@ INSERT INTO usuarios(nombre, apellido, "password", correo_electronico) VALUES
 ('Julio','Ramirez','Password','contador@tec.mx'),
 ('Alejandro','Polo', 'Password','presidente@tec.mx'),
 ('Daniel','Cu','Password','admin@tec.mx'),
-('David','Cu','Password','superadmin@tec.mx'),
-('Test1','Test1','Password','superadmin1@tec.mx'),
-('Test2','Test2','Password','superadmin2@tec.mx'),
-('Test3','Test3','Password','superadmin3@tec.mx'),
-('Test4','Test4','Password','superadmin4@tec.mx');
+('David','Cu','Password','superadmin@tec.mx');
 
 -- Insertar datos tabla roles_usuarios
 

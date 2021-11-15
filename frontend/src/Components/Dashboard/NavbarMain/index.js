@@ -54,10 +54,11 @@ export const NavbarMain = () => {
             onOpenStart: null,
             outDuration: 250
           }}
-          trigger={<a href='#!'>{auth.user.nombre} {auth.user.apellido}{' '}<Icon right>arrow_drop_down</Icon></a>}
+          trigger={<a href='#!'>
+            {auth.user.nombre} {auth.user.apellido}{' '}<Icon right>account_circle</Icon></a>}
         >
           <Link to='/dashboard/perfil'>
-            Mi cuenta
+            Mi perfil
           </Link>
           <Divider />
           <NavItem onClick={handlerLogout}>
