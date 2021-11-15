@@ -14,7 +14,6 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
     reset,
     formState: { errors }
   } = useForm()
-  const auth = useAuth()
   const modalRef = useRef()
   const options = {
     inDuration: 250,
@@ -36,6 +35,7 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
       toastInit('Elemento facturado')
       reset()
       setFetch((fetch) => setFetch(!fetch))
+      M.Modal.getInstance(modalRef.current).close()
     } catch (error) {
       toastInit('Error al facturar', 'red lighten-2')
       reset()
@@ -75,7 +75,9 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
             </div>
 
             <div className='footer'>
-              <button type='button' className='modal-close waves-effect red white-text btn'>
+              <button id='close-btn-invoice'
+                type='button'
+                className='modal-close waves-effect red white-text btn'>
                 Cancelar
               </button>
               <button type='submit' className='waves-effect waves-green green white-text btn'>
