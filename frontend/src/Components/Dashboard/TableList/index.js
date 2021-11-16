@@ -81,7 +81,7 @@ const typeRender = (key, element) => {
       return (
         <td>
           {
-            element[key] === null
+            element[key] === 'No facturado'
               ? (
                 <span className='red-text'>No facturado</span>)
               : (

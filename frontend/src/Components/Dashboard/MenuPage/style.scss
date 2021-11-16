@@ -5,15 +5,18 @@
   margin-bottom: 30px;
   width: 100% !important;
 
-  div {
+  .wrapper-finder {
     min-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    input {
-      max-width: 300px;
+    div {
+      width: 320px;
     }
 
     button {
-      width: 10px;
+      width: 50px;
     }
   }
 }

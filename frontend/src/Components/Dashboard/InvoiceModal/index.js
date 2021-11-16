@@ -58,7 +58,7 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
     <>
       <button
         className={`btn
-        ${facturado === null
+        ${facturado === 'No facturado'
             ? 'indigo'
             : 'red'
           }
@@ -67,7 +67,7 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
         data-target={`modal-invoice${id}`}
         type='button'>
         <Icon>
-          {facturado === null ? 'check_circle' : 'restore'}
+          {facturado === 'No facturado' ? 'check_circle' : 'restore'}
         </Icon>
       </button>
 
@@ -77,7 +77,7 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
         className='modal'
       >
         {
-          facturado === null
+          facturado === 'No facturado'
             ? (<div className='modal-layout'>
               <div className='modal-content'>
                 <h4>¿Deseas marcar como facturada esta donación?</h4>

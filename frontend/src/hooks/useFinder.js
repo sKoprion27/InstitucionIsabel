@@ -12,14 +12,30 @@ export const useFinder = (finderList = ['nombre']) => {
   const handlerFinder = ({ target }) => {
     console.log(target.value)
     if (target.value === '') {
-      setListFilter(originalList)
+      setListFilter([...originalList])
     } else {
+      const listFiltered = findBySelectFields(target)
       setListFilter(
-        [...listFiltered.filter(element => (
-          element.nombre.toLowerCase().includes(target.value.toLowerCase())
-        ))]
+        [...listFiltered]
       )
     }
+  }
+
+  const findBySelectFields = (target) => {
+    // ['nombre','monto','apellido']
+
+    const listFiltered = originalList.filter(element => {
+      for (const item of finderList) {
+        if (element[item]) {
+          if (element[item].toLowerCase().includes(target.value.toLowerCase())) {
+            return element
+          }
+        }
+      }
+      return null
+    })
+    console.log(listFiltered, '🤖')
+    return listFiltered
   }
 
   return {

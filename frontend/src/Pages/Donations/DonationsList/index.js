@@ -21,7 +21,7 @@ export const DonationsList = () => {
     originalList,
     listFiltered,
     handlerFinder
-  } = useFinder()
+  } = useFinder(['nombre', 'monto', 'donador', 'facturado'])
 
   // State for excel
   const [excel, setExcel] = useState({
@@ -42,8 +42,14 @@ export const DonationsList = () => {
     const getList = async () => {
       try {
         const donations = await getAllDonations({})
-        setOriginalList(donations)
-        setListFilter(donations)
+        const donationsParse = donations.map(d => {
+          return {
+            ...d,
+            facturado: d.facturado === null ? 'No facturado' : d.facturado
+          }
+        })
+        setOriginalList(donationsParse)
+        setListFilter(donationsParse)
         setExcel({
           headers: getHeadersCVS(donations),
           data: donations
@@ -155,7 +161,7 @@ export const DonationsList = () => {
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='donations'
-        fields={['id', 'creado']}
+        fields={['id', 'creado', 'tipo_donacion']}
       />
     </>
   )
