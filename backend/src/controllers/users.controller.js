@@ -19,19 +19,8 @@ export const userController = {
     try {
       const { rows, rowCount } = await User.getOne(id)
       if (rowCount === 0) {
-        console.log('Empty')
+        console.log('User not exists')
         response(req, res, 'GET ONE', null, 500)
-      } else if (rowCount === 1) {
-        const user = {
-          nombre: rows[0].nombre,
-          apellido: rows[0].apellido,
-          correo_electronico: rows[0].correo_electronico,
-          roles: [{
-            id: rows[0].id_role,
-            nombre: rows[0].role
-          }]
-        }
-        response(req, res, 'GET ONE', user, 200)
       } else {
         let user = {
           nombre: rows[0].nombre,
@@ -88,40 +77,48 @@ export const userController = {
     const newRoles = req.body.roles
 
     try {
-      const { rows, rowCount } = await User.getOne(id)
+      const { rows, rowCount } = await User.getRoles(id)
       if (rowCount === 0) {
-        if (newRoles.length > 1) {
-          for (const role of newRoles) {
-            await RoleUser.postOne(role.id, id)
-          }
-        } else {
-          await RoleUser.postOne(newRoles[0].id, id)
-        }
+        console.log('That user not exists')
+        response(req, res, 'ERROR PUT ONE USER', null, 500)
       } else {
-        const currentRoles = rows.map(row => {
-          const role = {
-            id: row.id_role,
-            nombre: row.role
-          }
-          return role
-        })
-
+        const currentRoles = rows
+        console.log(currentRoles, 'CURRENT_ROLES')
+        console.log(newRoles, 'NEW_ROLES')
         if (currentRoles.length > newRoles.length) {
           console.log('CURRENT ROLES THAN __ DELETE')
           const rolesDelete = arrayDiference(currentRoles, newRoles, 'nombre')
+          console.log('ROLES___DELETE', rolesDelete)
           for (const role of rolesDelete) {
             await RoleUser.deleteOne(role.id, id)
           }
         } else if (newRoles.length > currentRoles.length) {
           console.log('NEW ROLES THAN __ UPDATE')
           const roleUpdate = arrayDiference(newRoles, currentRoles, 'nombre')
-          console.log(roleUpdate)
+          console.log('ROLES___UPDATE', roleUpdate)
           for (const role of roleUpdate) {
             console.log(role.id, id)
             await RoleUser.postOne(role.id, id)
           }
         } else {
-          console.log('NO DIFF')
+          console.log('NO DIFF 😆')
+          if (newRoles.length === 1 && currentRoles.length === 1) {
+            if (newRoles[0].nombre !== currentRoles[0].nombre) {
+              console.log('POST ONE, DIFF')
+              await RoleUser.postOne(newRoles[0].id, id)
+            } else {
+              console.log('THE SAME ROLE, NO POST')
+            }
+          } else {
+            console.log('CHECK SAME ROLES, POST THE DIFFERENTS')
+            for (let index = 0; index < currentRoles.length; index++) {
+              if (newRoles[index].nombre !== currentRoles[index].nombre) {
+                await RoleUser.postOne(newRoles[index].id, id)
+              } else {
+                await RoleUser.deleteOne(newRoles[index].id, id)
+              }
+            }
+          }
         }
       }
       const { roles, ...user } = req.body
