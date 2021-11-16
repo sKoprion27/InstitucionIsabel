@@ -83,8 +83,6 @@ export const userController = {
         response(req, res, 'ERROR PUT ONE USER', null, 500)
       } else {
         const currentRoles = rows
-        console.log(currentRoles, 'CURRENT_ROLES')
-        console.log(newRoles, 'NEW_ROLES')
         if (currentRoles.length > newRoles.length) {
           console.log('CURRENT ROLES THAN __ DELETE')
           const rolesDelete = arrayDiference(currentRoles, newRoles, 'nombre')
@@ -101,23 +99,11 @@ export const userController = {
             await RoleUser.postOne(role.id, id)
           }
         } else {
-          console.log('NO DIFF 😆')
-          if (newRoles.length === 1 && currentRoles.length === 1) {
-            if (newRoles[0].nombre !== currentRoles[0].nombre) {
-              console.log('POST ONE, DIFF')
-              await RoleUser.postOne(newRoles[0].id, id)
-            } else {
-              console.log('THE SAME ROLE, NO POST')
-            }
-          } else {
-            console.log('CHECK SAME ROLES, POST THE DIFFERENTS')
-            for (let index = 0; index < currentRoles.length; index++) {
-              if (newRoles[index].nombre !== currentRoles[index].nombre) {
-                await RoleUser.postOne(newRoles[index].id, id)
-              } else {
-                await RoleUser.deleteOne(newRoles[index].id, id)
-              }
-            }
+          for (let index = 0; index < currentRoles.length; index++) {
+            await RoleUser.deleteOne(currentRoles[index].id, id)
+          }
+          for (let index = 0; index < newRoles.length; index++) {
+            await RoleUser.postOne(newRoles[index].id, id)
           }
         }
       }
