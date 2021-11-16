@@ -43,6 +43,10 @@ export const DonationsList = () => {
         const donations = await getAllDonations({})
         setOriginalList(donations)
         setListFilter(donations)
+        setExcel({
+          headers: getHeadersCVS(donations),
+          data: donations
+        })
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar la lista', 'red lighten-2')
@@ -63,6 +67,10 @@ export const DonationsList = () => {
         setOriginalList(donations)
         setListFilter(donations)
         toastInit('Lista actualizada')
+        setExcel({
+          headers: getHeadersCVS(donations),
+          data: donations
+        })
       } else {
         const donations = await getAllDonations({
           startDate: startDate.toString().split('GMT')[0],
@@ -70,13 +78,29 @@ export const DonationsList = () => {
         })
         setOriginalList(donations)
         setListFilter(donations)
-
         toastInit('Lista actualizada')
+        setExcel({
+          headers: getHeadersCVS(donations),
+          data: donations
+        })
       }
     } catch (error) {
       console.log(error)
       toastInit('Error al filtrar por fechas', 'red lighten-2')
     }
+  }
+
+  const getHeadersCVS = (response, arr = ['id', 'foto_donacion']) => {
+    const headers = Object.keys(response[0]).map(key => {
+      return {
+        label: key,
+        key
+      }
+    })
+    const headersFiltered = headers.filter(
+      header => !arr.some(k => k === header.key)
+    )
+    return headersFiltered
   }
 
   return (
@@ -89,7 +113,12 @@ export const DonationsList = () => {
         backend='donations'
       />
       <div className='report-area'>
-        <CSVLink className='btn download-excel' data={excel.data} headers={excel.headers}>
+        <CSVLink
+          className='btn download-excel'
+          filename={'donaciones.csv'}
+          data={excel.data}
+          headers={excel.headers}
+        >
           Descargar excel
         </CSVLink>
         <div className='date-picker-options'>
@@ -125,7 +154,7 @@ export const DonationsList = () => {
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='donations'
-        fields={['nombre', 'descripcion']}
+        fields={['id', 'creado']}
       />
     </>
   )

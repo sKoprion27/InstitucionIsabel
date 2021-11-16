@@ -38,7 +38,7 @@ export const PaymentList = () => {
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='payment-methods'
-        fields={['nombre', 'descripcion']}
+        fields={['id']}
       />
     </>
   )

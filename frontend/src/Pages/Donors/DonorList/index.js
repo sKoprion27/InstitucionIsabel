@@ -43,7 +43,7 @@ export const DonorList = () => {
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='donors'
-        fields={['nombre', 'descripcion']}
+        fields={['id', 'creado', 'correo_electronico', 'regimen_fiscal']}
       />
     </>
   )
