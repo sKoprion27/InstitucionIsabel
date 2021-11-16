@@ -105,6 +105,7 @@ export const DonorEdit = ({ justView }) => {
         nombre: data.nombre,
         correo_electronico: data.correo_electronico,
         domicilio_fiscal: data.domicilio_fiscal,
+        codigo_postal: data.codigo_postal,
         regimen_fiscal: data.regimen_fiscal.value,
         id_estado: data.id_estado.value,
         id_cfdi: data.id_cfdi.value
@@ -138,11 +139,12 @@ export const DonorEdit = ({ justView }) => {
           onSubmit={handleSubmit(handlerSubmit)}
         >
           <div>
-            <label>Telefono</label>
+            <label>Telefono (Ej.1234567890)</label>
             <input
               onChange={register}
-              type='text'
+              type='tel'
               autoComplete='off'
+              pattern='[0-9]{10}'
               {
               ...register('telefono', {
                 required: {
@@ -152,10 +154,10 @@ export const DonorEdit = ({ justView }) => {
               })
               }
               disabled={!edit} />
-            {errors.nombre &&
+            {errors.telefono &&
               (<span className='red-text'>
                 {
-                  errors.nombre.message
+                  errors.telefono.message
                 }
               </span>)
             }
@@ -174,10 +176,10 @@ export const DonorEdit = ({ justView }) => {
               })}
               disabled={!edit}
             />
-            {errors.descripcion &&
+            {errors.razon_social &&
               (<span className='red-text'>
                 {
-                  errors.descripcion.message
+                  errors.razon_social.message
                 }
               </span>)
             }
@@ -188,6 +190,8 @@ export const DonorEdit = ({ justView }) => {
               onChange={register}
               type='text'
               autoComplete='off'
+              maxLength='13'
+              minLength='13'
               {...register('rfc', {
                 required: {
                   value: true,
@@ -218,10 +222,10 @@ export const DonorEdit = ({ justView }) => {
               })}
               disabled={!edit}
             />
-            {errors.descripcion &&
+            {errors.nombre &&
               (<span className='red-text'>
                 {
-                  errors.descripcion.message
+                  errors.nombre.message
                 }
               </span>)
             }
@@ -230,7 +234,7 @@ export const DonorEdit = ({ justView }) => {
             <label>Correo Electrónico</label>
             <input
               onChange={register}
-              type='text'
+              type='email'
               autoComplete='off'
               {...register('correo_electronico', {
                 required: {
@@ -240,10 +244,10 @@ export const DonorEdit = ({ justView }) => {
               })}
               disabled={!edit}
             />
-            {errors.descripcion &&
+            {errors.correo_electronico &&
               (<span className='red-text'>
                 {
-                  errors.descripcion.message
+                  errors.correo_electronico.message
                 }
               </span>)
             }
@@ -262,15 +266,38 @@ export const DonorEdit = ({ justView }) => {
               })}
               disabled={!edit}
             />
-            {errors.descripcion &&
+            {errors.domicilio_fiscal &&
               (<span className='red-text'>
                 {
-                  errors.descripcion.message
+                  errors.domicilio_fiscal.message
                 }
               </span>)
             }
           </div>
-          {/* SELECT MÉTODO DE PAGO */}
+          <div>
+            <label>Código Postal</label>
+            <input
+              onChange={register}
+              type='number'
+              autoComplete='off'
+              max='99999'
+              {...register('codigo_postal', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.codigo_postal &&
+              (<span className='red-text'>
+                {
+                  errors.codigo_postal.message
+                }
+              </span>)
+            }
+          </div>
+          {/* SELECT REGIMEN FISCAL */}
           <div className='input-select'>
             <label>Selecciona el régimen fiscal</label>
             <Controller
@@ -293,11 +320,11 @@ export const DonorEdit = ({ justView }) => {
                 />
               )}
             />
-            {errors.payment_method &&
+            {errors.regimen_fiscal &&
               (<span
                 className='red-text'
               >
-                {errors.payment_method.message}
+                {errors.regimen_fiscal.message}
               </span>)
             }
           </div>
@@ -324,11 +351,11 @@ export const DonorEdit = ({ justView }) => {
                 />
               )}
             />
-            {errors.type_donation &&
+            {errors.estado &&
               (<span
                 className='red-text'
               >
-                {errors.type_donation.message}
+                {errors.estado.message}
               </span>)
             }
           </div>
@@ -355,11 +382,11 @@ export const DonorEdit = ({ justView }) => {
                 />
               )}
             />
-            {errors.categories &&
+            {errors.cfdi &&
               (<span
                 className='red-text'
               >
-                {errors.categories.message}
+                {errors.cfdi.message}
               </span>)
             }
           </div>
