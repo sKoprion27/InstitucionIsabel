@@ -63,7 +63,7 @@ export const DonationEdit = ({ justView }) => {
     const getOne = async () => {
       try {
         const response = await getOneDonation(id)
-        console.log(response.donation)
+        // console.log(response.donation)
         setUrlFoto(response.donation.foto_donacion)
         const idOptions = {
           idDonador: response.donation.id_donador,
@@ -81,7 +81,7 @@ export const DonationEdit = ({ justView }) => {
           beneficiaries: convertToSelectOptions(response.beneficiarios)
         })
 
-        console.log(response.donation)
+        // console.log(response.donation)
 
         const initialStateForm = {
           nombre: response.donation.nombre,
@@ -116,7 +116,7 @@ export const DonationEdit = ({ justView }) => {
             'nombre'
           )
         }
-        console.log('INITIAL', initialStateForm)
+        // console.log('INITIAL', initialStateForm)
         reset(initialStateForm)
       } catch (error) {
         console.log(error)

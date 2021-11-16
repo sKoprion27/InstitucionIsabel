@@ -2,18 +2,22 @@ import * as yup from 'yup'
 
 export const donationSchema = yup.object().shape({
   foto_donacion: yup.mixed()
-    .test('required', 'Es requerida una imagen', (value) => {
-      return value && value.length
-    })
+    // .test('required', 'Es requerida una imagen', (value, context) => {
+    //   console.log(value, 'SCHEMA @1', context)
+    //   return value && value.length
+    // })
+    .notRequired()
     .test('fileSize', 'El archivo es muy pesado', (value, context) => {
-      return value && value[0] && value[0].size <= 200000
+      console.log(value.length, 'SCHEMA @2')
+      return (value.length === 1 && value[0].size <= 200000) || value.length === 0
     })
-    .test('type', 'Solo es válido JPEG, JPG, PNG', function (value) {
-      return value &&
-        value[0] &&
+    .test('type', 'Solo es válido JPEG, JPG, PNG', (value) => {
+      console.log(value, 'SCHEMA @3')
+
+      return (value.length === 1 &&
         (value[0].type === 'image/jpeg' ||
           value[0].type === 'image/png' ||
-          value[0].type === 'image/jpg')
+          value[0].type === 'image/jpg')) || value.length === 0
     }),
   id_donador: yup.mixed()
     .test('required', 'Selecciona un donador', (value) => {

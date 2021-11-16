@@ -150,11 +150,12 @@ export const donationController = {
         }
       } else {
         console.log('NO DIFF CATEGORIES')
-        for (let index = 0; index < donationCategories.length; index++) {
-          await DonationCategory.deleteOne(donationCategories[index].id, id)
+        for (let index = 0; index < donationCategories.rows.length; index++) {
+          await DonationCategory
+            .deleteOne(id, donationCategories.rows[index].id)
         }
         for (let index = 0; index < categories.length; index++) {
-          await DonationCategory.postOne(categories[index].id, id)
+          await DonationCategory.postOne(id, categories[index].id)
         }
       }
       // Compare data beneficiaries
@@ -185,12 +186,12 @@ export const donationController = {
         }
       } else {
         console.log('NO DIFF beneficiaries')
-        for (let index = 0; index < donationBeneficiaries.length; index++) {
+        for (let index = 0; index < donationBeneficiaries.rows.length; index++) {
           await DonationBeneficiary
-            .deleteOne(donationBeneficiaries[index].id, id)
+            .deleteOne(id, donationBeneficiaries.rows[index].id)
         }
         for (let index = 0; index < beneficiaries.length; index++) {
-          await DonationBeneficiary.postOne(beneficiaries[index].id, id)
+          await DonationBeneficiary.postOne(id, beneficiaries[index].id)
         }
       }
 
