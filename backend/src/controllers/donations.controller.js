@@ -14,8 +14,14 @@ export const donationController = {
   // GET ALL
   getDonations: async (req, res) => {
     try {
-      const { rows } = await Donation.getAll()
-      response(req, res, 'GET DONATIONS', rows, 200)
+      const { startDate, endDate } = req.query
+      if (startDate && endDate) {
+        const { rows } = await Donation.getAllByRange(startDate, endDate)
+        response(req, res, 'GET DONATIONS', rows, 200)
+      } else {
+        const { rows } = await Donation.getAll()
+        response(req, res, 'GET DONATIONS', rows, 200)
+      }
     } catch (error) {
       console.log(error)
       response(req, res, 'ERROR GET DONATIONS', null, 500)

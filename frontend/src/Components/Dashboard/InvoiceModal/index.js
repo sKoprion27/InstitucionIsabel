@@ -32,7 +32,7 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
     try {
       console.log(data)
       await updateOneDonationInvoce(id, data)
-      toastInit('Elemento facturado')
+      toastInit('Donación facturada')
       reset()
       setFetch((fetch) => setFetch(!fetch))
       M.Modal.getInstance(modalRef.current).close()
@@ -41,13 +41,34 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
       reset()
     }
   }
+
+  const handlerDeleteInvoice = async () => {
+    try {
+      toastInit('Factura eliminada')
+      await updateOneDonationInvoce(id, { esta_facturado: null })
+      setFetch((fetch) => setFetch(!fetch))
+      M.Modal.getInstance(modalRef.current).close()
+    } catch (error) {
+      toastInit('Error al borrar fecha', 'red lighten-2')
+      reset()
+    }
+  }
+
   return (
     <>
       <button
-        className='btn indigo modal-trigger'
+        className={`btn
+        ${facturado === null
+            ? 'indigo'
+            : 'red'
+          }
+          modal-trigger`
+        }
         data-target={`modal-invoice${id}`}
-        type='button' disabled={facturado !== null}>
-        <Icon>check_circle</Icon>
+        type='button'>
+        <Icon>
+          {facturado === null ? 'check_circle' : 'restore'}
+        </Icon>
       </button>
 
       <div
@@ -55,38 +76,61 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
         id={`modal-invoice${id}`}
         className='modal'
       >
-        <div className='modal-layout'>
-          <div className='modal-content'>
-            <h4>¿Deseas marcar como facturada esta donación?</h4>
-            <p>Selecciona la fecha de la factura</p>
-          </div>
-          <form onSubmit={handleSubmit(handlerSubmit)}>
-            <div className='date-select'>
-              <span className='red-text'>
-                {errors.esta_facturado && errors.esta_facturado.message}
-              </span>
+        {
+          facturado === null
+            ? (<div className='modal-layout'>
+              <div className='modal-content'>
+                <h4>¿Deseas marcar como facturada esta donación?</h4>
+                <p>Selecciona la fecha de la factura</p>
+              </div>
+              <form onSubmit={handleSubmit(handlerSubmit)}>
+                <div className='date-select'>
+                  <span className='red-text'>
+                    {errors.esta_facturado && errors.esta_facturado.message}
+                  </span>
 
-              <input type='date' {...register('esta_facturado', {
-                required: {
-                  value: true,
-                  message: 'Selecciona cuando facturaste la donación'
-                }
-              })} />
-            </div>
+                  <input type='date' {...register('esta_facturado', {
+                    required: {
+                      value: true,
+                      message: 'Selecciona cuando facturaste la donación'
+                    }
+                  })} />
+                </div>
 
-            <div className='footer'>
-              <button id='close-btn-invoice'
-                type='button'
-                className='modal-close waves-effect red white-text btn'>
-                Cancelar
-              </button>
-              <button type='submit' className='waves-effect waves-green green white-text btn'>
-                Aceptar
-              </button>
-            </div>
-          </form>
-        </div>
+                <div className='footer'>
+                  <button id='close-btn-invoice'
+                    type='button'
+                    className='modal-close waves-effect red white-text btn'>
+                    Cancelar
+                  </button>
+                  <button type='submit' className='waves-effect waves-green green white-text btn'>
+                    Aceptar
+                  </button>
+                </div>
+              </form>
+            </div>)
+            : (
+              <div className='modal-layout'>
+                <div className='modal-content'>
+                  <h4>¿Deseas borrar la fecha de factura?</h4>
+                </div>
+
+                <div className='footer'>
+                  <button id='close-btn-invoice'
+                    type='button'
+                    className='modal-close waves-effect red white-text btn'>
+                    Cancelar
+                  </button>
+                  <button
+                    type='button'
+                    className='modal-close waves-effect waves-green green white-text btn'
+                    onClick={handlerDeleteInvoice}
+                  >
+                    Aceptar
+                  </button>
+                </div>
+              </div>)
+        }
       </div>
-    </>
-  )
+    </>)
 }

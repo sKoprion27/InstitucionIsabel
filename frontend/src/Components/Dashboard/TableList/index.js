@@ -113,7 +113,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Consultar usuarios'>
           <Link
             to={`ver/${element.id}`}
-            className='btn orange'>
+            className='btn green'>
             <Icon>visibility</Icon>
           </Link>
         </PermissionGuard>
@@ -126,7 +126,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         </PermissionGuard>
         {/* {
           backend === 'users' && (<button
-            className='btn orange'
+            className='btn green'
             type='button'
             disabled={auth.user.id === element.id}
           >
@@ -147,7 +147,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Consultar donaciones'>
           <Link
             to={`ver/${element.id}`}
-            className='btn orange'>
+            className='btn green'>
             <Icon>visibility</Icon>
           </Link>
         </PermissionGuard>
@@ -179,7 +179,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Consultar metodos de pago'>
           <Link
             to={`ver/${element.id}`}
-            className='btn orange'>
+            className='btn green'>
             <Icon>visibility</Icon>
           </Link>
         </PermissionGuard>
@@ -204,7 +204,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Consultar beneficiario donacion'>
           <Link
             to={`ver/${element.id}`}
-            className='btn orange'>
+            className='btn green'>
             <Icon>visibility</Icon>
           </Link>
         </PermissionGuard>
@@ -229,7 +229,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Consultar categoria donativo'>
           <Link
             to={`ver/${element.id}`}
-            className='btn orange'>
+            className='btn green'>
             <Icon>visibility</Icon>
           </Link>
         </PermissionGuard>
@@ -254,7 +254,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Consultar tipo de donativo'>
           <Link
             to={`ver/${element.id}`}
-            className='btn orange'>
+            className='btn green'>
             <Icon>visibility</Icon>
           </Link>
         </PermissionGuard>
@@ -279,7 +279,7 @@ const checkPermission = (backend, element, setFetchAction) => {
         <PermissionGuard onePermision permiso='Consultar donadores' >
           <Link
             to={`ver/${element.id}`}
-            className='btn orange'>
+            className='btn green'>
             <Icon>visibility</Icon>
           </Link>
         </PermissionGuard>

@@ -1,0 +1,31 @@
+.date-picker-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.report-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.download-excel {
+  margin-top: 20px;
+}
+
+.finder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 350px;
+
+  .react-datepicker__input-container {
+
+
+    min-width: 250px;
+    // input {}
+  }
+}
