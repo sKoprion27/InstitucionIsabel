@@ -57,6 +57,7 @@ export const donorController = {
   updateOneDonor: async (req, res) => {
     const donor = req.body
     const id = req.params.id
+    console.log(donor)
     const [queryAnswer, status] = await Donor.putOne(donor, id)
     response(req, res, 'UPDATE ONE DONOR', queryAnswer, status)
   },

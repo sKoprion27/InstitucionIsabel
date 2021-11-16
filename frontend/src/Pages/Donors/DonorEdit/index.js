@@ -58,6 +58,7 @@ export const DonorEdit = ({ justView }) => {
       try {
         const response = await getOneDonor(id)
         setOptions({
+          ...options,
           states: convertToSelectOptions(response.estados),
           cfdis: convertToSelectOptionsCFDI(response.cfdis)
         })
@@ -98,16 +99,16 @@ export const DonorEdit = ({ justView }) => {
     try {
       console.log('🐊', data)
       const updateData = {
-        donor: {
-          telefono: data.telefono,
-          razon_social: data.razon_social,
-          nombre: data.nombre,
-          correo_electronico: data.correo_electronico,
-          domicilio_fiscal: data.domicilio_fiscal,
-          regimen_fiscal: data.regimen_fiscal,
-          estado: data.id_estado.value,
-          cfdi: data.id_cfdi.value
-        }
+        telefono: data.telefono,
+        razon_social: data.razon_social,
+        rfc: data.rfc,
+        nombre: data.nombre,
+        correo_electronico: data.correo_electronico,
+        domicilio_fiscal: data.domicilio_fiscal,
+        regimen_fiscal: data.regimen_fiscal.value,
+        id_estado: data.id_estado.value,
+        id_cfdi: data.id_cfdi.value
+
       }
       console.log('😀', updateData)
 
@@ -177,6 +178,28 @@ export const DonorEdit = ({ justView }) => {
               (<span className='red-text'>
                 {
                   errors.descripcion.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>RFC</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {...register('rfc', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.rfc &&
+              (<span className='red-text'>
+                {
+                  errors.rfc.message
                 }
               </span>)
             }

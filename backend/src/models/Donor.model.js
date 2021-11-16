@@ -123,7 +123,6 @@ export const Donor = {
       donor.domicilio_fiscal,
       donor.regimen_fiscal,
       donor.id_estado,
-      donor.domicilio_fiscal,
       donor.id_cfdi
     ]
     return db.query(UPDATE, VALUES)
