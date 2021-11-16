@@ -1,8 +1,13 @@
 import { useState } from 'react'
 
-export const useFinder = () => {
+export const useFinder = (finderList = ['nombre']) => {
   const [originalList, setOriginalList] = useState([])
   const [listFiltered, setListFilter] = useState([])
+
+  const toggle = (ref) => {
+    ref.value = ''
+    setListFilter(originalList)
+  }
 
   const handlerFinder = ({ target }) => {
     console.log(target.value)
@@ -10,9 +15,9 @@ export const useFinder = () => {
       setListFilter(originalList)
     } else {
       setListFilter(
-        listFiltered.filter(element => (
-          element.nombre.includes(target.value)
-        ))
+        [...listFiltered.filter(element => (
+          element.nombre.toLowerCase().includes(target.value.toLowerCase())
+        ))]
       )
     }
   }
@@ -22,6 +27,7 @@ export const useFinder = () => {
     setListFilter,
     originalList,
     listFiltered,
-    handlerFinder
+    handlerFinder,
+    toggle
   }
 }

@@ -1,19 +1,32 @@
+import { useRef } from 'react'
+import { Icon, TextInput } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import { PermissionGuard } from '../../PermissionGuard'
 import './style.scss'
 
-export const MenuPage = ({ name, backend, handler, type }) => {
+export const MenuPage = ({ name, backend, handler, type = 'nombre', toggle = null }) => {
+  const inputRef = useRef()
   return (
-    <div className='menu'>
+    <div className='menu-finder'>
       {
         checkPermission(backend, name)
       }
-      <div className='input-field'>
-        <label>Buscar {name} {type && `por ${type}`}</label>
-        <input
-          type='text'
+      <div>
+        <TextInput
+          ref={inputRef}
+          icon='search'
+          id='finder'
+          label={`Buscar ${name} por ${type}`}
           onChange={handler}
         />
+        {/* {
+          (toggle && inputRef.current.value.length > 0) && (<button
+            className='btn red'
+            onClick={() => toggle(inputRef.current)}
+          >
+            <Icon>backspace</Icon>
+          </button>)
+        } */}
       </div>
     </div>
   )

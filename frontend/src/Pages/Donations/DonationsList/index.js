@@ -15,6 +15,7 @@ export const DonationsList = () => {
 
   // States for use finder
   const {
+    toggle,
     setOriginalList,
     setListFilter,
     originalList,
@@ -109,6 +110,7 @@ export const DonationsList = () => {
       <MenuPage
         name='donaciones'
         type='nombre'
+        toggle={toggle}
         handler={handlerFinder}
         backend='donations'
       />
@@ -131,7 +133,6 @@ export const DonationsList = () => {
               Filtrar
             </button>
             <DatePicker
-
               dateFormat='yyyy/MM/dd'
               valueFormat='yyyy/MM/dd'
               placeholderText='Click para seleccionar rango'

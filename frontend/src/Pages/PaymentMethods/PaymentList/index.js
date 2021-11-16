@@ -32,7 +32,7 @@ export const PaymentList = () => {
   return (
     <>
       <NavPage title='Lista de métodos de pago' onePage />
-      <MenuPage name='método pago' handler={handlerFinder} />
+      <MenuPage name='método pago' backend='payment-methods' handler={handlerFinder} />
       <TableList
         arrayList={originalList}
         arrayListFiltered={listFiltered}
