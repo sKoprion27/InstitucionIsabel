@@ -42,7 +42,7 @@ export const CategoryList = () => {
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='categories'
-        fields={['nombre', 'descripcion']}
+        fields={['id']}
       />
     </>
   )

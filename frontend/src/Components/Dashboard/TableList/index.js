@@ -11,7 +11,7 @@ export const TableList = ({
   arrayList = [],
   arrayListFiltered = [],
   setFetchAction,
-  fields = [],
+  fields = ['id', 'creado'],
   backend = ''
 }) => {
   return (
@@ -22,7 +22,7 @@ export const TableList = ({
             {
               arrayList.length > 0 &&
               (Object.keys(arrayList[0])
-                .filter(key => (key !== 'id') && (key !== 'creado'))
+                .filter(key => !fields.some(f => f === key))
                 .map((key, index) => {
                   return (
                     <th key={key + index}>{formatKeyTable(key)}</th>
@@ -42,7 +42,7 @@ export const TableList = ({
                       <tr key={element + index} className='table-row' >
                         {
                           Object.keys(element)
-                            .filter(key => (key !== 'id') && (key !== 'creado'))
+                            .filter(key => !fields.some(f => f === key))
                             .map((key) => {
                               return (
                                 <>

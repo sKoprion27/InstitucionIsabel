@@ -22,10 +22,11 @@
   justify-content: space-between;
   max-width: 350px;
 
+  button {
+    margin-right: 10px;
+  }
+
   .react-datepicker__input-container {
-
-
     min-width: 250px;
-    // input {}
   }
 }
