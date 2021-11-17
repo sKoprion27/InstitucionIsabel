@@ -106,6 +106,7 @@ export const DonorAdd = () => {
       toastInit('Error al agregar', 'red lighten-2')
       setEdit(true)
       resetForm()
+      setLoading(false)
     }
   }
 
@@ -387,7 +388,7 @@ export const DonorAdd = () => {
               className='btn btn-success  '
               disabled={loading || !edit}
             >
-              Agregar donación
+              Agregar donador
             </button>
           </div>
           {

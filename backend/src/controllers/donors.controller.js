@@ -47,33 +47,12 @@ export const donorController = {
   postOneDonor: async (req, res) => {
     try {
       const { donor } = req.body
-      console.log(donor)
+      console.log(req.body, ' soy el donor')
       const donorResponse = await Donor.postOne(donor)
-      const donorCreated = donorResponse.rows[0]
 
       if (donorResponse.rowCount === 0) {
         response(req, res, 'ERROR POST ONE DONOR', null, 500)
         return
-      }
-
-      const { states } = donor
-      for (const state of states) {
-        const stateResponse = await State
-          .postOne(donorCreated.id, state.id)
-        if (stateResponse.rowCount === 0) {
-          response(req, res, 'ERROR POST ONE DONOR', null, 500)
-          return
-        }
-      }
-
-      const { cfdis } = donor
-      for (const cfdi of cfdis) {
-        const cfdiResponse = await Cfdi
-          .postOne(donorCreated.id, cfdi.id)
-        if (cfdiResponse.rowCount === 0) {
-          response(req, res, 'ERROR POST ONE DONOR', null, 500)
-          return
-        }
       }
 
       response(req, res, 'POST ONE DONATION', donorResponse.rowCount, 201)
