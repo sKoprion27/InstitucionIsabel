@@ -1,5 +1,7 @@
 import { response } from './../utils/response'
 import { Beneficiary } from './../models/Beneficiary.model'
+import path from 'path'
+import fs from 'fs'
 
 export const beneficiaryController = {
   // GET ALL
@@ -22,6 +24,7 @@ export const beneficiaryController = {
         response(req, res, 'ERROR GET BENEFICIARIES', null, 500)
         return
       }
+      console.log(rows[0])
       response(req, res, 'GET BENEFICIARIES', rows[0], 200)
     } catch (error) {
       console.log(error)
@@ -29,11 +32,33 @@ export const beneficiaryController = {
     }
   },
 
+  getFile: async (req, res) => {
+    try {
+      const { id } = req.params
+      const { rows } = await Beneficiary.getOne(id)
+      // File
+      const fileName = rows[0].archivo
+      const filePath = path.join(__dirname, '/../../uploads/', fileName)
+      res.contentType(`application/${path.extname(fileName)}`)
+      res.status(201).download(
+        filePath,
+        fileName
+      )
+    } catch (error) {
+      console.log(error, 'get file')
+    }
+  },
+
   // POST ONE
   postOneBeneficiary: async (req, res) => {
     try {
-      const beneficiary = { ...req.body }
-      const { rowCount } = await Beneficiary.postOne(beneficiary)
+      const beneficiary = JSON.parse(req.body.beneficiary)
+      const postBeneficiary = {
+        ...beneficiary,
+        archivo: `${req.file.filename}`
+      }
+      console.log(postBeneficiary, 'POST')
+      const { rowCount } = await Beneficiary.postOne(postBeneficiary)
       response(req, res, 'POST ONE BENEFICIARY', rowCount, 201)
     } catch (error) {
       console.log(error)
@@ -44,9 +69,24 @@ export const beneficiaryController = {
   // UPDATE ONE
   updateOneBeneficiary: async (req, res) => {
     try {
-      const beneficiary = req.body
-      const id = req.params.id
-      const { rowCount } = await Beneficiary.putOne(beneficiary, id)
+      const { id } = req.params
+      const beneficiary = JSON.parse(req.body.beneficiary)
+      const currentFile = await Beneficiary.getOne(id)
+      const filePath = path.join(
+        __dirname, '/../../uploads/',
+        currentFile.rows[0].archivo
+      )
+
+      const postBeneficiary = {
+        ...beneficiary,
+        archivo: req.file.filename
+      }
+      const { rowCount } = await Beneficiary.putOne(postBeneficiary, id)
+      if (rowCount === 0) {
+        response(req, res, 'UPDATE ONE BENEFICIARY', null, 500)
+        return
+      }
+      fs.unlinkSync(filePath)
       response(req, res, 'UPDATE ONE BENEFICIARY', rowCount, 201)
     } catch (error) {
       console.log(error)

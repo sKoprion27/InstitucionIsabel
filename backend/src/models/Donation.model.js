@@ -38,7 +38,6 @@ export const Donation = {
       D.id,
       D.nombre,
       D.monto,
-      D.foto_donacion,
       D.esta_facturado as facturado,
       P.razon_social as donador,
       M.nombre metodo_pago,
