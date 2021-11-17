@@ -25,16 +25,8 @@ export const DonationsList = () => {
 
   // State for excel
   const [excel, setExcel] = useState({
-    headers: [
-      { label: 'First Name', key: 'firstname' },
-      { label: 'Last Name', key: 'lastname' },
-      { label: 'Email', key: 'email' }
-    ],
-    data: [
-      { firstname: 'Ahmed', lastname: 'Tomi', email: 'ah@smthing.co.com' },
-      { firstname: 'Raed', lastname: 'Labes', email: 'rl@smthing.co.com' },
-      { firstname: 'Yezzi', lastname: 'Min l3b', email: 'ymin@cocococo.com' }
-    ]
+    headers: [],
+    data: []
   })
 
   // Get initial list
@@ -42,18 +34,15 @@ export const DonationsList = () => {
     const getList = async () => {
       try {
         const donations = await getAllDonations({})
-        const donationsParse = donations.map(d => {
-          return {
-            ...d,
-            facturado: d.facturado === null ? 'No facturado' : d.facturado
-          }
-        })
-        setOriginalList(donationsParse)
-        setListFilter(donationsParse)
-        setExcel({
-          headers: getHeadersCVS(donations),
-          data: donations
-        })
+        if (!(donations.length === 0)) {
+          setExcel({
+            headers: getHeadersCVS(donations),
+            data: donations
+          })
+        }
+
+        setOriginalList(parseDonations(donations))
+        setListFilter(parseDonations(donations))
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar la lista', 'red lighten-2')
@@ -69,10 +58,10 @@ export const DonationsList = () => {
   // Get range list
   const finderByRange = async () => {
     try {
-      if (startDate === null || endDate === null) {
+      if (!startDate || !endDate) {
         const donations = await getAllDonations({})
-        setOriginalList(donations)
-        setListFilter(donations)
+        setOriginalList(parseDonations(donations))
+        setListFilter(parseDonations(donations))
         toastInit('Lista actualizada')
         setExcel({
           headers: getHeadersCVS(donations),
@@ -86,10 +75,12 @@ export const DonationsList = () => {
         setOriginalList(donations)
         setListFilter(donations)
         toastInit('Lista actualizada')
-        setExcel({
-          headers: getHeadersCVS(donations),
-          data: donations
-        })
+        if (!(donations.length === 0)) {
+          setExcel({
+            headers: getHeadersCVS(donations),
+            data: donations
+          })
+        }
       }
     } catch (error) {
       console.log(error)
@@ -122,7 +113,10 @@ export const DonationsList = () => {
       />
       <div className='report-area'>
         <CSVLink
-          className='btn download-excel'
+          className={`
+          btn download-excel
+          ${listFiltered.length === 0 && 'disabled'}
+          `}
           filename={'donaciones.csv'}
           data={excel.data}
           headers={excel.headers}
@@ -165,4 +159,12 @@ export const DonationsList = () => {
       />
     </>
   )
+}
+const parseDonations = (donations) => {
+  return donations.map(d => {
+    return {
+      ...d,
+      facturado: d.facturado === null ? 'No facturado' : d.facturado
+    }
+  })
 }

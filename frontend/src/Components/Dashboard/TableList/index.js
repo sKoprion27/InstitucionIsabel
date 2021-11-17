@@ -95,6 +95,7 @@ const typeRender = (key, element) => {
           }
         </td>
       )
+
     default:
       return (
         <td>

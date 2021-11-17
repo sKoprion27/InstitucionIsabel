@@ -325,16 +325,15 @@ export const DonationAdd = () => {
             }
           </div>
           {/* AGREGAR DE FOTO */}
-
           <div className='img-container-input'>
-            <div className='img-donacion'>
-              <p>Foto de la donación</p>
-              <input
-                id='foto_donacion'
-                type='file'
-                {...register('foto_donacion')}
-                onChange={onChange}
-              />
+            <div className='file-field input-field'>
+              <div className='btn'>
+                <span>Foto donación</span>
+                <input type='file' {...register('foto_donacion')} />
+              </div>
+              <div className='file-path-wrapper'>
+                <input className='file-path validate' type='text' />
+              </div>
             </div>
             {errors.foto_donacion &&
               (<span

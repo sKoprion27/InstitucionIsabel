@@ -15,6 +15,7 @@ import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { Card } from 'react-materialize'
 
 import {
+  getFileBeneficiary,
   getOneBeneficiary,
   updateBeneficiary
 } from '../../../helpers/beneficiaries.helpers'
@@ -23,6 +24,7 @@ import { toastInit } from '../../../Components/Dashboard/AlertToast'
 export const BeneficiaryEdit = ({ justView }) => {
   const { id } = useParams()
   const [edit, setEdit] = useState(false)
+  const [archivo, setArchivo] = useState(null)
 
   const {
     register,
@@ -35,7 +37,9 @@ export const BeneficiaryEdit = ({ justView }) => {
     const getOne = async () => {
       try {
         const beneficiary = await getOneBeneficiary(id)
-        reset(beneficiary)
+        const file = beneficiary.archivo
+        setArchivo(file)
+        reset({ ...beneficiary, archivo: '' })
       } catch (error) {
         console.log(error)
         setEdit(null)
@@ -46,7 +50,14 @@ export const BeneficiaryEdit = ({ justView }) => {
 
   const handlerSubmit = async (data) => {
     try {
-      await updateBeneficiary(data, id)
+      const post = {
+        beneficiary: {
+          nombre: data.nombre,
+          descripcion: data.descripcion
+        },
+        archivo: data.archivo[0]
+      }
+      await updateBeneficiary(post, id)
       toastInit('Elemento actualizado')
       setEdit(!edit)
     } catch (error) {
@@ -60,6 +71,14 @@ export const BeneficiaryEdit = ({ justView }) => {
 
   if (edit === null) {
     return <Navigate to='/dashboard/NOTFOUND' />
+  }
+
+  const handlerDownload = async () => {
+    try {
+      await getFileBeneficiary(id, archivo)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -116,6 +135,36 @@ export const BeneficiaryEdit = ({ justView }) => {
               </span>)
             }
           </div>
+          {
+            !justView && (
+              <div>
+                <label>Lista de beneficiarios (pdf, excel). Opcional</label>
+                <div className='file-field input-field'>
+                  <div className={`btn ${!edit && 'disabled'}`}>
+                    <span>Cambiar archivo</span>
+                    <input type='file'
+                      {...register('archivo')}
+                      disabled={!edit}
+                    />
+                  </div>
+                  <div className='file-path-wrapper'>
+                    <input
+                      className='file-path validate'
+                      type='text'
+                      disabled={!edit}
+                    />
+                  </div>
+                </div>
+                {errors.archivo &&
+                  (<span className='red-text'>
+                    {
+                      errors.archivo.message
+                    }
+                  </span>)
+                }
+              </div>
+            )
+          }
 
           {
             !justView && (<div className='user__btn__container'>
@@ -139,6 +188,18 @@ export const BeneficiaryEdit = ({ justView }) => {
             </div>)
           }
         </form>
+        <div>
+          <label>Lista de beneficiarios</label>
+          <div className='input-field'>
+            <button
+              type='button'
+              className='btn orange'
+              disabled={!archivo || !(edit || justView)}
+              onClick={handlerDownload}
+            >Archivo adjunto</button>
+          </div>
+        </div>
+
       </Card>
     </>
   )

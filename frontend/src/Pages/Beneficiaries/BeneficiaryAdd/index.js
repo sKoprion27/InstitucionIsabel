@@ -5,12 +5,14 @@ import {
 import {
   useForm
 } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 import { NavPage } from '../../../Components/Dashboard/NavPage'
 import { Card, Button } from 'react-materialize'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { ModalElement } from '../../../Components/ModalHelp'
 import { postBeneficiary } from '../../../helpers/beneficiaries.helpers'
+import { beneficiarySchema } from '../../../utils/schemas'
 
 export const BeneficiaryAdd = () => {
   const [loading, setLoading] = useState(false)
@@ -20,12 +22,25 @@ export const BeneficiaryAdd = () => {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm()
+  } = useForm(
+    {
+      resolver: yupResolver(beneficiarySchema)
+    }
+  )
 
   const handlerSubmit = async (data) => {
     try {
       setLoading(true)
-      await postBeneficiary(data)
+
+      const post = {
+        beneficiary: {
+          nombre: data.nombre,
+          descripcion: data.descripcion
+        },
+        archivo: data.archivo[0]
+      }
+      console.log(post, '😀')
+      await postBeneficiary(post)
       toastInit('Elemento agregado')
       setTimeout(() => {
         setLoading(false)
@@ -55,12 +70,7 @@ export const BeneficiaryAdd = () => {
               type='text'
               autoComplete='off'
               {
-              ...register('nombre', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })
+              ...register('nombre')
               }
             />
             {errors.nombre &&
@@ -77,18 +87,33 @@ export const BeneficiaryAdd = () => {
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('descripcion', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
+              {...register('descripcion')}
 
             />
             {errors.descripcion &&
               (<span className='red-text'>
                 {
                   errors.descripcion.message
+                }
+              </span>)
+            }
+          </div>
+
+          <div>
+            <label>Lista de beneficiarios (pdf, excel). Opcional</label>
+            <div className='file-field input-field'>
+              <div className='btn'>
+                <span>Subir archivo</span>
+                <input type='file' {...register('archivo')} />
+              </div>
+              <div className='file-path-wrapper'>
+                <input className='file-path validate' type='text' />
+              </div>
+            </div>
+            {errors.archivo &&
+              (<span className='red-text'>
+                {
+                  errors.archivo.message
                 }
               </span>)
             }

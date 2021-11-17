@@ -5,10 +5,10 @@ export const toastInit = (message, color) => {
     html: message || 'Toast',
     inDuration: 300,
     outDuration: 375,
-    displyLength: 2500,
+    displayLength: color ? 2000 : 700,
     classes: `rounded white-text ${color || 'green darken-1'}`,
     completeCallback: () => {
-      console.log('dismissed')
+      console.log('Finish alert')
     }
   }
   M.toast(options)

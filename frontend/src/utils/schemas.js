@@ -2,18 +2,11 @@ import * as yup from 'yup'
 
 export const donationSchema = yup.object().shape({
   foto_donacion: yup.mixed()
-    // .test('required', 'Es requerida una imagen', (value, context) => {
-    //   console.log(value, 'SCHEMA @1', context)
-    //   return value && value.length
-    // })
     .notRequired()
     .test('fileSize', 'El archivo es muy pesado', (value, context) => {
-      console.log(value.length, 'SCHEMA @2')
       return (value.length === 1 && value[0].size <= 200000) || value.length === 0
     })
     .test('type', 'Solo es válido JPEG, JPG, PNG', (value) => {
-      console.log(value, 'SCHEMA @3')
-
       return (value.length === 1 &&
         (value[0].type === 'image/jpeg' ||
           value[0].type === 'image/png' ||
@@ -52,5 +45,27 @@ export const donationSchema = yup.object().shape({
     })
     .test('positive', 'El numero debe ser positivo', (value) => {
       return value > 0
+    })
+})
+
+export const beneficiarySchema = yup.object().shape({
+  archivo: yup.mixed()
+    .notRequired()
+    .test('fileSize', 'El archivo es muy pesado', (value, context) => {
+      return (value.length === 1 && value[0].size <= 200000) || value.length === 0
+    })
+    .test('type', 'Solo es válido PDF, XLSX, CSV', (value) => {
+      return (value.length === 1 &&
+        (value[0].type === 'application/pdf' ||
+          value[0].type === 'application/csv' ||
+          value[0].type === 'application/vnd.ms-excel')) || value.length === 0
+    }),
+  nombre: yup.mixed()
+    .test('required', 'Agrega un nombre', (value) => {
+      return value
+    }),
+  descripcion: yup.mixed()
+    .test('required', 'Agrega una descripción', (value) => {
+      return value
     })
 })

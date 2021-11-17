@@ -96,6 +96,7 @@ CREATE TABLE beneficiarios(
   id SERIAL PRIMARY KEY NOT NULL,
   nombre TEXT NOT NULL,
   descripcion TEXT NOT NULL,
+  archivo TEXT,
   creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
   existe BOOLEAN DEFAULT TRUE
 );

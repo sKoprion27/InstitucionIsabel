@@ -1,3 +1,10 @@
 .table-row {
   text-align: center !important;
 }
+
+.table-row__options {
+  display: flex;
+  justify-content: space-between;
+  min-width: 200px;
+  max-width: 200px;
+}

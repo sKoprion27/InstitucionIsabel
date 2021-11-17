@@ -5,6 +5,7 @@ import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
 import { getAllStates } from '../../../helpers/states.helpers'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const BeneficiaryList = () => {
   const [didFetch, setDidFetch] = useState(false)
@@ -22,9 +23,10 @@ export const BeneficiaryList = () => {
         const beneficiaries = await getAllBeneficiaries()
         setOriginalList(beneficiaries)
         setListFilter(beneficiaries)
+        toastInit('Lista actualizada')
       } catch (error) {
         console.log(error)
-        alert('ERROR')
+        toastInit('Error al cargar lista', 'red lighten-2')
       }
     }
     getList()
