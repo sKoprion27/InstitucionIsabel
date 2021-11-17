@@ -70,8 +70,17 @@ export const DonorEdit = ({ justView }) => {
         console.log(response)
 
         const initialStateForm = {
-          ...response.donor,
-
+          telefono: response.donor.telefono,
+          razon_social: response.donor.razon_social,
+          rfc: response.donor.rfc,
+          nombre: response.donor.nombre,
+          correo_electronico: response.donor.correo_electronico,
+          domicilio_fiscal: response.donor.domicilio_fiscal,
+          codigo_postal: response.donor.codigo_postal,
+          regimen_fiscal: {
+            label: response.donor.regimen_fiscal ? 'PERSONA MORAL' : 'PERSONA FISICA',
+            value: response.donor.regimen_fiscal
+          },
           id_estado: filterSelectsOptiones(
             response.estados,
             [{ id: response.donor.id_estado }],
@@ -81,11 +90,7 @@ export const DonorEdit = ({ justView }) => {
             response.cfdis,
             [{ id: response.donor.id_cfdi }],
             'descripcion'
-          )[0],
-          regimen_fiscal: {
-            label: response.donor.regimen_fiscal ? 'PERSONA MORAL' : 'PERSONA FISICA',
-            value: response.donor.regimen_fiscal
-          }
+          )[0]
         }
         console.log('INITIAL DATA', initialStateForm)
         reset(initialStateForm)
@@ -309,9 +314,8 @@ export const DonorEdit = ({ justView }) => {
           </div>
           {/* SELECT ESTADO */}
           <div className='input-select'>
-            <label>Selecciona el estado</label>
+            <label>Selecciona un Estado</label>
             <Controller
-              defaultValue={false}
               control={control}
               name='id_estado'
               render={({ field }) => (

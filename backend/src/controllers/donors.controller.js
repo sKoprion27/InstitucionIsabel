@@ -18,8 +18,6 @@ export const donorController = {
     const { id } = req.params
     try {
       const donor = await Donor.getOne(id)
-      const donorState = await Donor.getStates(id)
-      const donorCfdi = await Donor.getCfdis(id)
 
       const states = await State.getAll()
       const cfdis = await Cfdi.getAll()
@@ -30,11 +28,7 @@ export const donorController = {
       }
       // {}
       const getDonor = {
-        donor: {
-          ...donor.rows[0],
-          estados: donorState.rows,
-          cfdis: donorCfdi.rows
-        }, // {}
+        donor: { ...donor.rows[0] }, // {}
         estados: states.rows, // []
         cfdis: cfdis.rows // []
       }
