@@ -240,6 +240,10 @@ export const DonorEdit = ({ justView }) => {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
+                },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: 'Ingresa un correo válido'
                 }
               })}
               disabled={!edit}
@@ -278,13 +282,20 @@ export const DonorEdit = ({ justView }) => {
             <label>Código Postal</label>
             <input
               onChange={register}
-              type='number'
+              type='text'
               autoComplete='off'
-              max='99999'
               {...register('codigo_postal', {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
+                },
+                pattern: {
+                  value: /^(?=.*[0-9])/,
+                  message: 'El código postal debe ser únicamente números'
+                },
+                minLength: {
+                  value: 5,
+                  message: 'El código postal debe contener 5 digitos'
                 }
               })}
               disabled={!edit}
@@ -305,7 +316,7 @@ export const DonorEdit = ({ justView }) => {
               rules={{
                 required: {
                   value: true,
-                  message: 'Selecciona al menos un método de pago'
+                  message: 'Selecciona un régimen'
                 }
               }}
               name='regimen_fiscal'
@@ -351,11 +362,11 @@ export const DonorEdit = ({ justView }) => {
                 />
               )}
             />
-            {errors.estado &&
+            {errors.id_estado &&
               (<span
                 className='red-text'
               >
-                {errors.estado.message}
+                {errors.id_estado.message}
               </span>)
             }
           </div>
@@ -382,11 +393,11 @@ export const DonorEdit = ({ justView }) => {
                 />
               )}
             />
-            {errors.cfdi &&
+            {errors.id_cfdi &&
               (<span
                 className='red-text'
               >
-                {errors.cfdi.message}
+                {errors.id_cfdi.message}
               </span>)
             }
           </div>

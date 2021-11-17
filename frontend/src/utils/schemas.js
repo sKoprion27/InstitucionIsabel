@@ -54,3 +54,71 @@ export const donationSchema = yup.object().shape({
       return value > 0
     })
 })
+
+export const donorSchema = yup.object().shape({
+  telefono: yup.mixed()
+    .test('required', 'Ingresa el número de teléfono del donador', (value) => {
+      return value
+    })
+    .test('number', 'El número de teléfono debe contener únicamente números', (value) => {
+      return !isNaN(value)
+    })
+    .test('length', 'El número de teléfono debe ser de 10 dígitos', (value) => {
+      return value.length === 10
+    }),
+  razon_social: yup.mixed()
+    .test('required', 'Ingresa la razón social del donador', (value) => {
+      return value
+    }),
+  rfc: yup.mixed()
+    .test('required', 'Ingresa el rfc del donador', (value) => {
+      return value
+    })
+    .test('length', 'El rfc debe ser de 13 caracteres', (value) => {
+      return value.length === 13
+    }),
+  nombre: yup.mixed()
+    .test('required', 'Ingresa el nombre del donador', (value) => {
+      return value
+    }),
+  correo_electronico: yup.mixed()
+    .test('required', 'Ingresa el correo electrónico del donador', (value) => {
+      return value
+    }),
+  domicilio_fiscal: yup.mixed()
+    .test('required', 'Ingresa el domicilio fiscal del donador', (value) => {
+      return value
+    }),
+  codigo_postal: yup.mixed()
+    .test('required', 'Ingresa el código postal de teléfono del donador', (value) => {
+      return value
+    })
+    .test('number', 'El código postal debe contener únicamente números', (value) => {
+      return !isNaN(value)
+    })
+    .test('length', 'El código postal debe ser de 5 dígitos', (value) => {
+      return value.length === 5
+    }),
+  regimen_fiscal: yup.mixed()
+    .test('required', 'Selecciona un régimen fiscal', (value) => {
+      return value
+    }),
+  id_estado: yup.mixed()
+    .test('required', 'Selecciona un estado', (value) => {
+      return value
+    }),
+  id_cfdi: yup.mixed()
+    .test('required', 'Selecciona un cfdi', (value) => {
+      return value
+    })
+  /* monto: yup.mixed()
+    .test('required', 'Ingresa el monto de la donación', (value) => {
+      return value && value.length
+    })
+    .test('number', 'El numero debe ser un número', (value) => {
+      return !isNaN(value)
+    })
+    .test('positive', 'El numero debe ser positivo', (value) => {
+      return value > 0
+    }) */
+})

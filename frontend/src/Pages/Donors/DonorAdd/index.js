@@ -23,6 +23,7 @@ import { convertToSelectOptions, convertToSelectOptionsCFDI } from '../../../uti
 import { getAllStates } from '../../../helpers/states.helpers'
 import { getAllCfdis } from './../../../helpers/cfdis.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { donorSchema } from '../../../utils/schemas'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 export const DonorAdd = () => {
@@ -50,7 +51,9 @@ export const DonorAdd = () => {
     control,
     setValue,
     formState: { errors }
-  } = useForm()
+  } = useForm({
+    resolver: yupResolver(donorSchema)
+  })
 
   const onChange = (e) => {
     console.log(e.target.files[0])
@@ -131,19 +134,13 @@ export const DonorAdd = () => {
           onSubmit={handleSubmit(handlerSubmit)}
         >
           <div>
-            <label>Telefono (Ej.1234567890)</label>
+            <label>Número de Teléfono</label>
             <input
               onChange={register}
-              type='tel'
+              type='text'
               autoComplete='off'
-              pattern='[0-9]{10}'
               {
-              ...register('telefono', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })
+              ...register('telefono')
               }
               disabled={!edit} />
             {errors.telefono &&
@@ -160,14 +157,10 @@ export const DonorAdd = () => {
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('razon_social', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
-              disabled={!edit}
-            />
+              {
+              ...register('razon_social')
+              }
+              disabled={!edit} />
             {errors.razon_social &&
               (<span className='red-text'>
                 {
@@ -182,16 +175,10 @@ export const DonorAdd = () => {
               onChange={register}
               type='text'
               autoComplete='off'
-              maxLength='13'
-              minLength='13'
-              {...register('rfc', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
-              disabled={!edit}
-            />
+              {
+              ...register('rfc')
+              }
+              disabled={!edit} />
             {errors.rfc &&
               (<span className='red-text'>
                 {
@@ -201,19 +188,15 @@ export const DonorAdd = () => {
             }
           </div>
           <div>
-            <label>Nombre</label>
+            <label>Nombre del donador</label>
             <input
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('nombre', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
-              disabled={!edit}
-            />
+              {
+              ...register('nombre')
+              }
+              disabled={!edit} />
             {errors.nombre &&
               (<span className='red-text'>
                 {
@@ -231,7 +214,11 @@ export const DonorAdd = () => {
               {...register('correo_electronico', {
                 required: {
                   value: true,
-                  message: 'Este campo es requerido'
+                  message: 'El correo electrónico es requerido'
+                },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: 'Ingresa un correo válido'
                 }
               })}
               disabled={!edit}
@@ -250,14 +237,10 @@ export const DonorAdd = () => {
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('domicilio_fiscal', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
-              disabled={!edit}
-            />
+              {
+              ...register('domicilio_fiscal')
+              }
+              disabled={!edit} />
             {errors.domicilio_fiscal &&
               (<span className='red-text'>
                 {
@@ -270,17 +253,12 @@ export const DonorAdd = () => {
             <label>Código Postal</label>
             <input
               onChange={register}
-              type='number'
+              type='text'
               autoComplete='off'
-              max='99999'
-              {...register('codigo_postal', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
-              disabled={!edit}
-            />
+              {
+              ...register('codigo_postal')
+              }
+              disabled={!edit} />
             {errors.codigo_postal &&
               (<span className='red-text'>
                 {
@@ -297,7 +275,7 @@ export const DonorAdd = () => {
               rules={{
                 required: {
                   value: true,
-                  message: 'Selecciona al menos un método de pago'
+                  message: 'Selecciona un régimen fiscal'
                 }
               }}
               name='regimen_fiscal'
@@ -322,15 +300,10 @@ export const DonorAdd = () => {
           </div>
           {/* SELECT ESTADO */}
           <div className='input-select'>
-            <label>Selecciona el Estado</label>
+            <label>Selecciona el estado</label>
             <Controller
+              defaultValue={false}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona el Estado'
-                }
-              }}
               name='id_estado'
               render={({ field }) => (
                 <Select
@@ -343,28 +316,24 @@ export const DonorAdd = () => {
                 />
               )}
             />
-            {errors.estado &&
+            {errors.id_estado &&
               (<span
                 className='red-text'
               >
-                {errors.estado.message}
+                {errors.id_estado.message}
               </span>)
             }
           </div>
+          {/* SELECT CFDI */}
           <div className='input-select'>
-            <label>Selecciona el CFDI</label>
+            <label>Selecciona un CFDI</label>
             <Controller
+              defaultValue={false}
               control={control}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Selecciona un CFDI'
-                }
-              }}
               name='id_cfdi'
               render={({ field }) => (
                 <Select
-                  placeholder='Claves de CFDI'
+                  placeholder='CFDI'
                   closeMenuOnSelect
                   components={animatedComponents}
                   options={options.cfdis}
@@ -373,11 +342,11 @@ export const DonorAdd = () => {
                 />
               )}
             />
-            {errors.cfdi &&
+            {errors.id_cfdi &&
               (<span
                 className='red-text'
               >
-                {errors.cfdi.message}
+                {errors.id_cfdi.message}
               </span>)
             }
           </div>
