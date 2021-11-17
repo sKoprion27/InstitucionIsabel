@@ -80,13 +80,16 @@ export const Donor = {
         rfc, 
         correo_electronico, 
         codigo_postal, 
-        domicilio_fiscal, regimen_fiscal)
+        domicilio_fiscal, 
+        regimen_fiscal
+        )
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING id;
     `
     const VALUES = [
       donor.id_cfdi,
       donor.id_estado,
-      donor.nombre_contacto,
+      donor.nombre,
       donor.telefono,
       donor.razon_social,
       donor.rfc,

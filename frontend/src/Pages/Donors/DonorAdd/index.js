@@ -1,212 +1,372 @@
 /* eslint-disable no-useless-escape */
-import { getAllRoles, postOneUser } from '../../../helpers/users.helpers'
-import { useEffect, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import {
+  useEffect,
+  useState
+} from 'react'
+import {
+  Navigate
+} from 'react-router-dom'
+import {
+  Controller,
+  useForm
+} from 'react-hook-form'
+
 import { NavPage } from '../../../Components/Dashboard/NavPage'
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
+import { Card } from 'react-materialize'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
+
+import { postDonor } from '../../../helpers/donors.helpers'
+
 import './style.scss'
-import { Card } from 'react-materialize'
+import { convertToSelectOptions, convertToSelectOptionsCFDI } from '../../../utils'
+import { getAllStates } from '../../../helpers/states.helpers'
+import { getAllCfdis } from './../../../helpers/cfdis.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { donorSchema } from '../../../utils/schemas'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 export const DonorAdd = () => {
+  const animatedComponents = makeAnimated()
+  const [edit, setEdit] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [options, setOptions] = useState({
+    states: [],
+    cfdis: [],
+    regimen_fiscal: [{
+      label: 'PERSONA MORAL',
+      value: true
+    },
+    {
+      label: 'PERSONA FISICA',
+      value: false
+    }
+    ]
+  })
+
   const {
     register,
     handleSubmit,
-    reset, control,
+    reset,
+    control,
+    setValue,
     formState: { errors }
-  } = useForm()
-  const [show, setShow] = useState(false)
-  const [roles, setRoles] = useState([{ value: 0, label: 'default' }])
+  } = useForm({
+    resolver: yupResolver(donorSchema)
+  })
 
-  const animatedComponents = makeAnimated()
+  const onChange = (e) => {
+    console.log(e.target.files[0])
+  }
 
   useEffect(() => {
-    const getRoles = async () => {
-      const roles = await getAllRoles()
-      const options = roles.map(r => {
-        return {
-          value: r.id,
-          label: r.nombre_role
-        }
-      })
-      setRoles(options)
-    }
-    getRoles()
-  }, [])
+    const getInfoSelects = async () => {
+      try {
+        const estados = await getAllStates()
+        const cfdis = await getAllCfdis()
 
-  const handlerShowPassword = () => {
-    setShow(!show)
-  }
+        setOptions({
+          ...options,
+          states: convertToSelectOptions(estados),
+          cfdis: convertToSelectOptionsCFDI(cfdis)
+        })
+      } catch (error) {
+        console.log(error)
+        toastInit('Error al cargar la página', 'red lighten-2')
+        setEdit(null)
+      }
+    }
+    getInfoSelects()
+  }, [edit])
+
+  // Use Effect for selects info
 
   const handlerSubmit = async (data) => {
     try {
-      // console.log(data)
-      const roles = data.roles.map(role => {
-        return {
-          id: role.value,
-          nombre: role.label
-        }
-      })
+      setLoading(true)
+      setEdit(false)
       const dataPost = {
-        ...data,
-        roles
+        donor: {
+          telefono: data.telefono,
+          razon_social: data.razon_social,
+          rfc: data.rfc,
+          nombre: data.nombre,
+          correo_electronico: data.correo_electronico,
+          domicilio_fiscal: data.domicilio_fiscal,
+          codigo_postal: data.codigo_postal,
+          regimen_fiscal: data.regimen_fiscal.value,
+          id_estado: data.id_estado.value,
+          id_cfdi: data.id_cfdi.value
+        }
       }
-      await postOneUser(dataPost)
+      await postDonor(dataPost)
       toastInit('Elemento agregado')
-      reset({})
-      reset({ roles: '' })
+      setEdit(true)
+      setLoading(false)
+      resetForm()
     } catch (error) {
+      console.log(error)
       toastInit('Error al agregar', 'red lighten-2')
-      console.log(error, 'Crear usuario')
+      setEdit(true)
+      resetForm()
+      setLoading(false)
     }
+  }
+
+  const resetForm = () => {
+    reset({})
+    setValue('id_estado', 'value', { shouldDirty: true })
+    setValue('id_cfdi', 'value', { shouldDirty: true })
+  }
+
+  if (edit === null) {
+    return <Navigate to='/dashboard/NOTFOUND' />
   }
 
   return (
     <>
-      <NavPage title='Agregar donador' path='/dashboard/usuarios' />
+      <NavPage title='Agregar donador' path='/dashboard/donadores' />
       <Card className='hoverable'>
+        <h6 className='teal-text'>Información</h6>
+
         <form
-          className='user__form'
+          className='user__form '
           onSubmit={handleSubmit(handlerSubmit)}
         >
-
-          <div className='input-field'>
-            <label>Nombre</label>
+          <div>
+            <label>Número de Teléfono</label>
             <input
               onChange={register}
               type='text'
-              name='nombre'
-              autoComplete={'off'}
+              autoComplete='off'
               {
-              ...register('nombre', {
-                required: true
-              })
+              ...register('telefono')
               }
-            />
-            {errors.nombre?.type === 'required' &&
-              (<span className='red-text'>El nombre es requerido</span>)
-            }
-          </div>
-          <div className='input-field'>
-            <label>Apellidos</label>
-            <input
-              onChange={register}
-              type='text'
-              className='input-field'
-              name='apellido'
-              autoComplete={'off'}
-              {...register('apellido', {
-                required: true
-              })}
-
-            />
-            {errors.apellido?.type === 'required' &&
-              (<span className='red-text'>El apellido es requerido</span>)
-            }
-          </div>
-          <div className='input-select'>
-            <label>Selecciona los roles</label>
-            <Controller
-              control={control}
-              rules={{ required: true }}
-              defaultValue={false}
-              name='roles'
-              render={({ field }) => (
-                <Select
-                  placeholder='Roles de usuario'
-                  closeMenuOnSelect
-                  components={animatedComponents}
-                  isMulti
-                  options={roles}
-                  {...field}
-                />
-              )}
-            />
-            {errors.roles?.type === 'required' &&
-              (<span
-                className='red-text'
-              >
-                Selecciona al menos un role
+              disabled={!edit} />
+            {errors.telefono &&
+              (<span className='red-text'>
+                {
+                  errors.telefono.message
+                }
               </span>)
             }
           </div>
-          <div className='input-field'>
-            <label>Correo electrónico</label>
+          <div>
+            <label>Razón Social</label>
             <input
               onChange={register}
               type='text'
-              name='correo_electronico'
-              autoComplete={'off'}
+              autoComplete='off'
+              {
+              ...register('razon_social')
+              }
+              disabled={!edit} />
+            {errors.razon_social &&
+              (<span className='red-text'>
+                {
+                  errors.razon_social.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>RFC</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {
+              ...register('rfc')
+              }
+              disabled={!edit} />
+            {errors.rfc &&
+              (<span className='red-text'>
+                {
+                  errors.rfc.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Nombre del donador</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {
+              ...register('nombre')
+              }
+              disabled={!edit} />
+            {errors.nombre &&
+              (<span className='red-text'>
+                {
+                  errors.nombre.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Correo Electrónico</label>
+            <input
+              onChange={register}
+              type='email'
+              autoComplete='off'
               {...register('correo_electronico', {
                 required: {
                   value: true,
-                  message: 'El correo electronico es requerido'
+                  message: 'El correo electrónico es requerido'
                 },
                 pattern: {
-                  value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   message: 'Ingresa un correo válido'
                 }
               })}
-
+              disabled={!edit}
             />
             {errors.correo_electronico &&
               (<span className='red-text'>
-                {errors.correo_electronico.message}
+                {
+                  errors.correo_electronico.message
+                }
               </span>)
             }
           </div>
-          <div className='input-field'>
-            <label>Contraseña</label>
+          <div>
+            <label>Domicilio Fiscal</label>
             <input
               onChange={register}
-              type={show ? 'text' : 'password'}
-              name='password'
-              autoComplete='new-password'
-              {...register('password', {
-                required: {
-                  value: true,
-                  message: 'La contraseña es requerida'
-                },
-                minLength: {
-                  value: 8,
-                  message: 'La contraseña debe contener al menos 8 caracteres'
-                },
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
-                  message: 'La contraseña debe contener al menos una mayúscula y un numero'
-                }
-              })}
-
-            />
-            {errors.password &&
+              type='text'
+              autoComplete='off'
+              {
+              ...register('domicilio_fiscal')
+              }
+              disabled={!edit} />
+            {errors.domicilio_fiscal &&
               (<span className='red-text'>
-                {errors.password.message}
+                {
+                  errors.domicilio_fiscal.message
+                }
               </span>)
             }
           </div>
-
-          {
-            show
-              ? (<div className='show-password' onClick={handlerShowPassword}>
-                <MdVisibilityOff />
-                <span className='text-muted'>Ocultar contraseña</span>
-              </div>)
-              : (<div className='show-password' onClick={handlerShowPassword}>
-                <MdVisibility />
-                <span className='text-muted'>Mostrar contraseña</span>
-              </div>)
-          }
-
-          <div className='btn-submit'>
+          <div>
+            <label>Código Postal</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {
+              ...register('codigo_postal')
+              }
+              disabled={!edit} />
+            {errors.codigo_postal &&
+              (<span className='red-text'>
+                {
+                  errors.codigo_postal.message
+                }
+              </span>)
+            }
+          </div>
+          {/* SELECT REGIMEN FISCAL */}
+          <div className='input-select'>
+            <label>Selecciona el régimen fiscal</label>
+            <Controller
+              control={control}
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Selecciona un régimen fiscal'
+                }
+              }}
+              name='regimen_fiscal'
+              render={({ field }) => (
+                <Select
+                  placeholder='Régimen Fiscal'
+                  closeMenuOnSelect
+                  components={animatedComponents}
+                  options={options.regimen_fiscal}
+                  {...field}
+                  isDisabled={!edit}
+                />
+              )}
+            />
+            {errors.regimen_fiscal &&
+              (<span
+                className='red-text'
+              >
+                {errors.regimen_fiscal.message}
+              </span>)
+            }
+          </div>
+          {/* SELECT ESTADO */}
+          <div className='input-select'>
+            <label>Selecciona el estado</label>
+            <Controller
+              defaultValue={false}
+              control={control}
+              name='id_estado'
+              render={({ field }) => (
+                <Select
+                  placeholder='Estado'
+                  closeMenuOnSelect
+                  components={animatedComponents}
+                  options={options.states}
+                  {...field}
+                  isDisabled={!edit}
+                />
+              )}
+            />
+            {errors.id_estado &&
+              (<span
+                className='red-text'
+              >
+                {errors.id_estado.message}
+              </span>)
+            }
+          </div>
+          {/* SELECT CFDI */}
+          <div className='input-select'>
+            <label>Selecciona un CFDI</label>
+            <Controller
+              defaultValue={false}
+              control={control}
+              name='id_cfdi'
+              render={({ field }) => (
+                <Select
+                  placeholder='CFDI'
+                  closeMenuOnSelect
+                  components={animatedComponents}
+                  options={options.cfdis}
+                  {...field}
+                  isDisabled={!edit}
+                />
+              )}
+            />
+            {errors.id_cfdi &&
+              (<span
+                className='red-text'
+              >
+                {errors.id_cfdi.message}
+              </span>)
+            }
+          </div>
+          {/* BOTONES DE OPCIONES */}
+          <div className='user__btn__container'>
             <button
               type='submit'
-              className='btn btn-primary'
+              className='btn btn-success  '
+              disabled={loading || !edit}
             >
-              Agregar usuario
+              Agregar donador
             </button>
           </div>
+          {
+            loading && (
+              <div className='progress'>
+                <div className='indeterminate' />
+              </div>
+            )
+          }
         </form>
       </Card>
     </>

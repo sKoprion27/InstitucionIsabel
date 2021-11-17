@@ -18,8 +18,6 @@ export const donorController = {
     const { id } = req.params
     try {
       const donor = await Donor.getOne(id)
-      const donorState = await Donor.getStates(id)
-      const donorCfdi = await Donor.getCfdis(id)
 
       const states = await State.getAll()
       const cfdis = await Cfdi.getAll()
@@ -30,11 +28,7 @@ export const donorController = {
       }
       // {}
       const getDonor = {
-        donor: {
-          ...donor.rows[0],
-          estados: donorState.rows,
-          cfdis: donorCfdi.rows
-        }, // {}
+        donor: { ...donor.rows[0] }, // {}
         estados: states.rows, // []
         cfdis: cfdis.rows // []
       }
@@ -45,9 +39,21 @@ export const donorController = {
     }
   },
   postOneDonor: async (req, res) => {
-    const donor = { ...req.body }
-    const [queryAnswer, status] = await Donor.postOne(donor)
-    response(req, res, 'POST ONE DONOR', queryAnswer, status)
+    try {
+      const { donor } = req.body
+      console.log(req.body, ' soy el donor')
+      const donorResponse = await Donor.postOne(donor)
+
+      if (donorResponse.rowCount === 0) {
+        response(req, res, 'ERROR POST ONE DONOR', null, 500)
+        return
+      }
+
+      response(req, res, 'POST ONE DONATION', donorResponse.rowCount, 201)
+    } catch (error) {
+      console.log(error, '🤡')
+      response(req, res, 'ERROR POST ONE DONOR', null, 500)
+    }
   },
   updateOneDonor: async (req, res) => {
     try {
@@ -62,8 +68,18 @@ export const donorController = {
     }
   },
   deleteOneDonor: async (req, res) => {
-    const id = req.params.id
-    const [queryAnswer, status] = await Donor.deleteOne(id)
-    response(req, res, 'DELETE ONE USER', queryAnswer, status)
+    try {
+      const id = req.params.id
+      const { rowCount } = await Donor.deleteOne(id)
+
+      if (rowCount === 0) {
+        response(req, res, 'ERROR DELETE ONE DONOR', null, 500)
+        return
+      }
+      response(req, res, 'DELETE ONE DONOR', rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'ERROR DELETE ONE DONOR', null, 500)
+    }
   }
 }
