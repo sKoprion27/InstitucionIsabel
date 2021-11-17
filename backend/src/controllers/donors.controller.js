@@ -47,7 +47,7 @@ export const donorController = {
   postOneDonor: async (req, res) => {
     try {
       const { donor } = req.body
-
+      console.log(donor)
       const donorResponse = await Donor.postOne(donor)
       const donorCreated = donorResponse.rows[0]
 

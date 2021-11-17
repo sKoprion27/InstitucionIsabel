@@ -19,7 +19,7 @@ import makeAnimated from 'react-select/animated'
 import { postDonor } from '../../../helpers/donors.helpers'
 
 import './style.scss'
-import { convertToSelectOptions, filterSelectsOptiones, formatDateTable } from '../../../utils'
+import { convertToSelectOptions, convertToSelectOptionsCFDI } from '../../../utils'
 import { getAllStates } from '../../../helpers/states.helpers'
 import { getAllCfdis } from './../../../helpers/cfdis.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
@@ -65,7 +65,7 @@ export const DonorAdd = () => {
         setOptions({
           ...options,
           states: convertToSelectOptions(estados),
-          cfdis: convertToSelectOptions(cfdis)
+          cfdis: convertToSelectOptionsCFDI(cfdis)
         })
       } catch (error) {
         console.log(error)
@@ -111,11 +111,8 @@ export const DonorAdd = () => {
 
   const resetForm = () => {
     reset({})
-    setValue('id_donador', 'value', { shouldDirty: true })
-    setValue('id_metodo_pago', 'value', { shouldDirty: true })
-    setValue('id_tipo_donacion', 'value', { shouldDirty: true })
-    setValue('categorias', 'value', { shouldDirty: true })
-    setValue('beneficiarios', 'value', { shouldDirty: true })
+    setValue('id_estado', 'value', { shouldDirty: true })
+    setValue('id_cfdi', 'value', { shouldDirty: true })
   }
 
   if (edit === null) {
@@ -178,13 +175,15 @@ export const DonorAdd = () => {
               </span>)
             }
           </div>
-          {/* <div>
-            <label>Facturado</label>
+          <div>
+            <label>RFC</label>
             <input
               onChange={register}
               type='text'
               autoComplete='off'
-              {...register('esta_facturado', {
+              maxLength='13'
+              minLength='13'
+              {...register('rfc', {
                 required: {
                   value: true,
                   message: 'Este campo es requerido'
@@ -192,164 +191,192 @@ export const DonorAdd = () => {
               })}
               disabled={!edit}
             />
-            {errors.descripcion &&
+            {errors.rfc &&
               (<span className='red-text'>
                 {
-                  errors.descripcion.message
+                  errors.rfc.message
                 }
               </span>)
             }
-          </div> */}
-          {/* SELECT DONDADOR */}
+          </div>
+          <div>
+            <label>Nombre</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {...register('nombre', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.nombre &&
+              (<span className='red-text'>
+                {
+                  errors.nombre.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Correo Electrónico</label>
+            <input
+              onChange={register}
+              type='email'
+              autoComplete='off'
+              {...register('correo_electronico', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.correo_electronico &&
+              (<span className='red-text'>
+                {
+                  errors.correo_electronico.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Domicilio Fiscal</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {...register('domicilio_fiscal', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.domicilio_fiscal &&
+              (<span className='red-text'>
+                {
+                  errors.domicilio_fiscal.message
+                }
+              </span>)
+            }
+          </div>
+          <div>
+            <label>Código Postal</label>
+            <input
+              onChange={register}
+              type='number'
+              autoComplete='off'
+              max='99999'
+              {...register('codigo_postal', {
+                required: {
+                  value: true,
+                  message: 'Este campo es requerido'
+                }
+              })}
+              disabled={!edit}
+            />
+            {errors.codigo_postal &&
+              (<span className='red-text'>
+                {
+                  errors.codigo_postal.message
+                }
+              </span>)
+            }
+          </div>
+          {/* SELECT REGIMEN FISCAL */}
           <div className='input-select'>
-            <label>Selecciona donador</label>
+            <label>Selecciona el régimen fiscal</label>
             <Controller
-              defaultValue={false}
               control={control}
-              name='id_donador'
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Selecciona al menos un método de pago'
+                }
+              }}
+              name='regimen_fiscal'
               render={({ field }) => (
                 <Select
-                  placeholder='Donador'
+                  placeholder='Régimen Fiscal'
                   closeMenuOnSelect
                   components={animatedComponents}
-                  options={options.donors}
+                  options={options.regimen_fiscal}
                   {...field}
                   isDisabled={!edit}
                 />
               )}
             />
-            {errors.id_donador &&
+            {errors.regimen_fiscal &&
               (<span
                 className='red-text'
               >
-                {errors.id_donador.message}
+                {errors.regimen_fiscal.message}
               </span>)
             }
           </div>
-          {/* SELECT MÉTODO DE PAGO */}
+          {/* SELECT ESTADO */}
           <div className='input-select'>
-            <label>Selecciona un método de pago</label>
+            <label>Selecciona el Estado</label>
             <Controller
-              defaultValue={false}
               control={control}
-              name='id_metodo_pago'
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Selecciona el Estado'
+                }
+              }}
+              name='id_estado'
               render={({ field }) => (
                 <Select
-                  placeholder='Método de pago'
+                  placeholder='Estado'
                   closeMenuOnSelect
                   components={animatedComponents}
-                  options={options.paymentMethods}
+                  options={options.states}
                   {...field}
                   isDisabled={!edit}
                 />
               )}
             />
-            {errors.id_metodo_pago &&
+            {errors.estado &&
               (<span
                 className='red-text'
               >
-                {errors.id_metodo_pago.message}
+                {errors.estado.message}
               </span>)
             }
           </div>
-          {/* SELECT TIPO DE DONACIÓN */}
           <div className='input-select'>
-            <label>Selecciona que tipo de donativo</label>
+            <label>Selecciona el CFDI</label>
             <Controller
-              defaultValue={false}
               control={control}
-              name='id_tipo_donacion'
+              rules={{
+                required: {
+                  value: true,
+                  message: 'Selecciona un CFDI'
+                }
+              }}
+              name='id_cfdi'
               render={({ field }) => (
                 <Select
-                  placeholder='Tipo donativo'
+                  placeholder='Claves de CFDI'
                   closeMenuOnSelect
                   components={animatedComponents}
-                  options={options.typesDonations}
+                  options={options.cfdis}
                   {...field}
                   isDisabled={!edit}
                 />
               )}
             />
-            {errors.id_tipo_donacion &&
+            {errors.cfdi &&
               (<span
                 className='red-text'
               >
-                {errors.id_tipo_donacion.message}
-              </span>)
-            }
-          </div>
-          {/* SELECT CATEGORIAS_DONACIONES */}
-          <div className='input-select'>
-            <label>Selecciona las categorias del donativo</label>
-            <Controller
-              control={control}
-              defaultValue={false}
-              name='categorias'
-              render={({ field }) => (
-                <Select
-                  placeholder='Categorias de donativo'
-                  closeMenuOnSelect
-                  components={animatedComponents}
-                  options={options.categories}
-                  isMulti
-                  {...field}
-                  isDisabled={!edit}
-                />
-              )}
-            />
-            {errors.categorias &&
-              (<span
-                className='red-text'
-              >
-                {errors.categorias.message}
-              </span>)
-            }
-          </div>
-          {/* SELECT DONACIONES_BENEFICIARIOS */}
-          <div className='input-select'>
-            <label>Selecciona los beneficiarios del donativo</label>
-            <Controller
-              control={control}
-              defaultValue={false}
-              name='beneficiarios'
-              render={({ field }) => (
-                <Select
-                  placeholder='Beneficiarios del donativo'
-                  closeMenuOnSelect
-                  isMulti
-                  components={animatedComponents}
-                  options={options.beneficiaries}
-                  {...field}
-                  isDisabled={!edit}
-
-                />
-              )}
-            />
-            {errors.beneficiarios &&
-              (<span
-                className='red-text'
-              >
-                {errors.beneficiarios.message}
-              </span>)
-            }
-          </div>
-          {/* AGREGAR DE FOTO */}
-
-          <div className='img-container-input'>
-            <div className='img-donacion'>
-              <p>Foto de la donación</p>
-              <input
-                id='foto_donacion'
-                type='file'
-                {...register('foto_donacion')}
-                onChange={onChange}
-              />
-            </div>
-            {errors.foto_donacion &&
-              (<span
-                className='red-text img-error'
-              >
-                {errors.foto_donacion.message}
+                {errors.cfdi.message}
               </span>)
             }
           </div>

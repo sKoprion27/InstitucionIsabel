@@ -17,7 +17,7 @@ export const updateDonor = async (donor, id) => {
 
 export const postDonor = async ({ donor }) => {
   const form = new FormData()
-  form.append('donation', JSON.stringify(donor))
+  form.append('donor', JSON.stringify(donor))
   const { data } = await Axios.post(`${URL_API}/donors`, form, {
     headers: {
       Accept: 'application/json',
