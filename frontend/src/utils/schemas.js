@@ -69,3 +69,5 @@ export const beneficiarySchema = yup.object().shape({
       return value
     })
 })
+
+export const donorSchema = {}

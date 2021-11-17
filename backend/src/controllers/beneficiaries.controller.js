@@ -39,13 +39,21 @@ export const beneficiaryController = {
       // File
       const fileName = rows[0].archivo
       const filePath = path.join(__dirname, '/../../uploads/', fileName)
-      res.contentType(`application/${path.extname(fileName)}`)
-      res.status(201).download(
-        filePath,
-        fileName
-      )
+
+      // console.log(exist)
+
+      if (fs.existsSync(filePath)) {
+        res.contentType(`application/${path.extname(fileName)}`)
+        res.status(201).download(
+          filePath,
+          fileName
+        )
+      } else {
+        response(req, res, 'ERROR GET FILE', null, 500)
+      }
     } catch (error) {
       console.log(error, 'get file')
+      response(req, res, 'ERROR GET FILE', null, 500)
     }
   },
 
@@ -86,7 +94,9 @@ export const beneficiaryController = {
         response(req, res, 'UPDATE ONE BENEFICIARY', null, 500)
         return
       }
-      fs.unlinkSync(filePath)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
       response(req, res, 'UPDATE ONE BENEFICIARY', rowCount, 201)
     } catch (error) {
       console.log(error)

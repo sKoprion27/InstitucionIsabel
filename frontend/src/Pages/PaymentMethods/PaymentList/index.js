@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllPayments } from '../../../helpers/payment.helpers'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const PaymentList = () => {
   const [didFetch, setDidFetch] = useState(false)
@@ -21,9 +22,10 @@ export const PaymentList = () => {
         const categories = await getAllPayments()
         setOriginalList(categories)
         setListFilter(categories)
+        toastInit('Lista actualizada')
       } catch (error) {
         console.log(error)
-        alert('ERROR')
+        toastInit('Error al cargar lista', 'red lighten-2')
       }
     }
     getList()

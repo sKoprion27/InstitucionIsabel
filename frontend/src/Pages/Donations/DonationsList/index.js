@@ -43,6 +43,7 @@ export const DonationsList = () => {
 
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
+        toastInit('Lista actualizada')
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar la lista', 'red lighten-2')
@@ -62,7 +63,7 @@ export const DonationsList = () => {
         const donations = await getAllDonations({})
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
-        toastInit('Lista actualizada')
+        toastInit('Lista filtrada')
         setExcel({
           headers: getHeadersCVS(donations),
           data: donations

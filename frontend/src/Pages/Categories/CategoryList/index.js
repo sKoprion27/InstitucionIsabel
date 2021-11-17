@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { getAllCategories } from '../../../helpers/categories.helpers'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const CategoryList = () => {
   const [didFetch, setDidFetch] = useState(false)
@@ -21,9 +22,10 @@ export const CategoryList = () => {
         const categories = await getAllCategories()
         setOriginalList(categories)
         setListFilter(categories)
+        toastInit('Lista actualizada')
       } catch (error) {
         console.log(error)
-        alert('ERROR')
+        toastInit('Error al cargar lista', 'red lighten-2')
       }
     }
     getList()

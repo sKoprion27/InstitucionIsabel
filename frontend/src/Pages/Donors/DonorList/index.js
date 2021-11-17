@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllDonors } from '../../../helpers/donors.helpers'
+import { toastInit } from '../../../Components/Dashboard/AlertToast'
 
 export const DonorList = () => {
   const [didFetch, setDidFetch] = useState(false)
@@ -21,9 +22,10 @@ export const DonorList = () => {
         const donors = await getAllDonors()
         setOriginalList(donors)
         setListFilter(donors)
+        toastInit('Lista actualizada')
       } catch (error) {
         console.log(error)
-        alert('ERROR')
+        toastInit('Error al cargar lista', 'red lighten-2')
       }
     }
     getList()

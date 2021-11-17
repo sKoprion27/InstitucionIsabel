@@ -76,8 +76,10 @@ export const BeneficiaryEdit = ({ justView }) => {
   const handlerDownload = async () => {
     try {
       await getFileBeneficiary(id, archivo)
+      toastInit('Archivo descargado')
     } catch (error) {
       console.log(error)
+      toastInit('Error al descargar archivo', 'red lighten-2')
     }
   }
 
