@@ -89,7 +89,7 @@ const typeRender = (key, element) => {
                   className='teal-text'
                 >
                   {
-                    formatDateTable(element[key])
+                    element[key] ? formatDateTable(element[key]) : ''
                   }
                 </span>)
           }

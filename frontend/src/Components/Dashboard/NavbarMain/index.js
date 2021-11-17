@@ -14,7 +14,7 @@ export const NavbarMain = () => {
   return (
     <>
       <Navbar
-        className='navbar indigo'
+        className='navbar teal'
         alignLinks='right'
         brand={
           <Link to='/dashboard' className='brand-isabel'>

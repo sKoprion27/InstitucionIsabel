@@ -11,7 +11,7 @@ export const Sidebar = () => {
   return (
     <SideNav
       id='sidenav-left'
-      className='indigo white-text hide-on-med-and-dow sidenav'
+      className='teal white-text hide-on-med-and-dow sidenav'
       fixed
     >
       <li className='waves-green'>
