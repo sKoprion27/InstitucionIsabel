@@ -6,9 +6,10 @@ import { response } from '../utils/response'
 export const donationMiddleware = {
   addImageBody: async (req, res, next) => {
     try {
-      const donation = JSON.parse(req.body.donation)
       const { id } = req.params
+      const donation = JSON.parse(req.body.donation)
 
+      console.log(req.file)
       if (req.file) {
         const image = dataUri(req)
         const response = await cloudinaryUploader.upload(image, { folder: 'donations' })
@@ -30,7 +31,8 @@ export const donationMiddleware = {
           }
         }
       } else {
-        req.body.donation = { ...donation }
+        const { rows } = await Donation.getOne(id)
+        req.body.donation = { ...rows[0], ...donation }
       }
       next()
     } catch (error) {

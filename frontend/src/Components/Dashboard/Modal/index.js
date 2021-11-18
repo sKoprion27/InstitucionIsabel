@@ -45,7 +45,7 @@ export const Modal = ({ id, path, setFetch }) => {
         <Icon>delete</Icon>
       </button>
 
-      <div
+      {/* <div
         ref={modalRef}
         id={`modal-delete${id}`}
         className='modal bottom-sheet'
@@ -64,7 +64,7 @@ export const Modal = ({ id, path, setFetch }) => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

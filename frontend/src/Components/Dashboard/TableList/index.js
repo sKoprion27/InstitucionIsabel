@@ -35,7 +35,7 @@ export const TableList = ({
                           .filter(key => !fields.some(f => f === key))
                           .map((key, index) => {
                             return (
-                              <th key={key + index}>{formatKeyTable(key)}</th>
+                              <th key={Math.random() + backend}>{formatKeyTable(key)}</th>
                             )
                           }))
                       }
@@ -45,43 +45,46 @@ export const TableList = ({
                   }
 
                 </thead>
-                <tbody className='text-center'>
-                  {
-                    arrayListFiltered.length > 0
-                      ? (
-                        <>
-                          {
-                            arrayListFiltered.map((element, index) => {
-                              return (
-                                <tr key={element + index} className='table-row' >
-                                  {
-                                    Object.keys(element)
-                                      .filter(key => !fields.some(f => f === key))
-                                      .map((key) => {
-                                        return (
-                                          <>
-                                            {
-                                              typeRender(key, element)
-                                            }
-                                          </>
-                                        )
-                                      })
-                                  }
-                                  <td className='table-row__options'>
-                                    {checkPermission(backend, element, setFetchAction)}
-                                  </td>
-                                </tr>
-                              )
-                            })
-                          }
-                        </>)
-                      : (
-                        <div className='container-nothing teal-text'>
-                          <h2>Sin coincidencias</h2>
-                          <span><Icon>mood_bad</Icon></span>
-                        </div>)
-                  }
-                </tbody>
+
+                {
+                  arrayListFiltered.length > 0
+                    ? (
+                      <tbody className='text-center'>
+                        {
+                          arrayListFiltered.map((element, index) => {
+                            return (
+                              <tr key={index} className='table-row' >
+                                {
+                                  Object.keys(element)
+                                    .filter(key => !fields.some(f => f === key))
+                                    .map((key) => {
+                                      return (
+                                        <td key={element[key]}>
+                                          {
+                                            typeRender(key, element)
+                                          }
+                                        </td>
+                                      )
+                                    })
+                                }
+                                <td className='table-row__options'>
+                                  {checkPermission(backend, element, setFetchAction)}
+                                </td>
+                              </tr>
+                            )
+                          })
+                        }
+                      </tbody>)
+                    : (
+                      <tbody className='container-nothing teal-text'>
+                        <tr>
+                          <td>
+                            <h2>Sin coincidencias</h2>
+                            <span><Icon>mood_bad</Icon></span>
+                          </td>
+                        </tr>
+                      </tbody>)
+                }
               </table>
             </div>)
       }
@@ -91,38 +94,30 @@ export const TableList = ({
 
 const typeRender = (key, element) => {
   switch (key) {
-    case 'foto_donacion':
-      return (
-        <MaterialBox
-          element={element}
-          keyValue={key}
-        />)
     case 'facturado':
-      return (
-        <td>
-          {
-            element[key] === 'No facturado'
-              ? (
-                <span className='red-text'>No facturado</span>)
-              : (
-                <span
-                  className='teal-text'
-                >
-                  {
-                    element[key] ? formatDateTable(element[key]) : ''
-                  }
-                </span>)
-          }
-        </td>
-      )
+      return (<>
+        {
+          element[key] === 'No facturado'
+            ? (
+              <span className='red-text'>No facturado</span>)
+            : (
+              <span
+                className='teal-text'
+              >
+                {
+                  element[key] ? formatDateTable(element[key]) : ''
+                }
+              </span>)
+        }
+      </>)
 
     default:
       return (
-        <td>
+        <>
           {
             element[key]
           }
-        </td>
+        </>
       )
   }
 }
@@ -145,15 +140,7 @@ const checkPermission = (backend, element, setFetchAction) => {
             <Icon>edit</Icon>
           </Link>
         </PermissionGuard>
-        {/* {
-          backend === 'users' && (<button
-            className='btn green'
-            type='button'
-            disabled={auth.user.id === element.id}
-          >
-            <Icon>person_add_disabled</Icon>
-          </button>)
-        } */}
+
         <PermissionGuard onePermision permiso='Eliminar usuarios'>
           <Modal
             id={element.id}

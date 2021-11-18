@@ -18,7 +18,9 @@ export const getOneDonation = async (id) => {
 export const postDonation = async ({ donation, foto_donacion }) => {
   const form = new FormData()
   form.append('foto_donacion', foto_donacion)
-  form.append('donation', JSON.stringify(donation))
+  if (foto_donacion !== null) {
+    form.append('donation', JSON.stringify(donation))
+  }
   const { data } = await Axios.post(`${URL_API}/donations`, form, {
     headers: {
       Accept: 'application/json',

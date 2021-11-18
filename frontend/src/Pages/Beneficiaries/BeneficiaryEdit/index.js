@@ -144,7 +144,7 @@ export const BeneficiaryEdit = ({ justView }) => {
                 <label>Lista de beneficiarios (pdf, excel). Opcional</label>
                 <div className='file-field input-field'>
                   <div className={`btn ${!edit && 'disabled'}`}>
-                    <span>Cambiar archivo</span>
+                    <span>Subir archivo</span>
                     <input type='file'
                       {...register('archivo')}
                       disabled={!edit}

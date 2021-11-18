@@ -84,9 +84,10 @@ export const beneficiaryController = {
         (currentFile.rows[0].archivo ? currentFile.rows[0].archivo : 'NULL')
       )
 
+      console.log(req.file)
       const postBeneficiary = {
         ...beneficiary,
-        archivo: req.file ? req.file.filename : null
+        archivo: req.file ? req.file.filename : currentFile.rows[0].archivo
       }
       const { rowCount } = await Beneficiary.putOne(postBeneficiary, id)
       if (rowCount === 0) {

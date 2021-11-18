@@ -73,6 +73,7 @@ export const DonationsList = () => {
           headers: getHeadersCVS(donations),
           data: donations
         })
+        endLoading()
       } else {
         const donations = await getAllDonations({
           startDate: startDate.toString().split('GMT')[0],

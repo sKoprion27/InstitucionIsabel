@@ -328,7 +328,7 @@ export const DonationAdd = () => {
           <div className='img-container-input'>
             <div className='file-field input-field'>
               <div className='btn'>
-                <span>Foto donación</span>
+                <span>Agregar foto</span>
                 <input type='file' {...register('foto_donacion')} />
               </div>
               <div className='file-path-wrapper'>

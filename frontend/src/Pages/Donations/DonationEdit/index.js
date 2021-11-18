@@ -128,9 +128,10 @@ export const DonationEdit = ({ justView }) => {
 
   // Use Effect for selects info
 
-  const handlerSubmit = async (data) => {
+  const handlerSubmit = async (data, e) => {
     try {
       setLoading(true)
+      console.log(data.foto_donacion[0] ? data.foto_donacion[0] : null)
       const donation = {
         data: {
           nombre: data.nombre,
@@ -142,12 +143,13 @@ export const DonationEdit = ({ justView }) => {
           categories: [...data.categorias.map(c => { return { id: c.value } })],
           beneficiaries: [...data.beneficiarios.map(b => { return { id: b.value } })]
         },
-        foto_donacion: data.foto_donacion[0]
+        foto_donacion: data.foto_donacion[0] ? data.foto_donacion[0] : null
       }
       await updateDonation(donation, id)// envio al server
       toastInit('Elemento actualizado')
       setLoading(false)
       setEdit(!edit)
+      e.target.reset()
     } catch (error) {
       console.log(error)
       toastInit('Error al actualizar', 'red lighten-2')
@@ -417,21 +419,29 @@ export const DonationEdit = ({ justView }) => {
             }
           </div>
           {/* CAMBIO DE FOTO */}
-
+          {/* AGREGAR DE FOTO */}
           {
             !justView && (<div className='img-container-input'>
-              <div className='img-donacion'>
-                <p>Foto de la donación</p>
-                <input
-                  id='foto_donacion'
-                  type='file'
-                  {...register('foto_donacion')}
-                  disabled={!edit}
-                />
+              <div className='file-field input-field'>
+                <div className={`btn ${!edit && 'disabled'}`}>
+                  <span>Cambiar foto</span>
+                  <input
+                    type='file'
+                    {...register('foto_donacion')}
+                    disabled={!edit}
+                  />
+                </div>
+                <div className='file-path-wrapper'>
+                  <input
+                    className='file-path validate'
+                    type='text'
+                    disabled={!edit}
+                  />
+                </div>
               </div>
               {errors.foto_donacion &&
                 (<span
-                  className='red-text  img-error'
+                  className='red-text img-error'
                 >
                   {errors.foto_donacion.message}
                 </span>)
