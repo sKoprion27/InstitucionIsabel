@@ -42,7 +42,8 @@ export const beneficiaryController = {
       // console.log(exist)
 
       if (fs.existsSync(filePath)) {
-        res.contentType(`application/${path.extname(fileName)}`)
+        res.contentType(`application/${path.extname(fileName).split('.')[1]}`)
+        console.log(`application/${path.extname(fileName).split('.')[1]}`)
         res.status(201).download(
           filePath,
           fileName

@@ -26,7 +26,9 @@ export const postBeneficiary = async ({ beneficiary, archivo }) => {
 }
 
 export const getFileBeneficiary = async (id, file) => {
-  const { data } = await Axios.get(`${URL_API}/beneficiaries/${id}/files`)
+  const { data } = await Axios.get(`${URL_API}/beneficiaries/${id}/files`, {
+    responseType: 'blob'
+  })
   await fileDownload(data, file)
 }
 
