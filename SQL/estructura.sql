@@ -416,30 +416,17 @@ INSERT INTO roles_usuarios(id_usuario , id_role) VALUES
 -- Crear datos de la tabla metodos_pago
 
 INSERT INTO metodos_pago(nombre, descripcion) VALUES
-('tarjeta visa','numero: 1234 1234 1234 1234'),
-('tarjeta mastercard','numero: 3456 3456 3456 3456'),
-('tarjeta american express','numero: 7890 7890 7890 7890'),
-('cheque','folio: 12345678'),
-('paypal','correo: lau@gmail.com'),
-('efectivo','monto: $500'),
-('3 meses sin intereses','monto: $500'),
-('6 meses sin intereses','monto: $500'),
-('12 meses sin intereses','monto: $500'),
-('Especie','cantidad: 10');
+('Tarjeta HSBC','Numero: 1234 1234 1234 1234'),
+('Transferencia bancaria HSBC','Numero: 3456 3456 3456 3456'),
+('Paypal','Correo: isabel@gmail.com'),
+('Efectivo','Dinero que se otorga en sucursal');
 
 -- Crear datos de la tabla categorias
 
 INSERT INTO categorias(nombre, descripcion) VALUES
-('Tecnologia','Computadoras para los ninos de la institucion'),
-('Inmobiliario','Sillas para los ninos de la institucion'),
-('Materiales','Materiales de arte para los ninos de la institucion'),
-('Inmobiliario','Sillones para los ninos de la institucion'),
-('Tecnologia','Ipads para los ninos de la institucion'),
-('Materiales','Materiales de escritura para los ninos de la institucion'),
-('Tecnologia','Pantallas para dar clases a los ninos de la institucion'),
-('Inmobiliario','Mesas para los ninos de la institucion'),
-('Tecnologia','Teclados extra para los ninos de la institucion'),
-('Materiales','Materiales de construccion para los ninos de la institucion');
+('Computo','Computadoras y electronica'),
+('Espcie','Viveres en general'),
+('Insumos','Sillas para los ninos de la institucion');
 
 
 -- Insertar datos de la tabla CFDIS
@@ -547,58 +534,29 @@ INSERT INTO donadores(id_cfdi, id_estado, nombre, telefono, razon_social, rfc, c
 INSERT INTO beneficiarios(nombre, descripcion) VALUES
 ('ninos de la institucion','Esta donacion es material didactico para los ninos de la institucion'),
 ('colaboradores','Esta donacion se utilizara para la compensacion de los colaboradores'),
-('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),
-('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
-('Personal de la institucion','Esta donacion es para comprar juguetes para los ninos'),
-('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
-('colaboradores','Esta donacion se utilizara para la compensacion de los colaboradores'),
-('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
-('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
-('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
-('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
-('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),
-('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
-('ninos de la institucion','Esta donacion es para comprar juguetes para los ninos'),
-('ninos de la institucion','Esta donacion es para introducir nuevos cursos para los ninos'),
-('colaboradores','Esta donacion se utilizara para la compensacion de los colaboradores'),
-('Personal de la institucion','Esta donacion es para pagar los salarios del personal'),
-('Personal de la institucion','Esta donacion es para comprar juguetes para los ninos'),
-('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos'),
-('ninos de la institucion','Esta donacion es para comprar materiales de arte para los ninos'),
-('ninos de la institucion','Esta donacion es para la compra de productos de higiene (papel de bano, jabon, etc) para la utilizacion de los ninos');
-
+('Gastos mensuales','Esta donacion es para uso mensual');
 -- Insertar datos de la tabla tipo_donacion
 
 INSERT INTO tipo_donaciones(nombre, descripcion) VALUES
-('efectivo','Donacion de dinero (ya sea en efectivo o en tarjeta)'),
-('especie','Cubre materia prima, materiales fisicos y apoyo tangible'),
-('inmuebles','Donacion de una propiedad'),
-('puntual','Donacion de una cantidad una sola vez'),
-('recurrente','Donacion realizada cada mes'),
-('microdonacion','Donacion masiva de pequenas cantidades');
+('Efectivo','Donacion de dinero (ya sea en efectivo o en tarjeta)'),
+('Especie','Cubre materia prima, materiales fisicos y apoyo tangible'),
+('Becas','Donacion de una convocatoria');
 
 -- Insertar datos donaciones
 INSERT INTO donaciones(id_donador, id_metodo_pago, id_tipo_donacion, nombre, monto, foto_donacion) VALUES
-(1,1,1,'10 computadoras donador 1', 3001, null),
-(1,2,2,'10 computadoras donador 1', 3002, 'https://source.unsplash.com/random'),
-(1,2,2,'10 computadoras donador 1', 3003, 'https://source.unsplash.com/random'),
-(1,1,1,'10 computadoras donador 1', 3004, 'https://source.unsplash.com/random'),
-(1,2,2,'10 computadoras donador 1', 3005, 'https://source.unsplash.com/random'),
-(2,1,1,'10 monitores donador 2', 4001, 'https://source.unsplash.com/random'),
-(2,2,2,'10 monitores donador 2', 4002, 'https://source.unsplash.com/random'),
-(2,2,2,'10 monitores donador 2', 4003, 'https://source.unsplash.com/random'),
-(2,1,1,'10 monitores donador 2', 4004, 'https://source.unsplash.com/random'),
-(2,2,2,'10 monitores donador 2', 4005, 'https://source.unsplash.com/random'),
-(3,1,1,'10 teclados donador 3', 5001, 'https://source.unsplash.com/random'),
-(3,2,2,'10 teclados donador 3', 5002, 'https://source.unsplash.com/random'),
-(3,2,2,'10 teclados donador 3', 5003, 'https://source.unsplash.com/random'),
-(3,1,1,'10 teclados donador 3', 5004, 'https://source.unsplash.com/random'),
-(3,2,2,'10 teclados donador 3', 5005, 'https://source.unsplash.com/random'),
-(4,1,1,'10 teclados donador 4', 6001, 'https://source.unsplash.com/random'),
-(4,2,2,'10 teclados donador 4', 6002, 'https://source.unsplash.com/random'),
-(4,2,2,'10 teclados donador 4', 6003, 'https://source.unsplash.com/random'),
-(4,1,1,'10 teclados donador 4', 6004, null),
-(4,2,2,'10 teclados donador 4', 6005, null);
+(1,1,1,'10 CPUS DELL mini', 10500, null),
+(2,2,2,'10 teclados y mouse', 2500, null),
+(3,2,2,'10 diademas para pc', 1500, null),
+(4,1,1,'5 teclados de repuesto marca lenovo', 1800, null),
+(1,2,2,'20 cajas de hojas', 5000, null),
+(2,1,1,'50 cajas de grapas', 2000, null),
+(6,2,2,'100 despensas para evento de navidad', 5000, null),
+(7,2,2,'10 loncheras', 400, null),
+(8,1,1,'10 kit de primeros auxilios', 3600, null),
+(2,2,2,'6 botes con ruedas para la basura', 5400, null),
+(3,1,1,'60 pinceles', 3655, null),
+(3,2,2,'10 botes de pintura blanca', 7895, null),
+(4,2,2,'80 litros de leche', 800, null);
 
 -- Insertar datos de la tabla donaciones_beneficiarios - 50
 
@@ -608,75 +566,13 @@ INSERT INTO donaciones_beneficiarios(id_beneficiario, id_donacion, destino_donac
 (1,3, 'Para el evento de diciembre'),
 (1,4, 'Para el evento de verano'),
 (1,5, 'Configurar el nuevo internet'),
-(2,1, 'Para uso del instituto'),
-(2,2, 'Para uso del instituto'),
-(2,3, 'Para uso del instituto'),
-(2,4, 'Para uso del instituto'),
-(2,5, 'Para uso del instituto'),
-(3,1, 'Para uso del instituto'),
-(3,2, 'Para uso del instituto'),
-(3,3, 'Para uso del instituto'),
-(3,4, 'Para uso del instituto'),
-(3,5, 'Para uso del instituto'),
-(4,1, 'Para uso del instituto'),
-(4,2, 'Para uso del instituto'),
-(5,3, 'Para uso del instituto'),
-(6,4, 'Para uso del instituto'),
-(7,5, 'Para uso del instituto');
-(8,6, 'Para uso del instituto');
+(2,1, 'Para uso del instituto');
 
 -- Insertar datos de la tabla donaciones_categorias - 50
 INSERT INTO donaciones_categorias(id_categoria, id_donacion) VALUES
 (1,1),
-(1,2),
-(1,3),
-(1,4),
-(1,5),
-(1,6),
-(1,7),
-(1,8),
-(1,9),
-(1,10),
-(1,11),
-(1,12),
-(1,13),
-(1,14),
-(1,15),
-(1,16),
-(1,17),
-(1,18),
-(1,19),
-(1,20),
-(3,3),
-(3,2),
-(3,3),
-(3,4),
-(3,5),
-(2,1),
 (2,2),
-(2,3),
-(2,4),
-(2,5),
-(2,6),
-(2,7),
-(2,8),
-(2,9),
-(2,10),
-(2,11),
-(2,12),
-(2,13),
-(2,14),
-(2,15),
-(3,1),
-(3,2),
-(3,3),
-(3,4),
-(3,5),
-(3,6),
-(3,7),
-(3,8),
-(3,9),
-(3,10);
+(3,2);
 
 -- NOTAS
 

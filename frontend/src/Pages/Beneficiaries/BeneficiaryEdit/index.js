@@ -20,6 +20,7 @@ import {
   updateBeneficiary
 } from '../../../helpers/beneficiaries.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import './style.scss'
 
 export const BeneficiaryEdit = ({ justView }) => {
   const { id } = useParams()
@@ -190,15 +191,16 @@ export const BeneficiaryEdit = ({ justView }) => {
             </div>)
           }
         </form>
-        <div>
-          <label>Lista de beneficiarios</label>
+        <div className='file-section'>
+          <label>Archivo actual</label>
           <div className='input-field'>
+            <input type='text' value={archivo || 'Sin archivo'} disabled />
             <button
               type='button'
               className='btn orange'
               disabled={!archivo || !(edit || justView)}
               onClick={handlerDownload}
-            >Archivo adjunto</button>
+            >Descargar</button>
           </div>
         </div>
 

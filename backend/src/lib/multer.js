@@ -16,10 +16,14 @@ const dataUri = (req) => {
 
 const diskStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    if (file) {
+      cb(null, 'uploads/')
+    }
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)) // Appending extension
+    if (file) {
+      cb(null, Date.now() + path.extname(file.originalname))
+    } // Appending extension
   }
 })
 const multerUploadFile = multer({ storage: diskStorage })

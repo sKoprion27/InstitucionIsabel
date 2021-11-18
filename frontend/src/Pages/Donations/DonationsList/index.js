@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { CSVLink } from 'react-csv'
+import { useLoading } from '../../../hooks/useLoading'
 
 export const DonationsList = () => {
   const [didFetch, setDidFetch] = useState(false)
@@ -28,11 +29,12 @@ export const DonationsList = () => {
     headers: [],
     data: []
   })
-
+  const { initLoading, endLoading, loading } = useLoading()
   // Get initial list
   useEffect(() => {
     const getList = async () => {
       try {
+        initLoading()
         const donations = await getAllDonations({})
         if (!(donations.length === 0)) {
           setExcel({
@@ -44,9 +46,11 @@ export const DonationsList = () => {
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
         toastInit('Lista actualizada')
+        endLoading()
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar la lista', 'red lighten-2')
+        endLoading()
       }
     }
     getList()
@@ -59,6 +63,7 @@ export const DonationsList = () => {
   // Get range list
   const finderByRange = async () => {
     try {
+      initLoading()
       if (!startDate || !endDate) {
         const donations = await getAllDonations({})
         setOriginalList(parseDonations(donations))
@@ -82,10 +87,12 @@ export const DonationsList = () => {
             data: donations
           })
         }
+        endLoading()
       }
     } catch (error) {
       console.log(error)
       toastInit('Error al filtrar por fechas', 'red lighten-2')
+      endLoading()
     }
   }
 
@@ -152,6 +159,7 @@ export const DonationsList = () => {
         </div>
       </div>
       <TableList
+        loading={loading}
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}

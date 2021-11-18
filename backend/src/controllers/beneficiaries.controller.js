@@ -24,7 +24,6 @@ export const beneficiaryController = {
         response(req, res, 'ERROR GET BENEFICIARIES', null, 500)
         return
       }
-      console.log(rows[0])
       response(req, res, 'GET BENEFICIARIES', rows[0], 200)
     } catch (error) {
       console.log(error)
@@ -82,12 +81,12 @@ export const beneficiaryController = {
       const currentFile = await Beneficiary.getOne(id)
       const filePath = path.join(
         __dirname, '/../../uploads/',
-        currentFile.rows[0].archivo
+        (currentFile.rows[0].archivo ? currentFile.rows[0].archivo : 'NULL')
       )
 
       const postBeneficiary = {
         ...beneficiary,
-        archivo: req.file.filename
+        archivo: req.file ? req.file.filename : null
       }
       const { rowCount } = await Beneficiary.putOne(postBeneficiary, id)
       if (rowCount === 0) {

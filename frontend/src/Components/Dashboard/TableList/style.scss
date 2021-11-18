@@ -8,3 +8,15 @@
   min-width: 200px;
   max-width: 200px;
 }
+
+.container-nothing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 300px;
+
+  i {
+    font-size: 40px;
+  }
+}

@@ -6,9 +6,11 @@ import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
 import { getAllStates } from '../../../helpers/states.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { useLoading } from '../../../hooks/useLoading'
 
 export const BeneficiaryList = () => {
   const [didFetch, setDidFetch] = useState(false)
+  const { initLoading, endLoading, loading } = useLoading()
   const {
     setOriginalList,
     setListFilter,
@@ -20,13 +22,16 @@ export const BeneficiaryList = () => {
   useEffect(() => {
     const getList = async () => {
       try {
+        initLoading()
         const beneficiaries = await getAllBeneficiaries()
         setOriginalList(beneficiaries)
         setListFilter(beneficiaries)
         toastInit('Lista actualizada')
+        endLoading()
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar lista', 'red lighten-2')
+        endLoading()
       }
     }
     getList()
@@ -41,11 +46,11 @@ export const BeneficiaryList = () => {
         backend='beneficiaries'
       />
       <TableList
+        loading={loading}
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}
         backend='beneficiaries'
-      // fields={['nombre', 'descripcion']}
       />
     </>
   )

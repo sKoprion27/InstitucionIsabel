@@ -5,9 +5,11 @@ import { getAllCategories } from '../../../helpers/categories.helpers'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { useLoading } from '../../../hooks/useLoading'
 
 export const CategoryList = () => {
   const [didFetch, setDidFetch] = useState(false)
+  const { endLoading, initLoading, loading } = useLoading()
   const {
     setOriginalList,
     setListFilter,
@@ -19,13 +21,16 @@ export const CategoryList = () => {
   useEffect(() => {
     const getList = async () => {
       try {
+        initLoading()
         const categories = await getAllCategories()
         setOriginalList(categories)
         setListFilter(categories)
         toastInit('Lista actualizada')
+        endLoading()
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar lista', 'red lighten-2')
+        endLoading()
       }
     }
     getList()
@@ -40,6 +45,7 @@ export const CategoryList = () => {
         backend='categories'
       />
       <TableList
+        loading={loading}
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}

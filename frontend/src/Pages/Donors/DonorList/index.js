@@ -5,9 +5,11 @@ import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
 import { getAllDonors } from '../../../helpers/donors.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { useLoading } from '../../../hooks/useLoading'
 
 export const DonorList = () => {
   const [didFetch, setDidFetch] = useState(false)
+  const { endLoading, initLoading, loading } = useLoading()
   const {
     setOriginalList,
     setListFilter,
@@ -19,13 +21,16 @@ export const DonorList = () => {
   useEffect(() => {
     const getList = async () => {
       try {
+        initLoading()
         const donors = await getAllDonors()
         setOriginalList(donors)
         setListFilter(donors)
         toastInit('Lista actualizada')
+        endLoading()
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar lista', 'red lighten-2')
+        endLoading()
       }
     }
     getList()
@@ -41,6 +46,7 @@ export const DonorList = () => {
         backend='donors'
       />
       <TableList
+        loading={loading}
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}

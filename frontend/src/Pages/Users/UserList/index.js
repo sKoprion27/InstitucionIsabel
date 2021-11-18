@@ -6,9 +6,11 @@ import { TableList } from '../../../Components/Dashboard/TableList'
 import { useFinder } from '../../../hooks/useFinder'
 import './style.scss'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
+import { useLoading } from '../../../hooks/useLoading'
 
 export const UserList = () => {
   const [didFetch, setDidFetch] = useState(false)
+  const { initLoading, endLoading, loading } = useLoading()
   const {
     setOriginalList,
     setListFilter,
@@ -20,13 +22,16 @@ export const UserList = () => {
   useEffect(() => {
     const getUsers = async () => {
       try {
+        initLoading()
         const users = await getAllUsers()
         setOriginalList(users)
         setListFilter(users)
         toastInit('Lista actualizada')
+        endLoading()
       } catch (error) {
         console.log(error.response)
         toastInit('Error al cargar lista', 'red lighten-2')
+        endLoading()
       }
     }
     getUsers()
@@ -42,6 +47,7 @@ export const UserList = () => {
         backend='users'
       />
       <TableList
+        loading={loading}
         arrayList={originalList}
         arrayListFiltered={listFiltered}
         setFetchAction={setDidFetch}

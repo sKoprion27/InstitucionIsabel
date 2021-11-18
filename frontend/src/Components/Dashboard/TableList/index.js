@@ -12,60 +12,80 @@ export const TableList = ({
   arrayListFiltered = [],
   setFetchAction,
   fields = ['id', 'creado'],
-  backend = ''
+  backend = '',
+  loading = true
 }) => {
   return (
-    <div className='responsive-table'>
-      <table className='highlight striped'>
-        <thead>
-          <tr>
-            {
-              arrayList.length > 0 &&
-              (Object.keys(arrayList[0])
-                .filter(key => !fields.some(f => f === key))
-                .map((key, index) => {
-                  return (
-                    <th key={key + index}>{formatKeyTable(key)}</th>
-                  )
-                }))
-            }
-            <th>OPCIONES</th>
-          </tr>
-        </thead>
-        <tbody className='text-center'>
-          {
-            arrayListFiltered.length >= 1 && (
-              <>
-                {
-                  arrayListFiltered.map((element, index) => {
-                    return (
-                      <tr key={element + index} className='table-row' >
-                        {
-                          Object.keys(element)
-                            .filter(key => !fields.some(f => f === key))
-                            .map((key) => {
+    <>
+      {
+        loading
+          ? (
+            <div className='progress'>
+              <div className='indeterminate' />
+            </div>)
+          : (
+            <div className='responsive-table'>
+              <table className='highlight striped'>
+                <thead>
+                  {
+                    arrayListFiltered.length > 0 && (<tr>
+                      {
+                        arrayList.length > 0 &&
+                        (Object.keys(arrayList[0])
+                          .filter(key => !fields.some(f => f === key))
+                          .map((key, index) => {
+                            return (
+                              <th key={key + index}>{formatKeyTable(key)}</th>
+                            )
+                          }))
+                      }
+                      <th>OPCIONES</th>
+
+                    </tr>)
+                  }
+
+                </thead>
+                <tbody className='text-center'>
+                  {
+                    arrayListFiltered.length > 0
+                      ? (
+                        <>
+                          {
+                            arrayListFiltered.map((element, index) => {
                               return (
-                                <>
+                                <tr key={element + index} className='table-row' >
                                   {
-                                    typeRender(key, element)
+                                    Object.keys(element)
+                                      .filter(key => !fields.some(f => f === key))
+                                      .map((key) => {
+                                        return (
+                                          <>
+                                            {
+                                              typeRender(key, element)
+                                            }
+                                          </>
+                                        )
+                                      })
                                   }
-                                </>
+                                  <td className='table-row__options'>
+                                    {checkPermission(backend, element, setFetchAction)}
+                                  </td>
+                                </tr>
                               )
                             })
-                        }
-                        <td className='table-row__options'>
-                          {checkPermission(backend, element, setFetchAction)}
-                        </td>
-                      </tr>
-                    )
-                  })
-                }
-              </>
-            )
-          }
-        </tbody>
-      </table>
-    </div>
+                          }
+                        </>)
+                      : (
+                        <div className='container-nothing teal-text'>
+                          <h2>Sin coincidencias</h2>
+                          <span><Icon>mood_bad</Icon></span>
+                        </div>)
+                  }
+                </tbody>
+              </table>
+            </div>)
+      }
+    </>
   )
 }
 
