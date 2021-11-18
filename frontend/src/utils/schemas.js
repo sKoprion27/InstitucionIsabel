@@ -99,6 +99,9 @@ export const donorSchema = yup.object().shape({
   correo_electronico: yup.mixed()
     .test('required', 'Ingresa el correo electrónico del donador', (value) => {
       return value
+    })
+    .test('format', 'Ingresa un correo válido (ejemplo@algo.com, sin espacios al final)', (value) => {
+      return !!value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
     }),
   domicilio_fiscal: yup.mixed()
     .test('required', 'Ingresa el domicilio fiscal del donador', (value) => {
