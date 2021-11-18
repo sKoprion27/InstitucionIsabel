@@ -71,7 +71,7 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
         </Icon>
       </button>
 
-      {/* <div
+      <div
         ref={modalRef}
         id={`modal-invoice${id}`}
         className='modal'
@@ -131,6 +131,6 @@ export const InvoiceModal = ({ id, setFetch, facturado }) => {
                 </div>
               </div>)
         }
-      </div> */}
+      </div>
     </>)
 }

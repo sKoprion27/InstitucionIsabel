@@ -67,8 +67,6 @@ export const DonorEdit = ({ justView }) => {
           cfdis: convertToSelectOptionsCFDI(response.cfdis)
         })
 
-        console.log(response)
-
         const initialStateForm = {
           telefono: response.donor.telefono,
           razon_social: response.donor.razon_social,
@@ -92,7 +90,7 @@ export const DonorEdit = ({ justView }) => {
             'descripcion'
           )[0]
         }
-        console.log('INITIAL DATA', initialStateForm)
+
         reset(initialStateForm)
       } catch (error) {
         console.log(error)

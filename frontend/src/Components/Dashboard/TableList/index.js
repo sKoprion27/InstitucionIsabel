@@ -76,9 +76,9 @@ export const TableList = ({
                         }
                       </tbody>)
                     : (
-                      <tbody className='container-nothing teal-text'>
+                      <tbody className='teal-text'>
                         <tr>
-                          <td>
+                          <td className='container-nothing white'>
                             <h2>Sin coincidencias</h2>
                             <span><Icon>mood_bad</Icon></span>
                           </td>
