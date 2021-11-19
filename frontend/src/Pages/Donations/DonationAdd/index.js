@@ -3,6 +3,7 @@ import {
   useState
 } from 'react'
 import {
+  Link,
   Navigate
 } from 'react-router-dom'
 import {
@@ -27,11 +28,13 @@ import { getAllBeneficiaries } from '../../../helpers/beneficiaries.helpers'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { donationSchema } from '../../../utils/schemas'
+import { useLoading } from '../../../hooks/useLoading'
+import { HelpShorcut } from '../../../Components/Dashboard/HelpShorcut'
 
 export const DonationAdd = () => {
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(true)
-  const [loading, setLoading] = useState(false)
+  const { initLoading, endLoading, Spinner, loading } = useLoading()
   const [options, setOptions] = useState({
     donors: [],
     paymentMethods: [],
@@ -49,10 +52,6 @@ export const DonationAdd = () => {
   } = useForm({
     resolver: yupResolver(donationSchema)
   })
-
-  const onChange = (e) => {
-    console.log(e.target.files[0])
-  }
 
   useEffect(() => {
     const getInfoSelects = async () => {
@@ -83,7 +82,7 @@ export const DonationAdd = () => {
 
   const handlerSubmit = async (data) => {
     try {
-      setLoading(true)
+      initLoading()
       setEdit(false)
       const dataPost = {
         donation: {
@@ -101,13 +100,13 @@ export const DonationAdd = () => {
       await postDonation(dataPost)
       toastInit('Elemento agregado')
       setEdit(true)
-      setLoading(false)
+      endLoading()
       resetForm()
     } catch (error) {
       console.log(error)
       toastInit('Error al agregar', 'red lighten-2')
       setEdit(true)
-      resetForm()
+      endLoading()
     }
   }
 
@@ -169,28 +168,6 @@ export const DonationAdd = () => {
               </span>)
             }
           </div>
-          {/* <div>
-            <label>Facturado</label>
-            <input
-              onChange={register}
-              type='text'
-              autoComplete='off'
-              {...register('esta_facturado', {
-                required: {
-                  value: true,
-                  message: 'Este campo es requerido'
-                }
-              })}
-              disabled={!edit}
-            />
-            {errors.descripcion &&
-              (<span className='red-text'>
-                {
-                  errors.descripcion.message
-                }
-              </span>)
-            }
-          </div> */}
           {/* SELECT DONDADOR */}
           <div className='input-select'>
             <label>Selecciona donador</label>
@@ -217,6 +194,10 @@ export const DonationAdd = () => {
               </span>)
             }
           </div>
+          <HelpShorcut
+            path='donadores/add'
+            text='Agregar donador'
+          />
           {/* SELECT MÉTODO DE PAGO */}
           <div className='input-select'>
             <label>Selecciona un método de pago</label>
@@ -243,6 +224,10 @@ export const DonationAdd = () => {
               </span>)
             }
           </div>
+          <HelpShorcut
+            path='metodos-pago/add'
+            text='Agregar método de pago'
+          />
           {/* SELECT TIPO DE DONACIÓN */}
           <div className='input-select'>
             <label>Selecciona que tipo de donativo</label>
@@ -269,6 +254,10 @@ export const DonationAdd = () => {
               </span>)
             }
           </div>
+          <HelpShorcut
+            path='tipo-donacion/add'
+            text='Agregar tipo de donación'
+          />
           {/* SELECT CATEGORIAS_DONACIONES */}
           <div className='input-select'>
             <label>Selecciona las categorias del donativo</label>
@@ -296,6 +285,10 @@ export const DonationAdd = () => {
               </span>)
             }
           </div>
+          <HelpShorcut
+            path='categorias/add'
+            text='Agregar categoria'
+          />
           {/* SELECT DONACIONES_BENEFICIARIOS */}
           <div className='input-select'>
             <label>Selecciona los beneficiarios del donativo</label>
@@ -324,6 +317,10 @@ export const DonationAdd = () => {
               </span>)
             }
           </div>
+          <HelpShorcut
+            path='beneficiarios/add'
+            text='Agregar beneficiario'
+          />
           {/* AGREGAR DE FOTO */}
           <div className='img-container-input'>
             <div className='file-field input-field'>
@@ -354,11 +351,7 @@ export const DonationAdd = () => {
             </button>
           </div>
           {
-            loading && (
-              <div className='progress'>
-                <div className='indeterminate' />
-              </div>
-            )
+            loading && (<Spinner />)
           }
         </form>
       </Card>

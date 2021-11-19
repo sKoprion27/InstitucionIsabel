@@ -14,13 +14,19 @@ export const donationController = {
   // GET ALL
   getDonations: async (req, res) => {
     try {
-      const { startDate, endDate } = req.query
+      const { startDate, endDate, limit, offset } = req.query
       if (startDate && endDate) {
         const { rows } = await Donation.getAllByRange(startDate, endDate)
         response(req, res, 'GET DONATIONS', rows, 200)
-      } else {
-        const { rows } = await Donation.getAll()
+      } else if (limit && offset) {
+        const { rows } = await Donation.pagination(limit, offset)
         response(req, res, 'GET DONATIONS', rows, 200)
+      } else {
+        const { rows, rowCount } = await Donation.getAll()
+        response(req, res, 'GET DONATIONS', {
+          donations: rows,
+          total: rowCount
+        }, 200)
       }
     } catch (error) {
       console.log(error)

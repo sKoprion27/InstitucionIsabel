@@ -2,6 +2,7 @@ import { AuthProvider } from './contexts/authContext'
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
 import { initInterceptors } from './services/auth.service'
 import { routes } from './routes'
+import './App.scss'
 
 initInterceptors()
 

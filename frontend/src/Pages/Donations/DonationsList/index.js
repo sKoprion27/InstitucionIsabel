@@ -3,16 +3,22 @@ import { MenuPage } from '../../../Components/Dashboard/MenuPage'
 import { useEffect, useState } from 'react'
 import { useFinder } from '../../../hooks/useFinder'
 import { TableList } from '../../../Components/Dashboard/TableList'
-import { getAllDonations } from '../../../helpers/donations.helpers'
+import {
+  getAllDonations,
+  getAllDonationsByRange,
+  getAllDonationsPagination
+} from '../../../helpers/donations.helpers'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './style.scss'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
-import { CSVLink } from 'react-csv'
 import { useLoading } from '../../../hooks/useLoading'
+import { useDownloadCSV } from '../../../hooks/useDownloadCSV'
 
 export const DonationsList = () => {
   const [didFetch, setDidFetch] = useState(false)
+  const [totalDonations, setTotalDonations] = useState(null)
+  const limitPagination = 10
 
   // States for use finder
   const {
@@ -24,25 +30,19 @@ export const DonationsList = () => {
     handlerFinder
   } = useFinder(['nombre', 'monto', 'donador', 'facturado'])
 
-  // State for excel
-  const [excel, setExcel] = useState({
-    headers: [],
-    data: []
-  })
+  const { DownloadCSV, setHeadersCSV } = useDownloadCSV()
+
   const { initLoading, endLoading, loading } = useLoading()
   // Get initial list
   useEffect(() => {
     const getList = async () => {
       try {
         initLoading()
-        const donations = await getAllDonations({})
+        const { donations, total } = await getAllDonations()
         if (!(donations.length === 0)) {
-          setExcel({
-            headers: getHeadersCVS(donations),
-            data: donations
-          })
+          setHeadersCSV(donations)
         }
-
+        setTotalDonations(total / limitPagination)
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
         toastInit('Lista actualizada')
@@ -65,28 +65,22 @@ export const DonationsList = () => {
     try {
       initLoading()
       if (!startDate || !endDate) {
-        const donations = await getAllDonations({})
+        const { donations } = await getAllDonations()
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
         toastInit('Lista filtrada')
-        setExcel({
-          headers: getHeadersCVS(donations),
-          data: donations
-        })
+        setHeadersCSV(donations)
         endLoading()
       } else {
-        const donations = await getAllDonations({
-          startDate: startDate.toString().split('GMT')[0],
-          endDate: endDate.toString().split('GMT')[0]
+        const donations = await getAllDonationsByRange({
+          startDate: '2021/11/25',
+          endDate: '2021/11/30'
         })
         setOriginalList(donations)
         setListFilter(donations)
         toastInit('Lista actualizada')
         if (!(donations.length === 0)) {
-          setExcel({
-            headers: getHeadersCVS(donations),
-            data: donations
-          })
+          setHeadersCSV(donations)
         }
         endLoading()
       }
@@ -97,19 +91,18 @@ export const DonationsList = () => {
     }
   }
 
-  const getHeadersCVS = (response, arr = ['id', 'foto_donacion']) => {
-    const headers = Object.keys(response[0]).map(key => {
-      return {
-        label: key,
-        key
+  const handlerPagination = async ({ selected }) => {
+    const pagination = selected
+    const donations = await getAllDonationsPagination(
+      {
+        limit: (pagination * limitPagination) + limitPagination,
+        offset: pagination * limitPagination
       }
-    })
-    const headersFiltered = headers.filter(
-      header => !arr.some(k => k === header.key)
     )
-    return headersFiltered
+    setOriginalList(parseDonations(donations))
+    setListFilter(parseDonations(donations))
+    console.log(donations)
   }
-
   return (
     <>
       <NavPage title='Lista de donaciones' onePage />
@@ -121,17 +114,7 @@ export const DonationsList = () => {
         backend='donations'
       />
       <div className='report-area'>
-        <CSVLink
-          className={`
-          btn download-excel
-          ${listFiltered.length === 0 && 'disabled'}
-          `}
-          filename={'donaciones.csv'}
-          data={excel.data}
-          headers={excel.headers}
-        >
-          Descargar excel
-        </CSVLink>
+        <DownloadCSV listFiltered={listFiltered} />
         <div className='date-picker-options'>
           <label>Selecciona rango de fechas de facturas</label>
           <div className='finder'>
@@ -159,6 +142,7 @@ export const DonationsList = () => {
           </div>
         </div>
       </div>
+
       <TableList
         loading={loading}
         arrayList={originalList}

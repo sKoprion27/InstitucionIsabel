@@ -29,11 +29,13 @@ import { convertToSelectOptions, filterSelectsOptiones, formatDateTable } from '
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { donationSchema } from '../../../utils/schemas'
+import { HelpShorcut } from '../../../Components/Dashboard/HelpShorcut'
+import { useLoading } from '../../../hooks/useLoading'
 
 export const DonationEdit = ({ justView }) => {
   const { id } = useParams()
   const animatedComponents = makeAnimated()
-  const [loading, setLoading] = useState(false)
+  const { initLoading, endLoading, Spinner, loading } = useLoading()
   const [edit, setEdit] = useState(false)
   const [urlFoto, setUrlFoto] = useState('')
   const [idsOptions, setIdsOptions] = useState({
@@ -62,6 +64,7 @@ export const DonationEdit = ({ justView }) => {
   useEffect(() => {
     const getOne = async () => {
       try {
+        initLoading()
         const response = await getOneDonation(id)
         // console.log(response.donation)
         setUrlFoto(response.donation.foto_donacion)
@@ -118,8 +121,10 @@ export const DonationEdit = ({ justView }) => {
         }
         // console.log('INITIAL', initialStateForm)
         reset(initialStateForm)
+        endLoading()
       } catch (error) {
         console.log(error)
+        endLoading()
         setEdit(null)
       }
     }
@@ -130,7 +135,7 @@ export const DonationEdit = ({ justView }) => {
 
   const handlerSubmit = async (data, e) => {
     try {
-      setLoading(true)
+      initLoading()
       console.log(data.foto_donacion[0] ? data.foto_donacion[0] : null)
       const donation = {
         data: {
@@ -147,13 +152,13 @@ export const DonationEdit = ({ justView }) => {
       }
       await updateDonation(donation, id)// envio al server
       toastInit('Elemento actualizado')
-      setLoading(false)
+      endLoading()
       setEdit(!edit)
       e.target.reset()
     } catch (error) {
       console.log(error)
       toastInit('Error al actualizar', 'red lighten-2')
-      setLoading(false)
+      endLoading()
     }
   }
   const handlerEdit = () => {
@@ -287,14 +292,10 @@ export const DonationEdit = ({ justView }) => {
             }
           </div>
           {
-            justView && (<div className='input-field'>
-              <Link
-                className='teal-text'
-                target='_blank' to={`/dashboard/donadores/ver/${idsOptions.idDonador}`}
-              >
-                Clik para ver detalle de donador
-              </Link>
-            </div>)
+            justView && (<HelpShorcut
+              path={`donadores/${idsOptions.idDonador}`}
+              text='Click para ver detalle de donador'
+            />)
           }
           {/* SELECT MÉTODO DE PAGO */}
           <div className='input-select'>
@@ -322,14 +323,10 @@ export const DonationEdit = ({ justView }) => {
             }
           </div>
           {
-            justView && (<div className='input-field'>
-              <Link
-                className='teal-text'
-                target='_blank' to={`/dashboard/metodos-pago/ver/${idsOptions.idMetodo}`}
-              >
-                Clik para ver detalle de método de pago
-              </Link>
-            </div>)
+            justView && (<HelpShorcut
+              path={`metodos-pago/${idsOptions.idMetodo}`}
+              text='Click para ver detalle de método de pago'
+            />)
           }
           {/* SELECT TIPO DE DONACIÓN */}
           <div className='input-select'>
@@ -357,14 +354,9 @@ export const DonationEdit = ({ justView }) => {
             }
           </div>
           {
-            justView && (<div className='input-field'>
-              <Link
-                className='teal-text'
-                target='_blank' to={`/dashboard/tipo-donacion/ver/${idsOptions.idTipoDonacion}`}
-              >
-                Clik para ver detalle de tipo de donativo
-              </Link>
-            </div>)
+            justView && (<HelpShorcut
+              path={`tipo-donacion/${idsOptions.idTipoDonacion}`}
+              text='Click para ver detalle de tipo de donativo' />)
           }
           {/* SELECT CATEGORIAS_DONACIONES */}
           <div className='input-select'>
@@ -471,11 +463,7 @@ export const DonationEdit = ({ justView }) => {
             </div>)
           }
           {
-            loading && (
-              <div className='progress'>
-                <div className='indeterminate' />
-              </div>
-            )
+            loading && (<Spinner />)
           }
         </form>
       </Card>

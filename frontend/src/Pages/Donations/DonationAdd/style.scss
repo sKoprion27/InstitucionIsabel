@@ -9,6 +9,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
 
-  .img-error {}
+.help-shorcut {
+  margin-bottom: 20px;
+
+  a {
+    font-weight: 500;
+  }
 }

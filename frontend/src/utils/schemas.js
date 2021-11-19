@@ -46,6 +46,9 @@ export const donationSchema = yup.object().shape({
     .test('positive', 'El numero debe ser positivo', (value) => {
       return value > 0
     })
+    .test('required', 'Supera el limite en valor númerico', (value) => {
+      return (Number(value) === Number(value).toFixed(2))
+    })
 })
 
 export const beneficiarySchema = yup.object().shape({
