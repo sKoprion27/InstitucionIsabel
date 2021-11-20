@@ -90,7 +90,8 @@ export const DonorEdit = ({ justView }) => {
             'descripcion'
           )[0]
         }
-
+        console.log(response)
+        console.log(initialStateForm)
         reset(initialStateForm)
       } catch (error) {
         console.log(error)
@@ -221,20 +222,12 @@ export const DonorEdit = ({ justView }) => {
             <label>Correo Electrónico</label>
             <input
               onChange={register}
-              type='email'
+              type='text'
               autoComplete='off'
-              {...register('correo_electronico', {
-                required: {
-                  value: true,
-                  message: 'El correo electrónico es requerido'
-                },
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Ingresa un correo válido'
-                }
-              })}
-              disabled={!edit}
-            />
+              {
+              ...register('correo_electronico')
+              }
+              disabled={!edit} />
             {errors.correo_electronico &&
               (<span className='red-text'>
                 {
@@ -339,7 +332,6 @@ export const DonorEdit = ({ justView }) => {
           <div className='input-select'>
             <label>Selecciona un CFDI</label>
             <Controller
-              defaultValue={false}
               control={control}
               name='id_cfdi'
               render={({ field }) => (
