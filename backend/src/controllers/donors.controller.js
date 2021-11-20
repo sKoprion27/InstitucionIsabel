@@ -6,8 +6,21 @@ import { Cfdi } from '../models/Cfdi.model'
 export const donorController = {
   getDonors: async (req, res) => {
     try {
-      const { rows } = await Donor.getAll()
-      response(req, res, 'GET DONORS', rows, 200)
+      const { limit, offset } = req.query
+      if (limit && offset) {
+        const { rowCount } = await Donor.getAll()
+        const { rows } = await Donor.pagination(limit, offset)
+        response(req, res, 'GET DONORS', {
+          donors: rows,
+          total: rowCount
+        }, 200)
+      } else {
+        const { rows, rowCount } = await Donor.getAll()
+        response(req, res, 'GET DONORS', {
+          donors: rows,
+          total: rowCount
+        }, 200)
+      }
     } catch (error) {
       console.log(error)
       response(req, res, 'ERROR GET DONORS', null, 500)

@@ -1,5 +1,6 @@
 import ReactPaginate from 'react-paginate'
 import { getAllDonationsPagination } from '../../../helpers/donations.helpers'
+import { getAllDonorsPagination } from '../../../helpers/donors.helpers'
 import { parseDonations } from '../../../utils'
 import './style.scss'
 export const PaginationLayout = ({
@@ -33,9 +34,9 @@ export const PaginationLayout = ({
   }
 
   const queryDonor = async (query) => {
-    const { donations } = await getAllDonationsPagination(query)
-    setOriginalList(parseDonations(donations))
-    setListFilter(parseDonations(donations))
+    const { donors } = await getAllDonorsPagination(query)
+    setOriginalList(donors)
+    setListFilter(donors)
   }
 
   return (

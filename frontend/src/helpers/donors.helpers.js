@@ -5,6 +5,13 @@ export const getAllDonors = async () => {
   return data.response
 }
 
+export const getAllDonorsPagination = async ({ limit, offset }) => {
+  const { data } = await Axios.get(
+    `${URL_API}/donors?limit=${limit}&offset=${offset}`
+  )
+  return data.response
+}
+
 export const getOneDonor = async (id) => {
   const { data } = await Axios.get(`${URL_API}/donors/${id}`)
   return data.response
