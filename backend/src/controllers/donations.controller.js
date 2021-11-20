@@ -16,11 +16,19 @@ export const donationController = {
     try {
       const { startDate, endDate, limit, offset } = req.query
       if (startDate && endDate) {
-        const { rows } = await Donation.getAllByRange(startDate, endDate)
-        response(req, res, 'GET DONATIONS', rows, 200)
+        const { rows, rowCount } = await Donation
+          .getAllByRange(startDate, endDate)
+
+        response(req, res, 'GET DONATIONS', {
+          donations: rows,
+          total: rowCount
+        }, 200)
       } else if (limit && offset) {
-        const { rows } = await Donation.pagination(limit, offset)
-        response(req, res, 'GET DONATIONS', rows, 200)
+        const { rows, rowCount } = await Donation.pagination(limit, offset)
+        response(req, res, 'GET DONATIONS', {
+          donations: rows,
+          total: rowCount
+        }, 200)
       } else {
         const { rows, rowCount } = await Donation.getAll()
         response(req, res, 'GET DONATIONS', {

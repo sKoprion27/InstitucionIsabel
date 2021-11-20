@@ -14,12 +14,14 @@ import './style.scss'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { useLoading } from '../../../hooks/useLoading'
 import { useDownloadCSV } from '../../../hooks/useDownloadCSV'
+import { parseDonations } from '../../../utils'
+import { PaginationLayout } from '../../../Components/Dashboard/PaginationLayout'
 
 export const DonationsList = () => {
   const [didFetch, setDidFetch] = useState(false)
-  const [totalDonations, setTotalDonations] = useState(null)
+  // States for pagination
+  const [totalElements, setTotalElements] = useState(null)
   const limitPagination = 10
-
   // States for use finder
   const {
     toggle,
@@ -42,9 +44,9 @@ export const DonationsList = () => {
         if (!(donations.length === 0)) {
           setHeadersCSV(donations)
         }
-        setTotalDonations(total / limitPagination)
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
+        setTotalElements(total / limitPagination)
         toastInit('Lista actualizada')
         endLoading()
       } catch (error) {
@@ -65,19 +67,25 @@ export const DonationsList = () => {
     try {
       initLoading()
       if (!startDate || !endDate) {
-        const { donations } = await getAllDonations()
+        const { donations, total } = await getAllDonations()
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
+        setTotalElements(total / limitPagination)
         toastInit('Lista filtrada')
+
         setHeadersCSV(donations)
         endLoading()
       } else {
-        const donations = await getAllDonationsByRange({
-          startDate: '2021/11/25',
-          endDate: '2021/11/30'
+        const initDate = startDate.toString().split('00')[0]
+        const finishDate = endDate.toString().split('00')[0]
+        const { donations, total } = await getAllDonationsByRange({
+          startDate: initDate,
+          endDate: finishDate
         })
+
         setOriginalList(donations)
         setListFilter(donations)
+        setTotalElements(total / limitPagination)
         toastInit('Lista actualizada')
         if (!(donations.length === 0)) {
           setHeadersCSV(donations)
@@ -91,18 +99,6 @@ export const DonationsList = () => {
     }
   }
 
-  const handlerPagination = async ({ selected }) => {
-    const pagination = selected
-    const donations = await getAllDonationsPagination(
-      {
-        limit: (pagination * limitPagination) + limitPagination,
-        offset: pagination * limitPagination
-      }
-    )
-    setOriginalList(parseDonations(donations))
-    setListFilter(parseDonations(donations))
-    console.log(donations)
-  }
   return (
     <>
       <NavPage title='Lista de donaciones' onePage />
@@ -125,8 +121,8 @@ export const DonationsList = () => {
               Filtrar
             </button>
             <DatePicker
-              dateFormat='yyyy/MM/dd'
-              valueFormat='yyyy/MM/dd'
+              dateFormat='yyyy-MM-dd'
+              valueFormat='yyyy-MM-dd'
               placeholderText='Click para seleccionar rango'
               showTimeSelect={false}
               selectsRange={true}
@@ -143,22 +139,22 @@ export const DonationsList = () => {
         </div>
       </div>
 
-      <TableList
-        loading={loading}
-        arrayList={originalList}
-        arrayListFiltered={listFiltered}
-        setFetchAction={setDidFetch}
+      <PaginationLayout
         backend='donations'
-        fields={['id', 'creado', 'tipo_donacion']}
-      />
+        limitPagination={limitPagination}
+        setOriginalList={setOriginalList}
+        setListFilter={setListFilter}
+        totalElements={totalElements}
+      >
+        <TableList
+          loading={loading}
+          arrayList={originalList}
+          arrayListFiltered={listFiltered}
+          setFetchAction={setDidFetch}
+          backend='donations'
+          fields={['id', 'creado', 'tipo_donacion']}
+        />
+      </PaginationLayout>
     </>
   )
-}
-const parseDonations = (donations) => {
-  return donations.map(d => {
-    return {
-      ...d,
-      facturado: d.facturado === null ? 'No facturado' : d.facturado
-    }
-  })
 }

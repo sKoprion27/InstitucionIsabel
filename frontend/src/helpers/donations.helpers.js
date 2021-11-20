@@ -1,9 +1,9 @@
 import Axios from 'axios'
 const URL_API = 'http://localhost:4000'
 export const getAllDonationsByRange = async ({ startDate, endDate }) => {
-  const { data } = await Axios.get(
-    `${URL_API}/donations?startDate=${startDate}&endDate=${endDate}`
-  )
+  const URL = `${URL_API}/donations?startDate=${startDate}&endDate=${endDate}`
+  console.log(URL)
+  const { data } = await Axios.get(URL)
   return data.response
 }
 

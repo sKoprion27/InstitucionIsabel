@@ -25,11 +25,11 @@ export const Donation = {
         D.existe = true
       ORDER BY D.id DESC
       LIMIT
-        10
-      OFFSET
         $1
+      OFFSET
+        $2
     `
-    return db.query(QUERY, [offset])
+    return db.query(QUERY, [limit, offset])
   },
   getAllByRange: (startDate, endDate) => {
     const QUERY = `
@@ -54,10 +54,10 @@ export const Donation = {
       D.id_tipo_donacion = T.id
       AND
       D.existe = true
-      BETWEEN
-      $1
       AND
-      $2
+      esta_facturado
+      BETWEEN
+      $1 AND $2
       ORDER BY D.id DESC
     `
     return db.query(QUERY, [startDate, endDate])

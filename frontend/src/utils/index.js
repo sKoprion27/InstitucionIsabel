@@ -46,3 +46,12 @@ export const convertToSelectOptionsCFDI = (arr, key = 'descripcion') => {
     }
   })
 }
+
+export const parseDonations = (donations) => {
+  return donations.map(d => {
+    return {
+      ...d,
+      facturado: d.facturado === null ? 'No facturado' : d.facturado
+    }
+  })
+}

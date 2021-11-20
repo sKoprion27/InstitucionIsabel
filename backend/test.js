@@ -6,4 +6,7 @@ const getPublicId = (url) => {
   return path
 }
 
-console.log(getPublicId(string))
+// console.log(getPublicId(string))
+
+const date = 'Tue Nov 09 2021 00:00:00 GMT-0600 (hora estándar central) '
+console.log(date.split('00')[0])

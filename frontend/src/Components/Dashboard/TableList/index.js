@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { formatDateTable, formatKeyTable } from '../../../utils'
 import { PermissionGuard } from '../../PermissionGuard'
 import { InvoiceModal } from '../InvoiceModal'
-import { MaterialBox } from '../MaterialBox'
 import { Modal } from '../Modal'
 import './style.scss'
 
