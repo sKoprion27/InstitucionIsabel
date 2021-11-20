@@ -56,14 +56,14 @@ export const DonationAdd = () => {
   useEffect(() => {
     const getInfoSelects = async () => {
       try {
-        const donadores = await getAllDonors()
+        const { donors } = await getAllDonors()
         const metodos_pago = await getAllPayments()
         const categorias = await getAllCategories()
         const tipos_donacion = await getAllTypesDonations()
         const beneficiarios = await getAllBeneficiaries()
 
         setOptions({
-          donors: convertToSelectOptions(donadores, 'razon_social'),
+          donors: convertToSelectOptions(donors, 'razon_social'),
           paymentMethods: convertToSelectOptions(metodos_pago),
           categories: convertToSelectOptions(categorias),
           typesDonations: convertToSelectOptions(tipos_donacion),
@@ -72,7 +72,7 @@ export const DonationAdd = () => {
       } catch (error) {
         console.log(error)
         toastInit('Error al cargar la página', 'red lighten-2')
-        setEdit(null)
+        // setEdit(null)
       }
     }
     getInfoSelects()
