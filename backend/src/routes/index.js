@@ -11,12 +11,12 @@ import typesDonationsRouter from './typesDonations.routes'
 import beneficiariesRouter from './beneficiaries.routes'
 import paymentMethodsRouter from './paymentMethods.routes'
 import categoriesRouter from './categories.routes'
-// import { auth } from '../lib/auth'
+import { auth } from '../lib/auth'
 
 export const initRoutes = (app) => {
   app.use('/auth', authRouter)
-  // app.use(auth.verifyToken) // si se activa pide token
   app.use('/users', usersRouter)
+  app.use(auth.verifyToken) // si se activa pide token
   app.use('/roles', rolesRouter)
   app.use('/donors', donorsRouter)
   app.use('/donations', donationsRouter)

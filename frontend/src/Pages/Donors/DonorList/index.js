@@ -29,7 +29,6 @@ export const DonorList = () => {
           limit: limitPagination,
           offset: 0
         })
-        alert(total)
         setOriginalList(donors)
         setListFilter(donors)
         setTotalElements(total / limitPagination)
