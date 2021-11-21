@@ -3,7 +3,7 @@ import * as yup from 'yup'
 export const donationSchema = yup.object().shape({
   foto_donacion: yup.mixed()
     .notRequired()
-    .test('fileSize', 'El archivo es muy pesado', (value, context) => {
+    .test('fileSize', 'El archivo es muy pesado. Peso max 2MB', (value, context) => {
       return (value.length === 1 && value[0].size <= 200000) || value.length === 0
     })
     .test('type', 'Solo es válido JPEG, JPG, PNG', (value) => {
@@ -55,7 +55,7 @@ export const donationSchema = yup.object().shape({
 export const beneficiarySchema = yup.object().shape({
   archivo: yup.mixed()
     .notRequired()
-    .test('fileSize', 'El archivo es muy pesado', (value, context) => {
+    .test('fileSize', 'El archivo es muy pesado. Peso max 2MB', (value, context) => {
       return (value.length === 1 && value[0].size <= 200000) || value.length === 0
     })
     .test('type', 'Solo es válido PDF, XLSX, CSV', (value) => {
