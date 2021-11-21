@@ -1,11 +1,11 @@
 import { Icon } from 'react-materialize'
 import { Link, useNavigate } from 'react-router-dom'
 import './style.scss'
-export const NavPage = ({ title, path = '/', onePage, justView }) => {
+export const NavPage = ({ title, detail, onePage, justView }) => {
   const navigate = useNavigate()
   return (
     <div className='navpage'>
-      <h2>{justView ? 'Ver detalle' : title}</h2>
+      <h2>{justView ? `Ver detalle ${detail}` : title}</h2>
       {
         !onePage && (
 

@@ -21,7 +21,12 @@ export const DonationsList = () => {
   const [didFetch, setDidFetch] = useState(false)
   // States for pagination
   const [totalElements, setTotalElements] = useState(null)
+  const [initialPage, setInitialPage] = useState(0)
   const limitPagination = 10
+  const initialQuery = {
+    limit: limitPagination,
+    offset: 0
+  }
   // States for use finder
   const {
     toggle,
@@ -39,8 +44,9 @@ export const DonationsList = () => {
   useEffect(() => {
     const getList = async () => {
       try {
+        setInitialPage(-1)
         initLoading()
-        const { donations, total } = await getAllDonations()
+        const { donations, total } = await getAllDonationsPagination(initialQuery)
         if (!(donations.length === 0)) {
           setHeadersCSV(donations)
         }
@@ -48,6 +54,8 @@ export const DonationsList = () => {
         setListFilter(parseDonations(donations))
         setTotalElements(total / limitPagination)
         toastInit('Lista actualizada')
+        setDateRange([null, null])
+        setInitialPage(0)
         endLoading()
       } catch (error) {
         console.log(error)
@@ -65,14 +73,15 @@ export const DonationsList = () => {
   // Get range list
   const finderByRange = async () => {
     try {
+      setInitialPage(0)
       initLoading()
       if (!startDate || !endDate) {
-        const { donations, total } = await getAllDonations()
+        const { donations, total } = await getAllDonationsPagination(initialQuery)
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
         setTotalElements(total / limitPagination)
+        setInitialPage(-1)
         toastInit('Lista filtrada')
-
         setHeadersCSV(donations)
         endLoading()
       } else {
@@ -86,6 +95,7 @@ export const DonationsList = () => {
         setOriginalList(donations)
         setListFilter(donations)
         setTotalElements(total / limitPagination)
+        setInitialPage(0)
         toastInit('Lista actualizada')
         if (!(donations.length === 0)) {
           setHeadersCSV(donations)
@@ -145,6 +155,7 @@ export const DonationsList = () => {
         setOriginalList={setOriginalList}
         setListFilter={setListFilter}
         totalElements={totalElements}
+        initialPage={initialPage}
       >
         <TableList
           loading={loading}

@@ -59,7 +59,7 @@ export const TypeDonationEdit = ({ justView }) => {
 
   return (
     <>
-      <NavPage justView={justView} title='Editar tipo de donación' path='/dashboard/tipo-donacion' />
+      <NavPage title='Editar tipo de donación' justView={justView} detail='tipo de donación' />
       <Card className='hoverable'>
         <p>Información</p>
         <form

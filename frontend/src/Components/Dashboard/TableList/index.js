@@ -177,6 +177,7 @@ const checkPermission = (backend, element, setFetchAction) => {
             id={element.id}
             facturado={element.facturado}
             setFetch={setFetchAction}
+            nombreDonacion={element.nombre}
           />
         </PermissionGuard>
       </>

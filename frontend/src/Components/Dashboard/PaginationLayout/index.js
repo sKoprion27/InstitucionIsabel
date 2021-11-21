@@ -9,7 +9,8 @@ export const PaginationLayout = ({
   setListFilter,
   totalElements,
   limitPagination,
-  children
+  children,
+  initialPage
 }) => {
   const handlerPagination = async ({ selected }) => {
     const pagination = selected
@@ -46,9 +47,12 @@ export const PaginationLayout = ({
           previousLabel={<span className='btn'>Anterior</span>}
           nextLabel={<span className='btn'>Siguiente</span>}
           breakLabel={'...'}
+          prevPageRel={null}
           pageCount={Math.ceil(totalElements)}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
+          forcePage={initialPage}
+          onPageActive={handlerPagination}
           onPageChange={handlerPagination}
           containerClassName={'pagination justify-content-center'}
           pageClassName={'page-item'}
@@ -60,6 +64,7 @@ export const PaginationLayout = ({
           breakClassName={'page-item'}
           breakLinkClassName={'page-link'}
           activeClassName={'active'}
+          disableInitialCallback
         />
       </div>
       {children}

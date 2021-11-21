@@ -441,9 +441,7 @@ export const routes = [
   {
     path: '*',
     element: (
-      <PageLayout onePage>
-        <NotFound />
-      </PageLayout>
+      <Navigate to='/' />
     )
   }
 ]

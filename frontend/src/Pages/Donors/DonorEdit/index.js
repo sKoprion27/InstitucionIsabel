@@ -139,7 +139,7 @@ export const DonorEdit = ({ justView }) => {
 
   return (
     <>
-      <NavPage justView={justView} title='Editar donador' path='/dashboard/donadores' />
+      <NavPage title='Editar donador' justView={justView} detail='donador' />
       <Card className='hoverable'>
         <h6 className='teal-text'>Información</h6>
         <form

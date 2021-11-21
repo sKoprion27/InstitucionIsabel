@@ -181,7 +181,7 @@ export const DonationEdit = ({ justView }) => {
 
   return (
     <>
-      <NavPage title='Editar donación' justView={justView} path='/dashboard/donaciones' />
+      <NavPage title='Editar donación' justView={justView} detail='donación' />
       <Card className='hoverable'>
         <h6 className='teal-text'>Información</h6>
         <div className='img-donacion'>
@@ -293,7 +293,7 @@ export const DonationEdit = ({ justView }) => {
           </div>
           {
             justView && (<HelpShorcut
-              path={`donadores/${idsOptions.idDonador}`}
+              path={`donadores/ver/${idsOptions.idDonador}`}
               text='Click para ver detalle de donador'
             />)
           }
@@ -324,7 +324,7 @@ export const DonationEdit = ({ justView }) => {
           </div>
           {
             justView && (<HelpShorcut
-              path={`metodos-pago/${idsOptions.idMetodo}`}
+              path={`metodos-pago/ver/${idsOptions.idMetodo}`}
               text='Click para ver detalle de método de pago'
             />)
           }
@@ -355,7 +355,7 @@ export const DonationEdit = ({ justView }) => {
           </div>
           {
             justView && (<HelpShorcut
-              path={`tipo-donacion/${idsOptions.idTipoDonacion}`}
+              path={`tipo-donacion/ver/${idsOptions.idTipoDonacion}`}
               text='Click para ver detalle de tipo de donativo' />)
           }
           {/* SELECT CATEGORIAS_DONACIONES */}
