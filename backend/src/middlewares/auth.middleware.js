@@ -4,7 +4,6 @@ import { loginSchema } from '../schemas/auth.schema'
 
 // Middleware validator
 export const validateLoginFields = async (req, res, next) => {
-  console.log('Validate fields user', req.body)
   const { err } = await validator.validateSchema(loginSchema, req.body)
   if (!err) {
     next()

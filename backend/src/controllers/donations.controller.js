@@ -24,7 +24,8 @@ export const donationController = {
           total: rowCount
         }, 200)
       } else if (limit && offset) {
-        const { rows, rowCount } = await Donation.pagination(limit, offset)
+        const { rowCount } = await Donation.getAll()
+        const { rows } = await Donation.pagination(limit, offset)
         response(req, res, 'GET DONATIONS', {
           donations: rows,
           total: rowCount
