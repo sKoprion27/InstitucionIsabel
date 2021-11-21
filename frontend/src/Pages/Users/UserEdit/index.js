@@ -108,7 +108,7 @@ export const UserEdit = ({ justView }) => {
   }
   return (
     <>
-      <NavPage title='Editar usuario' justView={justView} path='/dashboard/usuarios' />
+      <NavPage title='Editar usuario' justView={justView} detail='usuario' />
       <Card className='hoverable'>
         <p>Información de usuario</p>
         <form

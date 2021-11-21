@@ -86,7 +86,7 @@ export const BeneficiaryEdit = ({ justView }) => {
 
   return (
     <>
-      <NavPage title='Editar beneficiario' justView={justView} path='/dashboard/beneficiarios' />
+      <NavPage title='Editar beneficiario' justView={justView} detail='beneficiario' />
       <Card className='hoverable'>
         <p>Información</p>
         <form
