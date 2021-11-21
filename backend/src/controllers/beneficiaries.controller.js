@@ -63,7 +63,7 @@ export const beneficiaryController = {
       const beneficiary = JSON.parse(req.body.beneficiary)
       const postBeneficiary = {
         ...beneficiary,
-        archivo: `${req.file.filename}`
+        archivo: req.file ? `${req.file.filename}` : null
       }
       console.log(postBeneficiary, 'POST')
       const { rowCount } = await Beneficiary.postOne(postBeneficiary)
