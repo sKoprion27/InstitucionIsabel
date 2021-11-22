@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "sistema de donaciones institucion isabel",
   "main": "index.js",
+  "engines": {
+    "node": "16.13.0",
+    "npm": "8.1.0"
+  },
   "scripts": {
     "start": "npm run build && node dist/index.js",
     "dev": "npx nodemon --exec babel-node src/index.js",
