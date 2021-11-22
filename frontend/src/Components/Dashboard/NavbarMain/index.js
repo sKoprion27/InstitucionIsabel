@@ -1,6 +1,6 @@
 
 import { useAuth } from '../../../hooks/useAuth'
-import { Navbar, NavItem, Icon, Dropdown, Divider } from 'react-materialize'
+import { Dropdown, Divider, Icon, Navbar, NavItem } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import './style.scss'
 import { NavItems } from '../NavItems'
