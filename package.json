@@ -9,7 +9,7 @@
     "build": "babel src/ --out-dir dist",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "seed": "cat SQL/production.sql | pg:psql -a isabel-qro",
-    "clean": "rm -rf dist && mkdir uploads",
+    "clean": "rm -rf dist frontend/dist",
     "clean-storage": "rm -rf uploads && mkdir uploads"
   },
   "keywords": [
