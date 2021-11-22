@@ -10,7 +10,8 @@ export const PaginationLayout = ({
   totalElements,
   limitPagination,
   children,
-  initialPage
+  initialPage,
+  arrayListFiltered = []
 }) => {
   const handlerPagination = async ({ selected }) => {
     const pagination = selected
@@ -44,8 +45,18 @@ export const PaginationLayout = ({
     <>
       <div className='layout-pagination'>
         <ReactPaginate
-          previousLabel={<span className='btn'>Anterior</span>}
-          nextLabel={<span className='btn'>Siguiente</span>}
+          previousLabel={
+            <span
+              className={`btn ${(arrayListFiltered.length === 0) && 'disabled'}`}>
+              Anterior
+            </span>
+          }
+          nextLabel={
+            <span
+              className={`btn ${(arrayListFiltered.length === 0) && 'disabled'}`}>
+              Siguiente
+            </span>
+          }
           breakLabel={'...'}
           prevPageRel={null}
           pageCount={Math.ceil(totalElements)}

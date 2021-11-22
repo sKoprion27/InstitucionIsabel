@@ -58,6 +58,7 @@ export const DonorList = () => {
         backend='donors'
         limitPagination={limitPagination}
         totalElements={totalElements}
+        arrayListFiltered={listFiltered}
       >
         <TableList
           loading={loading}

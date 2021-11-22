@@ -156,6 +156,7 @@ export const DonationsList = () => {
         setListFilter={setListFilter}
         totalElements={totalElements}
         initialPage={initialPage}
+        arrayListFiltered={listFiltered}
       >
         <TableList
           loading={loading}
