@@ -62,5 +62,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "node-sass": "^6.0.1",
     "sass-loader": "^12.2.0"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }

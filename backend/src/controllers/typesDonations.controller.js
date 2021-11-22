@@ -33,6 +33,7 @@ export const typesDonationController = {
   postOneTypesDonation: async (req, res) => {
     try {
       const type = { ...req.body }
+      console.log(type)
       const { rowCount } = await TypesDonation.postOne(type)
       response(req, res, 'POST ONE DONATION', rowCount, 201)
     } catch (error) {

@@ -1,23 +1,22 @@
 import Axios from 'axios'
-const URL_API = 'http://localhost:4000'
 export const getAllDonationsByRange = async ({ startDate, endDate }) => {
-  const URL = `${URL_API}/donations?startDate=${startDate}&endDate=${endDate}`
+  const URL = `/donations?startDate=${startDate}&endDate=${endDate}`
   console.log(URL)
   const { data } = await Axios.get(URL)
   return data.response
 }
 
 export const getAllDonations = async () => {
-  const { data } = await Axios.get(`${URL_API}/donations`)
+  const { data } = await Axios.get('/donations')
   return data.response
 }
 
 export const getAllDonationsPagination = async ({ limit, offset }) => {
-  const { data } = await Axios.get(`${URL_API}/donations?limit=${limit}&offset=${offset}`)
+  const { data } = await Axios.get(`/donations?limit=${limit}&offset=${offset}`)
   return data.response
 }
 export const getOneDonation = async (id) => {
-  const { data } = await Axios.get(`${URL_API}/donations/${id}`)
+  const { data } = await Axios.get(`/donations/${id}`)
   return data.response
 }
 
@@ -27,7 +26,7 @@ export const postDonation = async ({ donation, foto_donacion }) => {
   if (foto_donacion !== null) {
     form.append('donation', JSON.stringify(donation))
   }
-  const { data } = await Axios.post(`${URL_API}/donations`, form, {
+  const { data } = await Axios.post('/donations', form, {
     headers: {
       Accept: 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -40,17 +39,17 @@ export const updateDonation = async (donation, id) => {
   const form = new FormData()
   form.append('foto_donacion', donation.foto_donacion)
   form.append('donation', JSON.stringify(donation.data))
-  const { data } = await Axios.put(`${URL_API}/donations/${id}`, form)
+  const { data } = await Axios.put(`/donations/${id}`, form)
   return data.response
 }
 
 export const deletePhotoDonation = async (id) => {
-  const { data } = await Axios.delete(`${URL_API}/donations/${id}/photos`)
+  const { data } = await Axios.delete(`/donations/${id}/photos`)
   return data.response
 }
 export const updateOneDonationInvoce = async (id, dataInvoice) => {
   const { data } = await Axios.put(
-    `${URL_API}/donations/${id}/invoices`,
+    `/donations/${id}/invoices`,
     dataInvoice
   )
   return data.response

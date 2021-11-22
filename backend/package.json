@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "dev": "npx nodemon --exec babel-node src/index.js",
     "build": "babel src/ --out-dir dist",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist uploads && mkdir uploads"
   },
   "keywords": [
     "express",

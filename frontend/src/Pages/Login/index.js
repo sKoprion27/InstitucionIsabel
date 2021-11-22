@@ -49,12 +49,12 @@ export const Login = () => {
         <div className='row'>
           <div className='form_container'>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='input-field'>
+              <div>
                 <label htmlFor='emailInput'>
                   Correo electrónico
                 </label>
                 <input
-
+                  placeholder='ejemplo@isabel.com'
                   type='email'
                   name='correo_electronico'
                   autoComplete='off'
@@ -77,12 +77,12 @@ export const Login = () => {
                   </span>
                 }
               </div>
-              <div className='input-field '>
-                <label >
+              <div>
+                <label>
                   Contraseña
                 </label>
                 <input
-
+                  placeholder='Ingresa contraseña'
                   type={show ? 'password' : 'text'}
                   name='password'
                   autoComplete='off'

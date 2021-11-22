@@ -1,44 +1,43 @@
 import Axios from 'axios'
-const URL_API = 'http://localhost:4000'
 
 export const getAllUsers = async () => {
-  const { data } = await Axios.get(`${URL_API}/users`)
+  const { data } = await Axios.get('/users')
   return data.response
 }
 
 export const getOneUser = async (id) => {
-  const { data } = await Axios.get(`${URL_API}/users/${id}`)
+  const { data } = await Axios.get(`/users/${id}`)
   return data.response
 }
 
 export const changeUserPassword = async (id, { password }) => {
   const { data } = await Axios.put(
-    `${URL_API}/users/${id}/password`,
+    `/users/${id}/password`,
     { password }
   )
   return data.response
 }
 export const postOneUser = async (user) => {
-  const { data } = await Axios.post(`${URL_API}/users`, user)
+  const { data } = await Axios.post('/users', user)
   return data.response
 }
 
 export const updateUser = async (user, id) => {
-  const { data } = await Axios.put(`${URL_API}/users/${id}`, user)
+  const { data } = await Axios.put(`/users/${id}`, user)
   return data.response
 }
 
 export const getAllRoles = async () => {
-  const { data } = await Axios.get(`${URL_API}/roles`)
+  const { data } = await Axios.get('/roles')
   return data.response
 }
 
 export const postOneUserRoles = async (id, roles) => {
-  const { data } = await Axios.post(`${URL_API}/roles`, { id, roles })
+  const { data } = await Axios.post('/roles', { id, roles })
   return data.response
 }
 
 export const deleteOneElement = async (id, path) => {
-  const { data } = await Axios.delete(`${URL_API}/${path}/${id}`)
+  const { data } = await Axios.delete(`/${path}/${id}`)
   return data.response
 }

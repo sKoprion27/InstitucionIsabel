@@ -16,7 +16,22 @@ export const globalConfig = {
       secure: true
     },
     jwt_token: { privateKey: 'password' }
+  },
+  PRODUCTION: {
+    databaseConfig: {
+      ssl: { rejectUnauthorized: false },
+      connectionString: process.env.DATABASE_URL
+    },
+    cloudinay: {
+      cloud_name: 'institucionisabel',
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+      secure: true
+    },
+    jwt_token: { privateKey: process.env.JWT_KEY }
   }
 }
 
-export default globalConfig.DEV
+const MODE = process.env.NODE_ENV === 'production' ? 'PRODUCTION' : 'DEV'
+
+export default globalConfig[MODE]

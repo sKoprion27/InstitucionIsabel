@@ -40,7 +40,17 @@ export const authController = {
       // usuarios
       const user = await User.me(req.body.id)
 
+      if (user.rowCount === 0) {
+        response(req, res, 'ERROR', null, 500)
+        return
+      }
+
       const roles = await User.getRoles(req.body.id)// roles_usuarios
+
+      if (roles.rowCount === 0) {
+        response(req, res, 'ERROR', null, 500)
+        return
+      }
 
       let result = {
         ...user.rows[0],
@@ -73,10 +83,10 @@ export const authController = {
             .map(JSON.parse)
       }
 
-      response(req, res, 'ME1', result, 200)
+      response(req, res, 'ME', result, 200)
     } catch (error) {
       console.log(error)
-      response(req, res, 'ME1', 'Error', 500)
+      response(req, res, 'ME', null, 500)
     }
   }
 }

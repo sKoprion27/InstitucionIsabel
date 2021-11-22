@@ -1,28 +1,27 @@
 import Axios from 'axios'
-const URL_API = 'http://localhost:4000'
 export const getAllDonors = async () => {
-  const { data } = await Axios.get(`${URL_API}/donors`)
+  const { data } = await Axios.get('/donors')
   return data.response
 }
 
 export const getAllDonorsPagination = async ({ limit, offset }) => {
   const { data } = await Axios.get(
-    `${URL_API}/donors?limit=${limit}&offset=${offset}`
+    `/donors?limit=${limit}&offset=${offset}`
   )
   return data.response
 }
 
 export const getOneDonor = async (id) => {
-  const { data } = await Axios.get(`${URL_API}/donors/${id}`)
+  const { data } = await Axios.get(`/donors/${id}`)
   return data.response
 }
 
 export const updateDonor = async (donor, id) => {
-  const { data } = await Axios.put(`${URL_API}/donors/${id}`, donor)
+  const { data } = await Axios.put(`/donors/${id}`, donor)
   return data.response
 }
 
 export const postDonor = async (donor) => {
-  const { data } = await Axios.post(`${URL_API}/donors/`, donor)
+  const { data } = await Axios.post('/donors/', donor)
   return data.response
 }
