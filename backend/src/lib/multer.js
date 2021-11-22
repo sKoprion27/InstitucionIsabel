@@ -19,7 +19,7 @@ const diskStorage = multer.diskStorage({
     cb(null, 'uploads/')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname))
+    cb(null, `${file.originalname}_${Date.now()}` + path.extname(file.originalname))
   }
 })
 const multerUploadFile = multer({ storage: diskStorage })
