@@ -4,10 +4,11 @@
   "description": "sistema de donaciones institucion isabel",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "dev": "npx nodemon --exec babel-node src/index.js",
     "build": "babel src/ --out-dir dist",
-    "clean": "rm -rf dist uploads && mkdir uploads"
+    "clean": "rm -rf dist && mkdir uploads",
+    "clean-storage": "rm -rf uploads && mkdir uploads"
   },
   "keywords": [
     "express",
