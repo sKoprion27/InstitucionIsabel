@@ -15,8 +15,8 @@ import { auth } from '../lib/auth'
 
 export const initRoutes = (app) => {
   app.use('/auth', authRouter)
-  app.use('/users', usersRouter)
   app.use(auth.verifyToken) // si se activa pide token
+  app.use('/users', usersRouter)
   app.use('/roles', rolesRouter)
   app.use('/donors', donorsRouter)
   app.use('/donations', donationsRouter)
