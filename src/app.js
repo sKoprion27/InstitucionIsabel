@@ -6,7 +6,7 @@ import { initRoutes } from './routes/index'
 import { cloudinaryConfig } from './lib/cloudinary'
 
 const app = express()
-const PORT = 4000 || process.env.PORT
+const PORT = 5000 || process.env.PORT
 app.disable('etag')
 
 // Middlewares de configuracion inicial
