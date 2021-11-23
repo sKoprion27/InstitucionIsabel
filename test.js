@@ -10,3 +10,5 @@ const getPublicId = (url) => {
 
 const date = 'Tue Nov 09 2021 00:00:00 GMT-0600 (hora estándar central) '
 console.log(date.split('00')[0])
+
+// heroku addons:create heroku-postgresql:hobby-dev

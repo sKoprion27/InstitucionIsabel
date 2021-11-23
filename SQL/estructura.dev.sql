@@ -394,11 +394,12 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 -- Insertar datos tabla usuarios - 20
 
 INSERT INTO usuarios(nombre, apellido, "password", correo_electronico) VALUES
-('Laura','Rivero', 'Password','tesorero@tec.mx'),
-('Julio','Ramirez','Password','contador@tec.mx'),
-('Alejandro','Polo', 'Password','presidente@tec.mx'),
-('Daniel','Cu','Password','admin@tec.mx'),
-('David','Cu','Password','superadmin@tec.mx');
+('Laura','Rivero', '$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','tesorero@isabel.mx'),
+('Julio','Ramirez','$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','contador@isabel.mx'),
+('Alejandro','Polo', '$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','presidente@isabel.mx'),
+('Daniel','Cu','$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','admin@isabel.mx'),
+('David','Cu','$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','superadmin@isabel.mx'),
+('Mariana','Gonzalez','$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','mariana@isabel.mx');
 
 -- Insertar datos tabla roles_usuarios
 

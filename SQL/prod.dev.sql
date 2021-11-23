@@ -397,7 +397,7 @@ INSERT INTO roles_permisos(id_role , id_permiso) VALUES
 -- Insertar datos tabla usuarios - 20
 
 INSERT INTO usuarios(nombre, apellido, "password", correo_electronico) VALUES
-('Mariana','Gonzalez','$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','superadmin@isabel.mx');
+('Mariana','Gonzalez','$2b$10$lP4/2dA1j3WRz0/Qh9e8V.aKgKO9rMrpIX2sKbx8If2Ueo.Q03Cre','mariana@isabel.mx');
 
 -- Insertar datos tabla roles_usuarios
 
