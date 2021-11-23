@@ -5,12 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.auth = void 0;
 
-var _response = require("./../utils/response");
-
 var _index = _interopRequireDefault(require("./../config/index"));
+
+var _path = _interopRequireDefault(require("path"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import { response } from './../utils/response'
 var jwt = require('jsonwebtoken'); // Config file
 
 
@@ -43,7 +44,8 @@ var auth = {
         authorization = _headers$authorizatio === void 0 ? undefined : _headers$authorizatio;
 
     if (!authorization) {
-      (0, _response.response)(req, res, 'ERROR', 'token error', 401);
+      // response(req, res, 'Token error', null, 500)
+      res.sendFile(_path["default"].join(__dirname, '../../frontend/build/index.html'));
       return;
     }
 
@@ -53,7 +55,8 @@ var auth = {
     });
 
     if (!decodedToken) {
-      (0, _response.response)(req, res, 'ERROR', 'invalid token', 401);
+      // response(req, res, 'Invalid token', null, 500)
+      res.sendFile(_path["default"].join(__dirname, '../../frontend/build/index.html'));
       return;
     }
 
