@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.globalConfig = void 0;
+exports["default"] = exports.MODE = exports.globalConfig = void 0;
 
 require('dotenv').config();
 
@@ -25,7 +25,8 @@ var globalConfig = {
     },
     jwt_token: {
       privateKey: 'password'
-    }
+    },
+    PORT: 4000
   },
   PRODUCTION: {
     databaseConfig: {
@@ -42,10 +43,12 @@ var globalConfig = {
     },
     jwt_token: {
       privateKey: process.env.JWT_KEY
-    }
+    },
+    PORT: process.env.PORT
   }
 };
 exports.globalConfig = globalConfig;
 var MODE = process.env.NODE_ENV === 'production' ? 'PRODUCTION' : 'DEV';
+exports.MODE = MODE;
 var _default = globalConfig[MODE];
 exports["default"] = _default;

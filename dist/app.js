@@ -16,6 +16,8 @@ var _cloudinary = require("./lib/cloudinary");
 
 var _path = _interopRequireDefault(require("path"));
 
+var _config = _interopRequireWildcard(require("./config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -23,7 +25,7 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var app = (0, _express["default"])();
-var PORT = 4000 || process.env.PORT;
+var PORT = _config["default"].PORT;
 app.disable('etag'); // Middlewares de configuracion inicial
 
 app.use((0, _cors["default"])()); // Una configuracion de seguridad entre headers
@@ -36,12 +38,13 @@ app.use((0, _morgan["default"])('dev')); // Muestra en consola la url, tiempo y 
 
 app.use('*', _cloudinary.cloudinaryConfig); // Configuración global para uso de cloudinary
 
-if (process.env.NODE_ENV === 'production') {
+if (_config.MODE === 'PRODUCTION') {
   // server static content
   // npm run build
-  app.use(_express["default"]["static"](_path["default"].join(__dirname, 'frontend/build')));
+  app.use(_express["default"]["static"](_path["default"].join(__dirname, '../frontend/build')));
 }
 
+console.log(_path["default"].join(__dirname, '../frontend/build'));
 app.get('/', function (req, res) {
   console.log('Esto es una prueba');
   res.json({
