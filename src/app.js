@@ -21,8 +21,10 @@ app.use('*', cloudinaryConfig)// Configuración global para uso de cloudinary
 if (process.env.NODE_ENV === 'production') {
   // server static content
   // npm run build
-  app.use(express.static(path.join(__dirname, 'frontend/build')))
+  app.use(express.static(path.join(__dirname, '../frontend/build')))
 }
+
+console.log(path.join(__dirname, '../frontend/build'))
 
 app.get('/', (req, res) => {
   console.log('Esto es una prueba')
