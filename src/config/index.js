@@ -34,6 +34,6 @@ export const globalConfig = {
   }
 }
 
-const MODE = process.env.NODE_ENV === 'production' ? 'PRODUCTION' : 'DEV'
+export const MODE = process.env.NODE_ENV === 'production' ? 'PRODUCTION' : 'DEV'
 
 export default globalConfig[MODE]
