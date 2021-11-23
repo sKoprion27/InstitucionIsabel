@@ -88,6 +88,7 @@ export const AuthProvider = (props) => {
                 user: null
               }
             })
+            window.localStorage.removeItem('TOKEN_ISABEL')
           }
         } else {
           // console.log('DISPATCH INITIALIZE NOT TOKEN')
@@ -107,6 +108,7 @@ export const AuthProvider = (props) => {
             user: null
           }
         })
+        window.localStorage.removeItem('TOKEN_ISABEL')
       }
     }
     initialize()
