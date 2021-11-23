@@ -15,7 +15,8 @@ export const globalConfig = {
       api_secret: process.env.CLOUDINARY_API_SECRET,
       secure: true
     },
-    jwt_token: { privateKey: 'password' }
+    jwt_token: { privateKey: 'password' },
+    PORT: 4000
   },
   PRODUCTION: {
     databaseConfig: {
@@ -28,7 +29,8 @@ export const globalConfig = {
       api_secret: process.env.CLOUDINARY_API_SECRET,
       secure: true
     },
-    jwt_token: { privateKey: process.env.JWT_KEY }
+    jwt_token: { privateKey: process.env.JWT_KEY },
+    PORT: process.env.PORT
   }
 }
 

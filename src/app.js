@@ -5,9 +5,10 @@ import cors from 'cors'
 import { initRoutes } from './routes/index'
 import { cloudinaryConfig } from './lib/cloudinary'
 import path from 'path'
+import config from './config'
 
 const app = express()
-const PORT = process.env.PORT || 4000
+const PORT = config.PORT || 4000
 app.disable('etag')
 
 // Middlewares de configuracion inicial
