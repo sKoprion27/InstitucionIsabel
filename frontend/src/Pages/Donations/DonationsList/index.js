@@ -76,7 +76,7 @@ export const DonationsList = () => {
       setInitialPage(0)
       initLoading()
       if (!startDate || !endDate) {
-        const { donations, total } = await getAllDonationsPagination(initialQuery)
+        const { donations, total } = await getAllDonations()
         setOriginalList(parseDonations(donations))
         setListFilter(parseDonations(donations))
         setTotalElements(total / limitPagination)

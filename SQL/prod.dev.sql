@@ -1,9 +1,9 @@
 -- BASE DE DATOS
 
-\c postgres;
-DROP DATABASE IF EXISTS institucion_isabel;
-CREATE DATABASE institucion_isabel;
-\c institucion_isabel;
+-- \c postgres;
+-- DROP DATABASE IF EXISTS institucion_isabel;
+-- CREATE DATABASE institucion_isabel;
+-- \c institucion_isabel;
 
 -- SET client_encoding = 'LATIN1';
 
