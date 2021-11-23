@@ -32,7 +32,7 @@ export const initInterceptors = () => {
     function (error) {
       if (error.response.status === 401) {
         localStorage.removeItem('TOKEN_ISABEL')
-        window.location = '/login'
+        window.location = '/'
       } else {
         return Promise.reject(error)
       }
