@@ -81,6 +81,13 @@ export const AuthProvider = (props) => {
             })
           } catch (error) {
             console.log(error)
+            dispatch({
+              type: 'INITIALIZE',
+              payload: {
+                isAuthenticated: false,
+                user: null
+              }
+            })
           }
         } else {
           // console.log('DISPATCH INITIALIZE NOT TOKEN')
