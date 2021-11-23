@@ -1,15 +1,15 @@
 import Axios from 'axios'
-const URL_BASE = 'http://localhost:4000'
+//cons = 'http://localhost:4000'
 
 export const loginService = async (correo_electronico, password) => {
-  const { data } = await Axios.post(`${URL_BASE}/auth/login/`, {
+  const { data } = await Axios.post(`/auth/login/`, {
     correo_electronico,
     password
   })
   return data.response
 }
 export const whoIamService = async (token) => {
-  const { data } = await Axios.post(`${URL_BASE}/auth/me/`, token, {
+  const { data } = await Axios.post(`/auth/me/`, token, {
     headers: { Authorization: `Bearer ${token}` }
   })
   return data.response
