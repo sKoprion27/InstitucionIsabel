@@ -60,7 +60,6 @@ export const NavbarMain = () => {
           <Link to='/dashboard/perfil'>
             Mi perfil
           </Link>
-          <Divider />
           <NavItem onClick={handlerLogout}>
             Cerrar sesión
           </NavItem>
