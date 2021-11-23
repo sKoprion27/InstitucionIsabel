@@ -8,7 +8,7 @@ import path from 'path'
 import config, { MODE } from './config'
 
 const app = express()
-const PORT = config.PORT || 4000
+const PORT = config.PORT
 app.disable('etag')
 
 // Middlewares de configuracion inicial
