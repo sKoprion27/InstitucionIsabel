@@ -1,5 +1,6 @@
-import { response } from './../utils/response'
+// import { response } from './../utils/response'
 import config from './../config/index'
+import path from 'path'
 const jwt = require('jsonwebtoken')
 
 // Config file
@@ -25,7 +26,8 @@ export const auth = {
     const { authorization = undefined } = headers
 
     if (!authorization) {
-      response(req, res, 'Token error', null, 500)
+      // response(req, res, 'Token error', null, 500)
+      res.sendFile(path.join(__dirname, '../../frontend/build/index.html'))
       return
     }
 
@@ -34,7 +36,8 @@ export const auth = {
     const decodedToken = isValidToken({ token: headerToken })
 
     if (!decodedToken) {
-      response(req, res, 'Invalid token', null, 500)
+      // response(req, res, 'Invalid token', null, 500)
+      res.sendFile(path.join(__dirname, '../../frontend/build/index.html'))
       return
     }
     const { payload } = decodedToken
