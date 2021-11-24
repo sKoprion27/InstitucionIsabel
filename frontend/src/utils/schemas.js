@@ -120,6 +120,9 @@ export const donorSchema = yup.object().shape({
     })
     .test('length', 'El código postal debe ser de 5 dígitos', (value) => {
       return value.length === 5
+    })
+    .test('positive', 'El código postal debe ser un número positivo', (value) => {
+      return value.length > 0
     }),
   regimen_fiscal: yup.mixed()
     .test('required', 'Selecciona un régimen fiscal', (value) => {
