@@ -132,11 +132,16 @@ export const userController = {
 
   // CHANGE PASSWORD
   changePasswordUser: async (req, res) => {
-    const { id } = req.params
-    const passwordHashed = encrypt.createHash(req.body.password)
-    console.log(passwordHashed)
-    const [queryAnswer, status] = await User.putOneByField('password', passwordHashed, id)
-    response(req, res, 'UPDATE ONE USER', queryAnswer, status)
+    try {
+      console.log(req.body)
+      const { id } = req.params
+      const passwordHashed = encrypt.createHash(req.body.password)
+      const { rowCount } = await User.changePassword(id, passwordHashed)
+      response(req, res, 'UPDATE ONE USER', rowCount, 201)
+    } catch (error) {
+      console.log(error)
+      response(req, res, 'UPDATE ONE USER', null, 500)
+    }
   }
 }
 

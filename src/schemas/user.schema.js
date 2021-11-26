@@ -10,5 +10,6 @@ export const userPostSchema = Joi.object({
 export const userPasswordSchema = Joi.object({
   password:
     Joi.string()
-      .min(8).required()
+      .min(8).required(),
+  id: Joi.allow()
 })

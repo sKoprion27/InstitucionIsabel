@@ -140,28 +140,18 @@ export const User = {
       return ['ERROR UPDATE USER 🤯', 400]
     }
   },
-  putOneByField: async (field, data, id) => {
-    console.log(field, data, id, '😆')
+  changePassword: async (id, password) => {
+    console.log(password, id, '😆')
     const UPDATE = `
       UPDATE usuarios
       SET
-      ${field} = $2
+      password = $2
       WHERE
       id = $1
       AND
       existe = true
     `
-    try {
-      const { rowCount } = await db.query(UPDATE, [id, data])
-      if (rowCount === 0) {
-        return ['ERROR PUT USER BY FIELD 🤯', 404]
-      } else {
-        return ['PUT USER BY FIELD', 201]
-      }
-    } catch (error) {
-      console.log('ERROR GET BY FIELD 🤯', error)
-      return ['ERROR GET BY FIELD 🤯', 404]
-    }
+    return db.query(UPDATE, [id, password])
   },
   deleteOne: async (id) => {
     const DELETE = `

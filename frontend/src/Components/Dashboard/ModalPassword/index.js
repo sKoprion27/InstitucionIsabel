@@ -1,19 +1,21 @@
 import { useForm } from 'react-hook-form'
 import { changeUserPassword } from '../../../helpers/users.helpers'
 import { Portal } from '../../Portal'
+import { toastInit } from '../AlertToast'
 import './style.scss'
 
 export const ModalPassword = ({ id, changeVisibility }) => {
   const { register, handleSubmit, formState: { errors } } = useForm()
 
   const onSubmit = async (data) => {
-    console.log(data)
+    //console.log(data)
     try {
       await changeUserPassword(id, data)
+      toastInit('Contraseña actualizada')
       changeVisibility(false)
     } catch (error) {
+      toastInit('Error al cambiar contraseña', 'red lighten-2')
       console.log(error)
-      alert('Error')
     }
   }
 

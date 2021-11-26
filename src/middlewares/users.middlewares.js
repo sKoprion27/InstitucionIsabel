@@ -18,11 +18,12 @@ export const validateUserFields = async (req, res, next) => {
 }
 
 export const validatePasswordUser = async (req, res, next) => {
-  console.log('Validate password')
+  console.log('Validate password', req.body)
   const { err } = await validator.validateSchema(userPasswordSchema, req.body)
   if (!err) {
     next()
   } else {
-    response(req, res, 'ERROR', err, 400)
+    console.log(err)
+    response(req, res, 'ERROR', null, 500)
   }
 }

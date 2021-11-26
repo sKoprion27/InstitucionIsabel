@@ -55,10 +55,6 @@ export const DonorAdd = () => {
     resolver: yupResolver(donorSchema)
   })
 
-  const onChange = (e) => {
-    console.log(e.target.files[0])
-  }
-
   useEffect(() => {
     const getInfoSelects = async () => {
       try {
