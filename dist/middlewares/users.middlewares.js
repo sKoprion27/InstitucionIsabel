@@ -68,7 +68,7 @@ var validatePasswordUser = /*#__PURE__*/function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            console.log('Validate password');
+            console.log('Validate password', req.body);
             _context2.next = 3;
             return _validator.validator.validateSchema(_user.userPasswordSchema, req.body);
 
@@ -79,7 +79,8 @@ var validatePasswordUser = /*#__PURE__*/function () {
             if (!err) {
               next();
             } else {
-              (0, _response.response)(req, res, 'ERROR', err, 400);
+              console.log(err);
+              (0, _response.response)(req, res, 'ERROR', null, 500);
             }
 
           case 6:

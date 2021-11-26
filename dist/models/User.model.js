@@ -331,57 +331,30 @@ var User = {
 
     return putOne;
   }(),
-  putOneByField: function () {
-    var _putOneByField = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(field, data, id) {
-      var UPDATE, _yield$db$query5, rowCount;
-
+  changePassword: function () {
+    var _changePassword = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(id, password) {
+      var UPDATE;
       return regeneratorRuntime.wrap(function _callee10$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
-              console.log(field, data, id, '😆');
-              UPDATE = "\n      UPDATE usuarios\n      SET\n      ".concat(field, " = $2\n      WHERE\n      id = $1\n      AND\n      existe = true\n    ");
-              _context10.prev = 2;
-              _context10.next = 5;
-              return _index.db.query(UPDATE, [id, data]);
+              console.log(password, id, '😆');
+              UPDATE = "\n      UPDATE usuarios\n      SET\n      password = $2\n      WHERE\n      id = $1\n      AND\n      existe = true\n    ";
+              return _context10.abrupt("return", _index.db.query(UPDATE, [id, password]));
 
-            case 5:
-              _yield$db$query5 = _context10.sent;
-              rowCount = _yield$db$query5.rowCount;
-
-              if (!(rowCount === 0)) {
-                _context10.next = 11;
-                break;
-              }
-
-              return _context10.abrupt("return", ['ERROR PUT USER BY FIELD 🤯', 404]);
-
-            case 11:
-              return _context10.abrupt("return", ['PUT USER BY FIELD', 201]);
-
-            case 12:
-              _context10.next = 18;
-              break;
-
-            case 14:
-              _context10.prev = 14;
-              _context10.t0 = _context10["catch"](2);
-              console.log('ERROR GET BY FIELD 🤯', _context10.t0);
-              return _context10.abrupt("return", ['ERROR GET BY FIELD 🤯', 404]);
-
-            case 18:
+            case 3:
             case "end":
               return _context10.stop();
           }
         }
-      }, _callee10, null, [[2, 14]]);
+      }, _callee10);
     }));
 
-    function putOneByField(_x9, _x10, _x11) {
-      return _putOneByField.apply(this, arguments);
+    function changePassword(_x9, _x10) {
+      return _changePassword.apply(this, arguments);
     }
 
-    return putOneByField;
+    return changePassword;
   }(),
   deleteOne: function () {
     var _deleteOne = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(id) {
@@ -401,7 +374,7 @@ var User = {
       }, _callee11);
     }));
 
-    function deleteOne(_x12) {
+    function deleteOne(_x11) {
       return _deleteOne.apply(this, arguments);
     }
 

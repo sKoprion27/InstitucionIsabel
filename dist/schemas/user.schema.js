@@ -20,7 +20,8 @@ var userPostSchema = _joi["default"].object({
 exports.userPostSchema = userPostSchema;
 
 var userPasswordSchema = _joi["default"].object({
-  password: _joi["default"].string().min(8).required()
+  password: _joi["default"].string().min(8).required(),
+  id: _joi["default"].allow()
 });
 
 exports.userPasswordSchema = userPasswordSchema;

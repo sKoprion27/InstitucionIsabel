@@ -489,31 +489,38 @@ var userController = {
   // CHANGE PASSWORD
   changePasswordUser: function () {
     var _changePasswordUser = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
-      var id, passwordHashed, _yield$User$putOneByF, _yield$User$putOneByF2, queryAnswer, status;
+      var id, passwordHashed, _yield$User$changePas, rowCount;
 
       return regeneratorRuntime.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
+              _context6.prev = 0;
+              console.log(req.body);
               id = req.params.id;
               passwordHashed = _encrypt.encrypt.createHash(req.body.password);
-              console.log(passwordHashed);
-              _context6.next = 5;
-              return _User.User.putOneByField('password', passwordHashed, id);
+              _context6.next = 6;
+              return _User.User.changePassword(id, passwordHashed);
 
-            case 5:
-              _yield$User$putOneByF = _context6.sent;
-              _yield$User$putOneByF2 = _slicedToArray(_yield$User$putOneByF, 2);
-              queryAnswer = _yield$User$putOneByF2[0];
-              status = _yield$User$putOneByF2[1];
-              (0, _response.response)(req, res, 'UPDATE ONE USER', queryAnswer, status);
+            case 6:
+              _yield$User$changePas = _context6.sent;
+              rowCount = _yield$User$changePas.rowCount;
+              (0, _response.response)(req, res, 'UPDATE ONE USER', rowCount, 201);
+              _context6.next = 15;
+              break;
 
-            case 10:
+            case 11:
+              _context6.prev = 11;
+              _context6.t0 = _context6["catch"](0);
+              console.log(_context6.t0);
+              (0, _response.response)(req, res, 'UPDATE ONE USER', null, 500);
+
+            case 15:
             case "end":
               return _context6.stop();
           }
         }
-      }, _callee6);
+      }, _callee6, null, [[0, 11]]);
     }));
 
     function changePasswordUser(_x11, _x12) {

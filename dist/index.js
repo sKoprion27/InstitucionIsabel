@@ -22,7 +22,7 @@ function _main() {
             return _app.app.listen(_app.PORT);
 
           case 2:
-            console.log("http://localhost:".concat(_app.PORT, " \uD83D\uDE80 CODESK"));
+            console.log("http://localhost:".concat(_app.PORT, " \uD83D\uDE80 CODESK_SERVIDOR"));
 
           case 3:
           case "end":
