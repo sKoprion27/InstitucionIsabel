@@ -30,6 +30,7 @@ export const DonorAdd = () => {
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(true)
   const [loading, setLoading] = useState(false)
+  const [isForeign, setIsForeign] = useState(false)
   const [options, setOptions] = useState({
     states: [],
     cfdis: [],
@@ -91,8 +92,8 @@ export const DonorAdd = () => {
           domicilio_fiscal: data.domicilio_fiscal,
           codigo_postal: data.codigo_postal,
           regimen_fiscal: data.regimen_fiscal.value,
-          id_estado: data.id_estado.value,
-          id_cfdi: data.id_cfdi.value
+          id_estado: data.id_estado.value || null,
+          id_cfdi: data.id_cfdi.value || null
         }
       }
       await postDonor(dataPost)
@@ -115,34 +116,66 @@ export const DonorAdd = () => {
     setValue('id_cfdi', 'value', { shouldDirty: true })
   }
 
-  if (edit === null) {
-    return <Navigate to='/dashboard/NOTFOUND' />
+  const handlerIsForeign = (type) => {
+    switch (type) {
+      case "foreign":
+        setIsForeign(true)
+        break
+      case "noForeign":
+        setIsForeign(false)
+        break
+      default:
+        setIsForeign(false)
+    }
   }
+
+  // if (edit === null) {
+  //   return <Navigate to='/dashboard/NOTFOUND' />
+  // }
 
   return (
     <>
       <NavPage title='Agregar donador' path='/dashboard/donadores' />
       <Card className='hoverable'>
-        <h6 className='teal-text'>Información</h6>
+        <h6 className='teal-text'>Información del donador</h6>
+
+        <div className="card donador-extranjero">
+          <p>¿El donador es extranjero?</p>
+          <div className="donador-extranjero-botones">
+
+            <button
+              className="btn"
+              disabled={!isForeign}
+              onClick={() => handlerIsForeign("noForeign")}
+            >No
+            </button>
+            <button
+              className="btn"
+              disabled={isForeign}
+              onClick={() => handlerIsForeign("foreign")}
+            >Si
+            </button>
+          </div>
+        </div>
 
         <form
           className='user__form '
           onSubmit={handleSubmit(handlerSubmit)}
         >
           <div>
-            <label>Número de Teléfono</label>
+            <label>{isForeign ? "Registro fiscal extranjero" : "RFC Méxicano"}</label>
             <input
               onChange={register}
               type='text'
               autoComplete='off'
               {
-              ...register('telefono')
+              ...register('rfc')
               }
               disabled={!edit} />
-            {errors.telefono &&
+            {errors.rfc &&
               (<span className='red-text'>
                 {
-                  errors.telefono.message
+                  errors.rfc.message
                 }
               </span>)
             }
@@ -166,24 +199,6 @@ export const DonorAdd = () => {
             }
           </div>
           <div>
-            <label>RFC</label>
-            <input
-              onChange={register}
-              type='text'
-              autoComplete='off'
-              {
-              ...register('rfc')
-              }
-              disabled={!edit} />
-            {errors.rfc &&
-              (<span className='red-text'>
-                {
-                  errors.rfc.message
-                }
-              </span>)
-            }
-          </div>
-          <div>
             <label>Nombre del donador</label>
             <input
               onChange={register}
@@ -201,6 +216,26 @@ export const DonorAdd = () => {
               </span>)
             }
           </div>
+          <div>
+            <label>Número de teléfono</label>
+            <input
+              onChange={register}
+              type='text'
+              autoComplete='off'
+              {
+              ...register('telefono')
+              }
+              disabled={!edit} />
+            {errors.telefono &&
+              (<span className='red-text'>
+                {
+                  errors.telefono.message
+                }
+              </span>)
+            }
+          </div>
+
+
           <div>
             <label>Correo Electrónico</label>
             <input
@@ -287,57 +322,62 @@ export const DonorAdd = () => {
             }
           </div>
           {/* SELECT ESTADO */}
-          <div className='input-select'>
-            <label>Selecciona el estado</label>
-            <Controller
-              defaultValue={false}
-              control={control}
-              name='id_estado'
-              render={({ field }) => (
-                <Select
-                  placeholder='Estado'
-                  closeMenuOnSelect
-                  components={animatedComponents}
-                  options={options.states}
-                  {...field}
-                  isDisabled={!edit}
+          {
+            !isForeign && (<>
+
+
+              <div className='input-select'>
+                <label>Selecciona el estado</label>
+                <Controller
+                  defaultValue={false}
+                  control={control}
+                  name='id_estado'
+                  render={({ field }) => (
+                    <Select
+                      placeholder='Estado'
+                      closeMenuOnSelect
+                      components={animatedComponents}
+                      options={options.states}
+                      {...field}
+                      isDisabled={!edit}
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.id_estado &&
-              (<span
-                className='red-text'
-              >
-                {errors.id_estado.message}
-              </span>)
-            }
-          </div>
-          {/* SELECT CFDI */}
-          <div className='input-select'>
-            <label>Selecciona un CFDI</label>
-            <Controller
-              defaultValue={false}
-              control={control}
-              name='id_cfdi'
-              render={({ field }) => (
-                <Select
-                  placeholder='CFDI'
-                  closeMenuOnSelect
-                  components={animatedComponents}
-                  options={options.cfdis}
-                  {...field}
-                  isDisabled={!edit}
+                {errors.id_estado &&
+                  (<span
+                    className='red-text'
+                  >
+                    {errors.id_estado.message}
+                  </span>)
+                }
+              </div>
+              {/* SELECT CFDI */}
+              <div className='input-select'>
+                <label>Selecciona un CFDI</label>
+                <Controller
+                  defaultValue={false}
+                  control={control}
+                  name='id_cfdi'
+                  render={({ field }) => (
+                    <Select
+                      placeholder='CFDI'
+                      closeMenuOnSelect
+                      components={animatedComponents}
+                      options={options.cfdis}
+                      {...field}
+                      isDisabled={!edit}
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.id_cfdi &&
-              (<span
-                className='red-text'
-              >
-                {errors.id_cfdi.message}
-              </span>)
-            }
-          </div>
+                {errors.id_cfdi &&
+                  (<span
+                    className='red-text'
+                  >
+                    {errors.id_cfdi.message}
+                  </span>)
+                }
+              </div></>)
+          }
           {/* BOTONES DE OPCIONES */}
           <div className='user__btn__container'>
             <button

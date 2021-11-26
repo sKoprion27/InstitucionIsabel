@@ -66,7 +66,7 @@ export const DonorList = () => {
           arrayListFiltered={listFiltered}
           setFetchAction={setDidFetch}
           backend='donors'
-          fields={['id', 'creado', 'correo_electronico', 'regimen_fiscal', 'clave_cfdi', 'codigo_postal', 'domicilio_fiscal', 'descripcion_cfdi']}
+          fields={['id', 'creado', 'correo_electronico', 'clave_cfdi', 'codigo_postal', 'domicilio_fiscal', 'descripcion_cfdi', 'estado']}
         />
       </PaginationLayout>
     </>

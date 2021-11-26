@@ -93,8 +93,8 @@ export const donorSchema = yup.object().shape({
     .test('required', 'Ingresa el rfc del donador', (value) => {
       return value
     })
-    .test('length', 'El rfc debe ser de 13 caracteres', (value) => {
-      return value.length === 13
+    .test('length', 'El rfc debe ser de máximo 15 caracteres', (value) => {
+      return value.length < 15
     }),
   nombre: yup.mixed()
     .test('required', 'Ingresa el nombre del donador', (value) => {
@@ -118,19 +118,11 @@ export const donorSchema = yup.object().shape({
     .test('number', 'El código postal debe contener únicamente números', (value) => {
       return !isNaN(value)
     })
-    .test('length', 'El código postal debe ser de 5 dígitos', (value) => {
-      return value.length === 5
+    .test('length', 'El código postal debe ser positivo', (value) => {
+      return value >= 0
     }),
   regimen_fiscal: yup.mixed()
     .test('required', 'Selecciona un régimen fiscal', (value) => {
-      return value
-    }),
-  id_estado: yup.mixed()
-    .test('required', 'Selecciona un estado', (value) => {
-      return value
-    }),
-  id_cfdi: yup.mixed()
-    .test('required', 'Selecciona un cfdi', (value) => {
       return value
     })
 })

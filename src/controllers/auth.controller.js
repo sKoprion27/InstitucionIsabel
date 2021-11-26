@@ -48,6 +48,7 @@ export const authController = {
       const roles = await User.getRoles(req.body.id)// roles_usuarios
 
       if (roles.rowCount === 0) {
+        console.log('roles', roles.rowCount)
         response(req, res, 'ERROR', null, 500)
         return
       }

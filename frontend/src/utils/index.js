@@ -41,7 +41,7 @@ export const convertToSelectOptions = (arr, key = 'nombre') => {
 export const convertToSelectOptionsCFDI = (arr, key = 'descripcion') => {
   return arr.map(value => {
     return {
-      label: value[key],
+      label: ` ${value.clave} - ${value[key]}`,
       value: value.id
     }
   })

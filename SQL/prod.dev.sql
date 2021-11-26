@@ -1,9 +1,9 @@
 -- BASE DE DATOS
 
--- \c postgres;
--- DROP DATABASE IF EXISTS institucion_isabel;
--- CREATE DATABASE institucion_isabel;
--- \c institucion_isabel;
+\c postgres;
+DROP DATABASE IF EXISTS institucion_isabel;
+CREATE DATABASE institucion_isabel;
+\c institucion_isabel;
 
 -- SET client_encoding = 'LATIN1';
 
@@ -77,8 +77,8 @@ CREATE TABLE estados(
 -- Crear tabla donadores
 CREATE TABLE donadores(
   id SERIAL PRIMARY KEY,
-  id_cfdi INTEGER NOT NULL,
-  id_estado INTEGER NOT NULL,
+  id_cfdi INTEGER,
+  id_estado INTEGER,
   nombre TEXT NOT NULL,
   telefono TEXT NOT NULL,
   razon_social TEXT NOT NULL,

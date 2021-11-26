@@ -34,7 +34,7 @@ export const TableList = ({
                           .filter(key => !fields.some(f => f === key))
                           .map((key, index) => {
                             return (
-                              <th key={Math.random() + backend}>{formatKeyTable(key)}</th>
+                              <th key={Math.random() + backend + index}>{formatKeyTable(key)}</th>
                             )
                           }))
                       }
@@ -56,9 +56,9 @@ export const TableList = ({
                                 {
                                   Object.keys(element)
                                     .filter(key => !fields.some(f => f === key))
-                                    .map((key) => {
+                                    .map((key, index) => {
                                       return (
-                                        <td key={element[key]}>
+                                        <td key={element[key] + index}>
                                           {
                                             typeRender(key, element)
                                           }
@@ -107,6 +107,14 @@ const typeRender = (key, element) => {
                   element[key] ? formatDateTable(element[key]) : ''
                 }
               </span>)
+        }
+      </>)
+    case 'regimen_fiscal':
+      return (<>
+        {
+          element[key] === true
+            ? (<span className='blue-text'>PERSONA MORAL</span>)
+            : (<span className='teal-text'>PERSONA FISICA</span>)
         }
       </>)
 

@@ -3,7 +3,6 @@ import {
   useState
 } from 'react'
 import {
-  Link,
   Navigate,
   useParams
 } from 'react-router-dom'
@@ -23,7 +22,6 @@ import {
 } from '../../../helpers/donors.helpers'
 
 import './style.scss'
-import { MaterialBox } from '../../../Components/Dashboard/MaterialBox'
 import { convertToSelectOptions, filterSelectsOptiones, formatDateTable, convertToSelectOptionsCFDI } from '../../../utils'
 import { toastInit } from '../../../Components/Dashboard/AlertToast'
 import { donorSchema } from '../../../utils/schemas'
@@ -33,6 +31,7 @@ export const DonorEdit = ({ justView }) => {
   const { id } = useParams()
   const animatedComponents = makeAnimated()
   const [edit, setEdit] = useState(false)
+  const [foreign, setForeign] = useState(false);
   const [options, setOptions] = useState({
     states: [],
     cfdis: [],
@@ -61,6 +60,9 @@ export const DonorEdit = ({ justView }) => {
     const getOne = async () => {
       try {
         const response = await getOneDonor(id)
+        console.log(response)
+        setForeign((!response.id_cfdi ? true : false))
+
         setOptions({
           ...options,
           states: convertToSelectOptions(response.estados),
@@ -115,9 +117,8 @@ export const DonorEdit = ({ justView }) => {
         domicilio_fiscal: data.domicilio_fiscal,
         codigo_postal: data.codigo_postal,
         regimen_fiscal: data.regimen_fiscal.value,
-        id_estado: data.id_estado.value,
-        id_cfdi: data.id_cfdi.value
-
+        id_estado: foreign ? null : data.id_estado.value,
+        id_cfdi: foreign ? null : data.id_cfdi.value
       }
       console.log('😀', updateData)
 
@@ -133,9 +134,9 @@ export const DonorEdit = ({ justView }) => {
     setEdit(!edit)
   }
 
-  if (edit === null) {
-    return <Navigate to='/dashboard/NOTFOUND' />
-  }
+  // if (edit === null) {
+  //   return <Navigate to='/dashboard/NOTFOUND' />
+  // }
 
   return (
     <>
@@ -303,56 +304,60 @@ export const DonorEdit = ({ justView }) => {
               </span>)
             }
           </div>
-          {/* SELECT ESTADO */}
-          <div className='input-select'>
-            <label>Selecciona un Estado</label>
-            <Controller
-              control={control}
-              name='id_estado'
-              render={({ field }) => (
-                <Select
-                  placeholder='Estado'
-                  closeMenuOnSelect
-                  components={animatedComponents}
-                  options={options.states}
-                  {...field}
-                  isDisabled={!edit}
+          {
+            !foreign && (<>
+              {/* SELECT ESTADO */}
+              <div className='input-select'>
+                <label>Selecciona un Estado</label>
+                <Controller
+                  control={control}
+                  name='id_estado'
+                  render={({ field }) => (
+                    <Select
+                      placeholder='Estado'
+                      closeMenuOnSelect
+                      components={animatedComponents}
+                      options={options.states}
+                      {...field}
+                      isDisabled={!edit}
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.id_estado &&
-              (<span
-                className='red-text'
-              >
-                {errors.id_estado.message}
-              </span>)
-            }
-          </div>
-          {/* SELECT CFDI */}
-          <div className='input-select'>
-            <label>Selecciona un CFDI</label>
-            <Controller
-              control={control}
-              name='id_cfdi'
-              render={({ field }) => (
-                <Select
-                  placeholder='CFDI'
-                  closeMenuOnSelect
-                  components={animatedComponents}
-                  options={options.cfdis}
-                  {...field}
-                  isDisabled={!edit}
+                {errors.id_estado &&
+                  (<span
+                    className='red-text'
+                  >
+                    {errors.id_estado.message}
+                  </span>)
+                }
+              </div>
+              {/* SELECT CFDI */}
+              <div className='input-select'>
+                <label>Selecciona un CFDI</label>
+                <Controller
+                  control={control}
+                  name='id_cfdi'
+                  render={({ field }) => (
+                    <Select
+                      placeholder='CFDI'
+                      closeMenuOnSelect
+                      components={animatedComponents}
+                      options={options.cfdis}
+                      {...field}
+                      isDisabled={!edit}
+                    />
+                  )}
                 />
-              )}
-            />
-            {errors.id_cfdi &&
-              (<span
-                className='red-text'
-              >
-                {errors.id_cfdi.message}
-              </span>)
-            }
-          </div>
+                {errors.id_cfdi &&
+                  (<span
+                    className='red-text'
+                  >
+                    {errors.id_cfdi.message}
+                  </span>)
+                }
+              </div>
+            </>)
+          }
 
           {/* BOTONES DE OPCIONES */}
           {

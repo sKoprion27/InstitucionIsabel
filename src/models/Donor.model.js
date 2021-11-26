@@ -2,26 +2,28 @@ import { db } from '../database/index'
 export const Donor = {
   getAll: async () => {
     const QUERY = `
-      SELECT
-      D.id, telefono,
+       SELECT
+      D.id,
       razon_social,
       D.nombre,
-      rfc, correo_electronico,
+      rfc,
+      telefono,
+      regimen_fiscal,
+      correo_electronico,
       codigo_postal,
       domicilio_fiscal,
-      regimen_fiscal,
       E.nombre Estado,
       C.clave Clave_CFDI,
       C.descripcion Descripcion_CFDI
       FROM
-      donadores D,
-      cfdis C,
-      estados E
-      WHERE
+      donadores D
+      LEFT JOIN cfdis C
+      ON
       D.id_cfdi = C.id
-      AND
+      LEFT JOIN estados E
+      ON
       D.id_estado = E.id
-      AND
+      WHERE
       D.existe = true
       ORDER BY D.id ASC
     `
@@ -30,25 +32,27 @@ export const Donor = {
   pagination: async (limit, offset) => {
     const QUERY = `
       SELECT
-      D.id, telefono,
+      D.id,
       razon_social,
       D.nombre,
-      rfc, correo_electronico,
+      rfc,
+      telefono,
+      regimen_fiscal,
+      correo_electronico,
       codigo_postal,
       domicilio_fiscal,
-      regimen_fiscal,
       E.nombre Estado,
       C.clave Clave_CFDI,
       C.descripcion Descripcion_CFDI
       FROM
-      donadores D,
-      cfdis C,
-      estados E
-      WHERE
+      donadores D
+      LEFT JOIN cfdis C
+      ON
       D.id_cfdi = C.id
-      AND
+      LEFT JOIN estados E
+      ON
       D.id_estado = E.id
-      AND
+      WHERE
       D.existe = true
       ORDER BY D.id ASC
       LIMIT
@@ -60,8 +64,9 @@ export const Donor = {
   },
   getOne: async (id) => {
     const QUERY = `
-      SELECT D.id, 
-      telefono, 
+      SELECT
+      D.id,
+      telefono,
       razon_social, 
       D.nombre nombre, 
       rfc, 
@@ -74,10 +79,16 @@ export const Donor = {
       C.descripcion Descripcion_CFDI,
       D.id_estado as id_estado,
       D.id_cfdi as id_cfdi
-      FROM donadores D, cfdis C, estados E
-      WHERE D.id_cfdi = C.id 
-      AND D.id_estado = E.id 
-      AND D.id = $1 
+      FROM
+      donadores D
+      LEFT JOIN cfdis C
+      ON
+      D.id_cfdi = C.id
+      LEFT JOIN estados E
+      ON
+      D.id_estado = E.id
+      WHERE
+      D.id = $1
       AND D.existe = true
     `
     return db.query(QUERY, [id])
